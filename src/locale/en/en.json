@@ -1,0 +1,145 @@
+{
+  "translations": {
+    "nav-links": {
+      "merchants": "Merchants",
+      "pricing": "Pricing",
+      "about": "About",
+      "english": "English",
+      "french": "French",
+      "sign-in": "Sign in",
+      "welcome": "Welcome",
+      "dashboard": "Dashboard",
+      "logout": "Logout"
+    },
+    "footer": {
+      "products": "Products",
+      "support": "Support",
+      "developer": "Developer and Resources",
+      "about-us": "About us",
+      "pricing": "Pricing",
+      "get-onboarded": "Get Onboarded",
+      "contact": "Contact",
+      "terms": "Terms and Conditions",
+      "privacy-policy": "Privacy Policy",
+      "faq": "FAQs",
+      "plug": "Plug 'n Play",
+      "api": "API Documentation",
+      "enterprise": "Enterprise Business",
+      "copy": "Copyright",
+      "rights": "All rights reserved"
+    },
+    "home": {
+      "banner-header": "Fast and secure payment platform for the internet",
+      "banner-text": "is a payment platform that allows any registered user makes the payment for goods and services, it also allows merchants registered on it to accept online payments for goods and services with cards and mobile money wallets",
+      "and": "and",
+      "btn-merchant": "Become a merchant",
+      "btn-payments": "Start making payments",
+      "get_started_paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse lectus libero, molestie non vulputate et, tempor id nibh. Sedultrices nec urna sed vestibulum.",
+      "language": "Language"
+    },
+    "login": {
+      "header": "Login To Your Account",
+      "email": "Email",
+      "password": "Password",
+      "remember": "Remember Me",
+      "forgotten": "Forgotten Password?",
+      "btn_title": "Login",
+      "note": "Don't have an account?",
+      "register_note": "Register here",
+      "processing": "Processing.."
+    },
+    "register": {
+      "header": "Sign Up to Join",
+      "customer": "Register as customer",
+      "business": "Register as business",
+      "name": "Business name or Full name",
+      "email": "Email",
+      "phone": "Phone number",
+      "password": "Password",
+      "confirm": "Re-type password",
+      "btn_title": "Register",
+      "note": "Already have an account?",
+      "login_note": "Sign in",
+      "processing": "Processing..",
+      "unmatch_password": "Passwords do not match. Try again"
+    },
+    "forgotten": {
+      "header": "Enter email to reset password",
+      "email": "Email",
+      "btn_title": "Send",
+      "note": "Remembered password now?",
+      "login_note": "Sign in",
+      "processing": "Processing.."
+    },
+    "wizard": {
+      "payment-type": "Payment Type",
+      "provider": "Provider",
+      "details": "Details",
+      "summary": "Summary",
+      "pay": "Pay",
+      "step-1": {
+        "main-title": "Araka Welcomes You",
+        "subtitle": "Which type of payment would you like to perform?",
+        "small-text": "Select only one type"
+      },
+      "step-2": {
+        "subtitle": "Which provider would you like to choose?",
+        "small-text": "Select only one payment method"
+      },
+      "step-3": {
+        "subtitle": "Last thing - how would you like to pay for this transaction?",
+        "small-text": "Select only one type"
+      },
+      "help": "Help",
+      "reset": "Reset",
+      "success": {
+        "main": "Awesome! Your transaction was completed successfully",
+        "sub": "You can perform another or view your",
+        "sub2": "transaction history",
+        "sub3": "Airtime top-up was successful",
+        "btn": "View history",
+        "btn2": "Start new payment"
+      },
+      "failure": {
+        "main": "Oops ... something went wrong processing your transaction",
+        "sub": "You can re-try or start this process over",
+        "sub2": "this has been logged in your transaction history",
+        "sub3": "Airtime top-up failed",
+        "btn": "View history",
+        "btn2": "Re-try"
+      },
+      "cancelled": {
+        "main": "... sad to see you cancel the transaction. Did something go wrong?",
+        "sub": "You can re-try or start this process over",
+        "sub2": "",
+        "sub3": "Airtime top-up cancelled",
+        "btn": "View history",
+        "btn2": "Re-try"
+      }
+    },
+    "dashboard": {
+      "top-nav": {
+        "logout": "Logout",
+        "home": "Home",
+        "account": "Account",
+        "recipients": "Recipients"
+      },
+      "side-bar": {
+        "home": "Home",
+        "account": "Account",
+        "recipients": "Recipients",
+        "make-payments": "Make Payments"
+      },
+      "new-user": {
+        "ready": "Ready to start",
+        "making-payments": "making payments?",
+        "yes": "yes, let's do it!"
+      },
+      "old-user": {
+        "activity": "Activity",
+        "search": "Search for...",
+        "transaction-details": "Transaction Details"
+      }
+    }
+  }
+}
