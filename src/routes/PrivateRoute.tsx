@@ -20,7 +20,7 @@ const PrivateRoute: React.FC<any> = ({ component: Component, ...rest }) => {
       <Route
         {...rest}
         render={(props) =>
-          !isAuthenticated ? (
+          isAuthenticated ? (
             <Layout className="min-height-vh">
               <SideBar collapsed={collapsed} />
               <Layout className="site-layout">

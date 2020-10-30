@@ -415,3 +415,45 @@ iframe {
 .page-buttons button {
   margin-right: 0.5rem;
 }
+
+.pay-details {
+  position: relative;
+  text-align: center;
+}
+
+.pay-details h2 {
+  margin-top: 1rem;
+  font-weight: 400;
+  color: #424242;
+}
+
+.pay-details h4 {
+  font-weight: 500;
+  color: #bdbdbd;
+}
+
+.pay-details p {
+  font-size: 0.8rem;
+  color: #757575;
+}
+
+.pay-form-col {
+  background: #fbfbfb;
+  border: 0.0625rem solid #f3f3f3;
+  padding: 1rem;
+}
+
+.pay-form-col .ant-form-item-label label {
+  font-weight: 500;
+  line-height: 25px;
+  font-size: 12px;
+  color: #444;
+}
+
+.pay-form-col .hide-label label {
+  visibility: hidden;
+}
+
+.pay-logos img {
+  padding-right: 2rem;
+}

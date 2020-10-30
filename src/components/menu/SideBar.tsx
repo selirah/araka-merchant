@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import {
   HomeOutlined,
@@ -12,10 +12,16 @@ interface SideBarProps {
   collapsed: boolean;
 }
 
+interface ParamProps {
+  pageId: string;
+}
+
 export const SideBar: React.FC<SideBarProps> = ({ collapsed }) => {
   const history = useHistory();
   const { Sider } = Layout;
   const { pathname } = history.location;
+  const { pageId } = useParams<ParamProps>();
+
   let act;
   switch (pathname) {
     case path.home:
@@ -25,7 +31,9 @@ export const SideBar: React.FC<SideBarProps> = ({ collapsed }) => {
       act = ['2'];
       break;
     case path.paymentPages:
-    case path.page:
+      act = ['3'];
+      break;
+    case `${path.page}/${pageId}`:
       act = ['3'];
       break;
   }
@@ -40,11 +48,13 @@ export const SideBar: React.FC<SideBarProps> = ({ collapsed }) => {
         setActive(['2']);
         break;
       case path.paymentPages:
-      case path.page:
+        setActive(['3']);
+        break;
+      case `${path.page}/${pageId}`:
         setActive(['3']);
         break;
     }
-  }, [pathname]);
+  }, [pathname, pageId]);
 
   return (
     <Sider trigger={null} collapsible collapsed={collapsed}>

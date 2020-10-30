@@ -2,12 +2,14 @@ import React from 'react';
 import { Menu } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
 
-interface SettingsMenuProps {}
+interface SettingsMenuProps {
+  logoutUser(): void;
+}
 
-export const SettingsMenu: React.FC<SettingsMenuProps> = () => {
+export const SettingsMenu: React.FC<SettingsMenuProps> = ({ logoutUser }) => {
   return (
     <Menu>
-      <Menu.Item key="1" icon={<LogoutOutlined />}>
+      <Menu.Item key="1" icon={<LogoutOutlined />} onClick={() => logoutUser()}>
         Logout
       </Menu.Item>
     </Menu>

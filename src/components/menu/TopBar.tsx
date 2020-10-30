@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { Layout, Menu, Dropdown, Button } from 'antd';
+import { useDispatch } from 'react-redux';
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -10,21 +11,34 @@ import {
   RightOutlined,
 } from '@ant-design/icons';
 import { StarterMenu } from './StarterMenu';
-// import { TestMenu } from './TestMenu';
 import { NotificationsMenu } from './NotificationsMenu';
 import { SettingsMenu } from './SettingsMenu';
 import { path } from '../../helpers/path';
+import { logout } from '../../store/auth/actions';
+import { secure } from '../../utils/secure';
+import { AppDispatch } from '../../helpers/appDispatch';
 
 interface TopBarProps {
   collapsed: boolean;
   toggle(): void;
 }
 
+interface ParamProps {
+  pageId: string;
+}
+
 export const TopBar: React.FC<TopBarProps> = ({ collapsed, toggle }) => {
+  const dispatch: AppDispatch = useDispatch();
   const history = useHistory();
   const { Header } = Layout;
   const [header, setHeader] = useState(<Link to={path.home}>Dashboard</Link>);
   const { pathname } = history.location;
+  const { pageId } = useParams<ParamProps>();
+
+  const logoutUser = () => {
+    secure.removeAll();
+    dispatch(logout());
+  };
 
   useEffect(() => {
     switch (pathname) {
@@ -37,14 +51,14 @@ export const TopBar: React.FC<TopBarProps> = ({ collapsed, toggle }) => {
       case path.paymentPages:
         setHeader(<Link to={path.paymentPages}>Payment Pages</Link>);
         break;
-      case path.page:
+      case `${path.page}/${pageId}`:
         setHeader(
           <React.Fragment>
-            <Link to={path.page}>Pages</Link> <RightOutlined />
+            <Link to={path.paymentPages}>Pages</Link> <RightOutlined /> {pageId}
           </React.Fragment>
         );
     }
-  }, [pathname]);
+  }, [pathname, pageId]);
 
   return (
     <Header className="site-layout-background" style={{ padding: 0 }}>
@@ -61,20 +75,13 @@ export const TopBar: React.FC<TopBarProps> = ({ collapsed, toggle }) => {
             </Button>
           </Dropdown>
         </Menu.Item>
-        {/* <Menu.Item key="2">
-          <Dropdown overlay={<TestMenu />}>
-            <Button danger>
-              Test Mode <DownOutlined />
-            </Button>
-          </Dropdown>
-        </Menu.Item> */}
         <Menu.Item key="3">
           <Dropdown overlay={<NotificationsMenu />}>
             <BellOutlined />
           </Dropdown>
         </Menu.Item>
         <Menu.Item key="4">
-          <Dropdown overlay={<SettingsMenu />}>
+          <Dropdown overlay={<SettingsMenu logoutUser={logoutUser} />}>
             <UserOutlined />
           </Dropdown>
         </Menu.Item>

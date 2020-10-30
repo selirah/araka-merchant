@@ -14,10 +14,7 @@ export const PageDetails: React.FC<PageDetailsProps> = () => {
       <Col span={24}>
         <div className="page-header">
           <div className="page-image">
-            <Image
-              width={100}
-              src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-            />
+            <Image width={100} src="https://via.placeholder.com/150" />
           </div>
           <div className="page-name">
             <h4>Page Name</h4>

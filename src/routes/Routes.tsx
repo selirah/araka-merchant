@@ -5,29 +5,21 @@ import Index from '../pages/_index';
 import Transactions from '../pages/_transactions';
 import PaymentPages from '../pages/_paymentPages';
 import Page from '../pages/_[pageId]';
+import Login from '../pages/_login';
 import NotFoundPage from '../pages/_404';
+import Pay from '../pages/_[pay]';
 import { path } from '../helpers/path';
 
 const Routes: React.FC = () => {
   return (
     <React.Fragment>
       <Switch>
-        {/* <Route exact path={path.payment} component={PaymentPage} />
-        <Route exact path={path.login} component={LoginPage} />
-        <Route exact path={path.register} component={RegisterPage} /> */}
-        {/* <Route
-          exact
-          path={path.registerSuccess}
-          component={RegisterSuccessPage}
-        />
-        <Route exact path={path.verify} component={EmailVerificationPage} />
-        <Route exact path={path.forgot} component={ForgottenPasswordPage} />
-        <Route exact path={path.reset} component={ResetPasswordPage} /> */}
-
+        <Route exact path={path.login} component={Login} />
         <PrivateRoute exact path={path.home} component={Index} />
         <PrivateRoute exact path={path.tranasctions} component={Transactions} />
         <PrivateRoute exact path={path.paymentPages} component={PaymentPages} />
         <PrivateRoute exact path={`${path.page}/:pageId`} component={Page} />
+        <Route exact path={path.pay} component={Pay} />
         <Route exact component={NotFoundPage} />
       </Switch>
     </React.Fragment>

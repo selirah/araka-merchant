@@ -1,13 +1,20 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter /*useParams*/ } from 'react-router-dom';
 import { Layout, Row, Col } from 'antd';
 import { PageDetails } from '../components/[pageId]/PageDetails';
 import { PageTransactions } from '../components/[pageId]/PageTransactions';
 
 interface PageProps {}
 
+// interface ParamProps {
+//   pageId: string;
+// }
+
 const Page: React.FC<PageProps> = () => {
   const { Content } = Layout;
+  // const { pageId } = useParams<ParamProps>();
+
+  // console.log(pageId);
 
   return (
     <Content
