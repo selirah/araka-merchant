@@ -6,7 +6,7 @@ import { AppDispatch } from '../helpers/appDispatch';
 import { appSelector } from '../helpers/appSelector';
 import { LoginForm } from '../components/login/LoginForm';
 import { Login as Auth } from '../interfaces';
-import { loginRequest } from '../store/auth';
+import { loginRequest, clearAuthState } from '../store/auth';
 import { path } from '../helpers/path';
 
 interface LoginProps {}
@@ -24,6 +24,11 @@ const Login: React.FC<LoginProps> = () => {
   const [error, setError] = useState<Error | {}>({});
   const [singleError, setSingleError] = useState<string>('');
   const history = useHistory();
+
+  useEffect(() => {
+    dispatch(clearAuthState());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onSubmit = (values: Auth) => {
     const payload: Auth = {

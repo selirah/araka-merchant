@@ -65,8 +65,12 @@ export const PayForm: React.FC<PayFormProps> = () => {
           </Row>
           <Row gutter={10}>
             <Col span={8}>
-              <Form.Item name="Currency" label="Amount to Charge">
-                <Select defaultValue="USD" onChange={handleChange}>
+              <Form.Item
+                name="Currency"
+                label="Amount to Charge"
+                initialValue="USD"
+              >
+                <Select onChange={handleChange}>
                   <Option value="GHS">GHS</Option>
                   <Option value="USD">USD</Option>
                 </Select>

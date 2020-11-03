@@ -25,11 +25,20 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'center',
-        marginTop: '100px',
+        marginTop: '150px',
       }}
     >
-      <Col span={6}>
-        <h1>Login</h1>
+      <Col
+        span={6}
+        style={{
+          background: '#fbfbfb',
+          padding: '1rem',
+          borderRadius: '0.2rem',
+        }}
+      >
+        <h1 style={{ color: '#1890ff', fontSize: '1.5rem', fontWeight: 300 }}>
+          Login to Merchant Account
+        </h1>
         {!isEmpty(error) ? (
           <Alert type="error" message={`${JSON.stringify(error)}`} />
         ) : null}

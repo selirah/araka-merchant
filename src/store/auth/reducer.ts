@@ -61,6 +61,7 @@ const reducer: Reducer<AuthState> = (state = initialState, action) => {
         success: initialState.success,
         error: initialState.error,
         isSubmitting: initialState.isSubmitting,
+        singleError: initialState.singleError,
       };
     case AuthActionTypes.DESTROY_STATES:
       return initialState;
