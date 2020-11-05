@@ -457,3 +457,11 @@ iframe {
 .pay-logos img {
   padding-right: 2rem;
 }
+
+.spinner {
+  text-align: center;
+  border-radius: 4px;
+  margin-top: 50px;
+  padding: 50px 50px;
+  margin: 20px 0;
+}

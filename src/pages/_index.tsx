@@ -1,13 +1,61 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Layout, Dropdown, Button, Divider, Row, Col, Progress } from 'antd';
+import {
+  Layout,
+  Dropdown,
+  Button,
+  Divider,
+  Row,
+  Col,
+  Progress,
+  Spin,
+} from 'antd';
+import { useDispatch } from 'react-redux';
+import { appSelector } from '../helpers/appSelector';
+import { AppDispatch } from '../helpers/appDispatch';
 import { DownOutlined } from '@ant-design/icons';
 import { GraphMenu } from '../components/home/GraphMenu';
+import { getTransactions } from '../store/transactions';
+import { TransactionHistory } from '../interfaces';
+// import moment from 'moment';
+import { isEmpty } from '../helpers/isEmpty';
 
 interface IndexProps {}
 
 const Index: React.FC<IndexProps> = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const { transactions, loading } = appSelector((state) => state.transaction);
+  const [transactionData, setTransactionData] = useState<TransactionHistory[]>(
+    transactions
+  );
+
   const { Content } = Layout;
+
+  useEffect(() => {
+    if (isEmpty(transactions) && !loading) {
+      dispatch(getTransactions());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    setTransactionData(transactions);
+  }, [loading, transactions, dispatch]);
+
+  let render: React.ReactNode;
+  if (loading) {
+    render = (
+      <div className="spinner">
+        <Spin size="small" />
+      </div>
+    );
+  }
+  if (!loading && isEmpty(transactionData)) {
+    render = 'USD 0.00';
+  }
+
+  if (!loading && !isEmpty(transactionData)) {
+  }
 
   return (
     <Content
@@ -26,7 +74,7 @@ const Index: React.FC<IndexProps> = () => {
             </Button>
           </Dropdown>
           <Divider />
-          <div className="total-amount">USD 0.00</div>
+          <div className="total-amount">{render}</div>
           <Divider />
           <Divider />
           <Divider />
