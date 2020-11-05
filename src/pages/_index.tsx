@@ -17,8 +17,9 @@ import { DownOutlined } from '@ant-design/icons';
 import { GraphMenu } from '../components/home/GraphMenu';
 import { getTransactions } from '../store/transactions';
 import { TransactionHistory } from '../interfaces';
-// import moment from 'moment';
+import moment from 'moment';
 import { isEmpty } from '../helpers/isEmpty';
+import { transactionStatus } from '../helpers/constants';
 
 interface IndexProps {}
 
@@ -28,6 +29,7 @@ const Index: React.FC<IndexProps> = () => {
   const [transactionData, setTransactionData] = useState<TransactionHistory[]>(
     transactions
   );
+  // const [totalAmount, setTotalAmount] = useState('');
 
   const { Content } = Layout;
 
@@ -55,6 +57,24 @@ const Index: React.FC<IndexProps> = () => {
   }
 
   if (!loading && !isEmpty(transactionData)) {
+    let amount = 0;
+    for (let i = 0; i < transactionData.length; i++) {
+      const currentDate = moment(new Date());
+      const numDays = moment(
+        transactionData[i].createdAt,
+        'MM/DD/YYYY HH:mm:ss'
+      );
+
+      const diff = currentDate.diff(numDays, 'days');
+
+      if (
+        diff <= 30 &&
+        transactionData[i].status === transactionStatus.APPROVED
+      ) {
+        amount = amount + transactionData[i].amountPaid;
+      }
+    }
+    render = `USD ${amount.toFixed(2)}`;
   }
 
   return (
