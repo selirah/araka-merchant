@@ -142,6 +142,7 @@ html::-moz-scrollbar-thumb {
 }
 .bg-placeholder {
   flex-grow: 1;
+  margin-right: 20px;
 }
 .bg-placeholder + .ant-divider-vertical {
   height: 100%;
@@ -464,4 +465,13 @@ iframe {
   margin-top: 50px;
   padding: 50px 50px;
   margin: 20px 0;
+}
+
+#transactions-bar {
+  min-width: 320px;
+  max-width: 100%;
+}
+#successrate-donut,
+#failurerate-donut {
+  max-height: 100px;
 }
