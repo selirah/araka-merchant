@@ -16,7 +16,6 @@ import { AppDispatch } from '../helpers/appDispatch';
 import { DownOutlined } from '@ant-design/icons';
 import { GraphMenu } from '../components/home/GraphMenu';
 import { getTransactions } from '../store/transactions';
-import { TransactionHistory } from '../interfaces';
 import moment from 'moment';
 import { isEmpty } from '../helpers/isEmpty';
 import { transactionStatus } from '../helpers/constants';
@@ -28,9 +27,7 @@ interface IndexProps {}
 const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
   const dispatch: AppDispatch = useDispatch();
   const { transactions, loading } = appSelector((state) => state.transaction);
-  const [transactionData, setTransactionData] = useState<TransactionHistory[]>(
-    transactions
-  );
+  const [transactionData, setTransactionData] = useState(transactions);
   // const [totalAmount, setTotalAmount] = useState('');
   const { Content } = Layout;
 
@@ -60,7 +57,15 @@ const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
     render = 'USD 0.00';
   }
   if (!loading && !isEmpty(transactionData)) {
+<<<<<<< HEAD
     let amount = 0, seriesObject: any = {}, series: any = [], successCount: any = 0, failureCount: any = 0;
+=======
+    let amount = 0,
+      seriesObject: any = {},
+      series: any = [],
+      successCount: any = 0,
+      failureCount: any = 0;
+>>>>>>> 2e04e1f1f9efd8e9d1e1d47e9b1214e7c26b65d7
     for (let i = 1; i <= 20; i++) {
       const currentDate = moment(new Date());
       const transactionDate = currentDate.subtract(i, 'days').format('MMM DD');
@@ -75,6 +80,7 @@ const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
 
       const diff = currentDate.diff(numDays, 'days');
 
+<<<<<<< HEAD
       if (diff <= 30 && transactionData[i].status === transactionStatus.APPROVED) {
           successCount += 1;
           amount = amount + transactionData[i].amountPaid;
@@ -122,17 +128,85 @@ const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
         text: ''
       },
       series: [{
+=======
+      if (
+        diff <= 30 &&
+        transactionData[i].status === transactionStatus.APPROVED
+      ) {
+        successCount += 1;
+        amount = amount + transactionData[i].amountPaid;
+        if (
+          seriesObject[moment(transactionData[i].createdAt).format('MMM DD')]
+        ) {
+          seriesObject[moment(transactionData[i].createdAt).format('MMM DD')] +=
+            transactionData[i].amountPaid;
+        } else {
+          seriesObject[moment(transactionData[i].createdAt).format('MMM DD')] =
+            transactionData[i].amountPaid;
+        }
+      }
+    }
+    failureCount = transactionData.length - successCount;
+    Object.keys(seriesObject).forEach((r) => series.push([r, seriesObject[r]]));
+    render = `USD ${amount.toFixed(2)}`;
+    transactionsGraphOptions = {
+      title: {
+        text: '',
+      },
+      xAxis: {
+        type: 'category',
+        labels: {
+          rotation: -45,
+          style: {
+            fontSize: '13px',
+            fontFamily: 'Verdana, sans-serif',
+          },
+        },
+      },
+      yAxis: {
+        min: 1,
+        title: {
+          text: 'Amount paid (total)',
+        },
+      },
+      legend: {
+        enabled: false,
+      },
+      series: [
+        {
+          name: 'Transactions total',
+          type: 'column',
+          data: series.reverse(),
+        },
+      ],
+    };
+    successGraphOptions = {
+      title: {
+        text: '',
+      },
+      series: [
+        {
+>>>>>>> 2e04e1f1f9efd8e9d1e1d47e9b1214e7c26b65d7
           type: 'pie',
           allowPointSelect: true,
           name: 'Transactions',
           innerSize: '90%',
           keys: ['name', 'y', 'selected', 'sliced'],
           data: [
+<<<<<<< HEAD
               ['Successful', successCount, false],
               ['Processing Errors', failureCount, false],
           ],
           showInLegend: true
       }]
+=======
+            ['Successful', successCount, false],
+            ['Processing Errors', failureCount, false],
+          ],
+          showInLegend: true,
+        },
+      ],
+>>>>>>> 2e04e1f1f9efd8e9d1e1d47e9b1214e7c26b65d7
     };
   }
 
@@ -155,9 +229,20 @@ const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
           <Divider />
           <div className="total-amount">{render}</div>
           {/* Insert HighCharts Here */}
+<<<<<<< HEAD
           
             <HighchartsReact highcharts={Highcharts} options={transactionsGraphOptions} {...props} id="transactions-bar" />
           
+=======
+
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={transactionsGraphOptions}
+            {...props}
+            id="transactions-bar"
+          />
+
+>>>>>>> 2e04e1f1f9efd8e9d1e1d47e9b1214e7c26b65d7
           <Divider />
           {/* <Divider />
           <Divider />
@@ -174,7 +259,16 @@ const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
           <div className="summaryHolder">
             <div className="bg-placeholder">
               <h3>Success Rate </h3>
+<<<<<<< HEAD
               <HighchartsReact highcharts={Highcharts} options={successGraphOptions} {...props} id="successrate-donut" />
+=======
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={successGraphOptions}
+                {...props}
+                id="successrate-donut"
+              />
+>>>>>>> 2e04e1f1f9efd8e9d1e1d47e9b1214e7c26b65d7
             </div>
             <Divider type="vertical" />
             <div className="bg-placeholder">
@@ -188,7 +282,11 @@ const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
           </div>
           <Divider />
           <p className="dash-summary text-center">
-            0 transactions · 0 abandoned{' '}
+<<<<<<< HEAD
+            0 transactions ï¿½ 0 abandoned{' '}
+=======
+            0 transactions ï¿½ 0 abandoned{' '}
+>>>>>>> 2e04e1f1f9efd8e9d1e1d47e9b1214e7c26b65d7
           </p>
         </Col>
         <Col span={8}>
