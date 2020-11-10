@@ -475,3 +475,6 @@ iframe {
 #failurerate-donut {
   max-height: 100px;
 }
+text.highcharts-credits {
+    display: none;
+}
