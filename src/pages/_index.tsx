@@ -16,7 +16,6 @@ import { AppDispatch } from '../helpers/appDispatch';
 import { DownOutlined } from '@ant-design/icons';
 import { GraphMenu } from '../components/home/GraphMenu';
 import { getTransactions } from '../store/transactions';
-import { TransactionHistory } from '../interfaces';
 import moment from 'moment';
 import { isEmpty } from '../helpers/isEmpty';
 import { transactionStatus } from '../helpers/constants';
@@ -28,9 +27,7 @@ interface IndexProps {}
 const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
   const dispatch: AppDispatch = useDispatch();
   const { transactions, loading } = appSelector((state) => state.transaction);
-  const [transactionData, setTransactionData] = useState<TransactionHistory[]>(
-    transactions
-  );
+  const [transactionData, setTransactionData] = useState(transactions);
   // const [totalAmount, setTotalAmount] = useState('');
   const { Content } = Layout;
 
