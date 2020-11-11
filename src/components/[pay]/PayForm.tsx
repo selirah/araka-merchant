@@ -1,15 +1,17 @@
 import React from 'react';
-import { Row, Col, Form, Input, Select, Button } from 'antd';
+import { Row, Col, Form, Input, Button, Alert } from 'antd';
+import { Merchant } from '../../interfaces';
+import { isEmpty } from '../../helpers/isEmpty';
+import { PayCircleOutlined, LoadingOutlined } from '@ant-design/icons';
 
-interface PayFormProps {}
+interface PayFormProps {
+  values: any;
+  onSubmit(values: Merchant): void;
+  isSubmit: boolean;
+  error: any;
+}
 
-export const PayForm: React.FC<PayFormProps> = () => {
-  const { Option } = Select;
-
-  const handleChange = (value: any) => {
-    console.log(value);
-  };
-
+export const PayForm: React.FC<PayFormProps> = ({ values, onSubmit, isSubmit, error }) => {
   return (
     <Row
       style={{
@@ -20,21 +22,15 @@ export const PayForm: React.FC<PayFormProps> = () => {
       }}
     >
       <Col span={6} className="pay-form-col">
-        <Form layout="vertical">
+      {!isEmpty(error) ? (
+          <Alert type="error" message={`${JSON.stringify(error)}`} />
+        ) : null}
+        <Form layout="vertical" name='basic' initialValues={values} onFinish={onSubmit}>
           <Row gutter={10}>
-            <Col span={12}>
+            <Col span={24}>
               <Form.Item
-                name="FirstName"
-                label="First Name"
-                style={{ marginBottom: '2px' }}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="LastName"
-                label="Last Name"
+                name="customerFullName"
+                label="Full Name"
                 style={{ marginBottom: '2px' }}
               >
                 <Input />
@@ -44,7 +40,7 @@ export const PayForm: React.FC<PayFormProps> = () => {
           <Row>
             <Col span={24}>
               <Form.Item
-                name="EmailAddress"
+                name="customerEmailAddress"
                 label="Email Address"
                 style={{ marginBottom: '2px' }}
               >
@@ -55,7 +51,7 @@ export const PayForm: React.FC<PayFormProps> = () => {
           <Row>
             <Col span={24}>
               <Form.Item
-                name="PhoneNumber"
+                name="customerPhoneNumber"
                 label="Phone Number"
                 style={{ marginBottom: '2px' }}
               >
@@ -66,18 +62,14 @@ export const PayForm: React.FC<PayFormProps> = () => {
           <Row gutter={10}>
             <Col span={8}>
               <Form.Item
-                name="Currency"
+                name="currency"
                 label="Amount to Charge"
-                initialValue="USD"
               >
-                <Select onChange={handleChange}>
-                  <Option value="GHS">GHS</Option>
-                  <Option value="USD">USD</Option>
-                </Select>
+                <Input />
               </Form.Item>
             </Col>
             <Col span={16}>
-              <Form.Item name="Amount" label="Amount" className="hide-label">
+              <Form.Item name="amount" label="Amount" className="hide-label">
                 <Input placeholder="2,600.00" />
               </Form.Item>
             </Col>
@@ -89,8 +81,16 @@ export const PayForm: React.FC<PayFormProps> = () => {
               justifyContent: 'center',
             }}
           >
-            <Button type="primary" htmlType="submit">
-              Pay Now
+            <Button type="primary" htmlType="submit" disabled={isSubmit}>
+              {!isSubmit ? (
+                <React.Fragment>
+                  <PayCircleOutlined /> Pay Now
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <LoadingOutlined /> Processing...
+                </React.Fragment>
+              )}
             </Button>
           </Row>
         </Form>

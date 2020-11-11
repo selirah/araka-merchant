@@ -1,32 +1,35 @@
-// import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
-// import { DashboardTypes } from './types';
-// import { callApiGet } from '../../utils/api';
+import { all, call, fork, put, takeEvery } from "redux-saga/effects";
+import { HomeTypes } from "./types";
+import { callApiPost } from "../../utils/api";
+import { Merchant } from "../../interfaces";
+import { paymentSuccess, paymentFailure } from "./actions";
 
-// function* getTransactions() {
-//   try {
-//     const res = yield call(callApiGet, 'payments/transactionhistory');
-//     if (res.status === 200) {
-//       yield put(getTransactionsSuccess(res.data));
-//     } else {
-//       yield put(getTransactionsFailure('An unknwon error occurred'));
-//     }
-//   } catch (err) {
-//     if (err && err.response) {
-//       yield put(getTransactionsFailure(err.response.data));
-//     } else {
-//       yield put(getTransactionsFailure('An unknwon error occurred'));
-//     }
-//   }
+function* processOrderRequest({
+  payload,
+}: {
+  type: string;
+  payload: Merchant;
+}) {
+  try {
+    const res = yield call(callApiPost, 'payments/getpaymentpage', payload);
+    yield put(paymentSuccess(res.data));
+  } catch (err) {
+    if (err && err.response) {
+      yield put(paymentFailure(err.response.data));
+    } else {
+      yield put(
+        paymentFailure("An error occured when making request to server")
+      );
+    }
+  }
+}
 
-//   function* watchGetTransactions() {
-//     yield takeEvery(DashboardTypes.TOPBAR_HEADER, getTransactions);
-//   }
+function* watchProcessOrderRequest() {
+  yield takeEvery(HomeTypes.REQUEST_PAYMENT, processOrderRequest);
+}
 
-//   function* dashboardSaga(): Generator {
-//     yield all([fork(watchGetTransactions)]);
-//   }
-// }
+function* homeSaga(): Generator {
+  yield all([fork(watchProcessOrderRequest)]);
+}
 
-// export { dashboardSaga };
-
-export const hi = 'hi';
+export { homeSaga };

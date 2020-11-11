@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../helpers/appDispatch';
 import { appSelector } from '../helpers/appSelector';
 import { LoginForm } from '../components/login/LoginForm';
-import { Login as Auth } from '../interfaces';
+import { Login as Auth, Error } from '../interfaces';
 import { loginRequest, clearAuthState } from '../store/auth';
 import { path } from '../helpers/path';
 

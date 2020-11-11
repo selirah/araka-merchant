@@ -5,7 +5,5 @@ export const path = {
   page: '/page',
   login: '/auth/login',
   pay: '/pay',
-  // verify: '/auth/email-verification',
-  // forgot: '/auth/forgotten-password',
-  // reset: '/auth/reset-password',
+  example: '/example-pay'
 };
