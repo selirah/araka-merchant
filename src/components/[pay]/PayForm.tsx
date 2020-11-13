@@ -33,7 +33,7 @@ export const PayForm: React.FC<PayFormProps> = ({ values, onSubmit, isSubmit, er
                 label="Full Name"
                 style={{ marginBottom: '2px' }}
               >
-                <Input readOnly />
+                <Input readOnly disabled />
               </Form.Item>
             </Col>
           </Row>
@@ -44,7 +44,7 @@ export const PayForm: React.FC<PayFormProps> = ({ values, onSubmit, isSubmit, er
                 label="Email Address"
                 style={{ marginBottom: '2px' }}
               >
-                <Input readOnly />
+                <Input readOnly disabled />
               </Form.Item>
             </Col>
           </Row>
@@ -55,7 +55,7 @@ export const PayForm: React.FC<PayFormProps> = ({ values, onSubmit, isSubmit, er
                 label="Phone Number"
                 style={{ marginBottom: '2px' }}
               >
-                <Input readOnly />
+                <Input readOnly disabled />
               </Form.Item>
             </Col>
           </Row>
@@ -65,12 +65,12 @@ export const PayForm: React.FC<PayFormProps> = ({ values, onSubmit, isSubmit, er
                 name="currency"
                 label="Amount to Charge"
               >
-                <Input readOnly />
+                <Input readOnly disabled />
               </Form.Item>
             </Col>
             <Col span={16}>
               <Form.Item name="amount" label="Amount" className="hide-label">
-                <Input readOnly />
+                <Input readOnly disabled />
               </Form.Item>
             </Col>
           </Row>
