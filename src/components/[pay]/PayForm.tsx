@@ -11,7 +11,12 @@ interface PayFormProps {
   error: any;
 }
 
-export const PayForm: React.FC<PayFormProps> = ({ values, onSubmit, isSubmit, error }) => {
+export const PayForm: React.FC<PayFormProps> = ({
+  values,
+  onSubmit,
+  isSubmit,
+  error,
+}) => {
   return (
     <Row
       style={{
@@ -21,11 +26,16 @@ export const PayForm: React.FC<PayFormProps> = ({ values, onSubmit, isSubmit, er
         marginTop: '10px',
       }}
     >
-      <Col span={6} className="pay-form-col">
-      {!isEmpty(error) ? (
+      <Col className="pay-form-col">
+        {!isEmpty(error) ? (
           <Alert type="error" message={`${JSON.stringify(error)}`} />
         ) : null}
-        <Form layout="vertical" name='basic' initialValues={values} onFinish={onSubmit}>
+        <Form
+          layout="vertical"
+          name="basic"
+          initialValues={values}
+          onFinish={onSubmit}
+        >
           <Row gutter={10}>
             <Col span={24}>
               <Form.Item
@@ -61,10 +71,7 @@ export const PayForm: React.FC<PayFormProps> = ({ values, onSubmit, isSubmit, er
           </Row>
           <Row gutter={10}>
             <Col span={8}>
-              <Form.Item
-                name="currency"
-                label="Amount to Charge"
-              >
+              <Form.Item name="currency" label="Amount to Charge">
                 <Input readOnly disabled />
               </Form.Item>
             </Col>

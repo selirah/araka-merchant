@@ -442,6 +442,10 @@ iframe {
   background: #fbfbfb;
   border: 0.0625rem solid #f3f3f3;
   padding: 1rem;
+  display: block;
+  -ms-flex: 0 0 25%;
+  flex: 0 0 25%;
+  max-width: 25%;
 }
 
 .pay-form-col .ant-form-item-label label {
@@ -476,5 +480,25 @@ iframe {
   max-height: 100px;
 }
 text.highcharts-credits {
-    display: none;
+  display: none;
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 640px) {
+  .pay-form-col {
+    display: block;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 768px) {
+  .pay-form-col {
+    display: block;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
 }

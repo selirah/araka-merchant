@@ -29,7 +29,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       }}
     >
       <Col
-        span={6}
+        className="pay-form-col"
         style={{
           background: '#fbfbfb',
           padding: '1rem',

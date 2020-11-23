@@ -57,6 +57,7 @@ export const TopBar: React.FC<TopBarProps> = ({ collapsed, toggle }) => {
             <Link to={path.paymentPages}>Pages</Link> <RightOutlined /> {pageId}
           </React.Fragment>
         );
+        break;
     }
   }, [pathname, pageId]);
 
