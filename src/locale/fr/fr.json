@@ -1,0 +1,145 @@
+{
+  "translations": {
+    "nav-links": {
+      "merchants": "Marchand(e)s",
+      "pricing": "Tarifs",
+      "about": "Sur",
+      "english": "Anglais(e)",
+      "french": "Français(e)",
+      "sign-in": "se connecter",
+      "welcome": "Bienvenu(e)",
+      "dashboard": "Tableau de bord",
+      "logout": "Se déconnecter"
+    },
+    "footer": {
+      "products": "Des produits",
+      "support": "Soutien",
+      "developer": "Développeur et ressources",
+      "about-us": "À propos de nous",
+      "pricing": "Tarifs",
+      "get-onboarded": "Embarquez",
+      "contact": "Contact",
+      "terms": "Termes et conditions",
+      "privacy-policy": "Politique de confidentialité",
+      "faq": "FAQs",
+      "plug": "Brancher et utiliser",
+      "api": "Documentation API",
+      "enterprise": "Entreprise",
+      "copy": "droits d'auteur",
+      "rights": "Tous les droits sont réservés"
+    },
+    "home": {
+      "banner-header": "Plateforme de paiement rapide et sécurisée pour Internet",
+      "banner-text": "est une plateforme de paiement qui permet à tout utilisateur enregistré d'effectuer le paiement de biens et de services, elle permet également aux commerçants inscrits sur celle-ci d'accepter des paiements en ligne pour des biens et services avec des cartes et des portefeuilles d'argent mobile",
+      "and": "et",
+      "btn-merchant": "Devenez marchand",
+      "btn-payments": "Effectuer des paiements",
+      "get_started_paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse lectus libero, molestie non vulputate et, tempor id nibh. Sedultrices nec urna sed vestibulum.",
+      "language": "Langue"
+    },
+    "login": {
+      "header": "Connectez-vous à votre compte",
+      "email": "Email",
+      "password": "Mot de passe",
+      "remember": "Souviens-toi de moi",
+      "forgotten": "Mot de passe oublié",
+      "btn_title": "S'identifier",
+      "note": "Vous n'avez pas de compte?",
+      "register_note": "Inscrivez-vous ici",
+      "processing": "En traitement.."
+    },
+    "register": {
+      "header": "Inscrivez-vous pour rejoindre",
+      "customer": "S'inscrire en tant que client",
+      "business": "S'inscrire en tant qu'entreprise",
+      "name": "Nom de l'entreprise ou nom complet",
+      "email": "Email",
+      "phone": "Numéro de téléphone",
+      "password": "Mot de passe",
+      "confirm": "Retaper le mot de passe",
+      "btn_title": "S'inscrire",
+      "note": "Vous avez déjà un compte?",
+      "login_note": "S'identifier",
+      "processing": "En traitement..",
+      "unmatch_password": "Les mots de passe ne correspondent pas. Réessayer"
+    },
+    "forgotten": {
+      "header": "Entrez l'email pour réinitialiser le mot de passe",
+      "email": "Email",
+      "btn_title": "Envoyer",
+      "note": "Vous vous souvenez du mot de passe maintenant?",
+      "login_note": "S'identifier",
+      "processing": "En traitement.."
+    },
+    "wizard": {
+      "payment-type": "Type de paiement",
+      "provider": "Fournisseur",
+      "details": "Détails",
+      "summary": "Résumé",
+      "pay": "Payer",
+      "step-1": {
+        "main-title": "Araka vous souhaite la bienvenue",
+        "subtitle": "Quel type de paiement souhaitez-vous effectuer?",
+        "small-text": "Sélectionnez un seul type"
+      },
+      "step-2": {
+        "subtitle": "Quel fournisseur souhaitez-vous choisir?",
+        "small-text": "Sélectionnez un seul mode de paiement"
+      },
+      "step-3": {
+        "subtitle": "Dernière chose - comment aimeriez-vous payer pour cette transaction?",
+        "small-text": "Sélectionnez un seul type"
+      },
+      "help": "Aidez-moi",
+      "reset": "Réinitialiser",
+      "success": {
+        "main": "Impressionnant! Votre transaction a été effectuée avec succès",
+        "sub": "Vous pouvez en exécuter une autre ou afficher votre",
+        "sub2": "historique des transactions",
+        "sub3": "La recharge de temps d'antenne a réussi",
+        "btn": "Voir l'historique",
+        "btn2": "Nouveau paiement"
+      },
+      "failure": {
+        "main": "Oups ... une erreur s'est produite lors du traitement de votre transaction",
+        "sub": "Vous pouvez réessayer ou recommencer ce processus",
+        "sub2": "cela a été enregistré dans votre historique de transactions",
+        "sub3": "Échec de la recharge de temps d'antenne",
+        "btn": "Voir l'historique",
+        "btn2": "Recommencez"
+      },
+      "cancelled": {
+        "main": "... triste de vous voir annuler la transaction. Quelque chose s'est mal passé?",
+        "sub": "Vous pouvez réessayer ou recommencer ce processus",
+        "sub2": "",
+        "sub3": "Recharge de temps d'antenne annulée",
+        "btn": "Voir l'historique",
+        "btn2": "Recommencez"
+      }
+    },
+    "dashboard": {
+      "top-nav": {
+        "logout": "Se déconnecter",
+        "home": "Accueil",
+        "account": "Compte",
+        "recipients": "Destinataires"
+      },
+      "side-bar": {
+        "home": "Accueil",
+        "account": "Compte",
+        "recipients": "Destinataires",
+        "make-payments": "Effectuer des paiements"
+      },
+      "new-user": {
+        "ready": "Prêt à commencer",
+        "making-payments": "effectuer des paiements?",
+        "yes": "Oui, faisons-le!"
+      },
+      "old-user": {
+        "activity": "Activité",
+        "search": "Rechercher...",
+        "transaction-details": "Détails de la transaction"
+      }
+    }
+  }
+}
