@@ -1,0 +1,130 @@
+import { Reducer } from 'redux';
+import { PaymentPagesState, PaymentPagesTypes } from './types';
+import { AuthActionTypes } from '../auth';
+
+export const initialState: PaymentPagesState = {
+  error: undefined,
+  failure: false,
+  loading: false,
+  pages: [],
+  success: false,
+  isSubmitting: false,
+};
+
+const reducer: Reducer<PaymentPagesState> = (state = initialState, action) => {
+  switch (action.type) {
+    case AuthActionTypes.DESTROY_STATES:
+      return initialState;
+
+    case PaymentPagesTypes.ADD_PAYMENT_PAGE_REQUEST:
+      return {
+        ...state,
+        isSubmitting: true,
+      };
+    case PaymentPagesTypes.ADD_PAYMENT_PAGE_SUCCESS:
+      return {
+        ...state,
+        isSubmitting: false,
+        error: {},
+        pages: [action.payload, ...state.pages],
+        success: true,
+        failure: false,
+      };
+    case PaymentPagesTypes.ADD_PAYMENT_PAGE_FAILURE:
+      return {
+        ...state,
+        isSubmitting: false,
+        error: action.payload,
+        success: false,
+        failure: true,
+      };
+
+    case PaymentPagesTypes.UPDATE_PAYMENT_PAGE_REQUEST:
+      return {
+        ...state,
+        isSubmitting: true,
+      };
+
+    case PaymentPagesTypes.UPDATE_PAYMENT_PAGE_SUCCESS:
+      let pages = state.pages.slice();
+      pages = pages.filter(
+        (page) => page.PaymentPageId !== action.payload.PaymentPageId
+      );
+      pages.unshift(action.payload);
+      return {
+        ...state,
+        isSubmitting: false,
+        pages: pages,
+        success: true,
+        failure: false,
+      };
+
+    case PaymentPagesTypes.UPDATE_PAYMENT_PAGE_FAILURE:
+      return {
+        ...state,
+        isSubmitting: false,
+        error: action.payload,
+        success: false,
+        failure: true,
+      };
+
+    case PaymentPagesTypes.DELETE_PAYMENT_PAGE_REQUEST:
+      return {
+        ...state,
+        isSubmitting: true,
+      };
+
+    case PaymentPagesTypes.DELETE_PAYMENT_PAGE_SUCCESS:
+      return {
+        ...state,
+        isSubmitting: false,
+        success: true,
+        failure: false,
+        pages: state.pages.filter(
+          (page) => page.PaymentPageId !== action.payload
+        ),
+      };
+
+    case PaymentPagesTypes.DELETE_PAYMENT_PAGE_FAILURE:
+      return {
+        ...state,
+        isSubmitting: false,
+        success: false,
+        failure: true,
+        error: action.payload,
+      };
+
+    case PaymentPagesTypes.GET_PAYMENT_PAGES_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case PaymentPagesTypes.GET_PAYMENT_PAGES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        pages: action.payload,
+      };
+
+    case PaymentPagesTypes.GET_PAYMENT_PAGES_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case PaymentPagesTypes.CLEAR_STATES:
+      return {
+        ...state,
+        isSubmitting: false,
+        error: undefined,
+        success: false,
+        failure: false,
+      };
+    default:
+      return state;
+  }
+};
+
+export { reducer as paymentPagesReducer };
