@@ -9,3 +9,4 @@ export * from './Category';
 export * from './Product';
 export * from './Merchant';
 export * from './OrderResponse';
+export * from './Page';

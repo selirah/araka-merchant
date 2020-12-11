@@ -5,5 +5,6 @@ export const path = {
   page: '/page',
   login: '/auth/login',
   pay: '/pay',
-  example: '/example-pay'
+  example: '/example-pay',
+  payment: '/payment',
 };

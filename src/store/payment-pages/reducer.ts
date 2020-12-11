@@ -9,6 +9,8 @@ export const initialState: PaymentPagesState = {
   pages: [],
   success: false,
   isSubmitting: false,
+  singlePage: undefined,
+  pageTransactions: [],
 };
 
 const reducer: Reducer<PaymentPagesState> = (state = initialState, action) => {
@@ -20,6 +22,9 @@ const reducer: Reducer<PaymentPagesState> = (state = initialState, action) => {
       return {
         ...state,
         isSubmitting: true,
+        error: {},
+        success: false,
+        failure: false,
       };
     case PaymentPagesTypes.ADD_PAYMENT_PAGE_SUCCESS:
       return {
@@ -48,7 +53,7 @@ const reducer: Reducer<PaymentPagesState> = (state = initialState, action) => {
     case PaymentPagesTypes.UPDATE_PAYMENT_PAGE_SUCCESS:
       let pages = state.pages.slice();
       pages = pages.filter(
-        (page) => page.PaymentPageId !== action.payload.PaymentPageId
+        (page) => page.paymentPageId !== action.payload.paymentPageId
       );
       pages.unshift(action.payload);
       return {
@@ -81,7 +86,7 @@ const reducer: Reducer<PaymentPagesState> = (state = initialState, action) => {
         success: true,
         failure: false,
         pages: state.pages.filter(
-          (page) => page.PaymentPageId !== action.payload
+          (page) => page.paymentPageId !== action.payload
         ),
       };
 
@@ -108,6 +113,46 @@ const reducer: Reducer<PaymentPagesState> = (state = initialState, action) => {
       };
 
     case PaymentPagesTypes.GET_PAYMENT_PAGES_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case PaymentPagesTypes.PAYMENT_PAGE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case PaymentPagesTypes.PAYMENT_PAGE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        singlePage: action.payload,
+      };
+
+    case PaymentPagesTypes.PAYMENT_PAGE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case PaymentPagesTypes.GET_PAGE_TRANX_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case PaymentPagesTypes.GET_PAGE_TRANX_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        pageTransactions: action.payload,
+      };
+
+    case PaymentPagesTypes.GET_PAGE_TRANX_FAILURE:
       return {
         ...state,
         loading: false,

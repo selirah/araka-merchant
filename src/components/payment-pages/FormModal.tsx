@@ -46,7 +46,7 @@ export const FormModal: React.FC<FormModalProps> = ({
       visible={showFormModal}
       footer={[
         <Button type="default" key="cancel" onClick={() => onToggleFormModal()}>
-          Cancel
+          Close
         </Button>,
         <Button
           form="paymentPageForm"

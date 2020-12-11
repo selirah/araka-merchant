@@ -8,6 +8,7 @@ import Page from '../pages/_[pageId]';
 import Login from '../pages/_login';
 import NotFoundPage from '../pages/_404';
 import Pay from '../pages/_[pay]';
+import GenericPay from '../pages/_[genericPay]';
 import ExamplePay from '../pages/_examplePay';
 import { path } from '../helpers/path';
 
@@ -21,6 +22,11 @@ const Routes: React.FC = () => {
         <PrivateRoute exact path={path.paymentPages} component={PaymentPages} />
         <PrivateRoute exact path={`${path.page}/:pageId`} component={Page} />
         <Route exact path={`${path.pay}/:processId`} component={Pay} />
+        <Route
+          exact
+          path={`${path.payment}/:processId`}
+          component={GenericPay}
+        />
         <Route exact path={path.example} component={ExamplePay} />
         <Route exact component={NotFoundPage} />
       </Switch>

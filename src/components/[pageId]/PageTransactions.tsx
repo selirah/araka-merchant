@@ -1,18 +1,45 @@
 import React from 'react';
-import { Tabs, Row, Col } from 'antd';
+import { Tabs, Row, Col, Spin } from 'antd';
 import { EmptyTransactions } from './EmptyTransactions';
+import { TransactionHistory } from '../../interfaces';
+import { isEmpty } from '../../helpers/isEmpty';
+import { Transactions } from './Transactions';
 
-interface PageTransactionsProps {}
+interface PageTransactionsProps {
+  loading: boolean;
+  transactions: TransactionHistory[];
+}
 
-export const PageTransactions: React.FC<PageTransactionsProps> = () => {
+export const PageTransactions: React.FC<PageTransactionsProps> = ({
+  loading,
+  transactions,
+}) => {
   const { TabPane } = Tabs;
+
+  let render: React.ReactNode;
+
+  if (loading && isEmpty(transactions)) {
+    render = (
+      <div className="spinner">
+        <Spin size="large" />
+      </div>
+    );
+  }
+
+  if (!loading && isEmpty(transactions)) {
+    render = <EmptyTransactions />;
+  }
+
+  if (!loading && !isEmpty(transactions)) {
+    <Transactions transactions={transactions} />;
+  }
 
   return (
     <Row>
       <Col span={24}>
         <Tabs defaultActiveKey="1">
           <TabPane tab="Recent Payments" key="1">
-            <EmptyTransactions />
+            {render}
           </TabPane>
         </Tabs>
       </Col>

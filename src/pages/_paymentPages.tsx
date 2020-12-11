@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Row, Col, Divider, Input, Button, message, Spin } from 'antd';
+import { Layout, Row, Col, Divider, Button, message, Spin, Space } from 'antd';
 import { PlusOutlined, LoadingOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { appSelector } from '../helpers/appSelector';
@@ -8,13 +8,14 @@ import { withRouter } from 'react-router-dom';
 import { EmptyBox } from '../components/payment-pages/EmptyBox';
 import { PaymentTypeModal } from '../components/payment-pages/PaymentTypeModal';
 import { FormModal } from '../components/payment-pages/FormModal';
-import { PaymentPage } from '../interfaces';
+import { PaymentPage, Page } from '../interfaces';
 import {
   getPaymentPagesRequest,
   addPaymentPageRequest,
   clearStates,
 } from '../store/payment-pages';
 import { isEmpty } from '../helpers/isEmpty';
+import { Pages } from '../components/payment-pages/Pages';
 
 interface PaymentPagesProps {}
 
@@ -22,7 +23,6 @@ const PaymentPages: React.FC<PaymentPagesProps> = () => {
   const dispatch: AppDispatch = useDispatch();
   const page = appSelector((state) => state.page);
   const { Content } = Layout;
-  const { Search } = Input;
   const [showPaymentTypeModal, setShowPaymentTypeModal] = useState(false);
   const [showFormModal, setShowFormModal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -41,10 +41,12 @@ const PaymentPages: React.FC<PaymentPagesProps> = () => {
     TransactionReference: '',
   });
   const [isSubmit, setIsSubmit] = useState(false);
-  const [pages, setPages] = useState<PaymentPage[]>([]);
+  const [pages, setPages] = useState<Page[]>([]);
+  const [isCopied, setIsCopied] = useState(false);
+  const [processId, setProcessId] = useState('');
 
   useEffect(() => {
-    const { pages } = page;
+    const { pages, loading } = page;
     dispatch(clearStates());
     if (isEmpty(pages) && !loading) {
       dispatch(getPaymentPagesRequest());
@@ -64,6 +66,10 @@ const PaymentPages: React.FC<PaymentPagesProps> = () => {
       message.error(error, 5);
     }
   }, [page]);
+
+  const reloadPages = () => {
+    dispatch(getPaymentPagesRequest());
+  };
 
   const onTogglePaymentTypeModal = () => {
     setShowPaymentTypeModal(!showPaymentTypeModal);
@@ -120,7 +126,7 @@ const PaymentPages: React.FC<PaymentPagesProps> = () => {
       Amount: values.Amount,
       Description: values.Description,
       EmailAddress: values.EmailAddress,
-      Logo: '',
+      Logo: imageUrl,
       PageName: values.PageName,
       PhoneNumber: values.PhoneNumber,
       RedirectUrl: values.RedirectUrl,
@@ -130,6 +136,22 @@ const PaymentPages: React.FC<PaymentPagesProps> = () => {
       TransactionReference: '',
     };
     dispatch(addPaymentPageRequest(payload));
+  };
+
+  const copyLink = (processId: string) => {
+    if (typeof window !== 'undefined') {
+      const { location } = window;
+      const path = `${location.protocol}//${location.host}/payment/${processId}`;
+
+      let board = document.createElement('textarea');
+      document.body.appendChild(board);
+      board.value = path;
+      board.select();
+      document.execCommand('copy');
+      document.body.removeChild(board);
+      setIsCopied(true);
+      setProcessId(processId);
+    }
   };
 
   let render: React.ReactNode;
@@ -160,6 +182,17 @@ const PaymentPages: React.FC<PaymentPagesProps> = () => {
     );
   }
 
+  if (!loading && !isEmpty(pages)) {
+    render = (
+      <Pages
+        pages={pages}
+        copyLink={copyLink}
+        isCopied={isCopied}
+        processId={processId}
+      />
+    );
+  }
+
   return (
     <Content
       className="site-layout-background"
@@ -171,19 +204,16 @@ const PaymentPages: React.FC<PaymentPagesProps> = () => {
     >
       <Row>
         <Col span={24}>
-          <Search
-            placeholder="Search pages"
-            onSearch={(value) => console.log(value)}
-            style={{ width: 300 }}
-          />
-          <Button
-            onClick={() => onTogglePaymentTypeModal()}
-            type="primary"
-            className="f-right"
-            icon={<PlusOutlined />}
-          >
-            New Page
-          </Button>
+          <Space className="f-right">
+            <Button
+              onClick={() => onTogglePaymentTypeModal()}
+              type="primary"
+              icon={<PlusOutlined />}
+            >
+              New Page
+            </Button>
+            <Button onClick={() => reloadPages()}>Refresh</Button>
+          </Space>
         </Col>
         <Divider />
         <Col span={24}>

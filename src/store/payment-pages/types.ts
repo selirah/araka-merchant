@@ -1,4 +1,4 @@
-import { PaymentPage } from '../../interfaces';
+import { Page, TransactionHistory } from '../../interfaces';
 
 export enum PaymentPagesTypes {
   GET_PAYMENT_PAGES_REQUEST = '@@payment-pages/GET_PAYMENT_PAGES_REQUEST',
@@ -14,13 +14,21 @@ export enum PaymentPagesTypes {
   DELETE_PAYMENT_PAGE_SUCCESS = '@@payment-pages/DELETE_PAYMENT_PAGE_SUCCESS',
   DELETE_PAYMENT_PAGE_FAILURE = '@@payment-pages/DELETE_PAYMENT_PAGE_FAILURE',
   CLEAR_STATES = '@@payment-pages/CLEAR_STATES',
+  PAYMENT_PAGE_REQUEST = '@@payment-pages/PAYMENT_PAGE_REQUEST',
+  PAYMENT_PAGE_SUCCESS = '@@payment-pages/PAYMENT_PAGE_SUCCESS',
+  PAYMENT_PAGE_FAILURE = '@@payment-pages/PAYMENT_PAGE_FAILURE',
+  GET_PAGE_TRANX_REQUEST = '@@payment-pages/GET_PAGE_TRANX_REQUEST',
+  GET_PAGE_TRANX_SUCCESS = '@@payment-pages/GET_PAGE_TRANX_SUCCESS',
+  GET_PAGE_TRANX_FAILURE = '@@payment-pages/GET_PAGE_TRANX_FAILURE',
 }
 
 export type PaymentPagesState = {
-  readonly pages: PaymentPage[];
+  readonly pages: Page[];
   readonly loading: boolean;
   readonly isSubmitting: boolean;
   readonly error: any;
   readonly success: boolean;
   readonly failure: boolean;
+  readonly singlePage: Page | undefined;
+  readonly pageTransactions: TransactionHistory[];
 };

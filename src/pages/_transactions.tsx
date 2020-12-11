@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Row, Col, Divider, Input, Spin, Tag, Button } from 'antd';
+import { Layout, Row, Col, Divider, Spin, Tag, Button } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { appSelector } from '../helpers/appSelector';
@@ -18,7 +18,6 @@ const Transactions: React.FC<TransactionsProps> = () => {
   const dispatch: AppDispatch = useDispatch();
   const { transactions, loading } = appSelector((state) => state.transaction);
   const { Content } = Layout;
-  const { Search } = Input;
   const [transactionData, setTransactionData] = useState<TransactionHistory[]>(
     transactions
   );
@@ -150,12 +149,6 @@ const Transactions: React.FC<TransactionsProps> = () => {
     >
       <Row>
         <Col span={24}>
-          <Divider type="vertical" />
-          <Search
-            placeholder="Search transactions"
-            onSearch={(value) => console.log(value)}
-            style={{ width: 300 }}
-          />
           <Button
             onClick={() => reloadTransaction()}
             style={{ float: 'right' }}

@@ -11,6 +11,10 @@ import {
   deletePaymentPageFailure,
   getPaymentPagesSuccess,
   getPaymentPagesFailure,
+  paymentPageSuccess,
+  paymentPageFailure,
+  getPageTranxSuccess,
+  getPageTranxFailure,
 } from './actions';
 
 function* addPaymentPage({ payload }: { type: string; payload: PaymentPage }) {
@@ -82,6 +86,39 @@ function* getPaymentPages() {
   }
 }
 
+function* paymentPage({ payload }: { type: string; payload: string }) {
+  try {
+    const res = yield call(callApiGet, `payments/getpaymentpage/${payload}`);
+    if (res.status === 200) {
+      yield put(paymentPageSuccess(res.data));
+    }
+  } catch (err) {
+    if (err && err.response) {
+      yield put(paymentPageFailure(err.response.data));
+    } else {
+      yield put(paymentPageFailure('An unknwon error occurred'));
+    }
+  }
+}
+
+function* pageTranx({ payload }: { type: string; payload: number }) {
+  try {
+    const res = yield call(
+      callApiGet,
+      `payments/getproducttransactions/${payload}`
+    );
+    if (res.status === 200) {
+      yield put(getPageTranxSuccess(res.data));
+    }
+  } catch (err) {
+    if (err && err.response) {
+      yield put(getPageTranxFailure(err.response.data));
+    } else {
+      yield put(getPageTranxFailure('An unknwon error occurred'));
+    }
+  }
+}
+
 function* watchAddPaymentPage() {
   yield takeEvery(PaymentPagesTypes.ADD_PAYMENT_PAGE_REQUEST, addPaymentPage);
 }
@@ -104,12 +141,22 @@ function* watchGetPaymentPages() {
   yield takeEvery(PaymentPagesTypes.GET_PAYMENT_PAGES_REQUEST, getPaymentPages);
 }
 
+function* watchGetPaymentPage() {
+  yield takeEvery(PaymentPagesTypes.PAYMENT_PAGE_REQUEST, paymentPage);
+}
+
+function* watchGetPageTranx() {
+  yield takeEvery(PaymentPagesTypes.GET_PAGE_TRANX_REQUEST, pageTranx);
+}
+
 function* paymentPagesSaga(): Generator {
   yield all([
     fork(watchAddPaymentPage),
     fork(watchUpdatePaymentPage),
     fork(watchDeletePaymentPage),
     fork(watchGetPaymentPages),
+    fork(watchGetPaymentPage),
+    fork(watchGetPageTranx),
   ]);
 }
 
