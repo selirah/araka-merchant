@@ -1,8 +1,8 @@
-import { all, call, fork, put, takeEvery } from "redux-saga/effects";
-import { HomeTypes } from "./types";
-import { callApiPost } from "../../utils/api";
-import { Merchant } from "../../interfaces";
-import { paymentSuccess, paymentFailure } from "./actions";
+import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
+import { HomeTypes } from './types';
+import { callApiPost } from '../../utils/api';
+import { Merchant } from '../../interfaces';
+import { paymentSuccess, paymentFailure } from './actions';
 
 function* processOrderRequest({
   payload,
@@ -18,7 +18,7 @@ function* processOrderRequest({
       yield put(paymentFailure(err.response.data));
     } else {
       yield put(
-        paymentFailure("An error occured when making request to server")
+        paymentFailure('An error occured when making request to server')
       );
     }
   }

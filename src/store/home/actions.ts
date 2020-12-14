@@ -1,6 +1,6 @@
-import { action } from "typesafe-actions";
-import { HomeTypes } from "./types";
-import { Merchant, OrderResponse } from "../../interfaces";
+import { action } from 'typesafe-actions';
+import { HomeTypes } from './types';
+import { Merchant, OrderResponse } from '../../interfaces';
 
 export const paymentRequest = (payload: Merchant) =>
   action(HomeTypes.REQUEST_PAYMENT, payload);

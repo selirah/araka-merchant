@@ -7,4 +7,4 @@ export interface OrderResponse {
     url: string;
     orderURL: string;
   };
-};
+}

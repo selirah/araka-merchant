@@ -1,6 +1,6 @@
-import { Reducer } from "redux";
-import { HomeState, HomeTypes } from "./types";
-import { AuthActionTypes } from "../auth";
+import { Reducer } from 'redux';
+import { HomeState, HomeTypes } from './types';
+import { AuthActionTypes } from '../auth';
 
 export const initialState: HomeState = {
   error: undefined,
