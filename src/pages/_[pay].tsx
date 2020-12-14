@@ -7,8 +7,9 @@ import { appSelector } from '../helpers/appSelector';
 import { PayForm } from '../components/[pay]/PayForm';
 import visa from '../images/visa.png';
 import mastercard from '../images/master-card.png';
-import { Merchant, Error } from '../interfaces';
+import { Merchant, Error, Page } from '../interfaces';
 import { paymentRequest, clearPaymentData } from '../store/home';
+import { paymentPageRequest, clearStates } from '../store/payment-pages';
 
 interface PayProps {}
 
@@ -21,6 +22,7 @@ const Pay: React.FC<PayProps> = () => {
   const { Content } = Layout;
   const { processId } = useParams<ParamProps>();
   const home = appSelector((state) => state.home);
+  const page = appSelector((state) => state.page);
   const query = new URLSearchParams(useLocation().search);
 
   const [values] = useState({
@@ -52,6 +54,7 @@ const Pay: React.FC<PayProps> = () => {
   });
   const [isSubmit, setIsSubmit] = useState(false);
   const [errorData, setErrorData] = useState<Error | {}>({});
+  const [singlePage, setSinglePage] = useState<Page | undefined>(undefined);
 
   const onSubmit = (v: Merchant) => {
     v.processId = values.processId;
@@ -62,8 +65,15 @@ const Pay: React.FC<PayProps> = () => {
     v.redirectURL = values.redirectURL !== null ? values.redirectURL : '';
     v.transactionReference =
       values.transactionReference !== null ? values.transactionReference : '';
+    v.paymentPageId = singlePage !== undefined ? singlePage.paymentPageId : 0;
     dispatch(paymentRequest(v));
   };
+
+  useEffect(() => {
+    dispatch(clearStates());
+    dispatch(paymentPageRequest(processId));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const {
@@ -73,6 +83,7 @@ const Pay: React.FC<PayProps> = () => {
       orderResponse,
       error,
     } = home;
+    const { singlePage } = page;
     setIsSubmit(isSubmitting);
     if (isPaymentSuccess && orderResponse !== undefined) {
       const { orderURL } = orderResponse.order;
@@ -82,7 +93,8 @@ const Pay: React.FC<PayProps> = () => {
     if (isPaymentFailure && error !== undefined) {
       setErrorData(error);
     }
-  }, [home, dispatch]);
+    setSinglePage(singlePage);
+  }, [home, dispatch, page]);
 
   return (
     <Layout>

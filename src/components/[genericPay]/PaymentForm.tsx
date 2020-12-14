@@ -29,6 +29,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
     processId: page.processId,
     redirectURL: page.redirectURL,
     transactionReference: page.transactionReference,
+    paymentPageId: page.paymentPageId,
   });
 
   return (
@@ -80,7 +81,11 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
                   label="Email Address"
                   style={{ marginBottom: '2px' }}
                   rules={[
-                    { required: true, message: 'Enter your email address' },
+                    {
+                      required: true,
+                      message: 'Enter your email address',
+                      type: 'email',
+                    },
                   ]}
                 >
                   <Input placeholder="Enter email address.." />
@@ -161,6 +166,13 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
                 <Input type="text" />
               </Form.Item>
               <Form.Item name="processId" className="hide-label" hidden={true}>
+                <Input type="text" />
+              </Form.Item>
+              <Form.Item
+                name="paymentPageId"
+                className="hide-label"
+                hidden={true}
+              >
                 <Input type="text" />
               </Form.Item>
               <Form.Item

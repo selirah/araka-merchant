@@ -10,4 +10,5 @@ export interface Merchant {
   amount: string;
   redirectURL: string;
   processId: string;
+  paymentPageId: number;
 }
