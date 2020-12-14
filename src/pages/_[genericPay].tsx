@@ -70,7 +70,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
   let render: React.ReactNode, form: React.ReactNode, methods: React.ReactNode;
   if (loading) {
     render = (
-      <div className="spinner" style={{ marginTop: '20rem' }}>
+      <div className="spinner" style={{ marginTop: '15rem' }}>
         <Spin size="large" />
       </div>
     );

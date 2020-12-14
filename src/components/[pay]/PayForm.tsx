@@ -71,7 +71,7 @@ export const PayForm: React.FC<PayFormProps> = ({
           </Row>
           <Row gutter={10}>
             <Col span={8}>
-              <Form.Item name="currency" label="Amount to Charge">
+              <Form.Item name="currency" label="Amount">
                 <Input readOnly disabled />
               </Form.Item>
             </Col>
