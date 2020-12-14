@@ -182,12 +182,24 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
               >
                 <Input type="text" />
               </Form.Item>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={24}>
               <Form.Item
                 name="transactionReference"
-                className="hide-label"
-                hidden={true}
+                label="Reference"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Transaction reference is required',
+                  },
+                ]}
               >
-                <Input type="text" />
+                <Input
+                  type="text"
+                  placeholder="Enter a reference for the payment..."
+                />
               </Form.Item>
             </Col>
           </Row>
