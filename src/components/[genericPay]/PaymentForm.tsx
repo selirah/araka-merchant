@@ -24,7 +24,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
     customerFullName: '',
     customerPhoneNumber: '',
     pageDescription: page.description,
-    pageLogo: page.logo,
+    pageLogo: '',
     pageTitle: page.pageName,
     processId: page.processId,
     redirectURL: page.redirectURL,
