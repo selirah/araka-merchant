@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, withRouter } from 'react-router-dom';
-import { Layout, Row, Col, Image, Avatar, Spin, Empty } from 'antd';
+import { useParams, withRouter, useLocation } from 'react-router-dom';
+import { Layout, Row, Col, Image, Avatar, Spin, Empty, message } from 'antd';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../helpers/appDispatch';
 import { appSelector } from '../helpers/appSelector';
@@ -10,6 +10,7 @@ import mastercard from '../images/master-card.png';
 import { Merchant, Error, Page } from '../interfaces';
 import { paymentRequest, clearPaymentData } from '../store/home';
 import { paymentPageRequest, clearStates } from '../store/payment-pages';
+import { isEmpty } from '../helpers/isEmpty';
 
 interface GenericPayProps {}
 
@@ -27,11 +28,23 @@ const GenericPay: React.FC<GenericPayProps> = () => {
   const [loading, setLoading] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
   const [errorData, setErrorData] = useState<Error | {}>({});
+  const query = new URLSearchParams(useLocation().search);
+  const transactionStatus = query.get('transactionStatus');
 
   useEffect(() => {
     dispatch(clearStates());
     dispatch(clearPaymentData());
     dispatch(paymentPageRequest(processId));
+    if (!isEmpty(transactionStatus)) {
+      switch (transactionStatus) {
+        case 'SUCCESS':
+          message.success('Transaction Successful', 5);
+          break;
+        case 'FAILED':
+          message.error('Transaction Failed', 5);
+          break;
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

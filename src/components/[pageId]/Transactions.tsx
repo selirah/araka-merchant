@@ -1,11 +1,20 @@
 import React from 'react';
-import { TransactionHistory, TransactionTable } from '../../interfaces';
+import { TransactionHistory } from '../../interfaces';
 import { Tag, Table } from 'antd';
 import { transactionStatus } from '../../helpers/constants';
 import moment from 'moment';
 
 interface TransactionsProps {
   transactions: TransactionHistory[];
+}
+
+interface DataSource {
+  key: number;
+  amount: string;
+  transactionId: number;
+  reference: string;
+  date: string;
+  status: string;
 }
 
 export const Transactions: React.FC<TransactionsProps> = ({ transactions }) => {
@@ -16,12 +25,12 @@ export const Transactions: React.FC<TransactionsProps> = ({ transactions }) => {
       key: 'amount',
       align: 'center',
     },
-    {
-      title: 'Customer',
-      dataIndex: 'customer',
-      key: 'customer',
-      align: 'center',
-    },
+    // {
+    //   title: 'Reference',
+    //   dataIndex: 'customer',
+    //   key: 'customer',
+    //   align: 'center',
+    // },
     {
       title: 'Transaction ID',
       dataIndex: 'transactionId',
@@ -32,12 +41,6 @@ export const Transactions: React.FC<TransactionsProps> = ({ transactions }) => {
       title: 'Paid on',
       dataIndex: 'date',
       key: 'date',
-      align: 'center',
-    },
-    {
-      title: 'Channel',
-      dataIndex: 'channel',
-      key: 'channel',
       align: 'center',
     },
     {
@@ -67,24 +70,23 @@ export const Transactions: React.FC<TransactionsProps> = ({ transactions }) => {
     },
   ];
 
-  let dataSource: TransactionTable[] = [];
+  let dataSource: DataSource[] = [];
 
   for (let transaction of transactions) {
     dataSource.push({
       key: transaction.transactionId,
       amount: `${transaction.currency} ${transaction.amountPaid.toFixed(2)}`,
-      customer: transaction.customer,
       transactionId: transaction.transactionId,
+      reference: '',
       date: moment(transaction.createdAt, 'MM/DD/YYYY HH:mm:ss').format(
         'MMMM D, YYYY (h:mm a)'
       ),
-      channel: transaction.channel.replace(/([a-z])([A-Z])/g, '$1 $2'),
       status: transaction.status,
     });
   }
   return (
     <Table
-      dataSource={transactions}
+      dataSource={dataSource}
       columns={columns}
       pagination={{ pageSize: 10 }}
     />

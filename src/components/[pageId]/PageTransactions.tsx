@@ -31,7 +31,7 @@ export const PageTransactions: React.FC<PageTransactionsProps> = ({
   }
 
   if (!loading && !isEmpty(transactions)) {
-    <Transactions transactions={transactions} />;
+    render = <Transactions transactions={transactions} />;
   }
 
   return (
