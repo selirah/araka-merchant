@@ -30,6 +30,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
 
   useEffect(() => {
     dispatch(clearStates());
+    dispatch(clearPaymentData());
     dispatch(paymentPageRequest(processId));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
