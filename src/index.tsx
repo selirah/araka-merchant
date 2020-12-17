@@ -17,16 +17,6 @@ import { authorization } from './utils/authorization';
 import { logout } from './store/auth/actions';
 import { path } from './helpers/path';
 
-const { host, protocol } = window.location;
-
-if (host !== 'localhost:3000') {
-  if (protocol === 'http:') {
-    window.location.href = window.location.href.replace('http:', 'https:');
-  } else if (protocol === 'https:') {
-    console.log('you are accessing us via our secure HTTPS protocol.');
-  }
-}
-
 const history = createBrowserHistory();
 
 declare global {
