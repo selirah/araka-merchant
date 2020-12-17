@@ -9,6 +9,7 @@ export interface TransactionHistory {
   customer: string;
   channel: string;
   status: string;
+  statusMessage: string;
   transactionDetails: {
     data?: any;
   };
