@@ -8,9 +8,15 @@ import {
 } from './actions';
 import { callApiGet } from '../../utils/api';
 
-function* getTransactions() {
+function* getTransactions({ payload }: { type: string; payload: string }) {
   try {
-    const res = yield call(callApiGet, 'payments/getmerchanttransactions');
+    let endPoint = '';
+    if (payload === 'gorgievski@pces.mk') {
+      endPoint = '';
+    } else {
+      endPoint = 'payments/getmerchanttransactions';
+    }
+    const res = yield call(callApiGet, endPoint);
     if (res.status === 200) {
       yield put(getTransactionsSuccess(res.data));
     } else {

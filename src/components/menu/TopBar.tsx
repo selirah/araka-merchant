@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { Layout, Menu, Dropdown, Button } from 'antd';
+import { Layout, Menu, Dropdown /*, Button*/ } from 'antd';
 import { useDispatch } from 'react-redux';
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  DownOutlined,
-  BellOutlined,
+  // DownOutlined,
+  // BellOutlined,
   UserOutlined,
   RightOutlined,
 } from '@ant-design/icons';
-import { StarterMenu } from './StarterMenu';
-import { NotificationsMenu } from './NotificationsMenu';
+// import { StarterMenu } from './StarterMenu';
+// import { NotificationsMenu } from './NotificationsMenu';
 import { SettingsMenu } from './SettingsMenu';
 import { path } from '../../helpers/path';
 import { logout } from '../../store/auth/actions';
@@ -69,18 +69,18 @@ export const TopBar: React.FC<TopBarProps> = ({ collapsed, toggle }) => {
       })}
       <span className="portal-title">{header}</span>
       <Menu mode="horizontal" className="f-right">
-        <Menu.Item key="1">
+        {/* <Menu.Item key="1">
           <Dropdown overlay={<StarterMenu />}>
             <Button danger>
               Starter Business <DownOutlined />
             </Button>
           </Dropdown>
-        </Menu.Item>
-        <Menu.Item key="3">
+        </Menu.Item> */}
+        {/* <Menu.Item key="3">
           <Dropdown overlay={<NotificationsMenu />}>
             <BellOutlined />
           </Dropdown>
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item key="4">
           <Dropdown overlay={<SettingsMenu logoutUser={logoutUser} />}>
             <UserOutlined />
