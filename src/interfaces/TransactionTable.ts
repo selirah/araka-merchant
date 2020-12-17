@@ -6,4 +6,5 @@ export interface TransactionTable {
   date: string;
   channel: string;
   status: string;
+  reason: string;
 }

@@ -17,6 +17,7 @@ interface TransactionsProps {}
 const Transactions: React.FC<TransactionsProps> = () => {
   const dispatch: AppDispatch = useDispatch();
   const { transactions, loading } = appSelector((state) => state.transaction);
+  const { user } = appSelector((state) => state.auth);
   const { Content } = Layout;
   const [transactionData, setTransactionData] = useState<TransactionHistory[]>(
     transactions
@@ -24,7 +25,7 @@ const Transactions: React.FC<TransactionsProps> = () => {
 
   useEffect(() => {
     if (isEmpty(transactions) && !loading) {
-      dispatch(getTransactions());
+      dispatch(getTransactions(user!.username));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -34,7 +35,7 @@ const Transactions: React.FC<TransactionsProps> = () => {
   }, [loading, transactions]);
 
   const reloadTransaction = () => {
-    dispatch(getTransactions());
+    dispatch(getTransactions(user!.username));
   };
 
   let render: React.ReactNode;
@@ -116,23 +117,29 @@ const Transactions: React.FC<TransactionsProps> = () => {
           );
         },
       },
+      {
+        title: 'Reason',
+        dataIndex: 'statusMessage',
+        key: 'statusMessage',
+        align: 'center',
+      },
     ];
     let dataSource: TransactionTable[] = [];
 
-    for (let i = 0; i < transactionData.length; i++) {
+    for (let transaction of transactionData) {
       dataSource.push({
-        key: transactionData[i].transactionId,
-        amount: `${transactionData[i].currency} ${transactionData[
-          i
-        ].amountPaid.toFixed(2)}`,
-        customer: transactionData[i].customer,
-        transactionId: transactionData[i].transactionId,
-        date: moment(
-          transactionData[i].createdAt,
-          'MM/DD/YYYY HH:mm:ss'
-        ).format('MMMM D, YYYY (h:mm a)'),
-        channel: transactionData[i].channel.replace(/([a-z])([A-Z])/g, '$1 $2'),
-        status: transactionData[i].status,
+        key: transaction.transactionId,
+        amount: `${transaction.currency} ${transaction.amountPaid.toFixed(2)}`,
+        customer: transaction.customer,
+        transactionId: transaction.transactionId,
+        date: moment(transaction.createdAt, 'MM/DD/YYYY HH:mm:ss').format(
+          'MMMM D, YYYY (h:mm a)'
+        ),
+        channel: transaction.channel.replace(/([a-z])([A-Z])/g, '$1 $2'),
+        status: transaction.status,
+        reason: !isEmpty(transaction.statusMessage)
+          ? transaction.statusMessage
+          : 'N/A',
       });
     }
     render = <Trans transactions={dataSource} columns={columns} pageSize={7} />;

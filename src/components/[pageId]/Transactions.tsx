@@ -3,6 +3,7 @@ import { TransactionHistory } from '../../interfaces';
 import { Tag, Table } from 'antd';
 import { transactionStatus } from '../../helpers/constants';
 import moment from 'moment';
+import { isEmpty } from '../../helpers/isEmpty';
 
 interface TransactionsProps {
   transactions: TransactionHistory[];
@@ -15,6 +16,7 @@ interface DataSource {
   reference: string;
   date: string;
   status: string;
+  reason: string;
 }
 
 export const Transactions: React.FC<TransactionsProps> = ({ transactions }) => {
@@ -68,6 +70,12 @@ export const Transactions: React.FC<TransactionsProps> = ({ transactions }) => {
         );
       },
     },
+    {
+      title: 'Reason',
+      dataIndex: 'statusMessage',
+      key: 'statusMessage',
+      align: 'center',
+    },
   ];
 
   let dataSource: DataSource[] = [];
@@ -82,6 +90,9 @@ export const Transactions: React.FC<TransactionsProps> = ({ transactions }) => {
         'MMMM D, YYYY (h:mm a)'
       ),
       status: transaction.status,
+      reason: !isEmpty(transaction.statusMessage)
+        ? transaction.statusMessage
+        : 'N/A',
     });
   }
   return (
