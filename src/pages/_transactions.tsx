@@ -6,6 +6,7 @@ import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
 import { EmptyBox } from '../components/transactions/EmptyBox';
 import { Transactions as Trans } from '../components/transactions/Transactions';
+import { FilterBoard } from '../components/transactions/FilterBoard';
 import { getTransactions } from '../store/transactions';
 import { isEmpty } from '../helpers/isEmpty';
 import { TransactionHistory, TransactionTable } from '../interfaces';
@@ -36,6 +37,62 @@ const Transactions: React.FC<TransactionsProps> = () => {
 
   const reloadTransaction = () => {
     dispatch(getTransactions(user!.username));
+  };
+
+  const onSearch = (value: string) => {
+    if (isEmpty(value)) {
+      if (!isEmpty(transactions)) {
+        setTransactionData(transactions);
+      }
+    } else {
+      if (!isEmpty(transactions)) {
+        let filteredList: TransactionHistory[] = [];
+        filteredList = transactions.filter((tranx) => {
+          const tranxId = `${tranx.transactionId}`;
+          const amount = `${tranx.amountPaid}`;
+          return tranxId.includes(value) || amount.includes(value);
+        });
+        setTransactionData(filteredList);
+      }
+    }
+  };
+
+  const onStatusFilter = (value: string) => {
+    if (isEmpty(value)) {
+      if (!isEmpty(transactions)) {
+        setTransactionData(transactions);
+      }
+    } else {
+      if (!isEmpty(transactions)) {
+        let filteredList: TransactionHistory[] = [];
+        filteredList = transactions.filter((tranx) => {
+          const status = tranx.status;
+          return status.includes(value);
+        });
+        setTransactionData(filteredList);
+      }
+    }
+  };
+
+  const onChannelFilter = (value: string) => {
+    if (isEmpty(value)) {
+      if (!isEmpty(transactions)) {
+        setTransactionData(transactions);
+      }
+    } else {
+      if (!isEmpty(transactions)) {
+        let filteredList: TransactionHistory[] = [];
+        filteredList = transactions.filter((tranx) => {
+          const channel = tranx.channel;
+          return channel.includes(value);
+        });
+        setTransactionData(filteredList);
+      }
+    }
+  };
+
+  const onDateFilter = (value: string) => {
+    console.log(value);
   };
 
   let render: React.ReactNode;
@@ -119,8 +176,8 @@ const Transactions: React.FC<TransactionsProps> = () => {
       },
       {
         title: 'Reason',
-        dataIndex: 'statusMessage',
-        key: 'statusMessage',
+        dataIndex: 'reason',
+        key: 'reason',
         align: 'center',
       },
     ];
@@ -156,6 +213,12 @@ const Transactions: React.FC<TransactionsProps> = () => {
     >
       <Row>
         <Col span={24}>
+          {/* <FilterBoard
+            onSearch={onSearch}
+            onStatusFilter={onStatusFilter}
+            onChannelFilter={onChannelFilter}
+            // onDateFilter={onDateFilter}
+          /> */}
           <Button
             onClick={() => reloadTransaction()}
             style={{ float: 'right' }}
