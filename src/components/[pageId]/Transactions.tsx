@@ -72,8 +72,8 @@ export const Transactions: React.FC<TransactionsProps> = ({ transactions }) => {
     },
     {
       title: 'Reason',
-      dataIndex: 'statusMessage',
-      key: 'statusMessage',
+      dataIndex: 'reason',
+      key: 'reason',
       align: 'center',
     },
   ];

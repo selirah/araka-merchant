@@ -12,7 +12,7 @@ function* getTransactions({ payload }: { type: string; payload: string }) {
   try {
     let endPoint = '';
     if (payload === 'gorgievski@pces.mk') {
-      endPoint = '';
+      endPoint = 'payments/getmerchanttransactionreport';
     } else {
       endPoint = 'payments/getmerchanttransactions';
     }
