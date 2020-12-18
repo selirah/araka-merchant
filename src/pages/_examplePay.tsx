@@ -21,10 +21,7 @@ const ExamplePay: React.FC<ExamplePayProps> = () => {
     amount: '40',
     redirectURL: 'https://inrbcovid.com/transaction-status',
     processId: 'b255c76a-41cc-4398-bfd2-b2f9e3238c2d',
-<<<<<<< HEAD
-=======
     paymentPageId: 0,
->>>>>>> master
   });
 
   return (
