@@ -7,6 +7,7 @@ export enum TransactionTypes {
   GET_CURRENCIES = '@@transaction/GET_CURRENCIES',
   GET_CURRENCIES_SUCCESS = '@@transaction/GET_CURRENCIES_SUCCESS',
   GET_CURRENCIES_FAILURE = '@@transaction/GET_CURRENCIES_FAILURE',
+  CLEAR_TRANSACTIONS = '@@transaction/CLEAR_TRANSACTIONS',
 }
 
 export type TransactionState = {

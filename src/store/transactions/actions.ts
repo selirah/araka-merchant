@@ -18,3 +18,6 @@ export const getCurrenciesSuccess = (data: Currency[]) =>
 
 export const getCurrenciesFailure = (error: any) =>
   action(TransactionTypes.GET_CURRENCIES_FAILURE, error);
+
+export const clearTransactions = () =>
+  action(TransactionTypes.CLEAR_TRANSACTIONS);

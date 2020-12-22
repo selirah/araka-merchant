@@ -84,13 +84,23 @@ const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
         successCount += 1;
         amount = amount + transactionData[i].amountPaid;
         if (
-          seriesObject[moment(transactionData[i].createdAt).format('MMM DD')]
+          seriesObject[
+            moment(transactionData[i].createdAt, 'MM/DD/YYYY HH:mm:ss').format(
+              'MMM DD'
+            )
+          ]
         ) {
-          seriesObject[moment(transactionData[i].createdAt).format('MMM DD')] +=
-            transactionData[i].amountPaid;
+          seriesObject[
+            moment(transactionData[i].createdAt, 'MM/DD/YYYY HH:mm:ss').format(
+              'MMM DD'
+            )
+          ] += transactionData[i].amountPaid;
         } else {
-          seriesObject[moment(transactionData[i].createdAt).format('MMM DD')] =
-            transactionData[i].amountPaid;
+          seriesObject[
+            moment(transactionData[i].createdAt, 'MM/DD/YYYY HH:mm:ss').format(
+              'MMM DD'
+            )
+          ] = transactionData[i].amountPaid;
         }
       }
     }
