@@ -20,6 +20,7 @@ export enum PaymentPagesTypes {
   GET_PAGE_TRANX_REQUEST = '@@payment-pages/GET_PAGE_TRANX_REQUEST',
   GET_PAGE_TRANX_SUCCESS = '@@payment-pages/GET_PAGE_TRANX_SUCCESS',
   GET_PAGE_TRANX_FAILURE = '@@payment-pages/GET_PAGE_TRANX_FAILURE',
+  CLEAR_PAYMENT_PAGES = '@@payment-pages/CLEAR_PAYMENT_PAGES',
 }
 
 export type PaymentPagesState = {

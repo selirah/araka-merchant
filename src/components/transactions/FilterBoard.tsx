@@ -6,14 +6,14 @@ interface FilterBoardProps {
   onSearch(value: string): void;
   onStatusFilter(value: string): void;
   onChannelFilter(value: string): void;
-  // onDateFilter(value: string): string;
+  onDateFilter(value: any): void;
 }
 
 export const FilterBoard: React.FC<FilterBoardProps> = ({
   onSearch,
   onStatusFilter,
   onChannelFilter,
-  // onDateFilter,
+  onDateFilter,
 }) => {
   const { Search } = Input;
   const { Option } = Select;
@@ -27,7 +27,7 @@ export const FilterBoard: React.FC<FilterBoardProps> = ({
         onChange={(e) => onSearch(e.target.value)}
       />
       <RangePicker
-        format="YYYY-MM-DD HH:mm:ss"
+        format="MMMM D, YYYY (h:mm a)"
         showTime={{
           hideDisabledOptions: true,
           defaultValue: [
@@ -35,7 +35,8 @@ export const FilterBoard: React.FC<FilterBoardProps> = ({
             moment('11:59:59', 'HH:mm:ss'),
           ],
         }}
-        // onChange={onDateFilter}
+        onChange={onDateFilter}
+        style={{ width: 500 }}
       />
       <Select
         style={{ width: 150 }}
@@ -43,9 +44,10 @@ export const FilterBoard: React.FC<FilterBoardProps> = ({
         showSearch
         placeholder="Search by Status"
       >
+        <Option value="">All</Option>
         <Option value="APPROVED">Approved</Option>
         <Option value="DECLINED">Declined</Option>
-        <Option value="CANCELLED">Cancelled</Option>
+        <Option value="CANCELED">Canceled</Option>
       </Select>
       <Select
         style={{ width: 170 }}
@@ -53,6 +55,7 @@ export const FilterBoard: React.FC<FilterBoardProps> = ({
         showSearch
         placeholder="Search by Channel"
       >
+        <Option value="">All</Option>
         <Option value="Card">Card</Option>
         <Option value="MPESA">Mpesa</Option>
       </Select>

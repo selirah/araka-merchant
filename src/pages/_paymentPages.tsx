@@ -13,6 +13,7 @@ import {
   getPaymentPagesRequest,
   addPaymentPageRequest,
   clearStates,
+  clearPaymentPages,
 } from '../store/payment-pages';
 import { isEmpty } from '../helpers/isEmpty';
 import { Pages } from '../components/payment-pages/Pages';
@@ -68,6 +69,7 @@ const PaymentPages: React.FC<PaymentPagesProps> = () => {
   }, [page]);
 
   const reloadPages = () => {
+    dispatch(clearPaymentPages());
     dispatch(getPaymentPagesRequest());
   };
 
