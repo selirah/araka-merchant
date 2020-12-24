@@ -195,6 +195,12 @@ const Transactions: React.FC<TransactionsProps> = () => {
         key: 'reason',
         align: 'center',
       },
+      {
+        title: 'Merchant',
+        dataIndex: 'merchant',
+        key: 'merchant',
+        align: 'left',
+      },
     ];
     let dataSource: TransactionTable[] = [];
 
@@ -212,6 +218,7 @@ const Transactions: React.FC<TransactionsProps> = () => {
         reason: !isEmpty(transaction.statusMessage)
           ? transaction.statusMessage
           : 'N/A',
+        merchant: transaction.merchant,
       });
     }
     render = <Trans transactions={dataSource} columns={columns} pageSize={7} />;

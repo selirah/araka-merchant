@@ -17,6 +17,7 @@ interface DataSource {
   date: string;
   status: string;
   reason: string;
+  merchant: string;
 }
 
 export const Transactions: React.FC<TransactionsProps> = ({ transactions }) => {
@@ -76,6 +77,12 @@ export const Transactions: React.FC<TransactionsProps> = ({ transactions }) => {
       key: 'reason',
       align: 'center',
     },
+    {
+      title: 'Merchant',
+      dataIndex: 'merchant',
+      key: 'merchant',
+      align: 'left',
+    },
   ];
 
   let dataSource: DataSource[] = [];
@@ -93,6 +100,7 @@ export const Transactions: React.FC<TransactionsProps> = ({ transactions }) => {
       reason: !isEmpty(transaction.statusMessage)
         ? transaction.statusMessage
         : 'N/A',
+      merchant: transaction.merchant,
     });
   }
   return (

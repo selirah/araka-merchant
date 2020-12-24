@@ -7,4 +7,5 @@ export interface TransactionTable {
   channel: string;
   status: string;
   reason: string;
+  merchant: string;
 }

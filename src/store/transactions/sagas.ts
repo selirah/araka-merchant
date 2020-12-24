@@ -11,7 +11,7 @@ import { callApiGet } from '../../utils/api';
 function* getTransactions({ payload }: { type: string; payload: string }) {
   try {
     let endPoint = '';
-    if (payload === 'gorgievski@pces.mk') {
+    if (payload === 'gorgievski@pces.mk' || payload === 'abdulwahab@pces.mk') {
       endPoint = 'payments/getmerchanttransactionreport';
     } else {
       endPoint = 'payments/getmerchanttransactions';
