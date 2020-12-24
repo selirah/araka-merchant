@@ -10,6 +10,7 @@ export interface TransactionHistory {
   channel: string;
   status: string;
   statusMessage: string;
+  merchant: string;
   transactionDetails: {
     data?: any;
   };
