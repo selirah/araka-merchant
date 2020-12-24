@@ -167,6 +167,11 @@ const reducer: Reducer<PaymentPagesState> = (state = initialState, action) => {
         success: false,
         failure: false,
       };
+    case PaymentPagesTypes.CLEAR_PAYMENT_PAGES:
+      return {
+        ...state,
+        pages: [],
+      };
     default:
       return state;
   }

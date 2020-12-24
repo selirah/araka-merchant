@@ -48,6 +48,11 @@ const reducer: Reducer<TransactionState> = (state = initialState, action) => {
         currenciesLoading: false,
         currencyError: action.payload,
       };
+    case TransactionTypes.CLEAR_TRANSACTIONS:
+      return {
+        ...state,
+        transactions: [],
+      };
     case AuthActionTypes.DESTROY_STATES:
       return initialState;
     default:

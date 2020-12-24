@@ -7,7 +7,7 @@ import { AppDispatch } from '../helpers/appDispatch';
 import { EmptyBox } from '../components/transactions/EmptyBox';
 import { Transactions as Trans } from '../components/transactions/Transactions';
 import { FilterBoard } from '../components/transactions/FilterBoard';
-import { getTransactions } from '../store/transactions';
+import { getTransactions, clearTransactions } from '../store/transactions';
 import { isEmpty } from '../helpers/isEmpty';
 import { TransactionHistory, TransactionTable } from '../interfaces';
 import { transactionStatus } from '../helpers/constants';
@@ -36,6 +36,7 @@ const Transactions: React.FC<TransactionsProps> = () => {
   }, [loading, transactions]);
 
   const reloadTransaction = () => {
+    dispatch(clearTransactions());
     dispatch(getTransactions(user!.username));
   };
 
@@ -49,7 +50,7 @@ const Transactions: React.FC<TransactionsProps> = () => {
         let filteredList: TransactionHistory[] = [];
         filteredList = transactions.filter((tranx) => {
           const tranxId = `${tranx.transactionId}`;
-          const amount = `${tranx.amountPaid}`;
+          const amount = `${tranx.amountPaid.toFixed(2)}`;
           return tranxId.includes(value) || amount.includes(value);
         });
         setTransactionData(filteredList);
@@ -91,8 +92,22 @@ const Transactions: React.FC<TransactionsProps> = () => {
     }
   };
 
-  const onDateFilter = (value: string) => {
-    console.log(value);
+  const onDateFilter = (value: any) => {
+    const from = moment(value[0]._d).format('X');
+    const to = moment(value[1]._d).format('X');
+
+    if (!isEmpty(transactions)) {
+      let filteredList: TransactionHistory[] = [];
+      for (let tranx of transactions) {
+        const createdAt = moment(tranx.createdAt, 'MM/DD/YYYY HH:mm:ss').format(
+          'X'
+        );
+        if (createdAt >= from && createdAt <= to) {
+          filteredList.push(tranx);
+        }
+      }
+      setTransactionData(filteredList);
+    }
   };
 
   let render: React.ReactNode;
@@ -213,12 +228,12 @@ const Transactions: React.FC<TransactionsProps> = () => {
     >
       <Row>
         <Col span={24}>
-          {/* <FilterBoard
+          <FilterBoard
             onSearch={onSearch}
             onStatusFilter={onStatusFilter}
             onChannelFilter={onChannelFilter}
-            // onDateFilter={onDateFilter}
-          /> */}
+            onDateFilter={onDateFilter}
+          />
           <Button
             onClick={() => reloadTransaction()}
             style={{ float: 'right' }}

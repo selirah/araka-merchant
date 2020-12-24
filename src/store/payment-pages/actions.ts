@@ -57,3 +57,6 @@ export const getPageTranxFailure = (error: any) =>
   action(PaymentPagesTypes.GET_PAGE_TRANX_FAILURE, error);
 
 export const clearStates = () => action(PaymentPagesTypes.CLEAR_STATES);
+
+export const clearPaymentPages = () =>
+  action(PaymentPagesTypes.CLEAR_PAYMENT_PAGES);

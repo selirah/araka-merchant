@@ -44,6 +44,7 @@ export const FormModal: React.FC<FormModalProps> = ({
       maskClosable={false}
       centered
       visible={showFormModal}
+      onCancel={() => onToggleFormModal()}
       footer={[
         <Button type="default" key="cancel" onClick={() => onToggleFormModal()}>
           Close
