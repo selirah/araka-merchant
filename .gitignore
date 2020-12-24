@@ -19,7 +19,6 @@
 .env.production.local
 .env
 
-<<<<<<< HEAD
 # vuepress build output
 .vuepress/dist
 
@@ -34,14 +33,10 @@
 
 # TernJS port file
 .tern-port
-<<<<<<< HEAD
-=======
 
 # Environment variable
 .env 
->>>>>>> 31fd835df028bcbd27553407f0cdc30196de52dc
-=======
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
->>>>>>> master
