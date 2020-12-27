@@ -8,15 +8,9 @@ import {
 } from './actions';
 import { callApiGet } from '../../utils/api';
 
-function* getTransactions({ payload }: { type: string; payload: string }) {
+function* getTransactions() {
   try {
-    let endPoint = '';
-    if (payload === 'gorgievski@pces.mk' || payload === 'abdulwahab@pces.mk') {
-      endPoint = 'payments/getmerchanttransactionreport';
-    } else {
-      endPoint = 'payments/getmerchanttransactions';
-    }
-    const res = yield call(callApiGet, endPoint);
+    const res = yield call(callApiGet, 'payments/getmerchanttransactions');
     if (res.status === 200) {
       yield put(getTransactionsSuccess(res.data));
     } else {

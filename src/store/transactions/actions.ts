@@ -2,8 +2,7 @@ import { action } from 'typesafe-actions';
 import { TransactionTypes } from './types';
 import { TransactionHistory, Currency } from '../../interfaces';
 
-export const getTransactions = (user: string) =>
-  action(TransactionTypes.GET_TRANSACTIONS, user);
+export const getTransactions = () => action(TransactionTypes.GET_TRANSACTIONS);
 
 export const getTransactionsSuccess = (data: TransactionHistory[]) =>
   action(TransactionTypes.GET_TRANSACTIONS_SUCCESS, data);

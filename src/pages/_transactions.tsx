@@ -18,7 +18,6 @@ interface TransactionsProps {}
 const Transactions: React.FC<TransactionsProps> = () => {
   const dispatch: AppDispatch = useDispatch();
   const { transactions, loading } = appSelector((state) => state.transaction);
-  const { user } = appSelector((state) => state.auth);
   const { Content } = Layout;
   const [transactionData, setTransactionData] = useState<TransactionHistory[]>(
     transactions
@@ -26,7 +25,7 @@ const Transactions: React.FC<TransactionsProps> = () => {
 
   useEffect(() => {
     if (isEmpty(transactions) && !loading) {
-      dispatch(getTransactions(user!.username));
+      dispatch(getTransactions());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -37,7 +36,7 @@ const Transactions: React.FC<TransactionsProps> = () => {
 
   const reloadTransaction = () => {
     dispatch(clearTransactions());
-    dispatch(getTransactions(user!.username));
+    dispatch(getTransactions());
   };
 
   const onSearch = (value: string) => {
