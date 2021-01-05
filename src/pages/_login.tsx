@@ -18,7 +18,6 @@ const Login: React.FC<LoginProps> = () => {
   const [values] = useState<Auth>({
     EmailAddress: '',
     Password: '',
-    RememberMe: false,
   });
   const [isSubmit, setIsSubmit] = useState(false);
   const [error, setError] = useState<Error | {}>({});

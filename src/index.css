@@ -483,6 +483,109 @@ text.highcharts-credits {
   display: none;
 }
 
+.btn-input {
+  margin-top: 1rem;
+}
+
+.login-btn {
+  background: #f55c29;
+  border: 0.0625rem solid #f55c29;
+  width: 100%;
+  transition: all .5s ease-in-out;
+}
+
+.login-btn:hover, .login-btn:focus {
+  background: #fc602c;
+  border: 0.0625rem solid #fc602c;
+}
+
+.login-header {
+  color: #607D8B;
+  font-size: 1rem;
+  font-weight: 400;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.login-row-first {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 3.375rem;
+  text-align: center;
+}
+
+.login-row-second {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 2.375rem;
+  text-align: center;
+}
+
+.login-row-second h4 {
+  font-size: 1.3rem;
+  font-weight: 300;
+  color: #607D8B;
+}
+
+.login-row-third {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1.375rem;
+}
+
+.login-row-third h4 {
+  font-size: 0.8rem;
+  color: #607D8B;
+}
+
+.login-row-fourth {
+  display: block;
+  text-align: center;
+  margin-top: 5.375rem;
+}
+
+.login-row-fourth h4:first-child {
+  font-size: 0.8rem;
+  color: #607D8B;
+  font-weight: 400;
+}
+
+.login-row-fourth span {
+  font-size: 0.8rem;
+  padding-right: 0.95rem;
+}
+
+.login-row-fourth span a {
+  color: #607D8B;
+  font-weight: 500;
+  transition: all .5s ease-in-out;
+}
+
+.login-row-fourth span a:hover {
+  color: #455A64;
+}
+
+.pay-form-col {
+  background: #ffffff;
+  padding: 1.3rem;
+  border-radius: 0.3rem;
+  box-shadow: 0 0 15px 0 rgba(117, 117, 117, 0.25);
+  border: 0.0625rem solid #fbfbfb;
+}
+
+.login-forgot {
+  margin-top: 0.8rem;
+}
+
+.login-forgot a {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 640px) {
   .pay-form-col {
