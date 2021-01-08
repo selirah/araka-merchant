@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Layout, Button, Divider, Row, Col, Progress, Spin } from 'antd';
+import { Layout, /*Button*/ Divider, Row, Col, /*Progress*/ Spin } from 'antd';
 import { useDispatch } from 'react-redux';
 import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
@@ -55,10 +55,16 @@ const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
       series: any = [],
       successCount: any = 0,
       failureCount: any = 0;
-    for (let i = 1; i <= 20; i++) {
+    let cDate = moment(new Date()).format('MMM DD');
+    for (let i = 0; i < 20; i++) {
       const currentDate = moment(new Date());
       const transactionDate = currentDate.subtract(i, 'days').format('MMM DD');
-      seriesObject[transactionDate] = 0;
+
+      if (transactionDate === cDate) {
+        seriesObject['Today'] = 0;
+      } else {
+        seriesObject[transactionDate] = 0;
+      }
     }
     for (let i = 0; i < transactionData.length; i++) {
       const currentDate = moment(new Date());
@@ -108,7 +114,7 @@ const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
         labels: {
           rotation: -45,
           style: {
-            fontSize: '13px',
+            fontSize: '11px',
             fontFamily: 'Verdana, sans-serif',
           },
         },
@@ -161,18 +167,19 @@ const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
       }}
     >
       <Row>
-        <Col span={16} className="b-right">
+        <Col span={24} className="b-right">
           <GraphMenu />
           <Divider />
           <div className="total-amount">{render}</div>
           {/* Insert HighCharts Here */}
-
-          <HighchartsReact
-            highcharts={Highcharts}
-            options={transactionsGraphOptions}
-            {...props}
-            id="transactions-bar"
-          />
+          <div>
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={transactionsGraphOptions}
+              {...props}
+              id="transactions-bar"
+            />
+          </div>
 
           <Divider />
           {/* End HighCharts Here */}
@@ -199,7 +206,7 @@ const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
             0 {t('dashboard.transactions')} � 0 {t('dashboard.abandoned')}{' '}
           </p>
         </Col>
-        <Col span={8}>
+        {/* <Col span={8}>
           <h3 className="stats text-muted text-center">
             {' '}
             {t('dashboard.statistics')}
@@ -221,7 +228,7 @@ const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
             format={(percent) => `${percent}/50,000.00 USD`}
           />
           <Button type="primary">{t('dashboard.upgrade')}</Button>
-        </Col>
+        </Col> */}
       </Row>
     </Content>
   );
