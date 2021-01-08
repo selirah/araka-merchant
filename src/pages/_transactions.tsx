@@ -105,9 +105,7 @@ const Transactions: React.FC<TransactionsProps> = () => {
     if (!isEmpty(transactions)) {
       let filteredList: TransactionHistory[] = [];
       for (let tranx of transactions) {
-        const createdAt = moment(tranx.createdAt, 'MM/DD/YYYY HH:mm:ss')
-          .tz(timeZones.kinshasa)
-          .format('X');
+        const createdAt = moment(tranx.createdAt, 'MM/DD/YYYY').format('X');
         if (createdAt >= from && createdAt <= to) {
           filteredList.push(tranx);
         }
