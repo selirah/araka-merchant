@@ -60,7 +60,7 @@ export const Transactions: React.FC<TransactionsProps> = ({ transactions }) => {
           case transactionStatus.DECLINED:
             color = 'volcano';
             break;
-          case transactionStatus.CANCELLED:
+          case transactionStatus.CANCELED:
             color = 'geekblue';
             break;
         }

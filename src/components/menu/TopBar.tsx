@@ -17,6 +17,7 @@ import { path } from '../../helpers/path';
 import { logout } from '../../store/auth/actions';
 import { secure } from '../../utils/secure';
 import { AppDispatch } from '../../helpers/appDispatch';
+import { useTranslation } from 'react-i18next';
 
 interface TopBarProps {
   collapsed: boolean;
@@ -34,32 +35,46 @@ export const TopBar: React.FC<TopBarProps> = ({ collapsed, toggle }) => {
   const [header, setHeader] = useState(<Link to={path.home}>Dashboard</Link>);
   const { pathname } = history.location;
   const { pageId } = useParams<ParamProps>();
+  const { t, i18n } = useTranslation();
+  const [active, setActive] = useState<string | null>(
+    localStorage.getItem('i18nextLng')
+  );
 
   const logoutUser = () => {
     secure.removeAll();
     dispatch(logout());
   };
 
+  const onChangeLanguage = (lang: string) => {
+    i18n.changeLanguage(lang);
+    setActive(lang);
+  };
+
   useEffect(() => {
     switch (pathname) {
       case path.home:
-        setHeader(<Link to={path.home}>Dashboard</Link>);
+        setHeader(<Link to={path.home}>{t('topBar.home')}</Link>);
         break;
       case path.tranasctions:
-        setHeader(<Link to={path.tranasctions}>Transactions</Link>);
+        setHeader(
+          <Link to={path.tranasctions}>{t('topBar.transactions')}</Link>
+        );
         break;
       case path.paymentPages:
-        setHeader(<Link to={path.paymentPages}>Payment Pages</Link>);
+        setHeader(
+          <Link to={path.paymentPages}>{t('topBar.paymentPages')}</Link>
+        );
         break;
       case `${path.page}/${pageId}`:
         setHeader(
           <React.Fragment>
-            <Link to={path.paymentPages}>Pages</Link> <RightOutlined /> {pageId}
+            <Link to={path.paymentPages}>{t('topBar.page')}</Link>{' '}
+            <RightOutlined /> {pageId}
           </React.Fragment>
         );
         break;
     }
-  }, [pathname, pageId]);
+  }, [pathname, pageId, t]);
 
   return (
     <Header className="site-layout-background" style={{ padding: 0 }}>
@@ -81,6 +96,21 @@ export const TopBar: React.FC<TopBarProps> = ({ collapsed, toggle }) => {
             <BellOutlined />
           </Dropdown>
         </Menu.Item> */}
+
+        <Menu.Item
+          key="5"
+          className={`lang-item ${active === 'en' ? 'active' : null}`}
+          onClick={() => onChangeLanguage('en')}
+        >
+          <i className="flag-icon flag-icon-gb"></i>
+        </Menu.Item>
+        <Menu.Item
+          key="6"
+          className={`lang-item ${active === 'fr' ? 'active' : null}`}
+          onClick={() => onChangeLanguage('fr')}
+        >
+          <i className="flag-icon flag-icon-fr"></i>
+        </Menu.Item>
         <Menu.Item key="4">
           <Dropdown overlay={<SettingsMenu logoutUser={logoutUser} />}>
             <UserOutlined />

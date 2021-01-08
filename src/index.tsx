@@ -4,6 +4,7 @@ import jwt_decode from 'jwt-decode';
 import { createBrowserHistory } from 'history';
 import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.css';
+import 'flag-icon-css/css/flag-icon.min.css';
 import './index.css';
 
 import App from './App';

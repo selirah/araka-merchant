@@ -10,8 +10,9 @@ import { FilterBoard } from '../components/transactions/FilterBoard';
 import { getTransactions, clearTransactions } from '../store/transactions';
 import { isEmpty } from '../helpers/isEmpty';
 import { TransactionHistory, TransactionTable } from '../interfaces';
-import { transactionStatus } from '../helpers/constants';
-import moment from 'moment';
+import { transactionStatus, timeZones } from '../helpers/constants';
+import moment from 'moment-timezone';
+import { useTranslation } from 'react-i18next';
 
 interface TransactionsProps {}
 
@@ -23,6 +24,7 @@ const Transactions: React.FC<TransactionsProps> = () => {
   const [transactionData, setTransactionData] = useState<TransactionHistory[]>(
     transactions
   );
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (isEmpty(transactions) && !loading) {
@@ -41,6 +43,7 @@ const Transactions: React.FC<TransactionsProps> = () => {
   };
 
   const onSearch = (value: string) => {
+    setTransactionData([]);
     if (isEmpty(value)) {
       if (!isEmpty(transactions)) {
         setTransactionData(transactions);
@@ -59,6 +62,7 @@ const Transactions: React.FC<TransactionsProps> = () => {
   };
 
   const onStatusFilter = (value: string) => {
+    setTransactionData([]);
     if (isEmpty(value)) {
       if (!isEmpty(transactions)) {
         setTransactionData(transactions);
@@ -76,6 +80,7 @@ const Transactions: React.FC<TransactionsProps> = () => {
   };
 
   const onChannelFilter = (value: string) => {
+    setTransactionData([]);
     if (isEmpty(value)) {
       if (!isEmpty(transactions)) {
         setTransactionData(transactions);
@@ -93,15 +98,16 @@ const Transactions: React.FC<TransactionsProps> = () => {
   };
 
   const onDateFilter = (value: any) => {
-    const from = moment(value[0]._d).format('X');
-    const to = moment(value[1]._d).format('X');
+    setTransactionData([]);
+    const from = moment(value[0]._d).tz(timeZones.kinshasa).format('X');
+    const to = moment(value[1]._d).tz(timeZones.kinshasa).format('X');
 
     if (!isEmpty(transactions)) {
       let filteredList: TransactionHistory[] = [];
       for (let tranx of transactions) {
-        const createdAt = moment(tranx.createdAt, 'MM/DD/YYYY HH:mm:ss').format(
-          'X'
-        );
+        const createdAt = moment(tranx.createdAt, 'MM/DD/YYYY HH:mm:ss')
+          .tz(timeZones.kinshasa)
+          .format('X');
         if (createdAt >= from && createdAt <= to) {
           filteredList.push(tranx);
         }
@@ -121,9 +127,8 @@ const Transactions: React.FC<TransactionsProps> = () => {
   if (!loading && isEmpty(transactionData)) {
     render = (
       <EmptyBox
-        header="No Transactions"
-        description="There're no transactions for this query. Please try another
-            query or clear your filters."
+        header={`${t('transactions.noTransactions')}`}
+        description={`${t('transactions.noTransDesc')}`}
       />
     );
   }
@@ -131,41 +136,44 @@ const Transactions: React.FC<TransactionsProps> = () => {
   if (!loading && !isEmpty(transactionData)) {
     const columns = [
       {
-        title: 'Amount',
+        title: `${t('transactions.table.amount')}`,
         dataIndex: 'amount',
         key: 'amount',
         align: 'center',
       },
       {
-        title: 'Customer',
+        title: `${t('transactions.table.customer')}`,
         dataIndex: 'customer',
         key: 'customer',
         align: 'center',
+        sorter: (a: TransactionTable, b: TransactionTable) =>
+          a.customer.length - b.customer.length,
       },
       {
-        title: 'Transaction ID',
+        title: `${t('transactions.table.transactionId')}`,
         dataIndex: 'transactionId',
         key: 'trasactionId',
         align: 'center',
+        sorter: (a: TransactionTable, b: TransactionTable) =>
+          a.transactionId - b.transactionId,
       },
       {
-        title: 'Paid on',
+        title: `${t('transactions.table.paidOn')}`,
         dataIndex: 'date',
         key: 'date',
         align: 'center',
-        // sorter: (a: any, b: any) => a.date.length - b.date.length,
-        // sortDirections: ['descend', 'ascend'],
+        sorter: (a: TransactionTable, b: TransactionTable) =>
+          moment(a.date).tz(timeZones.kinshasa).unix() -
+          moment(b.date).tz(timeZones.kinshasa).unix(),
       },
       {
-        title: 'Channel',
+        title: `${t('transactions.table.channel')}`,
         dataIndex: 'channel',
         key: 'channel',
         align: 'center',
-        // sorter: (a: any, b: any) => a.date.length - b.date.length,
-        // sortDirections: ['descend', 'ascend'],
       },
       {
-        title: 'Status',
+        title: `${t('transactions.table.status')}`,
         dataIndex: 'status',
         key: 'status',
         align: 'center',
@@ -178,25 +186,27 @@ const Transactions: React.FC<TransactionsProps> = () => {
             case transactionStatus.DECLINED:
               color = 'volcano';
               break;
-            case transactionStatus.CANCELLED:
+            case transactionStatus.CANCELED:
               color = 'geekblue';
               break;
           }
           return (
             <Tag color={color} key={status}>
-              {status.toUpperCase()}
+              {`${t(
+                `transactions.table.${status.toLocaleLowerCase()}`
+              ).toLocaleUpperCase()}`}
             </Tag>
           );
         },
       },
       {
-        title: 'Reason',
+        title: `${t('transactions.table.reason')}`,
         dataIndex: 'reason',
         key: 'reason',
         align: 'center',
       },
       {
-        title: 'Merchant',
+        title: `${t('transactions.table.merchant')}`,
         dataIndex: 'merchant',
         key: 'merchant',
         align: 'left',
@@ -210,9 +220,9 @@ const Transactions: React.FC<TransactionsProps> = () => {
         amount: `${transaction.currency} ${transaction.amountPaid.toFixed(2)}`,
         customer: transaction.customer,
         transactionId: transaction.transactionId,
-        date: moment(transaction.createdAt, 'MM/DD/YYYY HH:mm:ss').format(
-          'MMMM D, YYYY (h:mm a)'
-        ),
+        date: moment(transaction.createdAt, 'MM/DD/YYYY HH:mm:ss')
+          .tz(timeZones.kinshasa)
+          .format('MMMM D, YYYY (h:mm a)'),
         channel: transaction.channel.replace(/([a-z])([A-Z])/g, '$1 $2'),
         status: transaction.status,
         reason: !isEmpty(transaction.statusMessage)
@@ -245,7 +255,7 @@ const Transactions: React.FC<TransactionsProps> = () => {
             onClick={() => reloadTransaction()}
             style={{ float: 'right' }}
           >
-            Refresh
+            {t('transactions.refresh')}
           </Button>
         </Col>
         <Divider />

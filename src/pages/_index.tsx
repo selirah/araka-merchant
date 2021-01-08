@@ -1,19 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import {
-  Layout,
-  Dropdown,
-  Button,
-  Divider,
-  Row,
-  Col,
-  Progress,
-  Spin,
-} from 'antd';
+import { Layout, Button, Divider, Row, Col, Progress, Spin } from 'antd';
 import { useDispatch } from 'react-redux';
 import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
-import { DownOutlined } from '@ant-design/icons';
 import { GraphMenu } from '../components/home/GraphMenu';
 import { getTransactions } from '../store/transactions';
 import moment from 'moment';
@@ -21,6 +11,7 @@ import { isEmpty } from '../helpers/isEmpty';
 import { transactionStatus } from '../helpers/constants';
 import * as Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import { useTranslation } from 'react-i18next';
 
 interface IndexProps {}
 
@@ -31,6 +22,7 @@ const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
   const [transactionData, setTransactionData] = useState(transactions);
   // const [totalAmount, setTotalAmount] = useState('');
   const { Content } = Layout;
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (isEmpty(transactions) && !loading) {
@@ -124,7 +116,7 @@ const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
       yAxis: {
         min: 1,
         title: {
-          text: 'Amount paid (total)',
+          text: `${t('dashboard.amountPaid')}`,
         },
       },
       legend: {
@@ -150,8 +142,8 @@ const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
           innerSize: '90%',
           keys: ['name', 'y', 'selected', 'sliced'],
           data: [
-            ['Successful', successCount, false],
-            ['Processing Errors', failureCount, false],
+            [`${t('dashboard.successful')}`, successCount, false],
+            [`${t('dashboard.processingErrors')}`, failureCount, false],
           ],
           showInLegend: true,
         },
@@ -170,11 +162,7 @@ const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
     >
       <Row>
         <Col span={16} className="b-right">
-          <Dropdown overlay={<GraphMenu />}>
-            <Button>
-              Last 30 days <DownOutlined />
-            </Button>
-          </Dropdown>
+          <GraphMenu />
           <Divider />
           <div className="total-amount">{render}</div>
           {/* Insert HighCharts Here */}
@@ -187,21 +175,10 @@ const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
           />
 
           <Divider />
-          {/* <Divider />
-          <Divider />
-          <Divider />
-          <Divider />
-          <Divider />
-          <Divider>No activity for this period</Divider>
-          <Divider />
-          <Divider />
-          <Divider />
-          <Divider />
-          <Divider /> */}
           {/* End HighCharts Here */}
           <div className="summaryHolder">
             <div className="bg-placeholder">
-              <h3>Success Rate </h3>
+              <h3>{t('dashboard.successRate')}</h3>
               <HighchartsReact
                 highcharts={Highcharts}
                 options={successGraphOptions}
@@ -211,36 +188,39 @@ const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
             </div>
             <Divider type="vertical" />
             <div className="bg-placeholder">
-              <h3>Payment Issues</h3>
+              <h3>{t('dashboard.paymentIssues')}</h3>
               <div id="failurerate-donut">
-                <p>
-                  This chart breaks down the reasons why your transactions fail
-                </p>
+                <p>{t('dashboard.failureInfo')}</p>
               </div>
             </div>
           </div>
           <Divider />
           <p className="dash-summary text-center">
-            0 transactions � 0 abandoned{' '}
+            0 {t('dashboard.transactions')} � 0 {t('dashboard.abandoned')}{' '}
           </p>
         </Col>
         <Col span={8}>
-          <h3 className="stats text-muted text-center">Statistics</h3>
+          <h3 className="stats text-muted text-center">
+            {' '}
+            {t('dashboard.statistics')}
+          </h3>
           <Divider />
-          <h3 className="text-muted text-center">Next Payout</h3>
-          <p className="payout-desc">
-            There's no pending payout for your business
-          </p>
+          <h3 className="text-muted text-center">
+            {t('dashboard.nextPayout')}
+          </h3>
+          <p className="payout-desc">{t('dashboard.nextPayInfo')}</p>
           <Button type="primary" disabled>
-            View past payouts
+            {t('dashboard.viewPastPayouts')}
           </Button>
           <Divider />
-          <h2 className="text-muted text-center">Payout Limit</h2>
+          <h2 className="text-muted text-center">
+            {t('dashboard.payoutLimit')}
+          </h2>
           <Progress
             percent={0}
             format={(percent) => `${percent}/50,000.00 USD`}
           />
-          <Button type="primary">Upgrade your business</Button>
+          <Button type="primary">{t('dashboard.upgrade')}</Button>
         </Col>
       </Row>
     </Content>

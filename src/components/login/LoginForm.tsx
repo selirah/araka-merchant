@@ -1,8 +1,10 @@
 import React from 'react';
-import { Row, Col, Form, Input, Checkbox, Button, Alert } from 'antd';
+import { Row, Col, Form, Input, Button, Alert } from 'antd';
 import { LoadingOutlined, LoginOutlined } from '@ant-design/icons';
 import { Login } from '../../interfaces';
 import { isEmpty } from '../../helpers/isEmpty';
+import { useTranslation } from 'react-i18next';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 interface LoginFormProps {
   values: Login;
@@ -10,7 +12,10 @@ interface LoginFormProps {
   isSubmit: boolean;
   error: any;
   singleError: string;
+  onHandleRecaptcha(value: any): void;
 }
+
+const SITE_KEY = '6Lf00SUaAAAAAJbCW3lrIe7duzL0-FuOvNfsk2jY';
 
 export const LoginForm: React.FC<LoginFormProps> = ({
   values,
@@ -18,7 +23,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   isSubmit,
   error,
   singleError,
+  onHandleRecaptcha,
 }) => {
+  const { t } = useTranslation();
+  const ref = React.createRef<ReCAPTCHA>();
+
   return (
     <Row
       style={{
@@ -37,7 +46,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         }}
       >
         <h1 style={{ color: '#1890ff', fontSize: '1.5rem', fontWeight: 300 }}>
-          Login to Merchant Account
+          {t('login.box-header')}
         </h1>
         {!isEmpty(error) ? (
           <Alert type="error" message={`${JSON.stringify(error)}`} />
@@ -53,36 +62,43 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         >
           <Form.Item
             name="EmailAddress"
-            label="Email"
+            label={t('login.email')}
             rules={[
               {
                 required: true,
                 type: 'email',
-                message: 'Please input your email!',
+                message: `${t('login.email-error')}`,
               },
             ]}
           >
-            <Input placeholder="Enter your email address.." />
+            <Input placeholder={t('login.email-placeholder')} />
           </Form.Item>
           <Form.Item
-            label="Password"
+            label={t('login.password')}
             name="Password"
-            rules={[{ required: true, message: 'Please input your password!' }]}
+            rules={[
+              { required: true, message: `${t('login.password-error')}` },
+            ]}
           >
-            <Input.Password placeholder="Enter your password.." />
+            <Input.Password placeholder={t('login.password-placeholder')} />
           </Form.Item>
-          <Form.Item name="RememberMe" valuePropName="checked">
-            <Checkbox>Remember me</Checkbox>
+          <Form.Item>
+            <ReCAPTCHA
+              sitekey={SITE_KEY}
+              onChange={onHandleRecaptcha}
+              ref={ref}
+              theme="light"
+            />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit" disabled={isSubmit}>
               {!isSubmit ? (
                 <React.Fragment>
-                  <LoginOutlined /> Login
+                  <LoginOutlined /> {t('login.btn-text')}
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  <LoadingOutlined /> Logging in..
+                  <LoadingOutlined /> {t('login.btn-loading')}
                 </React.Fragment>
               )}
             </Button>

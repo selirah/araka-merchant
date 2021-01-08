@@ -7,6 +7,7 @@ import {
   InboxOutlined,
 } from '@ant-design/icons';
 import { path } from '../../helpers/path';
+import { useTranslation } from 'react-i18next';
 
 interface SideBarProps {
   collapsed: boolean;
@@ -21,6 +22,7 @@ export const SideBar: React.FC<SideBarProps> = ({ collapsed }) => {
   const { Sider } = Layout;
   const { pathname } = history.location;
   const { pageId } = useParams<ParamProps>();
+  const { t } = useTranslation();
 
   let act;
   switch (pathname) {
@@ -61,16 +63,16 @@ export const SideBar: React.FC<SideBarProps> = ({ collapsed }) => {
       <div className="logo" />
       <Menu theme="dark" mode="inline" defaultSelectedKeys={active}>
         <Menu.Item key="1" icon={<HomeOutlined />}>
-          <Link to={path.home}>Home</Link>
+          <Link to={path.home}>{t('topBar.home')}</Link>
         </Menu.Item>
-        <Menu.ItemGroup key="g1" title="PAYMENTS">
+        <Menu.ItemGroup key="g1" title={t('sideBar.payments').toUpperCase()}>
           <Menu.Item key="2" icon={<CreditCardOutlined />}>
-            <Link to={path.tranasctions}>Transactions</Link>
+            <Link to={path.tranasctions}>{t('sideBar.transactions')}</Link>
           </Menu.Item>
         </Menu.ItemGroup>
-        <Menu.ItemGroup key="g2" title="COMMERCE">
+        <Menu.ItemGroup key="g2" title={t('sideBar.commerce').toUpperCase()}>
           <Menu.Item key="3" icon={<InboxOutlined />}>
-            <Link to={path.paymentPages}>Payment Pages</Link>
+            <Link to={path.paymentPages}>{t('sideBar.paymentPages')}</Link>
           </Menu.Item>
         </Menu.ItemGroup>
       </Menu>
