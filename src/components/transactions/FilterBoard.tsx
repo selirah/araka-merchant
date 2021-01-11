@@ -1,6 +1,6 @@
 import React from 'react';
 import { DatePicker, Input, Select, Space } from 'antd';
-import moment from 'moment';
+// import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 
 interface FilterBoardProps {
@@ -25,13 +25,13 @@ export const FilterBoard: React.FC<FilterBoardProps> = ({
       <Search
         placeholder={t('transactions.filterBoard.search')}
         onSearch={(value: string) => onSearch(value)}
-        style={{ width: 300 }}
+        style={{ width: 250 }}
         onChange={(e) => onSearch(e.target.value)}
       />
       <RangePicker
         format="MMMM D, YYYY"
         onChange={onDateFilter}
-        style={{ width: 500 }}
+        style={{ width: 200 }}
       />
       <Select
         style={{ width: 200 }}

@@ -49,6 +49,20 @@
       "noTransactions": "Aucune transaction",
       "refresh": "Rafraîchir",
       "noTransDesc": "Il n'y a aucune transaction pour cette requête. Veuillez essayer une autre requête ou effacer vos filtres.",
+      "months": {
+        "January": "Janvier",
+        "February": "Février",
+        "March": "Mars",
+        "April": "Avril",
+        "May": "Mai",
+        "June": "Juin",
+        "July": "Juillet",
+        "August": "Août",
+        "September": "Septembre",
+        "October": "Octobre",
+        "November": "Novembre",
+        "December": "Décembre"
+      },
       "table": {
         "amount": "Montante",
         "customer": "Cliente",
@@ -69,6 +83,9 @@
         "all": "Toute",
         "card": "Carte",
         "mpesa": "Mpesa"
+      },
+      "exportMenu": {
+        "export": "Exportation"
       }
     },
     "paymentPages": {

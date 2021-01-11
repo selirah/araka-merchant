@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Row, Col, Divider, Spin, Tag, Button } from 'antd';
+import { Layout, Row, Col, Divider, Spin, Tag, Button, Space } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { appSelector } from '../helpers/appSelector';
@@ -13,6 +13,7 @@ import { TransactionHistory, TransactionTable } from '../interfaces';
 import { transactionStatus, timeZones } from '../helpers/constants';
 import moment from 'moment-timezone';
 import { useTranslation } from 'react-i18next';
+import { ExportMenu } from '../components/transactions/ExportMenu';
 
 interface TransactionsProps {}
 
@@ -25,6 +26,7 @@ const Transactions: React.FC<TransactionsProps> = () => {
     transactions
   );
   const { t } = useTranslation();
+  const [isExporting, setIsExporting] = useState(false);
 
   useEffect(() => {
     if (isEmpty(transactions) && !loading) {
@@ -138,6 +140,7 @@ const Transactions: React.FC<TransactionsProps> = () => {
         dataIndex: 'amount',
         key: 'amount',
         align: 'center',
+        className: 'column-text',
       },
       {
         title: `${t('transactions.table.customer')}`,
@@ -146,6 +149,7 @@ const Transactions: React.FC<TransactionsProps> = () => {
         align: 'center',
         sorter: (a: TransactionTable, b: TransactionTable) =>
           a.customer.length - b.customer.length,
+        className: 'column-text',
       },
       {
         title: `${t('transactions.table.transactionId')}`,
@@ -154,6 +158,7 @@ const Transactions: React.FC<TransactionsProps> = () => {
         align: 'center',
         sorter: (a: TransactionTable, b: TransactionTable) =>
           a.transactionId - b.transactionId,
+        className: 'column-text',
       },
       {
         title: `${t('transactions.table.paidOn')}`,
@@ -163,18 +168,21 @@ const Transactions: React.FC<TransactionsProps> = () => {
         sorter: (a: TransactionTable, b: TransactionTable) =>
           moment(a.date).tz(timeZones.kinshasa).unix() -
           moment(b.date).tz(timeZones.kinshasa).unix(),
+        className: 'column-text',
       },
       {
         title: `${t('transactions.table.channel')}`,
         dataIndex: 'channel',
         key: 'channel',
         align: 'center',
+        className: 'column-text',
       },
       {
         title: `${t('transactions.table.status')}`,
         dataIndex: 'status',
         key: 'status',
         align: 'center',
+        className: 'column-text',
         render: (status: string) => {
           let color: string = 'geekblue';
           switch (status) {
@@ -202,12 +210,14 @@ const Transactions: React.FC<TransactionsProps> = () => {
         dataIndex: 'reason',
         key: 'reason',
         align: 'center',
+        className: 'column-text',
       },
       {
         title: `${t('transactions.table.merchant')}`,
         dataIndex: 'merchant',
         key: 'merchant',
         align: 'left',
+        className: 'column-text',
       },
     ];
     let dataSource: TransactionTable[] = [];
@@ -220,7 +230,7 @@ const Transactions: React.FC<TransactionsProps> = () => {
         transactionId: transaction.transactionId,
         date: moment(transaction.createdAt, 'MM/DD/YYYY HH:mm:ss')
           .tz(timeZones.kinshasa)
-          .format('MMMM D, YYYY (h:mm a)'),
+          .format(`MMMM D, YYYY (h:mm a)`),
         channel: transaction.channel.replace(/([a-z])([A-Z])/g, '$1 $2'),
         status: transaction.status,
         reason: !isEmpty(transaction.statusMessage)
@@ -231,6 +241,11 @@ const Transactions: React.FC<TransactionsProps> = () => {
     }
     render = <Trans transactions={dataSource} columns={columns} pageSize={7} />;
   }
+
+  const onExportClick = (type: string) => {
+    console.log(type);
+    setIsExporting(true);
+  };
 
   return (
     <Content
@@ -249,12 +264,15 @@ const Transactions: React.FC<TransactionsProps> = () => {
             onChannelFilter={onChannelFilter}
             onDateFilter={onDateFilter}
           />
-          <Button
-            onClick={() => reloadTransaction()}
-            style={{ float: 'right' }}
-          >
-            {t('transactions.refresh')}
-          </Button>
+          <Space style={{ float: 'right' }}>
+            <ExportMenu
+              onExportClick={onExportClick}
+              isExporting={isExporting}
+            />
+            <Button onClick={() => reloadTransaction()}>
+              {t('transactions.refresh')}
+            </Button>
+          </Space>
         </Col>
         <Divider />
         <Col span={24}>{render}</Col>

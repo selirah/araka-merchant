@@ -1,9 +1,10 @@
 export interface Search {
-  SearchValue: '';
+  SearchValue: string;
   DateSearch: {
-    from: '';
-    to: '';
+    from: string;
+    to: string;
   };
-  StatusSeach: '';
-  ChannelSearch: '';
+  StatusSearch: string;
+  ChannelSearch: string;
+  ExportType: string;
 }

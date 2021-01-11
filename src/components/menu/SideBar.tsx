@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Image, Divider } from 'antd';
 import {
   HomeOutlined,
   CreditCardOutlined,
@@ -8,6 +8,7 @@ import {
 } from '@ant-design/icons';
 import { path } from '../../helpers/path';
 import { useTranslation } from 'react-i18next';
+import logo from '../../images/logo_symbol.png';
 
 interface SideBarProps {
   collapsed: boolean;
@@ -60,21 +61,22 @@ export const SideBar: React.FC<SideBarProps> = ({ collapsed }) => {
 
   return (
     <Sider trigger={null} collapsible collapsed={collapsed}>
-      <div className="logo" />
+      <div className="logo">
+        <Image src={logo} alt="logo" />
+      </div>
+      <Divider />
       <Menu theme="dark" mode="inline" defaultSelectedKeys={active}>
         <Menu.Item key="1" icon={<HomeOutlined />}>
           <Link to={path.home}>{t('topBar.home')}</Link>
         </Menu.Item>
-        <Menu.ItemGroup key="g1" title={t('sideBar.payments').toUpperCase()}>
-          <Menu.Item key="2" icon={<CreditCardOutlined />}>
-            <Link to={path.tranasctions}>{t('sideBar.transactions')}</Link>
-          </Menu.Item>
-        </Menu.ItemGroup>
-        <Menu.ItemGroup key="g2" title={t('sideBar.commerce').toUpperCase()}>
-          <Menu.Item key="3" icon={<InboxOutlined />}>
-            <Link to={path.paymentPages}>{t('sideBar.paymentPages')}</Link>
-          </Menu.Item>
-        </Menu.ItemGroup>
+
+        <Menu.Item key="2" icon={<CreditCardOutlined />}>
+          <Link to={path.tranasctions}>{t('sideBar.transactions')}</Link>
+        </Menu.Item>
+
+        <Menu.Item key="3" icon={<InboxOutlined />}>
+          <Link to={path.paymentPages}>{t('sideBar.paymentPages')}</Link>
+        </Menu.Item>
       </Menu>
     </Sider>
   );

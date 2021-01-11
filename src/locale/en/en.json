@@ -49,6 +49,20 @@
       "noTransactions": "No Transactions",
       "refresh": "Refresh",
       "noTransDesc": "There're no transactions for this query. Please try another query or clear your filters.",
+      "months": {
+        "January": "January",
+        "February": "February",
+        "March": "March",
+        "April": "April",
+        "May": "May",
+        "June": "June",
+        "July": "July",
+        "August": "August",
+        "September": "September",
+        "October": "October",
+        "November": "November",
+        "December": "December"
+      },
       "table": {
         "amount": "Amount",
         "customer": "Customer",
@@ -69,6 +83,9 @@
         "all": "All",
         "card": "Card",
         "mpesa": "Mpesa"
+      },
+      "exportMenu": {
+        "export": "Export"
       }
     },
     "paymentPages": {
