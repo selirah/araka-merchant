@@ -23,7 +23,7 @@ export const ExportMenu: React.FC<ExportMenuProps> = ({
     <Menu>
       <Menu.Item>
         <button
-          onClick={() => onExportClick('PDF')}
+          onClick={() => onExportClick('EXCEL')}
           className="transparent-button"
         >
           <FileExcelOutlined /> Excel

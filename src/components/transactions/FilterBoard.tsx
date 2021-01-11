@@ -8,6 +8,9 @@ interface FilterBoardProps {
   onStatusFilter(value: string): void;
   onChannelFilter(value: string): void;
   onDateFilter(value: any): void;
+  // searchValue: string;
+  // channelValue: string;
+  // statusValue: string;
 }
 
 export const FilterBoard: React.FC<FilterBoardProps> = ({

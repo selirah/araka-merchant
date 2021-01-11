@@ -7,9 +7,13 @@ import { AppDispatch } from '../helpers/appDispatch';
 import { EmptyBox } from '../components/transactions/EmptyBox';
 import { Transactions as Trans } from '../components/transactions/Transactions';
 import { FilterBoard } from '../components/transactions/FilterBoard';
-import { getTransactions, clearTransactions } from '../store/transactions';
+import {
+  getTransactions,
+  clearTransactions,
+  exportTranxRequest,
+} from '../store/transactions';
 import { isEmpty } from '../helpers/isEmpty';
-import { TransactionHistory, TransactionTable } from '../interfaces';
+import { Search, TransactionHistory, TransactionTable } from '../interfaces';
 import { transactionStatus, timeZones } from '../helpers/constants';
 import moment from 'moment-timezone';
 import { useTranslation } from 'react-i18next';
@@ -19,25 +23,37 @@ interface TransactionsProps {}
 
 const Transactions: React.FC<TransactionsProps> = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { transactions, loading } = appSelector((state) => state.transaction);
+  const { transactions, loading, isExporting } = appSelector(
+    (state) => state.transaction
+  );
   const { user } = appSelector((state) => state.auth);
   const { Content } = Layout;
   const [transactionData, setTransactionData] = useState<TransactionHistory[]>(
     transactions
   );
   const { t } = useTranslation();
-  const [isExporting, setIsExporting] = useState(false);
+  const [isExport, setIsExporting] = useState(false);
+  const [channelSearch, setChannelSearch] = useState('');
+  const [searchValue, setSearchValue] = useState('');
+  const [statusSearch, setStatusSearch] = useState('');
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
+  // const [searchedTransactions, setSearchedTransactions] = useState<
+  //   TransactionHistory[]
+  // >([]);
 
   useEffect(() => {
     if (isEmpty(transactions) && !loading) {
       dispatch(getTransactions(user!.username));
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     setTransactionData(transactions);
-  }, [loading, transactions]);
+    setIsExporting(isExporting);
+  }, [loading, transactions, isExporting]);
 
   const reloadTransaction = () => {
     dispatch(clearTransactions());
@@ -45,7 +61,6 @@ const Transactions: React.FC<TransactionsProps> = () => {
   };
 
   const onSearch = (value: string) => {
-    setTransactionData([]);
     if (isEmpty(value)) {
       if (!isEmpty(transactions)) {
         setTransactionData(transactions);
@@ -59,12 +74,13 @@ const Transactions: React.FC<TransactionsProps> = () => {
           return tranxId.includes(value) || amount.includes(value);
         });
         setTransactionData(filteredList);
+        setSearchValue(value);
       }
     }
   };
 
   const onStatusFilter = (value: string) => {
-    setTransactionData([]);
+    // setTransactionData([]);
     if (isEmpty(value)) {
       if (!isEmpty(transactions)) {
         setTransactionData(transactions);
@@ -77,12 +93,13 @@ const Transactions: React.FC<TransactionsProps> = () => {
           return status.includes(value);
         });
         setTransactionData(filteredList);
+        setStatusSearch(value);
       }
     }
   };
 
   const onChannelFilter = (value: string) => {
-    setTransactionData([]);
+    // setTransactionData([]);
     if (isEmpty(value)) {
       if (!isEmpty(transactions)) {
         setTransactionData(transactions);
@@ -95,12 +112,12 @@ const Transactions: React.FC<TransactionsProps> = () => {
           return channel.includes(value);
         });
         setTransactionData(filteredList);
+        setChannelSearch(value);
       }
     }
   };
 
   const onDateFilter = (value: any) => {
-    setTransactionData([]);
     const from = moment(value[0]._d).tz(timeZones.kinshasa).format('X');
     const to = moment(value[1]._d).tz(timeZones.kinshasa).format('X');
 
@@ -113,6 +130,8 @@ const Transactions: React.FC<TransactionsProps> = () => {
         }
       }
       setTransactionData(filteredList);
+      setFromDate(moment(value[0]._d, 'MMMM D, YYYY').format('MM/DD/YYYY'));
+      setToDate(moment(value[1]._d, 'MMMM D, YYYY').format('MM/DD/YYYY'));
     }
   };
 
@@ -243,8 +262,20 @@ const Transactions: React.FC<TransactionsProps> = () => {
   }
 
   const onExportClick = (type: string) => {
-    console.log(type);
-    setIsExporting(true);
+    const payload: Search = {
+      ChannelSearch: channelSearch,
+      DateSearch: {
+        from: fromDate,
+        to: toDate,
+      },
+      ExportType: type,
+      SearchValue: searchValue,
+      StatusSearch:
+        statusSearch.charAt(0).toUpperCase() +
+        statusSearch.slice(1).toLowerCase(),
+    };
+    // console.log(payload);
+    dispatch(exportTranxRequest(payload));
   };
 
   return (
@@ -265,10 +296,7 @@ const Transactions: React.FC<TransactionsProps> = () => {
             onDateFilter={onDateFilter}
           />
           <Space style={{ float: 'right' }}>
-            <ExportMenu
-              onExportClick={onExportClick}
-              isExporting={isExporting}
-            />
+            <ExportMenu onExportClick={onExportClick} isExporting={isExport} />
             <Button onClick={() => reloadTransaction()}>
               {t('transactions.refresh')}
             </Button>
