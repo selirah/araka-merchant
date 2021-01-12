@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Image, Divider } from 'antd';
 import {
   HomeOutlined,
   CreditCardOutlined,
   InboxOutlined,
 } from '@ant-design/icons';
 import { path } from '../../helpers/path';
+import { useTranslation } from 'react-i18next';
+import logo from '../../images/logo_symbol.png';
+import logo2 from '../../images/logo_transparent_background.png';
 
 interface SideBarProps {
   collapsed: boolean;
@@ -21,6 +24,7 @@ export const SideBar: React.FC<SideBarProps> = ({ collapsed }) => {
   const { Sider } = Layout;
   const { pathname } = history.location;
   const { pageId } = useParams<ParamProps>();
+  const { t } = useTranslation();
 
   let act;
   switch (pathname) {
@@ -58,21 +62,26 @@ export const SideBar: React.FC<SideBarProps> = ({ collapsed }) => {
 
   return (
     <Sider trigger={null} collapsible collapsed={collapsed}>
-      <div className="logo" />
+      <div className="logo">
+        {collapsed ? (
+          <Image src={logo2} alt="logo" preview={false} />
+        ) : (
+          <Image src={logo} alt="logo" preview={false} />
+        )}
+      </div>
+      <Divider />
       <Menu theme="dark" mode="inline" defaultSelectedKeys={active}>
         <Menu.Item key="1" icon={<HomeOutlined />}>
-          <Link to={path.home}>Home</Link>
+          <Link to={path.home}>{t('topBar.home')}</Link>
         </Menu.Item>
-        <Menu.ItemGroup key="g1" title="PAYMENTS">
-          <Menu.Item key="2" icon={<CreditCardOutlined />}>
-            <Link to={path.tranasctions}>Transactions</Link>
-          </Menu.Item>
-        </Menu.ItemGroup>
-        <Menu.ItemGroup key="g2" title="COMMERCE">
-          <Menu.Item key="3" icon={<InboxOutlined />}>
-            <Link to={path.paymentPages}>Payment Pages</Link>
-          </Menu.Item>
-        </Menu.ItemGroup>
+
+        <Menu.Item key="2" icon={<CreditCardOutlined />}>
+          <Link to={path.tranasctions}>{t('sideBar.transactions')}</Link>
+        </Menu.Item>
+
+        <Menu.Item key="3" icon={<InboxOutlined />}>
+          <Link to={path.paymentPages}>{t('sideBar.paymentPages')}</Link>
+        </Menu.Item>
       </Menu>
     </Sider>
   );

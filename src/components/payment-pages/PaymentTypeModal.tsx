@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Modal, List } from 'antd';
 import { CreditCardOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
 
 interface PaymentTypeModalProps {
   choosePaymentPage(): void;
@@ -19,33 +20,35 @@ export const PaymentTypeModal: React.FC<PaymentTypeModalProps> = ({
   showPaymentTypeModal,
   onTogglePaymentTypeModal,
 }) => {
+  const { t } = useTranslation();
+
   const paymentTypeData: ModalProps[] = [
     {
-      title: 'One-time Payment',
+      title: `${t('paymentPages.paymentTypeModal.oneTimePayment')}`,
       icon: <CreditCardOutlined style={{ fontSize: '30px' }} />,
       description: (
         <div className="option-desc">
-          <span>Create a simple page for your customers to pay you</span>
-          <Button onClick={() => choosePaymentPage()}>Choose</Button>
+          <span>{t('paymentPages.paymentTypeModal.oneTimePaymentDesc')}</span>
+          <Button onClick={() => choosePaymentPage()}>
+            {t('paymentPages.paymentTypeModal.choose')}
+          </Button>
         </div>
       ),
     },
     {
-      title: 'Payment Product',
+      title: `${t('paymentPages.paymentTypeModal.paymentProduct')}`,
       icon: <ShoppingCartOutlined style={{ fontSize: '30px' }} />,
       description: (
         <div className="option-desc">
-          <span>
-            Create a page to sell one or more products from your inventory
-          </span>
-          <Button>Choose</Button>
+          <span>{t('paymentPages.paymentTypeModal.paymentProductDesc')}</span>
+          <Button>{t('paymentPages.paymentTypeModal.choose')}</Button>
         </div>
       ),
     },
   ];
   return (
     <Modal
-      title="New Payment Page"
+      title={t('paymentPages.paymentTypeModal.title')}
       maskClosable={false}
       className="option-modal"
       centered

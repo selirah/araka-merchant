@@ -1,9 +1,13 @@
 import { action } from 'typesafe-actions';
 import { TransactionTypes } from './types';
-import { TransactionHistory, Currency } from '../../interfaces';
+import {
+  TransactionHistory,
+  Currency,
+  Search,
+  DataStream,
+} from '../../interfaces';
 
-export const getTransactions = (user: string) =>
-  action(TransactionTypes.GET_TRANSACTIONS, user);
+export const getTransactions = () => action(TransactionTypes.GET_TRANSACTIONS);
 
 export const getTransactionsSuccess = (data: TransactionHistory[]) =>
   action(TransactionTypes.GET_TRANSACTIONS_SUCCESS, data);
@@ -21,3 +25,12 @@ export const getCurrenciesFailure = (error: any) =>
 
 export const clearTransactions = () =>
   action(TransactionTypes.CLEAR_TRANSACTIONS);
+
+export const exportTranxRequest = (payload: Search) =>
+  action(TransactionTypes.EXPORT_TRANSACTIONS_REQUEST, payload);
+
+export const exportTranxSuccess = (data: DataStream) =>
+  action(TransactionTypes.EXPORT_TRANSACTIONS_SUCCESS, data);
+
+export const exportTranxFailure = (error: any) =>
+  action(TransactionTypes.EXPORT_TRANSACTIONS_FAILURE, error);

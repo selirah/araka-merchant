@@ -1,12 +1,16 @@
 import React from 'react';
 import { DatePicker, Input, Select, Space } from 'antd';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 
 interface FilterBoardProps {
   onSearch(value: string): void;
   onStatusFilter(value: string): void;
   onChannelFilter(value: string): void;
   onDateFilter(value: any): void;
+  // searchValue: string;
+  // channelValue: string;
+  // statusValue: string;
 }
 
 export const FilterBoard: React.FC<FilterBoardProps> = ({
@@ -18,12 +22,13 @@ export const FilterBoard: React.FC<FilterBoardProps> = ({
   const { Search } = Input;
   const { Option } = Select;
   const { RangePicker } = DatePicker;
+  const { t } = useTranslation();
   return (
     <Space>
       <Search
-        placeholder="Search by amount, transaction id"
+        placeholder={t('transactions.filterBoard.search')}
         onSearch={(value: string) => onSearch(value)}
-        style={{ width: 280 }}
+        style={{ width: 250 }}
         onChange={(e) => onSearch(e.target.value)}
       />
       <RangePicker
@@ -36,28 +41,28 @@ export const FilterBoard: React.FC<FilterBoardProps> = ({
           ],
         }}
         onChange={onDateFilter}
-        style={{ width: 500 }}
+        style={{ width: 200 }}
       />
       <Select
-        style={{ width: 150 }}
+        style={{ width: 200 }}
         onChange={onStatusFilter}
         showSearch
-        placeholder="Search by Status"
+        placeholder={t('transactions.filterBoard.statusSearch')}
       >
-        <Option value="">All</Option>
-        <Option value="APPROVED">Approved</Option>
-        <Option value="DECLINED">Declined</Option>
-        <Option value="CANCELED">Canceled</Option>
+        <Option value="">{t('transactions.filterBoard.all')}</Option>
+        <Option value="APPROVED">{t('transactions.table.approved')}</Option>
+        <Option value="DECLINED">{t('transactions.table.declined')}</Option>
+        <Option value="CANCELED">{t('transactions.table.canceled')}</Option>
       </Select>
       <Select
-        style={{ width: 170 }}
+        style={{ width: 200 }}
         onChange={onChannelFilter}
         showSearch
-        placeholder="Search by Channel"
+        placeholder={t('transactions.filterBoard.channelSearch')}
       >
-        <Option value="">All</Option>
-        <Option value="Card">Card</Option>
-        <Option value="MPESA">Mpesa</Option>
+        <Option value="">{t('transactions.filterBoard.all')}</Option>
+        <Option value="Card">{t('transactions.filterBoard.card')}</Option>
+        <Option value="MPESA">{t('transactions.filterBoard.mpesa')}</Option>
       </Select>
     </Space>
   );

@@ -1,5 +1,10 @@
 export const transactionStatus = {
   APPROVED: 'APPROVED',
   DECLINED: 'DECLINED',
-  CANCELLED: 'CANCELLED',
+  CANCELED: 'CANCELED',
+};
+
+export const timeZones = {
+  kinshasa: 'Africa/Kinshasa',
+  accra: 'Africa/Accra',
 };
