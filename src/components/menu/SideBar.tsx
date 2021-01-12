@@ -9,6 +9,7 @@ import {
 import { path } from '../../helpers/path';
 import { useTranslation } from 'react-i18next';
 import logo from '../../images/logo_symbol.png';
+import logo2 from '../../images/logo_transparent_background.png';
 
 interface SideBarProps {
   collapsed: boolean;
@@ -62,7 +63,11 @@ export const SideBar: React.FC<SideBarProps> = ({ collapsed }) => {
   return (
     <Sider trigger={null} collapsible collapsed={collapsed}>
       <div className="logo">
-        <Image src={logo} alt="logo" />
+        {collapsed ? (
+          <Image src={logo2} alt="logo" preview={false} />
+        ) : (
+          <Image src={logo} alt="logo" preview={false} />
+        )}
       </div>
       <Divider />
       <Menu theme="dark" mode="inline" defaultSelectedKeys={active}>

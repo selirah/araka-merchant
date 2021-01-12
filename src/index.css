@@ -96,17 +96,26 @@ a {
 .site-business-discovery-content {
   background: rgb(248, 248, 248);
 }
-.logo {
-  width: 150px;
-  margin: 16px 24px 16px 0;
-  float: left;
-}
+
 [data-theme='dark'] .site-layout-content {
   background: #141414;
 }
 [data-theme='dark'] .logo {
   background: rgba(255, 255, 255, 0.3);
 }
+
+.logo {
+  margin: 16px 24px 16px 0;
+  float: left;
+  margin: 16px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.logo-inner {
+  margin: 50px auto 16px auto !important;
+  float: none;
+}
+
 .f-right {
   float: right;
 }
@@ -202,11 +211,6 @@ a {
   background: #fff;
   padding: 50px;
 }
-.logo-inner {
-  width: 150px;
-  margin: 50px auto 16px auto !important;
-  float: none;
-}
 
 .register-area label {
   margin: 10px 0;
@@ -240,10 +244,6 @@ a {
 
 .trigger:hover {
   color: #ff9800;
-}
-
-.logo {
-  margin: 16px;
 }
 
 .ant-menu.ant-menu-dark,

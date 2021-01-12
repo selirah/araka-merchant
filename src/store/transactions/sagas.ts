@@ -11,7 +11,7 @@ import {
 import { callApiGet, callApiPost } from '../../utils/api';
 import { DataStream, Search } from '../../interfaces';
 
-function* getTransactions({ payload }: { type: string; payload: string }) {
+function* getTransactions() {
   try {
     const res = yield call(callApiGet, 'payments/getmerchanttransactions');
     if (res.status === 200) {

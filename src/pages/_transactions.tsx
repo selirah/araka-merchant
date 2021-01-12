@@ -26,7 +26,6 @@ const Transactions: React.FC<TransactionsProps> = () => {
   const { transactions, loading, isExporting } = appSelector(
     (state) => state.transaction
   );
-  const { user } = appSelector((state) => state.auth);
   const { Content } = Layout;
   const [transactionData, setTransactionData] = useState<TransactionHistory[]>(
     transactions
@@ -38,13 +37,10 @@ const Transactions: React.FC<TransactionsProps> = () => {
   const [statusSearch, setStatusSearch] = useState('');
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
-  // const [searchedTransactions, setSearchedTransactions] = useState<
-  //   TransactionHistory[]
-  // >([]);
 
   useEffect(() => {
     if (isEmpty(transactions) && !loading) {
-      dispatch(getTransactions(user!.username));
+      dispatch(getTransactions());
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,7 +53,7 @@ const Transactions: React.FC<TransactionsProps> = () => {
 
   const reloadTransaction = () => {
     dispatch(clearTransactions());
-    dispatch(getTransactions(user!.username));
+    dispatch(getTransactions());
   };
 
   const onSearch = (value: string) => {
@@ -80,7 +76,6 @@ const Transactions: React.FC<TransactionsProps> = () => {
   };
 
   const onStatusFilter = (value: string) => {
-    // setTransactionData([]);
     if (isEmpty(value)) {
       if (!isEmpty(transactions)) {
         setTransactionData(transactions);
@@ -124,7 +119,9 @@ const Transactions: React.FC<TransactionsProps> = () => {
     if (!isEmpty(transactions)) {
       let filteredList: TransactionHistory[] = [];
       for (let tranx of transactions) {
-        const createdAt = moment(tranx.createdAt, 'MM/DD/YYYY').format('X');
+        const createdAt = moment(tranx.createdAt, 'MM/DD/YYYY HH:mm:ss').format(
+          'X'
+        );
         if (createdAt >= from && createdAt <= to) {
           filteredList.push(tranx);
         }

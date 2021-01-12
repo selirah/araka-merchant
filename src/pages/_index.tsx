@@ -18,7 +18,6 @@ interface IndexProps {}
 const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
   const dispatch: AppDispatch = useDispatch();
   const { transactions, loading } = appSelector((state) => state.transaction);
-  const { user } = appSelector((state) => state.auth);
   const [transactionData, setTransactionData] = useState(transactions);
   // const [totalAmount, setTotalAmount] = useState('');
   const { Content } = Layout;
@@ -26,7 +25,7 @@ const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
 
   useEffect(() => {
     if (isEmpty(transactions) && !loading) {
-      dispatch(getTransactions(user!.username));
+      dispatch(getTransactions());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

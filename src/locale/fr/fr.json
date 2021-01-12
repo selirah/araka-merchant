@@ -64,8 +64,8 @@
         "December": "Décembre"
       },
       "table": {
-        "amount": "Montante",
-        "customer": "Cliente",
+        "amount": "Montant",
+        "customer": "Client",
         "transactionId": "Identifiant de transaction",
         "paidOn": "Payé le",
         "channel": "Canal",
