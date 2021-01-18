@@ -55,7 +55,7 @@ const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
       successCount: any = 0,
       failureCount: any = 0;
     let cDate = moment(new Date()).format('MMM DD');
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i <= 31; i++) {
       const currentDate = moment(new Date());
       const transactionDate = currentDate.subtract(i, 'days').format('MMM DD');
 
@@ -66,16 +66,16 @@ const Index: React.FC<IndexProps> = (props: HighchartsReact.Props) => {
       }
     }
     for (let i = 0; i < transactionData.length; i++) {
-      const currentDate = moment(new Date());
-      const numDays = moment(
-        transactionData[i].createdAt,
-        'MM/DD/YYYY HH:mm:ss'
-      );
+      // const currentDate = moment(new Date());
+      // const numDays = moment(
+      //   transactionData[i].createdAt,
+      //   'MM/DD/YYYY HH:mm:ss'
+      // );
 
-      const diff = currentDate.diff(numDays, 'days');
+      // const diff = currentDate.diff(numDays, 'days');
 
       if (
-        diff <= 30 &&
+        /*diff <= 30 &&*/
         transactionData[i].status === transactionStatus.APPROVED
       ) {
         successCount += 1;
