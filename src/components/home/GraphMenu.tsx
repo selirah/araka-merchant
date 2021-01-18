@@ -1,12 +1,17 @@
 import React from 'react';
-import { Menu } from 'antd';
+import { Select } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 interface GraphMenuProps {}
 
 export const GraphMenu: React.FC<GraphMenuProps> = () => {
+  const { t } = useTranslation();
+  const { Option } = Select;
   return (
-    <Menu>
-      <Menu.Item key="1">Last 30 days</Menu.Item>
-    </Menu>
+    <Select style={{ width: 200 }} placeholder={t('dashboard.last30Days')}>
+      <Option value={`${t('dashboard.last30Days')}`}>
+        {t('dashboard.last30Days')}
+      </Option>
+    </Select>
   );
 };

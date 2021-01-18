@@ -17,6 +17,7 @@ import {
 } from '../store/payment-pages';
 import { isEmpty } from '../helpers/isEmpty';
 import { Pages } from '../components/payment-pages/Pages';
+import { useTranslation } from 'react-i18next';
 
 interface PaymentPagesProps {}
 
@@ -45,6 +46,7 @@ const PaymentPages: React.FC<PaymentPagesProps> = () => {
   const [pages, setPages] = useState<Page[]>([]);
   const [isCopied, setIsCopied] = useState(false);
   const [processId, setProcessId] = useState('');
+  const { t } = useTranslation();
 
   useEffect(() => {
     const { pages, loading } = page;
@@ -61,12 +63,12 @@ const PaymentPages: React.FC<PaymentPagesProps> = () => {
     setLoading(loading);
     setIsSubmit(isSubmitting);
     if (success) {
-      message.success('Payment page has been added successfully', 5);
+      message.success(`${t('paymentPages.pageAddSuccess')}`, 5);
     }
     if (failure) {
       message.error(error, 5);
     }
-  }, [page]);
+  }, [page, t]);
 
   const reloadPages = () => {
     dispatch(clearPaymentPages());
@@ -92,12 +94,12 @@ const PaymentPages: React.FC<PaymentPagesProps> = () => {
     const isJPGOrPNG = file.type === 'image/jpeg' || file.type === 'image/png';
 
     if (!isJPGOrPNG) {
-      message.error('You can only upload JPG/PNG file!');
+      message.error(`${t('paymentPages.fileTypeError')}`);
     }
 
     const isLessThan2MB = file.size / 1024 / 1024 < 2;
     if (!isLessThan2MB) {
-      message.error('Image must be smaller than 2MB!');
+      message.error(`${t('paymentPages.fileSizeError')}`);
     }
 
     return isJPGOrPNG && isLessThan2MB;
@@ -167,10 +169,8 @@ const PaymentPages: React.FC<PaymentPagesProps> = () => {
   if (!loading && isEmpty(pages)) {
     render = (
       <EmptyBox
-        header="Payment Pages"
-        description="The easiest way to accept payments. Simply create a
-      page, share the link to your customers and start
-      accepting payments."
+        header={t('paymentPages.paymentPage')}
+        description={t('paymentPages.description')}
         image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
       >
         <Button
@@ -178,7 +178,7 @@ const PaymentPages: React.FC<PaymentPagesProps> = () => {
           onClick={() => onTogglePaymentTypeModal()}
           icon={<PlusOutlined />}
         >
-          New Page
+          {t('paymentPages.newPageText')}
         </Button>
       </EmptyBox>
     );
@@ -212,9 +212,11 @@ const PaymentPages: React.FC<PaymentPagesProps> = () => {
               type="primary"
               icon={<PlusOutlined />}
             >
-              New Page
+              {t('paymentPages.newPageText')}
             </Button>
-            <Button onClick={() => reloadPages()}>Refresh</Button>
+            <Button onClick={() => reloadPages()}>
+              {t('paymentPages.refresh')}
+            </Button>
           </Space>
         </Col>
         <Divider />

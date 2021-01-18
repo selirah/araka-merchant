@@ -9,6 +9,11 @@ export const initialState: TransactionState = {
   error: undefined,
   loading: false,
   transactions: [],
+  isExporting: false,
+  exportStream: undefined,
+  isExportSuccess: false,
+  isExportError: false,
+  exportError: undefined,
 };
 
 const reducer: Reducer<TransactionState> = (state = initialState, action) => {
@@ -52,6 +57,29 @@ const reducer: Reducer<TransactionState> = (state = initialState, action) => {
       return {
         ...state,
         transactions: [],
+      };
+    case TransactionTypes.EXPORT_TRANSACTIONS_REQUEST:
+      return {
+        ...state,
+        isExporting: true,
+      };
+    case TransactionTypes.EXPORT_TRANSACTIONS_SUCCESS:
+      return {
+        ...state,
+        isExporting: false,
+        exportStream: action.payload,
+        isExportError: false,
+        isExportSuccess: true,
+        exportError: undefined,
+      };
+    case TransactionTypes.EXPORT_TRANSACTIONS_FAILURE:
+      return {
+        ...state,
+        isExporting: false,
+        exportStream: undefined,
+        isExportError: true,
+        isExportSuccess: false,
+        exportError: action.payload,
       };
     case AuthActionTypes.DESTROY_STATES:
       return initialState;

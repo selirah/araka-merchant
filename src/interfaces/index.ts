@@ -10,3 +10,5 @@ export * from './Product';
 export * from './Merchant';
 export * from './OrderResponse';
 export * from './Page';
+export * from './Search';
+export * from './DataStream';

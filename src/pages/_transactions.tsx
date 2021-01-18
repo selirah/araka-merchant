@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Row, Col, Divider, Spin, Tag, Button } from 'antd';
+import { Layout, Row, Col, Divider, Spin, Tag, Button, Space } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { appSelector } from '../helpers/appSelector';
@@ -7,37 +7,53 @@ import { AppDispatch } from '../helpers/appDispatch';
 import { EmptyBox } from '../components/transactions/EmptyBox';
 import { Transactions as Trans } from '../components/transactions/Transactions';
 import { FilterBoard } from '../components/transactions/FilterBoard';
-import { getTransactions, clearTransactions } from '../store/transactions';
+import {
+  getTransactions,
+  clearTransactions,
+  exportTranxRequest,
+} from '../store/transactions';
 import { isEmpty } from '../helpers/isEmpty';
-import { TransactionHistory, TransactionTable } from '../interfaces';
-import { transactionStatus } from '../helpers/constants';
-import moment from 'moment';
+import { Search, TransactionHistory, TransactionTable } from '../interfaces';
+import { transactionStatus, timeZones } from '../helpers/constants';
+import moment from 'moment-timezone';
+import { useTranslation } from 'react-i18next';
+import { ExportMenu } from '../components/transactions/ExportMenu';
 
 interface TransactionsProps {}
 
 const Transactions: React.FC<TransactionsProps> = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { transactions, loading } = appSelector((state) => state.transaction);
-  const { user } = appSelector((state) => state.auth);
+  const { transactions, loading, isExporting } = appSelector(
+    (state) => state.transaction
+  );
   const { Content } = Layout;
   const [transactionData, setTransactionData] = useState<TransactionHistory[]>(
     transactions
   );
+  const { t } = useTranslation();
+  const [isExport, setIsExporting] = useState(false);
+  const [channelSearch, setChannelSearch] = useState('');
+  const [searchValue, setSearchValue] = useState('');
+  const [statusSearch, setStatusSearch] = useState('');
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
 
   useEffect(() => {
     if (isEmpty(transactions) && !loading) {
-      dispatch(getTransactions(user!.username));
+      dispatch(getTransactions());
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     setTransactionData(transactions);
-  }, [loading, transactions]);
+    setIsExporting(isExporting);
+  }, [loading, transactions, isExporting]);
 
   const reloadTransaction = () => {
     dispatch(clearTransactions());
-    dispatch(getTransactions(user!.username));
+    dispatch(getTransactions());
   };
 
   const onSearch = (value: string) => {
@@ -54,6 +70,7 @@ const Transactions: React.FC<TransactionsProps> = () => {
           return tranxId.includes(value) || amount.includes(value);
         });
         setTransactionData(filteredList);
+        setSearchValue(value);
       }
     }
   };
@@ -71,11 +88,13 @@ const Transactions: React.FC<TransactionsProps> = () => {
           return status.includes(value);
         });
         setTransactionData(filteredList);
+        setStatusSearch(value);
       }
     }
   };
 
   const onChannelFilter = (value: string) => {
+    // setTransactionData([]);
     if (isEmpty(value)) {
       if (!isEmpty(transactions)) {
         setTransactionData(transactions);
@@ -88,13 +107,14 @@ const Transactions: React.FC<TransactionsProps> = () => {
           return channel.includes(value);
         });
         setTransactionData(filteredList);
+        setChannelSearch(value);
       }
     }
   };
 
   const onDateFilter = (value: any) => {
-    const from = moment(value[0]._d).format('X');
-    const to = moment(value[1]._d).format('X');
+    const from = moment(value[0]._d).tz(timeZones.kinshasa).format('X');
+    const to = moment(value[1]._d).tz(timeZones.kinshasa).format('X');
 
     if (!isEmpty(transactions)) {
       let filteredList: TransactionHistory[] = [];
@@ -107,6 +127,8 @@ const Transactions: React.FC<TransactionsProps> = () => {
         }
       }
       setTransactionData(filteredList);
+      setFromDate(moment(value[0]._d, 'MMMM D, YYYY').format('MM/DD/YYYY'));
+      setToDate(moment(value[1]._d, 'MMMM D, YYYY').format('MM/DD/YYYY'));
     }
   };
 
@@ -121,9 +143,8 @@ const Transactions: React.FC<TransactionsProps> = () => {
   if (!loading && isEmpty(transactionData)) {
     render = (
       <EmptyBox
-        header="No Transactions"
-        description="There're no transactions for this query. Please try another
-            query or clear your filters."
+        header={`${t('transactions.noTransactions')}`}
+        description={`${t('transactions.noTransDesc')}`}
       />
     );
   }
@@ -131,44 +152,53 @@ const Transactions: React.FC<TransactionsProps> = () => {
   if (!loading && !isEmpty(transactionData)) {
     const columns = [
       {
-        title: 'Amount',
+        title: `${t('transactions.table.amount')}`,
         dataIndex: 'amount',
         key: 'amount',
         align: 'center',
+        className: 'column-text',
       },
       {
-        title: 'Customer',
+        title: `${t('transactions.table.customer')}`,
         dataIndex: 'customer',
         key: 'customer',
         align: 'center',
+        sorter: (a: TransactionTable, b: TransactionTable) =>
+          a.customer.length - b.customer.length,
+        className: 'column-text',
       },
       {
-        title: 'Transaction ID',
+        title: `${t('transactions.table.transactionId')}`,
         dataIndex: 'transactionId',
         key: 'trasactionId',
         align: 'center',
+        sorter: (a: TransactionTable, b: TransactionTable) =>
+          a.transactionId - b.transactionId,
+        className: 'column-text',
       },
       {
-        title: 'Paid on',
+        title: `${t('transactions.table.paidOn')}`,
         dataIndex: 'date',
         key: 'date',
         align: 'center',
-        // sorter: (a: any, b: any) => a.date.length - b.date.length,
-        // sortDirections: ['descend', 'ascend'],
+        sorter: (a: TransactionTable, b: TransactionTable) =>
+          moment(a.date).tz(timeZones.kinshasa).unix() -
+          moment(b.date).tz(timeZones.kinshasa).unix(),
+        className: 'column-text',
       },
       {
-        title: 'Channel',
+        title: `${t('transactions.table.channel')}`,
         dataIndex: 'channel',
         key: 'channel',
         align: 'center',
-        // sorter: (a: any, b: any) => a.date.length - b.date.length,
-        // sortDirections: ['descend', 'ascend'],
+        className: 'column-text',
       },
       {
-        title: 'Status',
+        title: `${t('transactions.table.status')}`,
         dataIndex: 'status',
         key: 'status',
         align: 'center',
+        className: 'column-text',
         render: (status: string) => {
           let color: string = 'geekblue';
           switch (status) {
@@ -178,28 +208,32 @@ const Transactions: React.FC<TransactionsProps> = () => {
             case transactionStatus.DECLINED:
               color = 'volcano';
               break;
-            case transactionStatus.CANCELLED:
+            case transactionStatus.CANCELED:
               color = 'geekblue';
               break;
           }
           return (
             <Tag color={color} key={status}>
-              {status.toUpperCase()}
+              {`${t(
+                `transactions.table.${status.toLocaleLowerCase()}`
+              ).toLocaleUpperCase()}`}
             </Tag>
           );
         },
       },
       {
-        title: 'Reason',
+        title: `${t('transactions.table.reason')}`,
         dataIndex: 'reason',
         key: 'reason',
         align: 'center',
+        className: 'column-text',
       },
       {
-        title: 'Merchant',
+        title: `${t('transactions.table.merchant')}`,
         dataIndex: 'merchant',
         key: 'merchant',
         align: 'left',
+        className: 'column-text',
       },
     ];
     let dataSource: TransactionTable[] = [];
@@ -210,9 +244,9 @@ const Transactions: React.FC<TransactionsProps> = () => {
         amount: `${transaction.currency} ${transaction.amountPaid.toFixed(2)}`,
         customer: transaction.customer,
         transactionId: transaction.transactionId,
-        date: moment(transaction.createdAt, 'MM/DD/YYYY HH:mm:ss').format(
-          'MMMM D, YYYY (h:mm a)'
-        ),
+        date: moment(transaction.createdAt, 'MM/DD/YYYY HH:mm:ss')
+          .tz(timeZones.kinshasa)
+          .format(`MMMM D, YYYY (h:mm a)`),
         channel: transaction.channel.replace(/([a-z])([A-Z])/g, '$1 $2'),
         status: transaction.status,
         reason: !isEmpty(transaction.statusMessage)
@@ -223,6 +257,23 @@ const Transactions: React.FC<TransactionsProps> = () => {
     }
     render = <Trans transactions={dataSource} columns={columns} pageSize={7} />;
   }
+
+  const onExportClick = (type: string) => {
+    const payload: Search = {
+      ChannelSearch: channelSearch,
+      DateSearch: {
+        from: fromDate,
+        to: toDate,
+      },
+      ExportType: type,
+      SearchValue: searchValue,
+      StatusSearch:
+        statusSearch.charAt(0).toUpperCase() +
+        statusSearch.slice(1).toLowerCase(),
+    };
+    // console.log(payload);
+    dispatch(exportTranxRequest(payload));
+  };
 
   return (
     <Content
@@ -241,12 +292,12 @@ const Transactions: React.FC<TransactionsProps> = () => {
             onChannelFilter={onChannelFilter}
             onDateFilter={onDateFilter}
           />
-          <Button
-            onClick={() => reloadTransaction()}
-            style={{ float: 'right' }}
-          >
-            Refresh
-          </Button>
+          <Space style={{ float: 'right' }}>
+            <ExportMenu onExportClick={onExportClick} isExporting={isExport} />
+            <Button onClick={() => reloadTransaction()}>
+              {t('transactions.refresh')}
+            </Button>
+          </Space>
         </Col>
         <Divider />
         <Col span={24}>{render}</Col>
