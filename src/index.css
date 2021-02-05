@@ -596,6 +596,130 @@ thead[class*='ant-table-thead'] th {
   transition: all 0.2s;
 }
 
+.highcharts-container {
+  position: relative;
+  overflow-x: auto !important;
+  overflow-y: hidden;
+  width: 100% !important;
+  height: 400px;
+  text-align: left;
+  line-height: normal;
+  z-index: 0;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  user-select: none;
+}
+
+.highcharts-container::-webkit-scrollbar {
+  width: 0.1rem;
+}
+
+.highcharts-container::-moz-scrollbar {
+  width: 0.1rem;
+}
+
+.card {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #ffffff;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  border: 1px solid #b3e5fc;
+  -webkit-border-radius: 10px;
+  border-radius: 5px;
+}
+
+.card-body {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1rem;
+}
+
+.ratio-box .ratio-title {
+  font-weight: 500;
+  margin-top: 10px;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #ffa726;
+}
+
+.ratio-box .ratio-point {
+  margin-top: 12px;
+  text-transform: uppercase;
+  color: rgba(66, 84, 102, 0.4) !important;
+  font-size: 0.8rem;
+}
+
+.align-items-center {
+  -webkit-box-align: center !important;
+  -ms-flex-align: center !important;
+  align-items: center !important;
+}
+
+.justify-content-between {
+  -webkit-box-pack: justify !important;
+  -ms-flex-pack: justify !important;
+  justify-content: space-between !important;
+}
+
+.d-flex {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+}
+
+.highcharts-figure,
+.highcharts-data-table table {
+  min-width: 310px;
+  max-width: 100%;
+  margin: 1em auto;
+}
+
+#container {
+  height: 400px;
+}
+
+.highcharts-data-table table {
+  font-family: Verdana, sans-serif;
+  border-collapse: collapse;
+  border: 1px solid #ebebeb;
+  margin: 10px auto;
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+}
+.highcharts-data-table caption {
+  padding: 1em 0;
+  font-size: 1.2em;
+  color: #555;
+}
+.highcharts-data-table th {
+  font-weight: 600;
+  padding: 0.5em;
+}
+.highcharts-data-table td,
+.highcharts-data-table th,
+.highcharts-data-table caption {
+  padding: 0.5em;
+}
+.highcharts-data-table thead tr,
+.highcharts-data-table tr:nth-child(even) {
+  background: #f8f8f8;
+}
+.highcharts-data-table tr:hover {
+  background: #f1f7ff;
+}
+
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 640px) {
   .pay-form-col {

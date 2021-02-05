@@ -43,7 +43,9 @@
       "abandoned": "abandoned",
       "amountPaid": "Amount paid (total)",
       "successful": "Successful",
-      "processingErrors": "Processing Errors"
+      "processingErrors": "Processing Errors",
+      "transactionVolumeToday": "Transactions volume",
+      "volumeAmount": "Volume of Amount"
     },
     "transactions": {
       "noTransactions": "No Transactions",

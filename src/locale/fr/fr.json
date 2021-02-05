@@ -43,7 +43,9 @@
       "abandoned": "abandonné",
       "amountPaid": "Montant payé (total)",
       "successful": "Réussie",
-      "processingErrors": "Erreurs de traitement"
+      "processingErrors": "Erreurs de traitement",
+      "transactionVolumeToday": "Volume de transactions",
+      "volumeAmount": "Volume du montant"
     },
     "transactions": {
       "noTransactions": "Aucune transaction",
