@@ -1,10 +1,10 @@
-import React from "react";
-import { Row, Col, Form, Input, Button, Alert, Image } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Login } from "../../interfaces";
-import { isEmpty } from "../../helpers/isEmpty";
-import logo from "../../images/logo_symbol.png";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Row, Col, Form, Input, Button, Alert, Image } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Login } from '../../interfaces';
+import { isEmpty } from '../../helpers/isEmpty';
+import logo from '../../images/logo_symbol.png';
+import { Link } from 'react-router-dom';
 
 interface LoginFormProps {
   values: Login;
@@ -53,8 +53,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               rules={[
                 {
                   required: true,
-                  type: "email",
-                  message: "Please input your email!",
+                  type: 'email',
+                  message: 'Please input your email!',
                 },
               ]}
             >
@@ -63,7 +63,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             <Form.Item
               name="Password"
               rules={[
-                { required: true, message: "Please input your password!" },
+                { required: true, message: 'Please input your password!' },
               ]}
             >
               <Input.Password placeholder="Your password" />
