@@ -1,3 +1,5 @@
+import { NumberFormatterCallbackFunction } from 'highcharts';
+
 export interface TransactionHistory {
   transactionId: number;
   createdAt: string;

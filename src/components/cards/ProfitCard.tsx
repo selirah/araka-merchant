@@ -6,12 +6,14 @@ interface ProfitCardProps {
   mainTitle: string;
   paragraph: string;
   amount: string;
+  data: any;
 }
 
 export const ProfitCard: React.FC<ProfitCardProps> = ({
   mainTitle,
   paragraph,
   amount,
+  data,
 }) => {
   return (
     <Card>
@@ -22,7 +24,7 @@ export const ProfitCard: React.FC<ProfitCardProps> = ({
           <h1>{amount}</h1>
         </div>
         <div>
-          <AreaChart />
+          <AreaChart info={data} />
         </div>
       </React.Fragment>
     </Card>

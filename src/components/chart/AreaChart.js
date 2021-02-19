@@ -1,10 +1,8 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 
-import { AreaChartData } from './chart.mock';
-
-const AreaChart = () => {
-  const [barData] = React.useState(AreaChartData);
+const AreaChart = ({ info }) => {
+  const [barData] = React.useState(info);
 
   const { datasets, height, labels, options } = barData;
 

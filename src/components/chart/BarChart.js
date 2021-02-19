@@ -1,10 +1,8 @@
 import React from 'react';
-import { Bar, Line, Pie } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 
-import { BarChartData } from './chart.mock';
-
-const BarChart = () => {
-  const [barData] = React.useState(BarChartData);
+const BarChart = ({ info }) => {
+  const [barData] = React.useState(info);
 
   const { datasets, height, labels, options } = barData;
 

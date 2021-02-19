@@ -6,7 +6,8 @@ import { path } from '../helpers/path';
 
 // const Index = lazy(() => import('../pages/_index'));
 const Dashboard = lazy(() => import('../pages/_dashboard'));
-const Transactions = lazy(() => import('../pages/_transactions'));
+// const Transactions = lazy(() => import('../pages/_transactions'));
+const Transactions = lazy(() => import('../pages/_trans'));
 const PaymentPages = lazy(() => import('../pages/_paymentPages'));
 const Page = lazy(() => import('../pages/_[pageId]'));
 const Login = lazy(() => import('../pages/_login'));

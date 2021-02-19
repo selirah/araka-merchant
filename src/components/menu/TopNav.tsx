@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Layout, Menu, Dropdown, Button, Row, Col } from 'antd';
 import { useDispatch } from 'react-redux';
 import {
@@ -13,7 +14,8 @@ import { path } from '../../helpers/path';
 import { logout } from '../../store/auth/actions';
 import { secure } from '../../utils/secure';
 import { AppDispatch } from '../../helpers/appDispatch';
-import { useTranslation } from 'react-i18next';
+import { appSelector } from '../../helpers/appSelector';
+import { menu, menuHeadings } from '../../helpers/menu';
 
 interface TopNavProps {
   collapsed: boolean;
@@ -28,13 +30,13 @@ export const TopNav: React.FC<TopNavProps> = ({ collapsed, toggle }) => {
   const dispatch: AppDispatch = useDispatch();
   const history = useHistory();
   const { Header } = Layout;
-  const [header, setHeader] = useState(<Link to={path.home}>Dashboard</Link>);
   const { pathname } = history.location;
   const { pageId } = useParams<ParamProps>();
   const { t, i18n } = useTranslation();
   const [active, setActive] = useState<string | null>(
     localStorage.getItem('i18nextLng')
   );
+  const { activeMenu, menuHeader } = appSelector((state) => state.utils);
 
   const logoutUser = () => {
     secure.removeAll();
@@ -46,36 +48,8 @@ export const TopNav: React.FC<TopNavProps> = ({ collapsed, toggle }) => {
     setActive(lang);
   };
 
-  useEffect(() => {
-    switch (pathname) {
-      case path.home:
-        setHeader(<Link to={path.home}>{t('topBar.home')}</Link>);
-        break;
-      case path.tranasctions:
-        setHeader(
-          <Link to={path.tranasctions}>{t('topBar.transactions')}</Link>
-        );
-        break;
-      case path.paymentPages:
-        setHeader(
-          <Link to={path.paymentPages}>{t('topBar.paymentPages')}</Link>
-        );
-        break;
-      case `${path.page}/${pageId}`:
-        setHeader(
-          <React.Fragment>
-            <Link to={path.paymentPages}>{t('topBar.page')}</Link>{' '}
-            <RightOutlined /> {pageId}
-          </React.Fragment>
-        );
-        break;
-    }
-  }, [pathname, pageId, t]);
-
-  function handleMenuClick() {}
-
   const menu = (
-    <Menu onClick={handleMenuClick}>
+    <Menu>
       <Menu.Item key="1" onClick={() => onChangeLanguage('en')}>
         EN
       </Menu.Item>
@@ -104,10 +78,10 @@ export const TopNav: React.FC<TopNavProps> = ({ collapsed, toggle }) => {
                 <FeatherIcons.Search className="top-nav-icons" size={25} />
               </div>
               <div className="topNavHeaders">
-                <h4>Dashboards</h4>
+                <h4>{menuHeader}</h4>
               </div>
               <div className="topNavHeaderSub">
-                <h4>Daily Overview</h4>
+                <h4>{activeMenu}</h4>
               </div>
             </div>
             <div className="user-box">

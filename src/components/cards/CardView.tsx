@@ -5,9 +5,10 @@ import { AreaChart } from '../chart/AreaChart';
 interface CardViewProps {
   value: any;
   title: string;
+  data: any;
 }
 
-export const CardView: React.FC<CardViewProps> = ({ value, title }) => {
+export const CardView: React.FC<CardViewProps> = ({ value, title, data }) => {
   return (
     <Card className="stats-padding">
       <div className="ecard">
@@ -17,7 +18,7 @@ export const CardView: React.FC<CardViewProps> = ({ value, title }) => {
           {/* <Statistic title={title} value={value} precision={2} /> */}
         </div>
         <div className="card-chunk">
-          <AreaChart />
+          <AreaChart info={data} />
         </div>
       </div>
     </Card>

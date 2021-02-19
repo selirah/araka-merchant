@@ -996,6 +996,11 @@ thead[class*='ant-table-thead'] th {
   border-radius: 20px;
 }
 
+.ant-menu-item-selected a,
+.ant-menu-item-selected a:hover {
+  color: #ffffff;
+}
+
 /** END SIDE BAR **/
 
 /** TOP BAR BEGINS **/
@@ -1198,6 +1203,10 @@ thead[class*='ant-table-thead'] th {
   padding: 50px;
 }
 
+.table-padding {
+  padding: 10px;
+}
+
 .profit-card {
   position: relative;
   padding: 20px;
@@ -1216,6 +1225,107 @@ thead[class*='ant-table-thead'] th {
   font-size: 2rem;
 }
 
+.filterButton {
+  border-radius: 20px;
+  background-color: #f55c29;
+  border: 1px solid #f55c29;
+  transition: all 0.5s ease-in-out;
+}
+
+.filterButton:hover {
+  background-color: rgba(245, 92, 41, 0.7);
+  border: 1px solid rgba(245, 92, 41, 0.7);
+}
+
+.resetButton {
+  border-radius: 20px;
+  background-color: #35b9e6;
+  border: 1px solid #35b9e6;
+  transition: all 0.5s ease-in-out;
+}
+
+.ant-collapse {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 0;
+  border-radius: 0;
+}
+
+.ant-collapse > .ant-collapse-item {
+  border-bottom: 0;
+}
+
+.ant-collapse-item:last-child > .ant-collapse-header {
+  border-radius: 0;
+}
+
+.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+  position: relative;
+  padding: 0;
+  padding-left: 0;
+}
+
+.ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
+  top: 6px;
+  left: 60px;
+  font-size: 12px;
+}
+
+.ant-collapse-content > .ant-collapse-content-box {
+  padding: 0;
+  padding-top: 16px;
+  padding-bottom: 10px;
+}
+
+.ant-collapse-content {
+  border-top: 0;
+}
+
+.margin-top-small {
+  margin-top: 15px;
+}
+
+.utility-buttons {
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+}
+
+.utility-buttons .export-buttons:first-child {
+  margin-right: 20px;
+}
+
+.utility-buttons .export-buttons {
+  background-color: #35b9e6;
+  border: 1px solid #35b9e6;
+  text-transform: uppercase;
+  border-radius: 20px;
+}
+
+.table-tag-channel {
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+.table-tag-merchant {
+  background-color: transparent;
+  border-radius: 10px;
+  border: 1px solid #76cca5;
+  color: #76cca5;
+  text-align: center;
+  font-weight: 700;
+}
+
+.ant-table-thead {
+  text-transform: uppercase;
+}
+
+.ant-table-row {
+  cursor: pointer;
+}
 /** END CONTENT **/
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
