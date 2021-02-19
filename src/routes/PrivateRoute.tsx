@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { Layout } from 'antd';
+import { Layout, Divider } from 'antd';
 import { appSelector } from '../helpers/appSelector';
 import { path } from '../helpers/path';
-import { SideBar } from '../components/menu/SideBar';
-import { TopBar } from '../components/menu/TopBar';
+// import { SideBar } from '../components/menu/SideBar';
+import { SideNav } from '../components/menu/SideNav';
+// import { TopBar } from '../components/menu/TopBar';
+import { TopNav } from '../components/menu/TopNav';
+import { FooterLayout as Footer } from '../components/menu/Footer';
+
+const { Content } = Layout;
 
 const PrivateRoute: React.FC<any> = ({ component: Component, ...rest }) => {
   const auth = appSelector((state) => state.auth);
@@ -22,10 +27,16 @@ const PrivateRoute: React.FC<any> = ({ component: Component, ...rest }) => {
         render={(props) =>
           isAuthenticated ? (
             <Layout className="min-height-vh">
-              <SideBar collapsed={collapsed} />
+              <SideNav collapsed={collapsed} onCollapsed={toggle} />
               <Layout className="site-layout">
-                <TopBar collapsed={collapsed} toggle={toggle} />
+                <TopNav collapsed={collapsed} toggle={toggle} />
                 <Component {...props} />
+                <div className="padding-box">
+                  <Content className="site-layout-background site-box">
+                    <Divider />
+                    <Footer />
+                  </Content>
+                </div>
               </Layout>
             </Layout>
           ) : (

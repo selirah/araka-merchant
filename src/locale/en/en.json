@@ -3,15 +3,25 @@
     "login": {
       "box-header": "Sign in to your account",
       "email": "Email",
-      "email-placeholder": "Enter your email address..",
+      "email-placeholder": "Your email",
       "email-error": "Please input your email!",
+      "email-valid": "Please a valid email!",
       "password": "Password",
-      "password-placeholder": "Enter your password..",
+      "password-placeholder": "Your password",
       "password-error": "Please input your password!",
       "remember-me": "Remember me",
       "btn-text": "Sign In",
       "btn-loading": "Signing in..",
-      "recaptcha": "Please verify that you are not a robot!"
+      "recaptcha": "Please verify that you are not a robot!",
+      "header": "Welcome to Araka Merchant Portal",
+      "forgot-password": "Forgot Password?",
+      "no-account": "Don't have an account?",
+      "sign-up": "Sign up",
+      "terms": "Terms of Use",
+      "compliance": "Compliance",
+      "support": "Support",
+      "contact": "Contact",
+      "privacy": "Privacy Policy"
     },
     "topBar": {
       "home": "Home",
@@ -26,7 +36,16 @@
       "paymentPages": "Payment Pages",
       "page": "Page",
       "payments": "Payments",
-      "commerce": "Commerce"
+      "commerce": "Commerce",
+      "dashboards": "Dashboards",
+      "reports": "Reports",
+      "merchantPayouts": "Merchant Payouts",
+      "VASProcessed": "VAS Processed",
+      "FEEReports": "FEE Reports",
+      "configurations": "Configurations",
+      "settings": "Settings",
+      "menuInfo": "Need assistance integrating Araka into your business model? Reach out to us!",
+      "apiAssistance": "API ASSISTANCE"
     },
     "dashboard": {
       "last30Days": "Last 30 days",

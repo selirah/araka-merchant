@@ -5,7 +5,7 @@ import { Login } from '../../interfaces';
 import { isEmpty } from '../../helpers/isEmpty';
 import logo from '../../images/logo_symbol.png';
 import { Link } from 'react-router-dom';
-// import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import ReCAPTCHA from 'react-google-recaptcha';
 
 interface LoginFormProps {
@@ -27,7 +27,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   singleError,
   onHandleRecaptcha,
 }) => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
   const ref = React.createRef<ReCAPTCHA>();
 
   return (
@@ -39,12 +39,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       </Row>
       <Row className="login-row-second">
         <Col>
-          <h4>Welcome to Araka Merchant Portal</h4>
+          <h4>{t('login.header')}</h4>
         </Col>
       </Row>
       <Row className="login-row-third">
         <Col className="pay-form-col">
-          <h1 className="login-header">Sign in to your account</h1>
+          <h1 className="login-header">{t('login.box-header')}</h1>
           {!isEmpty(error) ? (
             <Alert type="error" message={`${JSON.stringify(error)}`} />
           ) : null}
@@ -62,20 +62,23 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               rules={[
                 {
                   required: true,
+                  message: `${t('login.email-error')}`,
+                },
+                {
                   type: 'email',
-                  message: 'Please input your email!',
+                  message: `${t('login.email-valid')}`,
                 },
               ]}
             >
-              <Input placeholder="Your email" />
+              <Input placeholder={t('login.email-placeholder')} />
             </Form.Item>
             <Form.Item
               name="Password"
               rules={[
-                { required: true, message: 'Please input your password!' },
+                { required: true, message: `${t('login.password-error')}` },
               ]}
             >
-              <Input.Password placeholder="Your password" />
+              <Input.Password placeholder={t('login.password-placeholder')} />
             </Form.Item>
             <Form.Item>
               <ReCAPTCHA
@@ -90,19 +93,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 type="primary"
                 className="login-btn"
                 htmlType="submit"
-                disabled={isSubmit}
+                loading={isSubmit}
+                icon={isSubmit ? <LoadingOutlined /> : null}
               >
-                {!isSubmit ? (
-                  <React.Fragment>Sign In</React.Fragment>
-                ) : (
-                  <React.Fragment>
-                    <LoadingOutlined /> Signing in..
-                  </React.Fragment>
-                )}
+                {!isSubmit ? t('login.btn-text') : t('login.btn-loading')}
               </Button>
               <Row className="login-forgot">
                 <Col span={24}>
-                  <Link to="">Forgot Password?</Link>
+                  <Link to="">{t('login.forgot-password')}</Link>
                 </Col>
               </Row>
             </Form.Item>
@@ -112,7 +110,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       <Row className="login-row-third">
         <Col>
           <h4>
-            Don't have an account? <Link to="">Sign up</Link>
+            {t('login.no-account')} <Link to="">{t('login.sign-up')}</Link>
           </h4>
         </Col>
       </Row>
@@ -120,22 +118,23 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         <div>
           <h4>
             <span>
-              <Link to="">Terms of Use</Link>
+              <Link to="">{t('login.terms')}</Link>
             </span>
             <span>
-              <Link to="">Compliance</Link>
+              <Link to="">{t('login.compliance')}</Link>
             </span>
             <span>
-              <Link to="">Support</Link>
+              <Link to="">{t('login.support')}</Link>
             </span>
             <span>
-              <Link to="">Contact</Link>
+              <Link to="">{t('login.contact')}</Link>
             </span>
           </h4>
         </div>
         <div>
           <h4>
-            Copyright &copy; 2020-{new Date().getFullYear()} | Privacy Policy
+            Copyright &copy; 2020-{new Date().getFullYear()} |{' '}
+            {t('login.privacy')}
           </h4>
         </div>
       </Row>
