@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Layout, Row, Col, Divider, Button, message, Spin, Space } from 'antd';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
+import { Layout, Row, Button, message, Spin } from 'antd';
 import { PlusOutlined, LoadingOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
-import { withRouter } from 'react-router-dom';
-import { EmptyBox } from '../components/payment-pages/EmptyBox';
-import { PaymentTypeModal } from '../components/payment-pages/PaymentTypeModal';
-import { FormModal } from '../components/payment-pages/FormModal';
+import { withRouter, useHistory } from 'react-router-dom';
 import { PaymentPage, Page } from '../interfaces';
 import {
   getPaymentPagesRequest,
@@ -16,12 +13,18 @@ import {
   clearPaymentPages,
 } from '../store/payment-pages';
 import { isEmpty } from '../helpers/isEmpty';
-import { Pages } from '../components/payment-pages/Pages';
+import { path } from '../helpers/path';
 import { useTranslation } from 'react-i18next';
 
-interface PaymentPagesProps {}
+const EmptyBox = lazy(() => import('../components/payment-pages/EmptyBox'));
+const PaymentTypeModal = lazy(
+  () => import('../components/payment-pages/PaymentTypeModal')
+);
+const FormModal = lazy(() => import('../components/payment-pages/FormModal'));
+const FilterMenu = lazy(() => import('../components/payment-pages/FilterMenu'));
+const Pages = lazy(() => import('../components/payment-pages/Pages'));
 
-const PaymentPages: React.FC<PaymentPagesProps> = () => {
+const PaymentPages = () => {
   const dispatch: AppDispatch = useDispatch();
   const page = appSelector((state) => state.page);
   const { Content } = Layout;
@@ -47,6 +50,7 @@ const PaymentPages: React.FC<PaymentPagesProps> = () => {
   const [isCopied, setIsCopied] = useState(false);
   const [processId, setProcessId] = useState('');
   const { t } = useTranslation();
+  const history = useHistory();
 
   useEffect(() => {
     const { pages, loading } = page;
@@ -88,6 +92,10 @@ const PaymentPages: React.FC<PaymentPagesProps> = () => {
   const choosePaymentPage = () => {
     onTogglePaymentTypeModal();
     onToggleFormModal();
+  };
+
+  const onClickRow = (pageId: number) => {
+    history.push(`${path.page}/${pageId}`);
   };
 
   const beforeUpload = (file: File): boolean => {
@@ -158,11 +166,17 @@ const PaymentPages: React.FC<PaymentPagesProps> = () => {
     }
   };
 
+  const onPreviewClick = (processId: string) => {
+    const { location } = window;
+    const path = `${location.protocol}//${location.host}/payment/${processId}`;
+    window.open(path, '_blank');
+  };
+
   let render: React.ReactNode;
   if (loading) {
     render = (
       <div className="spinner">
-        <Spin size="large" />
+        <Spin size="default" />
       </div>
     );
   }
@@ -191,38 +205,39 @@ const PaymentPages: React.FC<PaymentPagesProps> = () => {
         copyLink={copyLink}
         isCopied={isCopied}
         processId={processId}
+        onClickRow={onClickRow}
+        onPreviewClick={onPreviewClick}
       />
     );
   }
 
   return (
-    <Content
-      className="site-layout-background"
-      style={{
-        margin: '24px 16px',
-        padding: 24,
-        minHeight: 280,
-      }}
-    >
-      <Row>
-        <Col span={24}>
-          <Space className="f-right">
-            <Button
-              onClick={() => onTogglePaymentTypeModal()}
-              type="primary"
-              icon={<PlusOutlined />}
-            >
-              {t('paymentPages.newPageText')}
-            </Button>
-            <Button onClick={() => reloadPages()}>
-              {t('paymentPages.refresh')}
-            </Button>
-          </Space>
-        </Col>
-        <Divider />
-        <Col span={24}>
+    <div className="padding-box">
+      <Content className="site-layout-background site-box">
+        <Suspense fallback={<Spin />}>
+          <FilterMenu />
+          <div className="margin-top">
+            <Row style={{ position: 'relative' }}>
+              <h4 className="transaction-chart-text">Payment Pages</h4>
+              <div className="utility-buttons">
+                <Button
+                  type="primary"
+                  className="export-buttons"
+                  onClick={() => onTogglePaymentTypeModal()}
+                >
+                  {t('paymentPages.newPageText')}
+                </Button>
+                <Button
+                  type="primary"
+                  className="export-buttons"
+                  onClick={() => reloadPages()}
+                >
+                  {t('paymentPages.refresh')}
+                </Button>
+              </div>
+            </Row>
+          </div>
           {render}
-
           <PaymentTypeModal
             choosePaymentPage={choosePaymentPage}
             onTogglePaymentTypeModal={onTogglePaymentTypeModal}
@@ -239,9 +254,9 @@ const PaymentPages: React.FC<PaymentPagesProps> = () => {
             onSubmit={onSubmit}
             isSubmit={isSubmit}
           />
-        </Col>
-      </Row>
-    </Content>
+        </Suspense>
+      </Content>
+    </div>
   );
 };
 

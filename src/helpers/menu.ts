@@ -9,6 +9,8 @@ export const menu = {
   VAS_PROCESSED: 'VAS Processed',
   FEE_REPORTS: 'Fee Reports',
   SETTINGS: 'Settings',
+  MY_PAYOUTS: 'My Payouts',
+  MERCHANT_OVERVIEW: 'Merchant Overview',
 };
 
 export const menuHeadings = {

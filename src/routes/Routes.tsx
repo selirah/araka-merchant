@@ -4,9 +4,7 @@ import { PrivateRoute } from './PrivateRoute';
 import { Spin } from 'antd';
 import { path } from '../helpers/path';
 
-// const Index = lazy(() => import('../pages/_index'));
 const Dashboard = lazy(() => import('../pages/_dashboard'));
-// const Transactions = lazy(() => import('../pages/_transactions'));
 const Transactions = lazy(() => import('../pages/_trans'));
 const PaymentPages = lazy(() => import('../pages/_paymentPages'));
 const Page = lazy(() => import('../pages/_[pageId]'));
@@ -15,6 +13,10 @@ const Login = lazy(() => import('../pages/_login'));
 const Pay = lazy(() => import('../pages/_[pay]'));
 const GenericPay = lazy(() => import('../pages/_[genericPay]'));
 const ExamplePay = lazy(() => import('../pages/_examplePay'));
+const MyPayouts = lazy(() => import('../pages/_myPayouts'));
+const MerchantsOverview = lazy(() => import('../pages/_merchantsOverview'));
+const MerchantsPayouts = lazy(() => import('../pages/_merchantsPayouts'));
+const VASProcessed = lazy(() => import('../pages/_vasProcessed'));
 
 const Routes: React.FC = () => {
   return (
@@ -40,6 +42,22 @@ const Routes: React.FC = () => {
             component={PaymentPages}
           />
           <PrivateRoute exact path={`${path.page}/:pageId`} component={Page} />
+          <PrivateRoute exact path={path.myPayouts} component={MyPayouts} />
+          <PrivateRoute
+            exact
+            path={path.merchantsOverview}
+            component={MerchantsOverview}
+          />
+          <PrivateRoute
+            exact
+            path={path.merchantPayouts}
+            component={MerchantsPayouts}
+          />
+          <PrivateRoute
+            exact
+            path={path.vasProcessed}
+            component={VASProcessed}
+          />
           <Route exact path={`${path.pay}/:processId`} component={Pay} />
           <Route
             exact

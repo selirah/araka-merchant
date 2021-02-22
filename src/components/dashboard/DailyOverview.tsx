@@ -23,6 +23,7 @@ const DailyOverview: React.FC<DailyOverviewProps> = ({
           </div>
         </Col>
       </Row>
+
       <div className="margin-top">
         <Row gutter={20}>
           <Col span={24}>

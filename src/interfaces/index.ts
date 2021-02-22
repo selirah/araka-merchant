@@ -12,3 +12,7 @@ export * from './OrderResponse';
 export * from './Page';
 export * from './Search';
 export * from './DataStream';
+export * from './MyPayout';
+export * from './MerchantOverview';
+export * from './MerchantPayout';
+export * from './VASProcessed';

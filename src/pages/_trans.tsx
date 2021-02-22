@@ -1,8 +1,22 @@
-import React, { lazy, Suspense, useState } from 'react';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Layout, Spin } from 'antd';
+import { Layout, Spin, Row, Button } from 'antd';
+import { useDispatch } from 'react-redux';
+import { appSelector } from '../helpers/appSelector';
+import { AppDispatch } from '../helpers/appDispatch';
+// import { Transactions as Trans } from '../components/transactions/Transactions';
+import {
+  getTransactions,
+  clearTransactions,
+  exportTranxRequest,
+} from '../store/transactions';
+import { isEmpty } from '../helpers/isEmpty';
+import { Search, TransactionHistory } from '../interfaces';
+// import { transactionStatus, timeZones } from '../helpers/constants';
+// import moment from 'moment-timezone';
+import { useTranslation } from 'react-i18next';
+
 import { MonthlyArea } from '../mock/MonthlyOverview';
-import { TransactionTableData } from '../mock/TransactionTableData';
 
 const { Content } = Layout;
 
@@ -22,16 +36,98 @@ const TransactionDetail = lazy(
   () => import('../components/transactions/TransactionDetail')
 );
 
+const EmptyBox = lazy(() => import('../components/transactions/EmptyBox'));
+
 const Transactions = () => {
   const [switchView, setSwitchView] = useState(false);
+  const dispatch: AppDispatch = useDispatch();
+  const { transactions, loading, isExporting } = appSelector(
+    (state) => state.transaction
+  );
+  const [transactionData, setTransactionData] = useState<TransactionHistory[]>(
+    transactions
+  );
+  const { t } = useTranslation();
+  const [channelSearch, setChannelSearch] = useState('');
+  const [searchValue, setSearchValue] = useState('');
+  const [statusSearch, setStatusSearch] = useState('');
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
+  const [exportType, setExportType] = useState('');
+  const [transaction, setTransaction] = useState<TransactionHistory | null>(
+    null
+  );
 
   const onClickRow = (transactionID: number) => {
     setSwitchView(!switchView);
-    console.log(transactionID);
+    const trx = transactions.find((t) => t.transactionId === transactionID);
+    if (trx !== undefined) {
+      setTransaction(trx);
+    }
   };
 
   const onCloseScreen = () => {
     setSwitchView(!switchView);
+  };
+
+  useEffect(() => {
+    if (isEmpty(transactions) && !loading) {
+      dispatch(getTransactions());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    setTransactionData(transactions);
+  }, [transactions]);
+
+  const reloadTransaction = () => {
+    dispatch(clearTransactions());
+    dispatch(getTransactions());
+  };
+
+  let render: React.ReactNode;
+  if (loading) {
+    render = (
+      <div className="spinner">
+        <Spin size="large" />
+      </div>
+    );
+  }
+  if (!loading && isEmpty(transactionData)) {
+    render = (
+      <EmptyBox
+        header={`${t('transactions.noTransactions')}`}
+        description={`${t('transactions.noTransDesc')}`}
+      />
+    );
+  }
+
+  if (!loading && !isEmpty(transactionData)) {
+    render = (
+      <TransactionTable
+        transactionHistory={transactionData}
+        onClickRow={onClickRow}
+      />
+    );
+  }
+
+  const onExportClick = (type: string) => {
+    setExportType(type);
+    const payload: Search = {
+      ChannelSearch: channelSearch,
+      DateSearch: {
+        from: fromDate,
+        to: toDate,
+      },
+      ExportType: type,
+      SearchValue: searchValue,
+      StatusSearch:
+        statusSearch.charAt(0).toUpperCase() +
+        statusSearch.slice(1).toLowerCase(),
+    };
+    // console.log(payload);
+    dispatch(exportTranxRequest(payload));
   };
 
   return (
@@ -41,14 +137,50 @@ const Transactions = () => {
           {!switchView ? (
             <>
               <TransactionFilters />
-              <TransactionSummaryCards areachartdata={MonthlyArea} />
-              <TransactionTable
-                transactionHistory={TransactionTableData}
-                onClickRow={onClickRow}
-              />
+              {!isEmpty(transactionData) ? (
+                <TransactionSummaryCards areachartdata={MonthlyArea} />
+              ) : null}
+              <div className="margin-top-small">
+                <Row style={{ position: 'relative' }}>
+                  <h4 className="transaction-chart-text">Transactions Chart</h4>
+                  <div className="utility-buttons">
+                    {!isEmpty(transactionData) ? (
+                      <>
+                        <Button
+                          type="primary"
+                          className="export-buttons"
+                          onClick={() => onExportClick('EXCEL')}
+                          loading={isExporting && exportType === 'EXCEL'}
+                        >
+                          Export to Excel
+                        </Button>
+                        <Button
+                          type="primary"
+                          className="export-buttons"
+                          onClick={() => onExportClick('PDF')}
+                          loading={isExporting && exportType === 'PDF'}
+                        >
+                          Export to PDF
+                        </Button>
+                      </>
+                    ) : null}
+                    <Button
+                      type="primary"
+                      className="export-buttons"
+                      onClick={() => reloadTransaction()}
+                    >
+                      {t('transactions.refresh')}
+                    </Button>
+                  </div>
+                </Row>
+                {render}
+              </div>
             </>
           ) : (
-            <TransactionDetail onCloseScreen={onCloseScreen} />
+            <TransactionDetail
+              onCloseScreen={onCloseScreen}
+              transaction={transaction!}
+            />
           )}
         </Suspense>
       </Content>

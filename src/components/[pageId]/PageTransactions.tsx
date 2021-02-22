@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, Row, Col, Spin } from 'antd';
+import { Tabs, Spin } from 'antd';
 import { EmptyTransactions } from './EmptyTransactions';
 import { TransactionHistory } from '../../interfaces';
 import { isEmpty } from '../../helpers/isEmpty';
@@ -35,14 +35,10 @@ export const PageTransactions: React.FC<PageTransactionsProps> = ({
   }
 
   return (
-    <Row>
-      <Col span={24}>
-        <Tabs defaultActiveKey="1">
-          <TabPane tab="Recent Payments" key="1">
-            {render}
-          </TabPane>
-        </Tabs>
-      </Col>
-    </Row>
+    <Tabs defaultActiveKey="1">
+      <TabPane tab="Recent Payments" key="1">
+        {render}
+      </TabPane>
+    </Tabs>
   );
 };

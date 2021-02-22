@@ -1,12 +1,11 @@
 import React from 'react';
-import { Row, Col, Select, DatePicker, Input, Button, Collapse } from 'antd';
+import { Row, Col, DatePicker, Input, Button, Collapse } from 'antd';
 
-interface FilterMenuProps {}
+interface FiltersProps {}
 
-const { Option } = Select;
 const { Panel } = Collapse;
 
-const FilterMenu: React.FC<FilterMenuProps> = () => {
+const Filters: React.FC<FiltersProps> = () => {
   return (
     <Collapse style={{ marginTop: '5px' }}>
       <Panel
@@ -21,26 +20,11 @@ const FilterMenu: React.FC<FilterMenuProps> = () => {
       >
         <Row gutter={10}>
           <Col span={6}>
-            <Select placeholder="Status: Default=All" style={{ width: '100%' }}>
-              <Option value="">All</Option>
-              <Option value="Approved">Approved</Option>
-              <Option value="Declined">Declined</Option>
-              <Option value="Canceled">Canceled</Option>
-            </Select>
-          </Col>
-          <Col span={6}>
-            <Select placeholder="Type: Default=All" style={{ width: '100%' }}>
-              <Option value="">All</Option>
-              <Option value="OT Payment">OT Payment</Option>
-              <Option value="Subscription">Subscription</Option>
-            </Select>
-          </Col>
-          <Col span={6}>
             <DatePicker
               style={{ width: '100%' }}
               format="MMMM D, YYYY"
               allowClear
-              placeholder="Created At: From"
+              placeholder="Payout Date: From"
             />
           </Col>
           <Col span={6}>
@@ -48,14 +32,17 @@ const FilterMenu: React.FC<FilterMenuProps> = () => {
               style={{ width: '100%' }}
               format="MMMM D, YYYY"
               allowClear
-              placeholder="Created At: To"
+              placeholder="Payout Date: To"
+            />
+          </Col>
+          <Col span={12}>
+            <Input
+              placeholder="Balance before/Balance after/Amount/Fee"
+              style={{ width: '100%' }}
             />
           </Col>
         </Row>
         <Row style={{ marginTop: '10px' }} gutter={10}>
-          <Col span={6}>
-            <Input placeholder="Page name/Amount" style={{ width: '100%' }} />
-          </Col>
           <Col span={6}>
             <Row gutter={5}>
               <Col span={6}>
@@ -76,4 +63,4 @@ const FilterMenu: React.FC<FilterMenuProps> = () => {
   );
 };
 
-export default FilterMenu;
+export default Filters;

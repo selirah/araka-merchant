@@ -45,7 +45,9 @@
       "configurations": "La configurations",
       "settings": "Réglages",
       "menuInfo": "Besoin d'aide pour intégrer Araka dans votre modèle commercial? Contactez-nous!",
-      "apiAssistance": "ASSISTANCE API"
+      "apiAssistance": "ASSISTANCE API",
+      "myPayout": "Mes paiements",
+      "merchantOverview": "Présentation du marchand"
     },
     "dashboard": {
       "last30Days": "Les 30 derniers jours",

@@ -26,7 +26,7 @@ interface FormModalProps {
   isSubmit: boolean;
 }
 
-export const FormModal: React.FC<FormModalProps> = ({
+const FormModal: React.FC<FormModalProps> = ({
   showFormModal,
   onToggleFormModal,
   beforeUpload,
@@ -185,3 +185,5 @@ export const FormModal: React.FC<FormModalProps> = ({
     </Modal>
   );
 };
+
+export default FormModal;

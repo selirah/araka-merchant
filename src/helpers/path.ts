@@ -7,4 +7,8 @@ export const path = {
   pay: '/pay',
   example: '/example-pay',
   payment: '/payment',
+  myPayouts: '/my-payouts',
+  merchantsOverview: '/merchants-overview',
+  vasProcessed: '/vas-processed',
+  merchantPayouts: '/merchants-payouts',
 };

@@ -15,7 +15,7 @@ type ModalProps = {
   description: React.ReactNode;
 };
 
-export const PaymentTypeModal: React.FC<PaymentTypeModalProps> = ({
+const PaymentTypeModal: React.FC<PaymentTypeModalProps> = ({
   choosePaymentPage,
   showPaymentTypeModal,
   onTogglePaymentTypeModal,
@@ -72,3 +72,5 @@ export const PaymentTypeModal: React.FC<PaymentTypeModalProps> = ({
     </Modal>
   );
 };
+
+export default PaymentTypeModal;

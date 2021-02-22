@@ -1,12 +1,12 @@
 import React from 'react';
-import { Row, Col, Select, DatePicker, Input, Button, Collapse } from 'antd';
+import { Row, Col, DatePicker, Input, Button, Collapse, Select } from 'antd';
 
-interface TransactionFiltersProps {}
+interface FiltersProps {}
 
-const { Option } = Select;
 const { Panel } = Collapse;
+const { Option } = Select;
 
-const TransactionFilters: React.FC<TransactionFiltersProps> = () => {
+const Filters: React.FC<FiltersProps> = () => {
   return (
     <Collapse style={{ marginTop: '5px' }}>
       <Panel
@@ -35,7 +35,7 @@ const TransactionFilters: React.FC<TransactionFiltersProps> = () => {
             >
               <Option value="">All</Option>
               <Option value="Card">Card</Option>
-              <Option value="mPSA">mPESA</Option>
+              <Option value="mPESA">mPESA</Option>
             </Select>
           </Col>
           <Col span={6}>
@@ -56,21 +56,11 @@ const TransactionFilters: React.FC<TransactionFiltersProps> = () => {
           </Col>
         </Row>
         <Row style={{ marginTop: '10px' }} gutter={10}>
-          <Col span={6}>
+          <Col span={8}>
             <Input
-              placeholder="Reference/Transaction ID/Customer"
+              placeholder="Reference/Transactions ID/Customer/Merchant"
               style={{ width: '100%' }}
             />
-          </Col>
-          <Col span={6}>
-            <Select
-              placeholder="Merchant: Default=All"
-              style={{ width: '100%' }}
-            >
-              <Option value="">All</Option>
-              <Option value="Card">LEON Hotel</Option>
-              <Option value="mPSA">INRB</Option>
-            </Select>
           </Col>
           <Col span={6}>
             <Row gutter={5}>
@@ -92,4 +82,4 @@ const TransactionFilters: React.FC<TransactionFiltersProps> = () => {
   );
 };
 
-export default TransactionFilters;
+export default Filters;

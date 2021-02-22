@@ -1,37 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Layout, Menu, Dropdown, Button, Row, Col } from 'antd';
 import { useDispatch } from 'react-redux';
-import {
-  UserOutlined,
-  RightOutlined,
-  DownOutlined,
-  BellOutlined,
-} from '@ant-design/icons';
+import { UserOutlined, DownOutlined, BellOutlined } from '@ant-design/icons';
 import * as FeatherIcons from 'react-feather';
-import { path } from '../../helpers/path';
 import { logout } from '../../store/auth/actions';
 import { secure } from '../../utils/secure';
 import { AppDispatch } from '../../helpers/appDispatch';
 import { appSelector } from '../../helpers/appSelector';
-import { menu, menuHeadings } from '../../helpers/menu';
 
 interface TopNavProps {
   collapsed: boolean;
   toggle(): void;
 }
 
-interface ParamProps {
-  pageId: string;
-}
-
 export const TopNav: React.FC<TopNavProps> = ({ collapsed, toggle }) => {
   const dispatch: AppDispatch = useDispatch();
-  const history = useHistory();
   const { Header } = Layout;
-  const { pathname } = history.location;
-  const { pageId } = useParams<ParamProps>();
   const { t, i18n } = useTranslation();
   const [active, setActive] = useState<string | null>(
     localStorage.getItem('i18nextLng')

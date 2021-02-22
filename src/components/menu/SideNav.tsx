@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, useParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Layout, Menu, Image, Button } from 'antd';
 import * as FeatherIcons from 'react-feather';
 import { useDispatch } from 'react-redux';
@@ -17,17 +17,10 @@ interface SideNavProps {
   onCollapsed(): void;
 }
 
-interface ParamProps {
-  pageId: string;
-}
-
 const { Sider } = Layout;
 
 export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
-  const history = useHistory();
   const dispatch: AppDispatch = useDispatch();
-  const { pathname } = history.location;
-  const { pageId } = useParams<ParamProps>();
   const { t } = useTranslation();
   const utils = appSelector((state) => state.utils);
   const [activeMenu, setActiveMenu] = useState(utils.activeMenu);
@@ -129,14 +122,45 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                 size={14}
               />
             }
+            onClick={() =>
+              switchMenu(menu.PAYMENT_PAGES, menuHeadings.COMMERCE)
+            }
           >
-            {t('sideBar.paymentPages')}
+            <Link to={path.paymentPages}>{t('sideBar.paymentPages')}</Link>
           </Menu.Item>
         </Menu.ItemGroup>
         <Menu.ItemGroup
           key="g4"
           title={t('sideBar.reports').toLocaleUpperCase()}
         >
+          <Menu.Item
+            key={menu.MY_PAYOUTS}
+            icon={
+              <FeatherIcons.CreditCard
+                className="ant-menu-item-icon anticon"
+                size={14}
+              />
+            }
+            onClick={() => switchMenu(menu.MY_PAYOUTS, menuHeadings.REPORTS)}
+          >
+            <Link to={path.myPayouts}>{t('sideBar.myPayout')}</Link>
+          </Menu.Item>
+          <Menu.Item
+            key={menu.MERCHANT_OVERVIEW}
+            icon={
+              <FeatherIcons.Users
+                className="ant-menu-item-icon anticon"
+                size={14}
+              />
+            }
+            onClick={() =>
+              switchMenu(menu.MERCHANT_OVERVIEW, menuHeadings.REPORTS)
+            }
+          >
+            <Link to={path.merchantsOverview}>
+              {t('sideBar.merchantOverview')}
+            </Link>
+          </Menu.Item>
           <Menu.Item
             key={menu.MERCHANT_PAYOUTS}
             icon={
@@ -145,8 +169,13 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                 size={14}
               />
             }
+            onClick={() =>
+              switchMenu(menu.MERCHANT_PAYOUTS, menuHeadings.REPORTS)
+            }
           >
-            {t('sideBar.merchantPayouts')}
+            <Link to={path.merchantPayouts}>
+              {t('sideBar.merchantPayouts')}
+            </Link>
           </Menu.Item>
           <Menu.Item
             key={menu.VAS_PROCESSED}
@@ -156,8 +185,9 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                 size={14}
               />
             }
+            onClick={() => switchMenu(menu.VAS_PROCESSED, menuHeadings.REPORTS)}
           >
-            {t('sideBar.VASProcessed')}
+            <Link to={path.vasProcessed}>{t('sideBar.VASProcessed')}</Link>
           </Menu.Item>
           <Menu.Item
             key={menu.FEE_REPORTS}

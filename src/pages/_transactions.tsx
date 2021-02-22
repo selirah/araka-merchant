@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
-import { EmptyBox } from '../components/transactions/EmptyBox';
+import EmptyBox from '../components/transactions/EmptyBox';
 import { Transactions as Trans } from '../components/transactions/Transactions';
 import { FilterBoard } from '../components/transactions/FilterBoard';
 import {
@@ -42,7 +42,6 @@ const Transactions: React.FC<TransactionsProps> = () => {
     if (isEmpty(transactions) && !loading) {
       dispatch(getTransactions());
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

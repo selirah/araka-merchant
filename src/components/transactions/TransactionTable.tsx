@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Card, Button, Tag, Table } from 'antd';
+import { Row, Col, Card, Tag, Table } from 'antd';
 import moment from 'moment-timezone';
 import { TransactionHistory } from '../../interfaces/TransactionHistory';
 import { transactionStatus, timeZones } from '../../helpers/constants';
@@ -121,7 +121,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
 
   for (let transaction of transactionHistory) {
     dataSource.push({
-      key: transaction.transactionId,
+      key: Math.random(),
       amount: `${transaction.currency} ${transaction.amountPaid.toFixed(2)}`,
       customer: transaction.customer,
       transactionId: transaction.transactionId,
@@ -138,35 +138,22 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
   }
 
   return (
-    <div className="margin-top-small">
-      <Row style={{ position: 'relative' }}>
-        <h4 className="transaction-chart-text">Transactions Chart</h4>
-        <div className="utility-buttons">
-          <Button type="primary" className="export-buttons">
-            Export to Excel
-          </Button>
-          <Button type="primary" className="export-buttons">
-            Export to PDF
-          </Button>
-        </div>
-      </Row>
-      <Row gutter={20}>
-        <Col span={24}>
-          <Card>
-            <div className="table-padding">
-              <Table
-                dataSource={dataSource}
-                columns={columns}
-                pagination={{ pageSize: 15 }}
-                onRow={(t: TT) => ({
-                  onClick: () => onClickRow(t.transactionId),
-                })}
-              />
-            </div>
-          </Card>
-        </Col>
-      </Row>
-    </div>
+    <Row gutter={20}>
+      <Col span={24}>
+        <Card>
+          <div className="table-padding">
+            <Table
+              dataSource={dataSource}
+              columns={columns}
+              pagination={{ pageSize: 15 }}
+              onRow={(t: TT) => ({
+                onClick: () => onClickRow(t.transactionId),
+              })}
+            />
+          </div>
+        </Card>
+      </Col>
+    </Row>
   );
 };
 
