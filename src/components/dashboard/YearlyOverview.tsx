@@ -3,16 +3,32 @@ import { Row, Col, Card } from 'antd';
 import { CardView } from '../cards/CardView';
 import { BarChart } from '../chart/BarChart';
 import { ProfitCard } from '../cards/ProfitCard';
+import { TransactionHistory } from '../../interfaces';
+import {
+  CalculateTransactionTotals,
+  GetAreaPoints,
+} from '../../helpers/functions';
 
 interface YearlyOverviewProps {
   barchartdata: any;
   areachartdata: any;
+  transactions: TransactionHistory[];
 }
 
 const YearlyOverview: React.FC<YearlyOverviewProps> = ({
   barchartdata,
   areachartdata,
+  transactions,
 }) => {
+  const { total, approved, declined } = CalculateTransactionTotals(
+    transactions,
+    'yearly'
+  );
+  const { trxAreaChart, approvedAreaChart, declinedAreaChart } = GetAreaPoints(
+    transactions,
+    'yearly'
+  );
+
   return (
     <>
       <Row gutter={10}>
@@ -30,22 +46,22 @@ const YearlyOverview: React.FC<YearlyOverviewProps> = ({
               <Col span={8} sm={24} md={8} xs={24}>
                 <CardView
                   value="Transactions"
-                  title="50000"
-                  data={areachartdata}
+                  title={`${total}`}
+                  data={trxAreaChart}
                 />
               </Col>
               <Col span={8} sm={24} md={8} xs={24}>
                 <CardView
                   value="Approved"
-                  title="$826,056.12"
-                  data={areachartdata}
+                  title={`$${approved.toFixed(2)}`}
+                  data={approvedAreaChart}
                 />
               </Col>
               <Col span={8} sm={24} md={8} xs={24}>
                 <CardView
                   value="Declined"
-                  title="$50,056.12"
-                  data={areachartdata}
+                  title={`$${declined.toFixed(2)}`}
+                  data={declinedAreaChart}
                 />
               </Col>
             </Row>

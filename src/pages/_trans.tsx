@@ -9,6 +9,7 @@ import {
   getTransactions,
   clearTransactions,
   exportTranxRequest,
+  downloadReceiptRequest,
 } from '../store/transactions';
 import { isEmpty } from '../helpers/isEmpty';
 import { Search, TransactionHistory } from '../interfaces';
@@ -41,9 +42,12 @@ const EmptyBox = lazy(() => import('../components/transactions/EmptyBox'));
 const Transactions = () => {
   const [switchView, setSwitchView] = useState(false);
   const dispatch: AppDispatch = useDispatch();
-  const { transactions, loading, isExporting } = appSelector(
-    (state) => state.transaction
-  );
+  const {
+    transactions,
+    loading,
+    isExporting,
+    isRequestingDownload,
+  } = appSelector((state) => state.transaction);
   const [transactionData, setTransactionData] = useState<TransactionHistory[]>(
     transactions
   );
@@ -84,6 +88,10 @@ const Transactions = () => {
   const reloadTransaction = () => {
     dispatch(clearTransactions());
     dispatch(getTransactions());
+  };
+
+  const onDownloadReceiptClick = (transactionId: number): void => {
+    dispatch(downloadReceiptRequest(transactionId));
   };
 
   let render: React.ReactNode;
@@ -180,6 +188,8 @@ const Transactions = () => {
             <TransactionDetail
               onCloseScreen={onCloseScreen}
               transaction={transaction!}
+              isDownloading={isRequestingDownload}
+              onDownloadReceiptClick={onDownloadReceiptClick}
             />
           )}
         </Suspense>

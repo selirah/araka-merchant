@@ -56,7 +56,7 @@ export const DailyBar = {
         15,
         20,
       ],
-      backgroundColor: '#001737',
+      backgroundColor: '#f55c29',
     },
     {
       label: 'APPROVED TRANSACTIONS',
@@ -86,7 +86,7 @@ export const DailyBar = {
         25,
         30,
       ],
-      backgroundColor: '#1ce1ac',
+      backgroundColor: '#35b9e6',
     },
   ],
 

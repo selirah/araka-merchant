@@ -19,7 +19,7 @@ export const YearlyBar = {
     {
       label: 'DECLINED/CANCELLED TRANSACTIONS',
       data: [100, 400, 300, 400, 600, 550, 450, 350, 300, 200, 150, 200],
-      backgroundColor: '#001737',
+      backgroundColor: '#f55c29',
     },
     {
       label: 'APPROVED TRANSACTIONS',
@@ -37,7 +37,7 @@ export const YearlyBar = {
         3200,
         9922,
       ],
-      backgroundColor: '#1ce1ac',
+      backgroundColor: '#35b9e6',
     },
   ],
 

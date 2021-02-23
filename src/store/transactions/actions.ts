@@ -34,3 +34,12 @@ export const exportTranxSuccess = (data: DataStream) =>
 
 export const exportTranxFailure = (error: any) =>
   action(TransactionTypes.EXPORT_TRANSACTIONS_FAILURE, error);
+
+export const downloadReceiptRequest = (transactionId: number) =>
+  action(TransactionTypes.DOWNLOAD_RECEIPT_REQUEST, transactionId);
+
+export const downloadReceiptSuccess = (data: DataStream) =>
+  action(TransactionTypes.DOWNLOAD_RECEIPT_SUCCESS, data);
+
+export const downloadReceiptFailure = (error: any) =>
+  action(TransactionTypes.DOWNLOAD_RECEIPT_FAILURE, error);

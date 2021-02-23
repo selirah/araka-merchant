@@ -10,7 +10,6 @@ import {
   Button,
   Select,
 } from 'antd';
-import { PlusOutlined, LoadingOutlined } from '@ant-design/icons';
 import { PaymentPage } from '../../interfaces';
 import { useTranslation } from 'react-i18next';
 
@@ -57,8 +56,7 @@ const FormModal: React.FC<FormModalProps> = ({
           key="submit"
           htmlType="submit"
           type="primary"
-          icon={isSubmit ? <LoadingOutlined /> : <PlusOutlined />}
-          disabled={isSubmit ? true : false}
+          loading={isSubmit}
         >
           {t('paymentPages.formModal.btnText')}
         </Button>,

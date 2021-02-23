@@ -1,98 +1,182 @@
-import { Currency, Category, Product } from '../interfaces';
+import { TransactionHistory } from '../interfaces';
+import { transactionStatus } from './constants';
+import moment from 'moment';
 
-export const getCurrency = (
-  currencies: Currency[],
-  currencyCodeId: number
-): string => {
-  const currency = currencies.find((c) => c.numericCode === currencyCodeId);
-  if (currency !== undefined) {
-    return currency.code;
-  } else {
-    return 'none';
+export const CalculateTransactionTotals = (
+  transactions: TransactionHistory[],
+  review: string
+) => {
+  let total = 0,
+    approved = 0.0,
+    declined = 0.0;
+
+  switch (review) {
+    case 'yearly':
+      total = transactions.length;
+      for (let trx of transactions) {
+        switch (trx.status) {
+          case transactionStatus.APPROVED:
+            approved = approved + trx.amountPaid;
+            break;
+          case transactionStatus.DECLINED:
+            declined = declined + trx.amountPaid;
+            break;
+        }
+      }
+      break;
   }
+
+  return { total, approved, declined };
 };
 
-export const getCategoryName = (
-  categories: Category[],
-  categoryId: number
-): string => {
-  const category = categories.find((c) => c.productCategoryId === categoryId);
-  if (category !== undefined) {
-    return category.name;
-  } else {
-    return 'none';
+export const GetAreaPoints = (
+  transactions: TransactionHistory[],
+  review: string
+) => {
+  let labels = getLabels(review)!;
+  let trxAreaChart,
+    approvedAreaChart,
+    declinedAreaChart = {};
+  let trxData = [];
+  let trxApproved = [];
+  let trxDeclined = [];
+
+  switch (review) {
+    case 'yearly':
+      for (let lbl of labels) {
+        const { total, approved, declined } = calculateYearValues(
+          transactions,
+          lbl
+        );
+        trxData.push(total);
+        trxApproved.push(approved);
+        trxDeclined.push(declined);
+      }
+      trxAreaChart = getAreaOptions(labels, trxData);
+      approvedAreaChart = getAreaOptions(labels, trxApproved);
+      declinedAreaChart = getAreaOptions(labels, trxDeclined);
+      break;
   }
+  return { trxAreaChart, approvedAreaChart, declinedAreaChart };
 };
 
-export const getProductName = (
-  categories: Category[],
-  categoryId: number,
-  productId: number
-): string => {
-  const category = categories.find((c) => c.productCategoryId === categoryId);
-  if (category !== undefined) {
-    const product = category.products.find((p) => p.productId === productId);
-    if (product !== undefined) {
-      return product.name;
-    } else {
-      return 'none';
+const calculateYearValues = (
+  transactions: TransactionHistory[],
+  month: string
+) => {
+  let total = 0;
+  let approved = 0.0;
+  let declined = 0.0;
+  for (let trx of transactions) {
+    const m = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('MMM');
+    if (m === month) {
+      total += 1;
     }
-  } else {
-    return 'none';
-  }
-};
-
-export const getCategory = (
-  categories: Category[],
-  categoryId: number
-): Category => {
-  const category = categories.find((c) => c.productCategoryId === categoryId);
-  return category!;
-};
-
-export const getProduct = (
-  categories: Category[],
-  categoryId: number,
-  productId: number
-): Product => {
-  const category = categories.find((c) => c.productCategoryId === categoryId);
-  const product = category!.products.find((p) => p.productId === productId);
-  return product!;
-};
-
-export const filterCategories = (
-  categories: Category[],
-  query: string
-): Category[] => {
-  let filteredList: Category[] = [];
-  filteredList = categories.filter((category) => {
-    const lowerCase = category.name.toLowerCase();
-    const filter = query.toLowerCase();
-    return lowerCase.includes(filter);
-  });
-  return filteredList;
-};
-
-export const filterCategoriesById = (
-  categories: Category[],
-  id: number
-): Category | undefined => {
-  const category = categories.find((c) => c.productCategoryId === id);
-  if (category === undefined) {
-    return undefined;
-  }
-  return category;
-};
-
-export const filterProducts = (categories: Category[]): Product[] => {
-  // check if user wants all products
-  let products: Product[] = [];
-  for (let i = 0; i < categories.length; i++) {
-    const prods = categories[i].products;
-    for (let j = 0; j < prods.length; j++) {
-      products.push(prods[j]);
+    if (m === month && trx.status === transactionStatus.APPROVED) {
+      approved += trx.amountPaid;
+    }
+    if (m === month && trx.status === transactionStatus.DECLINED) {
+      declined += trx.amountPaid;
     }
   }
+  return { total, approved, declined };
+};
 
-  return products;
+const getAreaOptions = (labels: string[], dataPoints: any[]) => {
+  const data = {
+    height: 100,
+    labels: labels,
+    datasets: [
+      {
+        data: dataPoints,
+        borderColor: '#03A9F4',
+        borderWidth: 1,
+        fill: true,
+        backgroundColor: '#B3E5FC',
+        pointHoverBorderColor: 'transparent',
+      },
+    ],
+    options: {
+      maintainAspectRatio: true,
+      hover: {
+        mode: 'nearest',
+        intersect: false,
+      },
+
+      layout: {
+        padding: {
+          left: -10,
+          right: 0,
+          top: 2,
+          bottom: -10,
+        },
+      },
+      legend: {
+        display: false,
+        labels: {
+          display: false,
+        },
+      },
+      elements: {
+        point: {
+          radius: 0,
+        },
+      },
+      scales: {
+        yAxes: [
+          {
+            stacked: true,
+            gridLines: {
+              display: false,
+              color: '#e5e9f2',
+            },
+            ticks: {
+              beginAtZero: true,
+              fontSize: 10,
+              display: false,
+              stepSize: 20,
+            },
+          },
+        ],
+        xAxes: [
+          {
+            stacked: true,
+            gridLines: {
+              display: false,
+            },
+
+            ticks: {
+              beginAtZero: true,
+              fontSize: 11,
+              display: false,
+            },
+          },
+        ],
+      },
+    },
+  };
+  return data;
+};
+
+const getLabels = (review: string) => {
+  let label;
+  switch (review) {
+    case 'yearly':
+      label = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
+      ];
+      break;
+  }
+  return label;
 };

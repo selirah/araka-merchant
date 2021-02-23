@@ -6,12 +6,12 @@ export const WeeklyBar = {
     {
       label: 'DECLINED/CANCELLED TRANSACTIONS',
       data: [60, 50, 45, 50, 60, 70, 45],
-      backgroundColor: '#001737',
+      backgroundColor: '#f55c29',
     },
     {
       label: 'APPROVED TRANSACTIONS',
       data: [500, 350, 400, 890, 960, 1005, 800],
-      backgroundColor: '#1ce1ac',
+      backgroundColor: '#35b9e6',
     },
   ],
 

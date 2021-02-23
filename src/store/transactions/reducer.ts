@@ -14,6 +14,11 @@ export const initialState: TransactionState = {
   isExportSuccess: false,
   isExportError: false,
   exportError: undefined,
+  downloadReceiptStream: undefined,
+  downloadRecieptError: false,
+  downloadRecieptSuccess: false,
+  isRequestingDownload: false,
+  downloadError: undefined,
 };
 
 const reducer: Reducer<TransactionState> = (state = initialState, action) => {
@@ -80,6 +85,31 @@ const reducer: Reducer<TransactionState> = (state = initialState, action) => {
         isExportError: true,
         isExportSuccess: false,
         exportError: action.payload,
+      };
+    case TransactionTypes.DOWNLOAD_RECEIPT_REQUEST:
+      return {
+        ...state,
+        isRequestingDownload: true,
+      };
+
+    case TransactionTypes.DOWNLOAD_RECEIPT_SUCCESS:
+      return {
+        ...state,
+        isRequestingDownload: false,
+        downloadReceiptStream: action.payload,
+        downloadRecieptError: false,
+        downloadRecieptSuccess: true,
+        downloadError: undefined,
+      };
+
+    case TransactionTypes.DOWNLOAD_RECEIPT_FAILURE:
+      return {
+        ...state,
+        isRequestingDownload: false,
+        downloadReceiptStream: undefined,
+        downloadRecieptError: true,
+        downloadRecieptSuccess: false,
+        downloadError: action.payload,
       };
     case AuthActionTypes.DESTROY_STATES:
       return initialState;

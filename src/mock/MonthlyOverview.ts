@@ -68,7 +68,7 @@ export const MonthlyBar = {
         60,
         55,
       ],
-      backgroundColor: '#001737',
+      backgroundColor: '#f55c29',
     },
     {
       label: 'APPROVED TRANSACTIONS',
@@ -104,7 +104,7 @@ export const MonthlyBar = {
         70,
         40,
       ],
-      backgroundColor: '#1ce1ac',
+      backgroundColor: '#35b9e6',
     },
   ],
 

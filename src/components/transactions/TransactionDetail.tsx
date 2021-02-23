@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Divider, Button, List, Avatar } from 'antd';
+import { Row, Col, Divider, Button, List /*, Avatar*/ } from 'antd';
 import { XCircle } from 'react-feather';
 import { TransactionHistory } from '../../interfaces';
 import { transactionStatus, timeZones } from '../../helpers/constants';
@@ -8,11 +8,15 @@ import moment from 'moment-timezone';
 interface TransactionDetailProps {
   onCloseScreen(): void;
   transaction: TransactionHistory;
+  onDownloadReceiptClick(transactionId: number): void;
+  isDownloading: boolean;
 }
 
 const TransactionDetail: React.FC<TransactionDetailProps> = ({
   onCloseScreen,
   transaction,
+  onDownloadReceiptClick,
+  isDownloading,
 }) => {
   let classname = '';
 
@@ -55,7 +59,12 @@ const TransactionDetail: React.FC<TransactionDetailProps> = ({
         <Col span={12}>
           <div className="trans-detail-header-box">
             <Button>Refund</Button>
-            <Button>Print/Export</Button>
+            <Button
+              loading={isDownloading}
+              onClick={() => onDownloadReceiptClick(transaction.transactionId)}
+            >
+              Print/Export
+            </Button>
           </div>
           <div className="trans-detail-info">
             <div className="trans-amount">

@@ -1432,6 +1432,90 @@ thead[class*='ant-table-thead'] th {
   text-decoration: underline;
   cursor: pointer;
 }
+
+.settings-page {
+  background: #f9f9f9;
+  min-height: 100vh;
+}
+
+.profile-box {
+  background: #fff;
+  margin-top: 30px;
+  padding: 10px 50px 10px 50px;
+  text-align: center;
+  border: 1px solid #fafafa;
+}
+
+.profile-box h3 {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-top: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.profile-box .form-label {
+  text-align: right;
+  margin-top: 5px;
+}
+
+.profile-box .change-password-btn {
+  text-align: left;
+}
+
+.profile-box .change-password-btn button {
+  background-color: #35b9e6;
+  border: 1px solid #35b9e6;
+  text-transform: uppercase;
+  border-radius: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-weight: 300;
+}
+
+.profile-box .switch-btn {
+  text-align: left;
+}
+
+.profile-box .switch-btn .ant-switch-checked {
+  background-color: #41b883;
+}
+
+.profile-box .tech-skill {
+  text-align: left;
+}
+
+.profile-box .form-submit-btn {
+  margin-top: 30px;
+}
+
+.profile-box .form-submit-btn button {
+  border-radius: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
+  background-color: #f55c29;
+  border: 1px solid #f55c29;
+}
+
+.ant-form-item-explain.ant-form-item-explain-error {
+  text-align: left;
+}
+
+.change-password-button {
+  border-radius: 20px;
+}
+
+.change-password-button:last-child {
+  background-color: #35b9e6;
+  border: 1px solid #35b9e6;
+}
+
+.empty-box-button {
+  border-radius: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
+  background-color: #35b9e6;
+  border: 1px solid #35b9e6;
+}
 /** END CONTENT **/
 
 /* Small devices (portrait tablets and large phones, 600px and up) */

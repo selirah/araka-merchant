@@ -11,4 +11,5 @@ export const path = {
   merchantsOverview: '/merchants-overview',
   vasProcessed: '/vas-processed',
   merchantPayouts: '/merchants-payouts',
+  settings: '/settings',
 };

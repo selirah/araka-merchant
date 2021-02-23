@@ -7,6 +7,8 @@ import {
   getCurrenciesFailure,
   exportTranxSuccess,
   exportTranxFailure,
+  downloadReceiptSuccess,
+  downloadReceiptFailure,
 } from './actions';
 import { callApiGet, callApiPost } from '../../utils/api';
 import { DataStream, Search } from '../../interfaces';
@@ -77,6 +79,35 @@ function* getExportTransactions({
   }
 }
 
+function* getDownloadReceiptStream({
+  payload,
+}: {
+  type: string;
+  payload: number;
+}) {
+  try {
+    const res = yield call(
+      callApiGet,
+      `payments/gettransactionreciept/${payload}`
+    );
+    if (res.status === 200) {
+      yield put(downloadReceiptSuccess(res.data));
+
+      let file: DataStream = res.data;
+      const link = document.createElement('a');
+      link.href = `data:application/pdf;base64,${file.fileContents}`;
+      link.download = file.fileDownloadName;
+      link.click();
+    }
+  } catch (err) {
+    if (err && err.response) {
+      yield put(downloadReceiptFailure(err.response.data));
+    } else {
+      yield put(downloadReceiptFailure('An unknwon error occurred'));
+    }
+  }
+}
+
 function* watchGetTransactions() {
   yield takeEvery(TransactionTypes.GET_TRANSACTIONS, getTransactions);
 }
@@ -92,11 +123,19 @@ function* watchExportTransactions() {
   );
 }
 
+function* watchFetchGetDownloadReceiptStream() {
+  yield takeEvery(
+    TransactionTypes.DOWNLOAD_RECEIPT_REQUEST,
+    getDownloadReceiptStream
+  );
+}
+
 function* transactionSaga(): Generator {
   yield all([
     fork(watchGetTransactions),
     fork(watchGetCurrencies),
     fork(watchExportTransactions),
+    fork(watchFetchGetDownloadReceiptStream),
   ]);
 }
 

@@ -8,12 +8,14 @@ import { authSaga } from './auth/sagas';
 import { transactionSaga } from './transactions/sagas';
 import { homeSaga } from './home/sagas';
 import { paymentPagesSaga } from './payment-pages/sagas';
+import { settingsSaga } from './settings/sagas';
 
 import { AuthState, authReducer } from './auth';
 import { HomeState, homeReducer } from './home';
 import { TransactionState, transactionReducer } from './transactions';
 import { PaymentPagesState, paymentPagesReducer } from './payment-pages';
 import { UtilsState, utilsReducer } from './utils';
+import { SettingsState, settingsReducer } from './settings';
 
 export type ApplicationState = {
   auth: AuthState;
@@ -21,13 +23,22 @@ export type ApplicationState = {
   transaction: TransactionState;
   page: PaymentPagesState;
   utils: UtilsState;
+  settings: SettingsState;
   router: RouterState;
 };
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth', 'home', 'transaction', 'page', 'utils', 'router'],
+  whitelist: [
+    'auth',
+    'home',
+    'transaction',
+    'page',
+    'utils',
+    'settings',
+    'router',
+  ],
 };
 
 export const persistingReducer = (history: History) =>
@@ -39,6 +50,7 @@ export const persistingReducer = (history: History) =>
       transaction: transactionReducer,
       page: paymentPagesReducer,
       utils: utilsReducer,
+      settings: settingsReducer,
       router: connectRouter(history),
     })
   );
@@ -49,5 +61,6 @@ export function* rootSaga() {
     fork(transactionSaga),
     fork(homeSaga),
     fork(paymentPagesSaga),
+    fork(settingsSaga),
   ]);
 }
