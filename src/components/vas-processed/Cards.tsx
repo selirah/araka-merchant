@@ -1,12 +1,21 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import { CardView } from '../cards/CardView';
+import { VASProcessed } from '../../interfaces';
+import { GetVASAnalytics } from '../../helpers/vas_functions';
 
 interface CardsProps {
   areachartdata: any;
+  vas: VASProcessed[];
 }
 
-const Cards: React.FC<CardsProps> = ({ areachartdata }) => {
+const Cards: React.FC<CardsProps> = ({ areachartdata, vas }) => {
+  const {
+    totalArakaIncome,
+    totalFeesCharged,
+    totalProcessed,
+  } = GetVASAnalytics(vas);
+
   return (
     <div className="margin-top-small">
       <Row>
@@ -18,21 +27,21 @@ const Cards: React.FC<CardsProps> = ({ areachartdata }) => {
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Vas Processed"
-                title="1240"
+                title={`${totalProcessed}`}
                 data={areachartdata}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Araka Income"
-                title="$22,056,12"
+                title={`$${totalArakaIncome.toFixed(2)}`}
                 data={areachartdata}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Fees Charged"
-                title="$3,056.12"
+                title={`$${totalFeesCharged.toFixed(2)}`}
                 data={areachartdata}
               />
             </Col>

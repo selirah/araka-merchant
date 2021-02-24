@@ -128,6 +128,7 @@ export const calculateYearValues = (
   let declinedAmt = 0.0;
   let totalApproved = 0;
   let totalDeclined = 0;
+  let merchants: any = {};
 
   for (let trx of transactions) {
     const m = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('MMM');
@@ -137,13 +138,21 @@ export const calculateYearValues = (
     if (m === month && trx.status === transactionStatus.APPROVED) {
       approvedAmt += trx.amountPaid;
       totalApproved += 1;
+      merchants[trx.merchant] = trx.amountPaid;
     }
     if (m === month && trx.status === transactionStatus.DECLINED) {
       declinedAmt += trx.amountPaid;
       totalDeclined += 1;
     }
   }
-  return { total, approvedAmt, declinedAmt, totalApproved, totalDeclined };
+  return {
+    total,
+    approvedAmt,
+    declinedAmt,
+    totalApproved,
+    totalDeclined,
+    merchants,
+  };
 };
 
 export const calculateDailyValues = (
@@ -155,6 +164,7 @@ export const calculateDailyValues = (
   let declinedAmt = 0.0;
   let totalApproved = 0;
   let totalDeclined = 0;
+  let merchants: any = {};
 
   // we have to make sure transactions were performed today
   let cDate = moment(new Date()).format('MM/DD/YYYY');
@@ -177,6 +187,7 @@ export const calculateDailyValues = (
     ) {
       approvedAmt += trx.amountPaid;
       totalApproved += 1;
+      merchants[trx.merchant] = trx.amountPaid;
     }
     if (
       tDate === cDate &&
@@ -187,7 +198,14 @@ export const calculateDailyValues = (
       totalDeclined += 1;
     }
   }
-  return { total, approvedAmt, declinedAmt, totalApproved, totalDeclined };
+  return {
+    total,
+    approvedAmt,
+    declinedAmt,
+    totalApproved,
+    totalDeclined,
+    merchants,
+  };
 };
 
 export const calculateWeeklyValues = (
@@ -199,6 +217,7 @@ export const calculateWeeklyValues = (
   let declinedAmt = 0.0;
   let totalApproved = 0;
   let totalDeclined = 0;
+  let merchants: any = {};
 
   const todayDate = moment(new Date()).format('X');
   const last7Days = moment(new Date()).subtract(7, 'd').format('X');
@@ -222,13 +241,21 @@ export const calculateWeeklyValues = (
     if (d === day && trx.status === transactionStatus.APPROVED) {
       approvedAmt += trx.amountPaid;
       totalApproved += 1;
+      merchants[trx.merchant] = trx.amountPaid;
     }
     if (d === day && trx.status === transactionStatus.DECLINED) {
       declinedAmt += trx.amountPaid;
       totalDeclined += 1;
     }
   }
-  return { total, approvedAmt, declinedAmt, totalApproved, totalDeclined };
+  return {
+    total,
+    approvedAmt,
+    declinedAmt,
+    totalApproved,
+    totalDeclined,
+    merchants,
+  };
 };
 
 export const calculateMonthlyValues = (
@@ -240,6 +267,7 @@ export const calculateMonthlyValues = (
   let declinedAmt = 0.0;
   let totalApproved = 0;
   let totalDeclined = 0;
+  let merchants: any = {};
 
   // let's get current date and 30 days from current date
   const todayDate = moment(new Date()).format('X');
@@ -268,11 +296,19 @@ export const calculateMonthlyValues = (
     if (date === day && trx.status === transactionStatus.APPROVED) {
       approvedAmt += trx.amountPaid;
       totalApproved += 1;
+      merchants[trx.merchant] = trx.amountPaid;
     }
     if (date === day && trx.status === transactionStatus.DECLINED) {
       declinedAmt += trx.amountPaid;
       totalDeclined += 1;
     }
   }
-  return { total, approvedAmt, declinedAmt, totalApproved, totalDeclined };
+  return {
+    total,
+    approvedAmt,
+    declinedAmt,
+    totalApproved,
+    totalDeclined,
+    merchants,
+  };
 };

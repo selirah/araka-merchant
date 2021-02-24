@@ -7,19 +7,15 @@ import { TransactionHistory } from '../../interfaces';
 import {
   CalculateTransactionTotals,
   GetAreaAndBarPoints,
+  GetTopMerchants,
 } from '../../helpers/functions';
+import { isEmpty } from '../../helpers/isEmpty';
 
 interface DailyOverviewProps {
-  barchartdata: any;
-  areachartdata: any;
   transactions: TransactionHistory[];
 }
 
-const DailyOverview: React.FC<DailyOverviewProps> = ({
-  barchartdata,
-  areachartdata,
-  transactions,
-}) => {
+const DailyOverview: React.FC<DailyOverviewProps> = ({ transactions }) => {
   const { total, approved, declined } = CalculateTransactionTotals(
     transactions,
     'daily'
@@ -30,7 +26,30 @@ const DailyOverview: React.FC<DailyOverviewProps> = ({
     approvedAreaChart,
     declinedAreaChart,
     barChart,
+    merchantsArr,
   } = GetAreaAndBarPoints(transactions, 'daily');
+
+  const { merchantTotals } = GetTopMerchants(
+    transactions,
+    'daily',
+    merchantsArr
+  );
+
+  const sorter = (a: any, b: any) => {
+    return b.amount - a.amount; // descending order;
+  };
+
+  const sortByAmount = (arr: any[]) => {
+    arr.sort(sorter);
+  };
+
+  let topMerchant, secondMerchant, thirdMerchant;
+  if (!isEmpty(merchantTotals)) {
+    sortByAmount(merchantTotals);
+    topMerchant = merchantTotals[0];
+    secondMerchant = merchantTotals[1];
+    thirdMerchant = merchantTotals[2];
+  }
 
   return (
     <>
@@ -86,37 +105,39 @@ const DailyOverview: React.FC<DailyOverviewProps> = ({
           </Col>
         </Row>
       </div>
-      <div className="margin-top">
-        <Row>
-          <h4 className="transaction-chart-text">Profits by Merchants</h4>
-        </Row>
-        <Row gutter={40}>
-          <Col span={8}>
-            <ProfitCard
-              mainTitle="#1 Top Merchant"
-              paragraph="3% of revenue by LEON Hotel"
-              amount="$506.40"
-              data={areachartdata}
-            />
-          </Col>
-          <Col span={8}>
-            <ProfitCard
-              mainTitle="#2 Top Merchant"
-              paragraph="3% of revenue by mPESA"
-              amount="$70.12"
-              data={areachartdata}
-            />
-          </Col>
-          <Col span={8}>
-            <ProfitCard
-              mainTitle="#3 Top Merchant"
-              paragraph="3% of revenue by Orange"
-              amount="$30.68"
-              data={areachartdata}
-            />
-          </Col>
-        </Row>
-      </div>
+      {topMerchant.amount > 0 ? (
+        <div className="margin-top">
+          <Row>
+            <h4 className="transaction-chart-text">Profits by Merchants</h4>
+          </Row>
+          <Row gutter={40}>
+            <Col span={8}>
+              <ProfitCard
+                mainTitle="#1 Top Merchant"
+                paragraph={`3% of revenue by ${topMerchant.merchant}`}
+                amount={`$${topMerchant.amount.toFixed(2)}`}
+                data={trxAreaChart}
+              />
+            </Col>
+            <Col span={8}>
+              <ProfitCard
+                mainTitle="#2 Top Merchant"
+                paragraph={`3% of revenue by ${secondMerchant.merchant}`}
+                amount={`$${secondMerchant.amount.toFixed(2)}`}
+                data={approvedAreaChart}
+              />
+            </Col>
+            <Col span={8}>
+              <ProfitCard
+                mainTitle="#3 Top Merchant"
+                paragraph={`3% of revenue by ${thirdMerchant.merchant}`}
+                amount={`$${thirdMerchant.amount.toFixed(2)}`}
+                data={declinedAreaChart}
+              />
+            </Col>
+          </Row>
+        </div>
+      ) : null}
     </>
   );
 };

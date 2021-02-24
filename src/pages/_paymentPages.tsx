@@ -191,6 +191,7 @@ const PaymentPages = () => {
           type="primary"
           onClick={() => onTogglePaymentTypeModal()}
           icon={<PlusOutlined />}
+          className="empty-box-button"
         >
           {t('paymentPages.newPageText')}
         </Button>
@@ -229,7 +230,7 @@ const PaymentPages = () => {
                 </Button>
                 <Button
                   type="primary"
-                  className="export-buttons"
+                  className="export-buttons reload"
                   onClick={() => reloadPages()}
                 >
                   {t('paymentPages.refresh')}

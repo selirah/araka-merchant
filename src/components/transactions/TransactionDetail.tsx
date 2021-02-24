@@ -58,7 +58,7 @@ const TransactionDetail: React.FC<TransactionDetailProps> = ({
       >
         <Col span={12}>
           <div className="trans-detail-header-box">
-            <Button>Refund</Button>
+            <Button style={{ visibility: 'hidden' }}>Refund</Button>
             <Button
               loading={isDownloading}
               onClick={() => onDownloadReceiptClick(transaction.transactionId)}

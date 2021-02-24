@@ -1,15 +1,15 @@
 import React from 'react';
-import { Row, Col, Card, Button, Tag, Table } from 'antd';
-// import moment from 'moment-timezone';
-import { MerchantPayout } from '../../interfaces';
+import { Row, Col, Card, Tag, Table } from 'antd';
+import moment from 'moment-timezone';
+import { TransactionHistory } from '../../interfaces';
+import { transactionStatus, timeZones } from '../../helpers/constants';
 // import { isEmpty } from '../../helpers/isEmpty';
-import { transactionStatus } from '../../helpers/constants';
 
 interface DetailsProps {
-  merchants: MerchantPayout[];
+  payouts: TransactionHistory[];
 }
 
-const Details: React.FC<DetailsProps> = ({ merchants }) => {
+const Details: React.FC<DetailsProps> = ({ payouts }) => {
   const columns: any = [
     {
       title: 'Status',
@@ -51,66 +51,55 @@ const Details: React.FC<DetailsProps> = ({ merchants }) => {
       },
     },
     {
-      title: 'Balance',
+      title: 'Amount Paid',
       dataIndex: 'balance',
       key: 'balance',
-      align: 'left',
+      align: 'center',
       className: 'column-text',
     },
     {
       title: 'Paid On',
       dataIndex: 'paidOn',
       key: 'paidOn',
-      align: 'left',
+      align: 'center',
       className: 'column-text',
     },
     {
       title: 'Transaction ID',
       dataIndex: 'transactionId',
       key: 'transactionId',
-      align: 'left',
+      align: 'center',
       className: 'column-text',
     },
   ];
 
   let dataSource = [];
-  for (let merchant of merchants) {
+  for (let payout of payouts) {
     dataSource.push({
       key: Math.random(),
-      merchant: merchant.merchant,
-      balance: `${merchant.currency} ${merchant.balance}`,
-      paidOn: `${merchant.paidOn}`,
-      transactionId: `${merchant.transactionId}`,
+      merchant: payout.merchant,
+      balance: `${payout.currency} ${payout.amountPaid.toFixed(2)}`,
+      paidOn: moment(payout.createdAt, 'MM/DD/YYYY HH:mm:ss')
+        .tz(timeZones.kinshasa)
+        .format(`MMMM D, YYYY (h:mm a)`),
+      transactionId: `${payout.transactionId}`,
     });
   }
 
   return (
-    <div className="margin-top-small">
-      <Row style={{ position: 'relative' }}>
-        <h4 className="transaction-chart-text">Merchants Payouts Table</h4>
-        <div className="utility-buttons">
-          <Button type="primary" className="export-buttons">
-            Export to Excel
-          </Button>
-          <Button type="primary" className="export-buttons">
-            Export to PDF
-          </Button>
-        </div>
-      </Row>
-      <Row gutter={20}>
-        <Col span={24}>
-          <Card>
-            <div className="table-padding">
-              <Table
-                dataSource={dataSource}
-                columns={columns}
-                pagination={{ pageSize: 15 }}
-              />
-            </div>
-          </Card>
-        </Col>
-      </Row>
-    </div>
+    <Row gutter={20}>
+      <Col span={24}>
+        <Card>
+          <div className="table-padding">
+            <Table
+              dataSource={dataSource}
+              columns={columns}
+              pagination={{ pageSize: 15 }}
+            />
+          </div>
+        </Card>
+      </Col>
+    </Row>
   );
 };
 

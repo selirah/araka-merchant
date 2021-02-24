@@ -1,8 +1,7 @@
 export interface MerchantOverview {
   merchant: string;
-  amountProcessed: string;
-  totalTransactions: string;
-  totalFees: string;
-  createdWhen: string;
+  totalAmountProcessed: number;
+  totalTransactions: number;
+  totalArakaFees: number;
   currency: string;
 }

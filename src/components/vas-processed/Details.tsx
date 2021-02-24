@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Card, Button, Table } from 'antd';
+import { Row, Col, Card, Table } from 'antd';
 // import moment from 'moment-timezone';
 import { VASProcessed } from '../../interfaces';
 // import { isEmpty } from '../../helpers/isEmpty';
@@ -22,36 +22,36 @@ const Details: React.FC<DetailsProps> = ({ vas }) => {
     },
     {
       title: 'Total Amount Sold',
-      dataIndex: 'totalAmount',
-      key: 'totalAmount',
+      dataIndex: 'totalAmountProcessed',
+      key: 'totalAmountProcessed',
       align: 'left',
       className: 'column-text',
     },
     {
       title: 'Total Fee Charged',
-      dataIndex: 'totalFee',
-      key: 'totalFee',
+      dataIndex: 'totalFeesCharged',
+      key: 'totalFeesCharged',
       align: 'left',
       className: 'column-text',
     },
     {
       title: 'Araka Fee Charged',
-      dataIndex: 'arakaFee',
-      key: 'arakaFee',
+      dataIndex: 'totalArakaFees',
+      key: 'totalArakaFees',
       align: 'left',
       className: 'column-text',
     },
     {
       title: 'Araka Discount',
-      dataIndex: 'arakaDiscount',
-      key: 'arakaDiscount',
+      dataIndex: 'totalArakaDiscount',
+      key: 'totalArakaDiscount',
       align: 'left',
       className: 'column-text',
     },
     {
       title: 'Total Araka Income',
-      dataIndex: 'arakaIncome',
-      key: 'arakaIncome',
+      dataIndex: 'totalArakaIncome',
+      key: 'totalArakaIncome',
       align: 'left',
       className: 'column-text',
     },
@@ -62,41 +62,28 @@ const Details: React.FC<DetailsProps> = ({ vas }) => {
     dataSource.push({
       key: Math.random(),
       month: v.month,
-      totalAmount: `${v.currency} ${v.totalAmount}`,
-      totalFee: `${v.currency} ${v.totalFee}`,
-      arakaFee: `${v.currency} ${v.arakaFee}`,
-      arakaDiscount: `${v.currency} ${v.arakaDiscount}`,
-      arakaIncome: `${v.currency} ${v.arakaIncome}`,
+      totalAmountProcessed: `${v.currency} ${v.totalAmountProcessed}`,
+      totalFeesCharged: `${v.currency} ${v.totalFeesCharged}`,
+      totalArakaFees: `${v.currency} ${v.totalArakaFees}`,
+      totalArakaDiscount: `${v.currency} ${v.totalArakaDiscount}`,
+      totalArakaIncome: `${v.currency} ${v.totalArakaIncome}`,
     });
   }
 
   return (
-    <div className="margin-top-small">
-      <Row style={{ position: 'relative' }}>
-        <h4 className="transaction-chart-text">Merchants Table</h4>
-        <div className="utility-buttons">
-          <Button type="primary" className="export-buttons">
-            Export to Excel
-          </Button>
-          <Button type="primary" className="export-buttons">
-            Export to PDF
-          </Button>
-        </div>
-      </Row>
-      <Row gutter={20}>
-        <Col span={24}>
-          <Card>
-            <div className="table-padding">
-              <Table
-                dataSource={dataSource}
-                columns={columns}
-                pagination={{ pageSize: 15 }}
-              />
-            </div>
-          </Card>
-        </Col>
-      </Row>
-    </div>
+    <Row gutter={20}>
+      <Col span={24}>
+        <Card>
+          <div className="table-padding">
+            <Table
+              dataSource={dataSource}
+              columns={columns}
+              pagination={{ pageSize: 15 }}
+            />
+          </div>
+        </Card>
+      </Col>
+    </Row>
   );
 };
 

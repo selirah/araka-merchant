@@ -26,6 +26,7 @@ export const CalculateTransactionTotals = (
         switch (trx.status) {
           case transactionStatus.APPROVED:
             approved = approved + trx.amountPaid;
+
             break;
           case transactionStatus.DECLINED:
             declined = declined + trx.amountPaid;
@@ -95,6 +96,7 @@ export const GetAreaAndBarPoints = (
   let trxApprovedAmt = [];
   let trxDeclinedAmt = [];
   let barChart = {};
+  let merchantsArr = [];
 
   switch (review) {
     case 'yearly':
@@ -105,12 +107,14 @@ export const GetAreaAndBarPoints = (
           declinedAmt,
           totalApproved,
           totalDeclined,
+          merchants,
         } = calculateYearValues(transactions, lbl);
         trxData.push(total);
         trxApproved.push(totalApproved);
         trxDeclined.push(totalDeclined);
         trxApprovedAmt.push(approvedAmt);
         trxDeclinedAmt.push(declinedAmt);
+        merchantsArr.push(merchants);
       }
 
       trxAreaChart = getAreaOptions(labels, trxData, '#03A9F4', '#B3E5FC');
@@ -139,12 +143,14 @@ export const GetAreaAndBarPoints = (
           declinedAmt,
           totalApproved,
           totalDeclined,
+          merchants,
         } = calculateDailyValues(transactions, lbl);
         trxData.push(total);
         trxApproved.push(totalApproved);
         trxDeclined.push(totalDeclined);
         trxApprovedAmt.push(approvedAmt);
         trxDeclinedAmt.push(declinedAmt);
+        merchantsArr.push(merchants);
       }
       trxAreaChart = getAreaOptions(labels, trxData, '#1ce1ac', '#1ce1ac50');
       approvedAreaChart = getAreaOptions(
@@ -169,12 +175,14 @@ export const GetAreaAndBarPoints = (
           declinedAmt,
           totalApproved,
           totalDeclined,
+          merchants,
         } = calculateWeeklyValues(transactions, label);
         trxData.push(total);
         trxApproved.push(totalApproved);
         trxDeclined.push(totalDeclined);
         trxApprovedAmt.push(approvedAmt);
         trxDeclinedAmt.push(declinedAmt);
+        merchantsArr.push(merchants);
       }
       trxAreaChart = getAreaOptions(labels, trxData, '#5E35B1', '#D1C4E9');
       approvedAreaChart = getAreaOptions(
@@ -201,12 +209,14 @@ export const GetAreaAndBarPoints = (
           declinedAmt,
           totalApproved,
           totalDeclined,
+          merchants,
         } = calculateMonthlyValues(transactions, label);
         trxData.push(total);
         trxApproved.push(totalApproved);
         trxDeclined.push(totalDeclined);
         trxApprovedAmt.push(approvedAmt);
         trxDeclinedAmt.push(declinedAmt);
+        merchantsArr.push(merchants);
       }
       trxAreaChart = getAreaOptions(labels, trxData, '#FFA000', '#FFE082');
       approvedAreaChart = getAreaOptions(
@@ -224,7 +234,13 @@ export const GetAreaAndBarPoints = (
       barChart = getBarOptions(labels, trxApproved, trxDeclined);
       break;
   }
-  return { trxAreaChart, approvedAreaChart, declinedAreaChart, barChart };
+  return {
+    trxAreaChart,
+    approvedAreaChart,
+    declinedAreaChart,
+    barChart,
+    merchantsArr,
+  };
 };
 
 const getLabels = (review: string) => {
@@ -436,4 +452,93 @@ const getBarOptions = (
     },
   };
   return data;
+};
+
+export const GetTopMerchants = (
+  transactions: TransactionHistory[],
+  review: string,
+  merchantsArr: any[]
+) => {
+  let merchants: string[] = [];
+  let merchantTotals: any[] = [];
+
+  switch (review) {
+    case 'yearly':
+      for (let trx of transactions) {
+        const merchant = merchants.find((m) => m === trx.merchant);
+        if (merchant === undefined) {
+          merchants.push(trx.merchant);
+        }
+      }
+      // loop through and get and add their amounts
+      for (let m of merchants) {
+        // merchantTotals[m] = getMerchantsAmount(merchantsArr, m);
+        merchantTotals.push({
+          merchant: m,
+          amount: getMerchantsAmount(merchantsArr, m),
+        });
+      }
+      break;
+    case 'daily':
+      for (let trx of transactions) {
+        const merchant = merchants.find((m) => m === trx.merchant);
+        if (merchant === undefined) {
+          merchants.push(trx.merchant);
+        }
+      }
+      // loop through and get and add their amounts
+      for (let m of merchants) {
+        // merchantTotals[m] = getMerchantsAmount(merchantsArr, m);
+        merchantTotals.push({
+          merchant: m,
+          amount: getMerchantsAmount(merchantsArr, m),
+        });
+      }
+      break;
+    case 'weekly':
+      for (let trx of transactions) {
+        const merchant = merchants.find((m) => m === trx.merchant);
+        if (merchant === undefined) {
+          merchants.push(trx.merchant);
+        }
+      }
+      // loop through and get and add their amounts
+      for (let m of merchants) {
+        // merchantTotals[m] = getMerchantsAmount(merchantsArr, m);
+        merchantTotals.push({
+          merchant: m,
+          amount: getMerchantsAmount(merchantsArr, m),
+        });
+      }
+      break;
+    case 'monthly':
+      for (let trx of transactions) {
+        const merchant = merchants.find((m) => m === trx.merchant);
+        if (merchant === undefined) {
+          merchants.push(trx.merchant);
+        }
+      }
+      // loop through and get and add their amounts
+      for (let m of merchants) {
+        // merchantTotals[m] = getMerchantsAmount(merchantsArr, m);
+        merchantTotals.push({
+          merchant: m,
+          amount: getMerchantsAmount(merchantsArr, m),
+        });
+      }
+      break;
+  }
+
+  return { merchantTotals };
+};
+
+const getMerchantsAmount = (merchantsArr: any[], merchant: string) => {
+  let amt = 0.0;
+
+  for (let m of merchantsArr) {
+    if (m[merchant]) {
+      amt += m[merchant];
+    }
+  }
+  return amt;
 };

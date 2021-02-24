@@ -1,14 +1,14 @@
 import React from 'react';
-import { Row, Col, Card, Button, Tag, Table } from 'antd';
+import { Row, Col, Card, Tag, Table } from 'antd';
 // import moment from 'moment-timezone';
 import { MerchantOverview } from '../../interfaces';
 // import { isEmpty } from '../../helpers/isEmpty';
 
 interface DetailsProps {
-  merchants: MerchantOverview[];
+  overviews: MerchantOverview[];
 }
 
-const Details: React.FC<DetailsProps> = ({ merchants }) => {
+const Details: React.FC<DetailsProps> = ({ overviews }) => {
   const columns: any = [
     {
       title: 'Merchant',
@@ -28,14 +28,14 @@ const Details: React.FC<DetailsProps> = ({ merchants }) => {
       title: 'Total Amount Processed',
       dataIndex: 'amountProcessed',
       key: 'amountProcessed',
-      align: 'left',
+      align: 'center',
       className: 'column-text',
     },
     {
       title: 'Total Transactions',
       dataIndex: 'totalTransactions',
       key: 'totalTransactions',
-      align: 'left',
+      align: 'center',
       className: 'column-text',
     },
     {
@@ -48,43 +48,32 @@ const Details: React.FC<DetailsProps> = ({ merchants }) => {
   ];
 
   let dataSource = [];
-  for (let merchant of merchants) {
+  for (let overview of overviews) {
     dataSource.push({
       key: Math.random(),
-      merchant: merchant.merchant,
-      amountProcessed: `${merchant.currency} ${merchant.amountProcessed}`,
-      totalTransactions: `${merchant.totalTransactions}`,
-      totalFees: `${merchant.currency} ${merchant.totalFees}`,
+      merchant: overview.merchant,
+      amountProcessed: `${
+        overview.currency
+      } ${overview.totalAmountProcessed.toFixed(2)}`,
+      totalTransactions: `${overview.totalTransactions}`,
+      totalFees: `${overview.currency} ${overview.totalArakaFees.toFixed(2)}`,
     });
   }
 
   return (
-    <div className="margin-top-small">
-      <Row style={{ position: 'relative' }}>
-        <h4 className="transaction-chart-text">Merchants Table</h4>
-        <div className="utility-buttons">
-          <Button type="primary" className="export-buttons">
-            Export to Excel
-          </Button>
-          <Button type="primary" className="export-buttons">
-            Export to PDF
-          </Button>
-        </div>
-      </Row>
-      <Row gutter={20}>
-        <Col span={24}>
-          <Card>
-            <div className="table-padding">
-              <Table
-                dataSource={dataSource}
-                columns={columns}
-                pagination={{ pageSize: 15 }}
-              />
-            </div>
-          </Card>
-        </Col>
-      </Row>
-    </div>
+    <Row gutter={20}>
+      <Col span={24}>
+        <Card>
+          <div className="table-padding">
+            <Table
+              dataSource={dataSource}
+              columns={columns}
+              pagination={{ pageSize: 15 }}
+            />
+          </div>
+        </Card>
+      </Col>
+    </Row>
   );
 };
 

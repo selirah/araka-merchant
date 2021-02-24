@@ -1,6 +1,6 @@
-import { VASProcessed } from '../interfaces';
+// import { VASProcessed } from '../interfaces';
 
-export const VASProcessedData: VASProcessed[] = [
+export const VASProcessedData = [
   {
     arakaDiscount: '100.09',
     arakaFee: '100.09',

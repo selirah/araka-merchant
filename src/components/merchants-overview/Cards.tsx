@@ -1,12 +1,21 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import { CardView } from '../cards/CardView';
+import { MerchantOverview } from '../../interfaces';
+import { GetOverviewAnalytics } from '../../helpers/overview_functions';
 
 interface CardsProps {
   areachartdata: any;
+  overviews: MerchantOverview[];
 }
 
-const Cards: React.FC<CardsProps> = ({ areachartdata }) => {
+const Cards: React.FC<CardsProps> = ({ areachartdata, overviews }) => {
+  const {
+    totalAmountProcessed,
+    totalMerchants,
+    totalTransactions,
+  } = GetOverviewAnalytics(overviews);
+
   return (
     <div className="margin-top-small">
       <Row>
@@ -16,19 +25,23 @@ const Cards: React.FC<CardsProps> = ({ areachartdata }) => {
         <Col span={24}>
           <Row gutter={20}>
             <Col span={8} sm={24} md={8} xs={24}>
-              <CardView value="Merchants" title="529" data={areachartdata} />
+              <CardView
+                value="Merchants"
+                title={`${totalMerchants}`}
+                data={areachartdata}
+              />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Amount Processed"
-                title="$22,056,12"
+                title={`$${totalAmountProcessed.toFixed(2)}`}
                 data={areachartdata}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Total Transactions"
-                title="10,200"
+                title={`${totalTransactions}`}
                 data={areachartdata}
               />
             </Col>

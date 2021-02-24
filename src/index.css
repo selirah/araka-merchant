@@ -1266,6 +1266,10 @@ thead[class*='ant-table-thead'] th {
   border-radius: 20px;
 }
 
+.utility-buttons .reload {
+  margin-right: 0 !important;
+}
+
 .table-tag-channel {
   background-color: transparent;
   border-radius: 10px;

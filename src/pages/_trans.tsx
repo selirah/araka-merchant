@@ -48,15 +48,15 @@ const Transactions = () => {
     isExporting,
     isRequestingDownload,
   } = appSelector((state) => state.transaction);
-  const [transactionData, setTransactionData] = useState<TransactionHistory[]>(
-    transactions
-  );
+  // const [transactionData, setTransactionData] = useState<TransactionHistory[]>(
+  //   transactions
+  // );
   const { t } = useTranslation();
-  const [channelSearch, setChannelSearch] = useState('');
-  const [searchValue, setSearchValue] = useState('');
-  const [statusSearch, setStatusSearch] = useState('');
-  const [fromDate, setFromDate] = useState('');
-  const [toDate, setToDate] = useState('');
+  const [channelSearch /*, setChannelSearch*/] = useState('');
+  const [searchValue /*, setSearchValue*/] = useState('');
+  const [statusSearch /*, setStatusSearch*/] = useState('');
+  const [fromDate /*, setFromDate*/] = useState('');
+  const [toDate /*, setToDate*/] = useState('');
   const [exportType, setExportType] = useState('');
   const [transaction, setTransaction] = useState<TransactionHistory | null>(
     null
@@ -75,15 +75,9 @@ const Transactions = () => {
   };
 
   useEffect(() => {
-    if (isEmpty(transactions) && !loading) {
-      dispatch(getTransactions());
-    }
+    dispatch(getTransactions());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    setTransactionData(transactions);
-  }, [transactions]);
 
   const reloadTransaction = () => {
     dispatch(clearTransactions());
@@ -102,7 +96,7 @@ const Transactions = () => {
       </div>
     );
   }
-  if (!loading && isEmpty(transactionData)) {
+  if (!loading && isEmpty(transactions)) {
     render = (
       <EmptyBox
         header={`${t('transactions.noTransactions')}`}
@@ -111,10 +105,10 @@ const Transactions = () => {
     );
   }
 
-  if (!loading && !isEmpty(transactionData)) {
+  if (!loading && !isEmpty(transactions)) {
     render = (
       <TransactionTable
-        transactionHistory={transactionData}
+        transactionHistory={transactions}
         onClickRow={onClickRow}
       />
     );
@@ -145,14 +139,17 @@ const Transactions = () => {
           {!switchView ? (
             <>
               <TransactionFilters />
-              {!isEmpty(transactionData) ? (
-                <TransactionSummaryCards areachartdata={MonthlyArea} />
+              {!isEmpty(transactions) ? (
+                <TransactionSummaryCards
+                  areachartdata={MonthlyArea}
+                  transactions={transactions}
+                />
               ) : null}
-              <div className="margin-top-small">
+              <div className="margin-top">
                 <Row style={{ position: 'relative' }}>
                   <h4 className="transaction-chart-text">Transactions Chart</h4>
                   <div className="utility-buttons">
-                    {!isEmpty(transactionData) ? (
+                    {!isEmpty(transactions) ? (
                       <>
                         <Button
                           type="primary"
@@ -174,7 +171,7 @@ const Transactions = () => {
                     ) : null}
                     <Button
                       type="primary"
-                      className="export-buttons"
+                      className="export-buttons reload"
                       onClick={() => reloadTransaction()}
                     >
                       {t('transactions.refresh')}

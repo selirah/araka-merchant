@@ -1,9 +1,10 @@
 export interface VASProcessed {
   month: string;
-  totalAmount: string;
-  totalFee: string;
   currency: string;
-  arakaFee: string;
-  arakaDiscount: string;
-  arakaIncome: string;
+  totalTransactions: number;
+  totalAmountProcessed: number;
+  totalFeesCharged: number;
+  totalArakaFees: number;
+  totalArakaDiscount: number;
+  totalArakaIncome: number;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, DatePicker, Input, Button, Collapse, Select } from 'antd';
+import { Row, Col, Input, Button, Collapse, Select } from 'antd';
 
 interface FiltersProps {}
 
@@ -31,22 +31,7 @@ const Filters: React.FC<FiltersProps> = () => {
               <Option value="Canceled">Canceled</Option>
             </Select>
           </Col>
-          <Col span={6}>
-            <DatePicker
-              style={{ width: '100%' }}
-              format="MMMM D, YYYY"
-              allowClear
-              placeholder="Date Period: From"
-            />
-          </Col>
-          <Col span={6}>
-            <DatePicker
-              style={{ width: '100%' }}
-              format="MMMM D, YYYY"
-              allowClear
-              placeholder="Date Period: To"
-            />
-          </Col>
+
           <Col span={6}>
             <Input
               placeholder="Amount Processed/Transactions/Fee"

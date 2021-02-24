@@ -5,10 +5,6 @@ import { Layout, Spin, Row } from 'antd';
 import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
 import { menu } from '../helpers/menu';
-import { DailyBar, DailyArea } from '../mock/DailyOverview';
-import { WeeklyBar, WeeklyArea } from '../mock/WeeklyOverview';
-import { YearlyBar, YearlyArea } from '../mock/YearlyOverview';
-import { MonthlyBar, MonthlyArea } from '../mock/MonthlyOverview';
 import { getCurrentUser } from '../store/settings';
 import { isEmpty } from '../helpers/isEmpty';
 import { getTransactions, clearTransactions } from '../store/transactions';
@@ -70,49 +66,19 @@ const Dashboard = () => {
   } else if (!loading && !isEmpty(transactions)) {
     switch (activeMenu) {
       case menu.DASHBOARD_YEARLY:
-        container = (
-          <YearlyOverview
-            barchartdata={YearlyBar}
-            areachartdata={YearlyArea}
-            transactions={transactions}
-          />
-        );
+        container = <YearlyOverview transactions={transactions} />;
         break;
       case menu.DASHBOARD_DAILY:
-        container = (
-          <DailyOverview
-            barchartdata={DailyBar}
-            areachartdata={DailyArea}
-            transactions={transactions}
-          />
-        );
+        container = <DailyOverview transactions={transactions} />;
         break;
       case menu.DASHBOARD_WEEKLY:
-        container = (
-          <WeeklyOverview
-            barchartdata={WeeklyBar}
-            areachartdata={WeeklyArea}
-            transactions={transactions}
-          />
-        );
+        container = <WeeklyOverview transactions={transactions} />;
         break;
       case menu.DASHBOARD_MONTHLY:
-        container = (
-          <MonthlyOverview
-            barchartdata={MonthlyBar}
-            areachartdata={MonthlyArea}
-            transactions={transactions}
-          />
-        );
+        container = <MonthlyOverview transactions={transactions} />;
         break;
       default:
-        container = (
-          <YearlyOverview
-            barchartdata={YearlyBar}
-            areachartdata={YearlyArea}
-            transactions={transactions}
-          />
-        );
+        container = <YearlyOverview transactions={transactions} />;
     }
   }
 
