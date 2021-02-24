@@ -11,6 +11,7 @@ import {
   updateUserRequest,
 } from '../store/settings';
 import { isEmpty } from '../helpers/isEmpty';
+import { Clock } from '../utils/clock';
 
 const { Content } = Layout;
 
@@ -29,6 +30,7 @@ export const Settings = () => {
     error,
     editFailure,
   } = appSelector((state) => state.settings);
+  const { time } = Clock();
 
   useEffect(() => {
     dispatch(clearSomeBooleans());
@@ -49,7 +51,7 @@ export const Settings = () => {
 
   useEffect(() => {
     if (changePasswordFailure) {
-      message.error(error);
+      message.error(JSON.stringify(error));
     }
     if (changePasswordSuccess) {
       message.success('Password changed successfully');
@@ -58,7 +60,7 @@ export const Settings = () => {
       message.success('You details have been updated');
     }
     if (editFailure) {
-      message.error(error);
+      message.error(JSON.stringify(error));
     }
   }, [
     changePasswordFailure,
@@ -76,7 +78,7 @@ export const Settings = () => {
             <Col span={24}>
               <div className="upper-header">
                 <h4>PROFILE</h4>
-                <h6>01/01/2021, 11:35AM</h6>
+                <h6>{time}</h6>
               </div>
             </Col>
           </Row>

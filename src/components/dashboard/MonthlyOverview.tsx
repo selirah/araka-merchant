@@ -10,12 +10,14 @@ import {
   GetTopMerchants,
 } from '../../helpers/functions';
 import { isEmpty } from '../../helpers/isEmpty';
+import { Clock } from '../../utils/clock';
 
 interface MonthlyOverviewProps {
   transactions: TransactionHistory[];
 }
 
 const MonthlyOverview: React.FC<MonthlyOverviewProps> = ({ transactions }) => {
+  const { time } = Clock();
   const { total, approved, declined } = CalculateTransactionTotals(
     transactions,
     'monthly'
@@ -57,7 +59,7 @@ const MonthlyOverview: React.FC<MonthlyOverviewProps> = ({ transactions }) => {
         <Col span={24}>
           <div className="upper-header">
             <h4>MONTHLY STATISTICS</h4>
-            <h6>01/01/2021, 11:35AM</h6>
+            <h6>{time}</h6>
           </div>
         </Col>
       </Row>

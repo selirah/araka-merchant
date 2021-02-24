@@ -1,5 +1,6 @@
 import React from 'react';
 import { Row, Col, Input, Button, Collapse, Select } from 'antd';
+import { Clock } from '../../utils/clock';
 
 interface FiltersProps {}
 
@@ -7,6 +8,8 @@ const { Panel } = Collapse;
 const { Option } = Select;
 
 const Filters: React.FC<FiltersProps> = () => {
+  const { time } = Clock();
+
   return (
     <Collapse style={{ marginTop: '5px' }}>
       <Panel
@@ -15,7 +18,7 @@ const Filters: React.FC<FiltersProps> = () => {
         key="1"
         extra={
           <h6 style={{ fontWeight: 500, fontSize: '1rem', color: '#0090fe' }}>
-            01/01/2021, 11:35AM
+            {time}
           </h6>
         }
       >

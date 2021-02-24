@@ -10,12 +10,14 @@ import {
   GetTopMerchants,
 } from '../../helpers/functions';
 import { isEmpty } from '../../helpers/isEmpty';
+import { Clock } from '../../utils/clock';
 
 interface YearlyOverviewProps {
   transactions: TransactionHistory[];
 }
 
 const YearlyOverview: React.FC<YearlyOverviewProps> = ({ transactions }) => {
+  const { time } = Clock();
   const { total, approved, declined } = CalculateTransactionTotals(
     transactions,
     'yearly'
@@ -56,7 +58,7 @@ const YearlyOverview: React.FC<YearlyOverviewProps> = ({ transactions }) => {
         <Col span={24}>
           <div className="upper-header">
             <h4>OVERALL STATISTICS</h4>
-            <h6>01/01/2021, 11:35AM</h6>
+            <h6>{time}</h6>
           </div>
         </Col>
       </Row>

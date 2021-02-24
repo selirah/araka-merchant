@@ -16,8 +16,8 @@ interface AppProps {
 }
 
 const App: React.FC<AppProps> = ({ store, history, persistor }) => {
-  const [signOutTime] = useState(60 * 10 * 10000); // 10 minutes
-  const [warningTime] = useState(54 * 10 * 10000); // 9 minutes
+  const [signOutTime] = useState(60 * 10 * 1000); // 10 minutes
+  const [warningTime] = useState(54 * 10 * 1000); // 9 minutes
   let warnTimeOut: any;
   let logoutTimeOut: any;
   const { isAuthenticated } = store.getState().auth;
