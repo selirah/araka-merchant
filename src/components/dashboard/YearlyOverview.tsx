@@ -6,7 +6,7 @@ import { ProfitCard } from '../cards/ProfitCard';
 import { TransactionHistory } from '../../interfaces';
 import {
   CalculateTransactionTotals,
-  GetAreaPoints,
+  GetAreaAndBarPoints,
 } from '../../helpers/functions';
 
 interface YearlyOverviewProps {
@@ -24,10 +24,12 @@ const YearlyOverview: React.FC<YearlyOverviewProps> = ({
     transactions,
     'yearly'
   );
-  const { trxAreaChart, approvedAreaChart, declinedAreaChart } = GetAreaPoints(
-    transactions,
-    'yearly'
-  );
+  const {
+    trxAreaChart,
+    approvedAreaChart,
+    declinedAreaChart,
+    barChart,
+  } = GetAreaAndBarPoints(transactions, 'yearly');
 
   return (
     <>
@@ -76,7 +78,7 @@ const YearlyOverview: React.FC<YearlyOverviewProps> = ({
           <Col span={24}>
             <Card>
               <div className="chart-padding">
-                <BarChart info={barchartdata} />
+                <BarChart info={barChart} />
               </div>
             </Card>
           </Col>

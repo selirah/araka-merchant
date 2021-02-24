@@ -80,12 +80,20 @@ const Dashboard = () => {
         break;
       case menu.DASHBOARD_DAILY:
         container = (
-          <DailyOverview barchartdata={DailyBar} areachartdata={DailyArea} />
+          <DailyOverview
+            barchartdata={DailyBar}
+            areachartdata={DailyArea}
+            transactions={transactions}
+          />
         );
         break;
       case menu.DASHBOARD_WEEKLY:
         container = (
-          <WeeklyOverview barchartdata={WeeklyBar} areachartdata={WeeklyArea} />
+          <WeeklyOverview
+            barchartdata={WeeklyBar}
+            areachartdata={WeeklyArea}
+            transactions={transactions}
+          />
         );
         break;
       case menu.DASHBOARD_MONTHLY:
@@ -93,6 +101,7 @@ const Dashboard = () => {
           <MonthlyOverview
             barchartdata={MonthlyBar}
             areachartdata={MonthlyArea}
+            transactions={transactions}
           />
         );
         break;

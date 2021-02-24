@@ -3,16 +3,35 @@ import { Row, Col, Card } from 'antd';
 import { CardView } from '../cards/CardView';
 import { BarChart } from '../chart/BarChart';
 import { ProfitCard } from '../cards/ProfitCard';
+import { TransactionHistory } from '../../interfaces';
+import {
+  CalculateTransactionTotals,
+  GetAreaAndBarPoints,
+} from '../../helpers/functions';
 
 interface MonthlyOverviewProps {
   barchartdata: any;
   areachartdata: any;
+  transactions: TransactionHistory[];
 }
 
 const MonthlyOverview: React.FC<MonthlyOverviewProps> = ({
   barchartdata,
   areachartdata,
+  transactions,
 }) => {
+  const { total, approved, declined } = CalculateTransactionTotals(
+    transactions,
+    'monthly'
+  );
+
+  const {
+    trxAreaChart,
+    approvedAreaChart,
+    declinedAreaChart,
+    barChart,
+  } = GetAreaAndBarPoints(transactions, 'monthly');
+
   return (
     <>
       <Row gutter={10}>
@@ -30,22 +49,22 @@ const MonthlyOverview: React.FC<MonthlyOverviewProps> = ({
               <Col span={8} sm={24} md={8} xs={24}>
                 <CardView
                   value="Transactions"
-                  title="906"
-                  data={areachartdata}
+                  title={`${total}`}
+                  data={trxAreaChart}
                 />
               </Col>
               <Col span={8} sm={24} md={8} xs={24}>
                 <CardView
                   value="Approved"
-                  title="$20,140.10"
-                  data={areachartdata}
+                  title={`$${approved.toFixed(2)}`}
+                  data={approvedAreaChart}
                 />
               </Col>
               <Col span={8} sm={24} md={8} xs={24}>
                 <CardView
                   value="Declined"
-                  title="$25,512.10"
-                  data={areachartdata}
+                  title={`$${declined.toFixed(2)}`}
+                  data={declinedAreaChart}
                 />
               </Col>
             </Row>
@@ -60,7 +79,7 @@ const MonthlyOverview: React.FC<MonthlyOverviewProps> = ({
           <Col span={24}>
             <Card>
               <div className="chart-padding">
-                <BarChart info={barchartdata} />
+                <BarChart info={barChart} />
               </div>
             </Card>
           </Col>

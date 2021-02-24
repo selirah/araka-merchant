@@ -1,6 +1,15 @@
 import { TransactionHistory } from '../interfaces';
 import { transactionStatus } from './constants';
 import moment from 'moment';
+import {
+  calculateDailyTransactionTotals,
+  calculateDailyValues,
+  calculateMonthlyTransactionTotal,
+  calculateMonthlyValues,
+  calculateWeeklyTransactionTotals,
+  calculateWeeklyValues,
+  calculateYearValues,
+} from './helperFunctions';
 
 export const CalculateTransactionTotals = (
   transactions: TransactionHistory[],
@@ -24,12 +33,55 @@ export const CalculateTransactionTotals = (
         }
       }
       break;
+    case 'daily':
+      const DailyLabels = getLabels(review)!;
+      for (let label of DailyLabels) {
+        let hour = label.split(':')[0];
+        let ampm = label.split(':')[1].split(' ')[1];
+        const lbl = `${hour}${ampm}`;
+        const {
+          trxTotal,
+          totalApprovedAmt,
+          totalDeclinedAmt,
+        } = calculateDailyTransactionTotals(transactions, lbl);
+
+        total += trxTotal;
+        approved += totalApprovedAmt;
+        declined += totalDeclinedAmt;
+      }
+      break;
+    case 'weekly':
+      const WeeklyLabels = getLabels(review)!;
+      for (let label of WeeklyLabels) {
+        const {
+          trxTotal,
+          totalApprovedAmt,
+          totalDeclinedAmt,
+        } = calculateWeeklyTransactionTotals(transactions, label);
+        total += trxTotal;
+        approved += totalApprovedAmt;
+        declined += totalDeclinedAmt;
+      }
+      break;
+    case 'monthly':
+      const MonthlyLabels = getLabels(review)!;
+      for (let label of MonthlyLabels) {
+        const {
+          trxTotal,
+          totalApprovedAmt,
+          totalDeclinedAmt,
+        } = calculateMonthlyTransactionTotal(transactions, label);
+        total += trxTotal;
+        approved += totalApprovedAmt;
+        declined += totalDeclinedAmt;
+      }
+      break;
   }
 
   return { total, approved, declined };
 };
 
-export const GetAreaPoints = (
+export const GetAreaAndBarPoints = (
   transactions: TransactionHistory[],
   review: string
 ) => {
@@ -40,59 +92,224 @@ export const GetAreaPoints = (
   let trxData = [];
   let trxApproved = [];
   let trxDeclined = [];
+  let trxApprovedAmt = [];
+  let trxDeclinedAmt = [];
+  let barChart = {};
 
   switch (review) {
     case 'yearly':
       for (let lbl of labels) {
-        const { total, approved, declined } = calculateYearValues(
-          transactions,
-          lbl
-        );
+        const {
+          total,
+          approvedAmt,
+          declinedAmt,
+          totalApproved,
+          totalDeclined,
+        } = calculateYearValues(transactions, lbl);
         trxData.push(total);
-        trxApproved.push(approved);
-        trxDeclined.push(declined);
+        trxApproved.push(totalApproved);
+        trxDeclined.push(totalDeclined);
+        trxApprovedAmt.push(approvedAmt);
+        trxDeclinedAmt.push(declinedAmt);
       }
-      trxAreaChart = getAreaOptions(labels, trxData);
-      approvedAreaChart = getAreaOptions(labels, trxApproved);
-      declinedAreaChart = getAreaOptions(labels, trxDeclined);
+
+      trxAreaChart = getAreaOptions(labels, trxData, '#03A9F4', '#B3E5FC');
+      approvedAreaChart = getAreaOptions(
+        labels,
+        trxApprovedAmt,
+        '#03A9F4',
+        '#B3E5FC'
+      );
+      declinedAreaChart = getAreaOptions(
+        labels,
+        trxDeclinedAmt,
+        '#03A9F4',
+        '#B3E5FC'
+      );
+      barChart = getBarOptions(labels, trxApproved, trxDeclined);
+      break;
+    case 'daily':
+      for (let label of labels) {
+        let hour = label.split(':')[0];
+        let ampm = label.split(':')[1].split(' ')[1];
+        const lbl = `${hour}${ampm}`;
+        const {
+          total,
+          approvedAmt,
+          declinedAmt,
+          totalApproved,
+          totalDeclined,
+        } = calculateDailyValues(transactions, lbl);
+        trxData.push(total);
+        trxApproved.push(totalApproved);
+        trxDeclined.push(totalDeclined);
+        trxApprovedAmt.push(approvedAmt);
+        trxDeclinedAmt.push(declinedAmt);
+      }
+      trxAreaChart = getAreaOptions(labels, trxData, '#1ce1ac', '#1ce1ac50');
+      approvedAreaChart = getAreaOptions(
+        labels,
+        trxApprovedAmt,
+        '#1ce1ac',
+        '#1ce1ac50'
+      );
+      declinedAreaChart = getAreaOptions(
+        labels,
+        trxDeclinedAmt,
+        '#1ce1ac',
+        '#1ce1ac50'
+      );
+      barChart = getBarOptions(labels, trxApproved, trxDeclined);
+      break;
+    case 'weekly':
+      for (let label of labels) {
+        const {
+          total,
+          approvedAmt,
+          declinedAmt,
+          totalApproved,
+          totalDeclined,
+        } = calculateWeeklyValues(transactions, label);
+        trxData.push(total);
+        trxApproved.push(totalApproved);
+        trxDeclined.push(totalDeclined);
+        trxApprovedAmt.push(approvedAmt);
+        trxDeclinedAmt.push(declinedAmt);
+      }
+      trxAreaChart = getAreaOptions(labels, trxData, '#5E35B1', '#D1C4E9');
+      approvedAreaChart = getAreaOptions(
+        labels,
+        trxApprovedAmt,
+        '#5E35B1',
+        '#D1C4E9'
+      );
+      declinedAreaChart = getAreaOptions(
+        labels,
+        trxDeclinedAmt,
+        '#5E35B1',
+        '#D1C4E9'
+      );
+      barChart = getBarOptions(labels, trxApproved, trxDeclined);
+      break;
+    case 'monthly':
+      // let's reverse the labels to start from last 30 days date and not today
+      labels = labels.reverse();
+      for (let label of labels) {
+        const {
+          total,
+          approvedAmt,
+          declinedAmt,
+          totalApproved,
+          totalDeclined,
+        } = calculateMonthlyValues(transactions, label);
+        trxData.push(total);
+        trxApproved.push(totalApproved);
+        trxDeclined.push(totalDeclined);
+        trxApprovedAmt.push(approvedAmt);
+        trxDeclinedAmt.push(declinedAmt);
+      }
+      trxAreaChart = getAreaOptions(labels, trxData, '#FFA000', '#FFE082');
+      approvedAreaChart = getAreaOptions(
+        labels,
+        trxApprovedAmt,
+        '#FFA000',
+        '#FFE082'
+      );
+      declinedAreaChart = getAreaOptions(
+        labels,
+        trxDeclinedAmt,
+        '#FFA000',
+        '#FFE082'
+      );
+      barChart = getBarOptions(labels, trxApproved, trxDeclined);
       break;
   }
-  return { trxAreaChart, approvedAreaChart, declinedAreaChart };
+  return { trxAreaChart, approvedAreaChart, declinedAreaChart, barChart };
 };
 
-const calculateYearValues = (
-  transactions: TransactionHistory[],
-  month: string
-) => {
-  let total = 0;
-  let approved = 0.0;
-  let declined = 0.0;
-  for (let trx of transactions) {
-    const m = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('MMM');
-    if (m === month) {
-      total += 1;
-    }
-    if (m === month && trx.status === transactionStatus.APPROVED) {
-      approved += trx.amountPaid;
-    }
-    if (m === month && trx.status === transactionStatus.DECLINED) {
-      declined += trx.amountPaid;
-    }
+const getLabels = (review: string) => {
+  let labels: string[] = [];
+  switch (review) {
+    case 'yearly':
+      labels = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
+      ];
+      break;
+    case 'daily':
+      labels = [
+        '12:00 AM',
+        '01:00 AM',
+        '02:00 AM',
+        '03:00 AM',
+        '04:00 AM',
+        '05:00 AM',
+        '06:00 AM',
+        '07:00 AM',
+        '08:00 AM',
+        '09:00 AM',
+        '10:00 AM',
+        '11:00 AM',
+        '12:00 PM',
+        '01:00 PM',
+        '02:00 PM',
+        '03:00 PM',
+        '04:00 PM',
+        '05:00 PM',
+        '06:00 PM',
+        '07:00 PM',
+        '08:00 PM',
+        '09:00 PM',
+        '10:00 PM',
+        '11:00 PM',
+      ];
+      break;
+    case 'weekly':
+      labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      break;
+    case 'monthly':
+      // this is a special case
+      // we have to get last 30 days dates
+      const todayDate = moment(new Date()).format('MMM DD');
+      // have to get for all 30 days
+      for (let d = 0; d < 30; d++) {
+        let date = moment(new Date()).subtract(d, 'd').format('MMM DD');
+        if (date === todayDate) {
+          date = 'Today';
+        }
+        labels.push(date);
+      }
+      break;
   }
-  return { total, approved, declined };
+  return labels;
 };
 
-const getAreaOptions = (labels: string[], dataPoints: any[]) => {
+const getAreaOptions = (
+  labels: string[],
+  dataPoints: any[],
+  borderColor: string,
+  backgroundColor: string
+) => {
   const data = {
     height: 100,
     labels: labels,
     datasets: [
       {
         data: dataPoints,
-        borderColor: '#03A9F4',
+        borderColor: borderColor,
         borderWidth: 1,
         fill: true,
-        backgroundColor: '#B3E5FC',
+        backgroundColor: backgroundColor,
         pointHoverBorderColor: 'transparent',
       },
     ],
@@ -158,25 +375,65 @@ const getAreaOptions = (labels: string[], dataPoints: any[]) => {
   return data;
 };
 
-const getLabels = (review: string) => {
-  let label;
-  switch (review) {
-    case 'yearly':
-      label = [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec',
-      ];
-      break;
-  }
-  return label;
+const getBarOptions = (
+  labels: string[],
+  approvedDataPoints: any[],
+  declinedDataPoints: any[]
+) => {
+  const data = {
+    height: 100,
+    labels: labels,
+    datasets: [
+      {
+        label: 'DECLINED/CANCELLED TRANSACTIONS',
+        data: declinedDataPoints,
+        backgroundColor: '#f55c29',
+      },
+      {
+        label: 'APPROVED TRANSACTIONS',
+        data: approvedDataPoints,
+        backgroundColor: '#35b9e6',
+      },
+    ],
+    options: {
+      maintainAspectRatio: true,
+      responsive: true,
+      legend: {
+        display: true,
+        position: 'bottom',
+        labels: {
+          fontSize: 10,
+          padding: 30,
+          boxWidth: 10,
+        },
+      },
+      scales: {
+        yAxes: [
+          {
+            gridLines: {
+              color: '#e5e9f2',
+            },
+            ticks: {
+              beginAtZero: true,
+              fontSize: 10,
+              fontColor: '#182b49',
+            },
+          },
+        ],
+        xAxes: [
+          {
+            gridLines: {
+              display: false,
+            },
+            ticks: {
+              beginAtZero: true,
+              fontSize: 11,
+              fontColor: '#182b49',
+            },
+          },
+        ],
+      },
+    },
+  };
+  return data;
 };
