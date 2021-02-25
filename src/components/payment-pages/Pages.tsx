@@ -1,6 +1,8 @@
 import React from 'react';
 import { Table, Row, Col, Card } from 'antd';
 import { Page } from '../../interfaces';
+import moment from 'moment-timezone';
+import { timeZones } from '../../helpers/constants';
 
 interface PagesProps {
   pages: Page[];
@@ -119,7 +121,9 @@ const Pages: React.FC<PagesProps> = ({
       emailAddress: page.emailAddress,
       currency: page.currency,
       processId: page.processId,
-      createdWhen: page.createdWhen,
+      createdWhen: moment(page.createdWhen)
+        .tz(timeZones.kinshasa)
+        .format(`MMMM D, YYYY (h:mm a)`),
     });
   }
 

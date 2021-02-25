@@ -168,6 +168,7 @@ export const GetAreaAndBarPoints = (
       barChart = getBarOptions(labels, trxApproved, trxDeclined);
       break;
     case 'weekly':
+      labels = labels.reverse();
       for (let label of labels) {
         const {
           total,
@@ -248,6 +249,7 @@ const getLabels = (review: string) => {
   switch (review) {
     case 'yearly':
       labels = [
+        'Dec',
         'Jan',
         'Feb',
         'Mar',
@@ -259,7 +261,6 @@ const getLabels = (review: string) => {
         'Sep',
         'Oct',
         'Nov',
-        'Dec',
       ];
       break;
     case 'daily':
@@ -291,7 +292,16 @@ const getLabels = (review: string) => {
       ];
       break;
     case 'weekly':
-      labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      // labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const tDate = moment(new Date()).format('ddd');
+      for (let d = 0; d < 7; d++) {
+        let day = moment(new Date()).subtract(d, 'd').format('ddd');
+        if (day === tDate) {
+          day = 'Today';
+        }
+        labels.push(day);
+      }
+
       break;
     case 'monthly':
       // this is a special case

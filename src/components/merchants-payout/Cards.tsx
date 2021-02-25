@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col } from 'antd';
 import { CardView } from '../cards/CardView';
 import { TransactionHistory } from '../../interfaces';
-import { GetTransactionsAnalytics } from '../../helpers/transaction_fucntions';
+import { GetTransactionsAnalytics } from '../../helpers/transaction_functions';
 
 interface CardsProps {
   areachartdata: any;

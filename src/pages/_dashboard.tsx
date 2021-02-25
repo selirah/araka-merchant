@@ -34,12 +34,12 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (user && isEmpty(client)) {
-      // fetch user details
       dispatch(getCurrentUser(user.userId));
     }
     // fetch transaction history
-    dispatch(clearTransactions());
-    dispatch(getTransactions());
+    if (isEmpty(transactions) && !loading) {
+      dispatch(getTransactions());
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -51,13 +51,7 @@ const Dashboard = () => {
   let container;
   if (loading && isEmpty(transactions)) {
     container = (
-      <Row
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-        }}
-      >
+      <Row className="suspense-container">
         <Spin style={{ marginTop: '200px' }} />
       </Row>
     );
@@ -85,7 +79,17 @@ const Dashboard = () => {
   return (
     <div className="padding-box">
       <Content className="site-layout-background site-box">
-        <Suspense fallback={<Spin />}>{container}</Suspense>
+        <Suspense
+          fallback={
+            <Row className="suspense-container">
+              <div style={{ marginTop: '200px' }}>
+                <Spin />
+              </div>
+            </Row>
+          }
+        >
+          {container}
+        </Suspense>
       </Content>
     </div>
   );

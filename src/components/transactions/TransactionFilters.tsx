@@ -1,14 +1,42 @@
 import React from 'react';
-import { Row, Col, Select, DatePicker, Input, Button, Collapse } from 'antd';
+import {
+  Row,
+  Col,
+  Select,
+  DatePicker,
+  Input,
+  Button,
+  Collapse,
+  Form,
+} from 'antd';
 import { Clock } from '../../utils/clock';
+import { TransactionHistory } from '../../interfaces';
 
-interface TransactionFiltersProps {}
+interface TransactionFiltersProps {
+  transactions: TransactionHistory[];
+  onSearch(values: any): void;
+  onReset(form: any): void;
+}
 
 const { Option } = Select;
 const { Panel } = Collapse;
 
-const TransactionFilters: React.FC<TransactionFiltersProps> = () => {
+const TransactionFilters: React.FC<TransactionFiltersProps> = ({
+  transactions,
+  onSearch,
+  onReset,
+}) => {
   const { time } = Clock();
+  const [form] = Form.useForm();
+
+  let merchants: string[] = [];
+  for (let trx of transactions) {
+    const merchant = merchants.find((m) => m === trx.merchant);
+    if (merchant === undefined) {
+      merchants.push(trx.merchant);
+    }
+  }
+
   return (
     <Collapse style={{ marginTop: '5px' }}>
       <Panel
@@ -21,74 +49,101 @@ const TransactionFilters: React.FC<TransactionFiltersProps> = () => {
           </h6>
         }
       >
-        <Row gutter={10}>
-          <Col span={6}>
-            <Select placeholder="Status: Default=All" style={{ width: '100%' }}>
-              <Option value="">All</Option>
-              <Option value="Approved">Approved</Option>
-              <Option value="Declined">Declined</Option>
-              <Option value="Canceled">Canceled</Option>
-            </Select>
-          </Col>
-          <Col span={6}>
-            <Select
-              placeholder="Channel: Default=All"
-              style={{ width: '100%' }}
-            >
-              <Option value="">All</Option>
-              <Option value="Card">Card</Option>
-              <Option value="mPSA">mPESA</Option>
-            </Select>
-          </Col>
-          <Col span={6}>
-            <DatePicker
-              style={{ width: '100%' }}
-              format="MMMM D, YYYY"
-              allowClear
-              placeholder="Date Period: From"
-            />
-          </Col>
-          <Col span={6}>
-            <DatePicker
-              style={{ width: '100%' }}
-              format="MMMM D, YYYY"
-              allowClear
-              placeholder="Date Period: To"
-            />
-          </Col>
-        </Row>
-        <Row style={{ marginTop: '10px' }} gutter={10}>
-          <Col span={6}>
-            <Input
-              placeholder="Reference/Transaction ID/Customer"
-              style={{ width: '100%' }}
-            />
-          </Col>
-          <Col span={6}>
-            <Select
-              placeholder="Merchant: Default=All"
-              style={{ width: '100%' }}
-            >
-              <Option value="">All</Option>
-              <Option value="Card">LEON Hotel</Option>
-              <Option value="mPSA">INRB</Option>
-            </Select>
-          </Col>
-          <Col span={6}>
-            <Row gutter={5}>
-              <Col span={6}>
-                <Button type="primary" className="filterButton">
-                  Filter
-                </Button>
-              </Col>
-              <Col span={6}>
-                <Button type="primary" className="resetButton">
-                  Reset
-                </Button>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+        <Form name="filter" form={form} onFinish={onSearch}>
+          <Row gutter={10}>
+            <Col span={6}>
+              <Form.Item name="status">
+                <Select
+                  placeholder="Status: Default=All"
+                  style={{ width: '100%' }}
+                >
+                  <Option value="APPROVED">Approved</Option>
+                  <Option value="DECLINED">Declined</Option>
+                  <Option value="CANCELED">Canceled</Option>
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              <Form.Item name="channel">
+                <Select
+                  placeholder="Channel: Default=All"
+                  style={{ width: '100%' }}
+                >
+                  <Option value="Card">Card</Option>
+                  <Option value="mPESA">mPESA</Option>
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              <Form.Item name="periodFrom">
+                <DatePicker
+                  style={{ width: '100%' }}
+                  format="MMMM D, YYYY"
+                  allowClear
+                  placeholder="Date Period: From"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              <Form.Item name="periodTo">
+                <DatePicker
+                  style={{ width: '100%' }}
+                  format="MMMM D, YYYY"
+                  allowClear
+                  placeholder="Date Period: To"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row style={{ marginTop: '10px' }} gutter={10}>
+            <Col span={6}>
+              <Form.Item name="query">
+                <Input
+                  placeholder="Reference/Transaction ID/Customer"
+                  style={{ width: '100%' }}
+                />
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              <Form.Item name="merchant">
+                <Select
+                  placeholder="Merchant: Default=All"
+                  style={{ width: '100%' }}
+                >
+                  {merchants.map((m) => (
+                    <Option value={m} key={Math.random()}>
+                      {m}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              <Row gutter={5}>
+                <Form.Item>
+                  <Col span={6}>
+                    <Button
+                      type="primary"
+                      className="filterButton"
+                      htmlType="submit"
+                    >
+                      Filter
+                    </Button>
+                  </Col>
+                </Form.Item>
+                <Col span={6}>
+                  <Button
+                    type="primary"
+                    className="resetButton"
+                    onClick={() => onReset(form)}
+                  >
+                    Reset
+                  </Button>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Form>
       </Panel>
     </Collapse>
   );

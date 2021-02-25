@@ -73,7 +73,15 @@ export const Settings = () => {
   return (
     <div className="padding-box">
       <Content className="site-layout-background site-box">
-        <Suspense fallback={<Spin />}>
+        <Suspense
+          fallback={
+            <Row className="suspense-container">
+              <div style={{ marginTop: '200px' }}>
+                <Spin />
+              </div>
+            </Row>
+          }
+        >
           <Row gutter={10}>
             <Col span={24}>
               <div className="upper-header">

@@ -1520,6 +1520,12 @@ thead[class*='ant-table-thead'] th {
   background-color: #35b9e6;
   border: 1px solid #35b9e6;
 }
+
+.suspense-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 /** END CONTENT **/
 
 /* Small devices (portrait tablets and large phones, 600px and up) */

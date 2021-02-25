@@ -1,14 +1,28 @@
 import React from 'react';
-import { Row, Col, Input, Button, Collapse, Select } from 'antd';
+import { Row, Col, Input, Button, Collapse, Select, Form } from 'antd';
 import { Clock } from '../../utils/clock';
+import { MerchantOverview } from '../../interfaces/MerchantOverview';
 
-interface FiltersProps {}
+interface FiltersProps {
+  overviews: MerchantOverview[];
+  onSearch(values: any): void;
+  onReset(form: any): void;
+}
 
 const { Panel } = Collapse;
 const { Option } = Select;
 
-const Filters: React.FC<FiltersProps> = () => {
+const Filters: React.FC<FiltersProps> = ({ overviews, onReset, onSearch }) => {
   const { time } = Clock();
+  const [form] = Form.useForm();
+
+  let merchants: string[] = [];
+  for (let overview of overviews) {
+    const merchant = merchants.find((m) => m === overview.merchant);
+    if (merchant === undefined) {
+      merchants.push(overview.merchant);
+    }
+  }
 
   return (
     <Collapse style={{ marginTop: '5px' }}>
@@ -22,42 +36,59 @@ const Filters: React.FC<FiltersProps> = () => {
           </h6>
         }
       >
-        <Row gutter={10}>
-          <Col span={6}>
-            <Select
-              placeholder="Merchant: Default=All"
-              style={{ width: '100%' }}
-            >
-              <Option value="">All</Option>
-              <Option value="Approved">Approved</Option>
-              <Option value="Declined">Declined</Option>
-              <Option value="Canceled">Canceled</Option>
-            </Select>
-          </Col>
+        <Form name="filter" form={form} onFinish={onSearch}>
+          <Row gutter={10}>
+            <Col span={6}>
+              <Form.Item name="merchant">
+                <Select
+                  placeholder="Merchant: Default=All"
+                  style={{ width: '100%' }}
+                >
+                  {merchants.map((m) => (
+                    <Option value={m} key={Math.random()}>
+                      {m}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
 
-          <Col span={6}>
-            <Input
-              placeholder="Amount Processed/Transactions/Fee"
-              style={{ width: '100%' }}
-            />
-          </Col>
-        </Row>
-        <Row style={{ marginTop: '10px' }} gutter={10}>
-          <Col span={6}>
-            <Row gutter={5}>
-              <Col span={6}>
-                <Button type="primary" className="filterButton">
-                  Filter
-                </Button>
-              </Col>
-              <Col span={6}>
-                <Button type="primary" className="resetButton">
-                  Reset
-                </Button>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+            <Col span={6}>
+              <Form.Item name="query">
+                <Input
+                  placeholder="Amount Processed/Transactions/Fee"
+                  style={{ width: '100%' }}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row style={{ marginTop: '10px' }} gutter={10}>
+            <Col span={6}>
+              <Row gutter={5}>
+                <Form.Item>
+                  <Col span={6}>
+                    <Button
+                      type="primary"
+                      className="filterButton"
+                      htmlType="submit"
+                    >
+                      Filter
+                    </Button>
+                  </Col>
+                </Form.Item>
+                <Col span={6}>
+                  <Button
+                    type="primary"
+                    className="resetButton"
+                    onClick={() => onReset(form)}
+                  >
+                    Reset
+                  </Button>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Form>
       </Panel>
     </Collapse>
   );

@@ -15,6 +15,7 @@ import {
 import { isEmpty } from '../helpers/isEmpty';
 import { path } from '../helpers/path';
 import { useTranslation } from 'react-i18next';
+import { GetPagesFilteredResult } from '../helpers/page_functions';
 
 const EmptyBox = lazy(() => import('../components/payment-pages/EmptyBox'));
 const PaymentTypeModal = lazy(
@@ -26,12 +27,15 @@ const Pages = lazy(() => import('../components/payment-pages/Pages'));
 
 const PaymentPages = () => {
   const dispatch: AppDispatch = useDispatch();
-  const page = appSelector((state) => state.page);
+  const { pages, loading, isSubmitting, success, failure, error } = appSelector(
+    (state) => state.page
+  );
   const { Content } = Layout;
   const [showPaymentTypeModal, setShowPaymentTypeModal] = useState(false);
   const [showFormModal, setShowFormModal] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
+  // const [spin, setSpin] = useState(false);
+
   const [values] = useState<PaymentPage>({
     Amount: '',
     Description: '',
@@ -45,15 +49,13 @@ const PaymentPages = () => {
     ProcessId: '',
     TransactionReference: '',
   });
-  const [isSubmit, setIsSubmit] = useState(false);
-  const [pages, setPages] = useState<Page[]>([]);
+  const [pageData, setPageData] = useState<Page[]>(pages);
   const [isCopied, setIsCopied] = useState(false);
   const [processId, setProcessId] = useState('');
   const { t } = useTranslation();
   const history = useHistory();
 
   useEffect(() => {
-    const { pages, loading } = page;
     dispatch(clearStates());
     if (isEmpty(pages) && !loading) {
       dispatch(getPaymentPagesRequest());
@@ -62,17 +64,13 @@ const PaymentPages = () => {
   }, []);
 
   useEffect(() => {
-    const { pages, loading, isSubmitting, success, failure, error } = page;
-    setPages(pages);
-    setLoading(loading);
-    setIsSubmit(isSubmitting);
     if (success) {
       message.success(`${t('paymentPages.pageAddSuccess')}`, 5);
     }
     if (failure) {
       message.error(error, 5);
     }
-  }, [page, t]);
+  }, [success, error, failure, t]);
 
   const reloadPages = () => {
     dispatch(clearPaymentPages());
@@ -122,7 +120,7 @@ const PaymentPages = () => {
   const handleChange = (info: any): void => {
     getBase64(info.file.originFileObj, (imageUrl: any) => {
       setImageUrl(imageUrl);
-      setLoading(false);
+      // setSpin(false);
     });
   };
 
@@ -176,7 +174,7 @@ const PaymentPages = () => {
   if (loading) {
     render = (
       <div className="spinner">
-        <Spin size="default" />
+        <Spin />
       </div>
     );
   }
@@ -202,7 +200,7 @@ const PaymentPages = () => {
   if (!loading && !isEmpty(pages)) {
     render = (
       <Pages
-        pages={pages}
+        pages={pageData}
         copyLink={copyLink}
         isCopied={isCopied}
         processId={processId}
@@ -212,11 +210,29 @@ const PaymentPages = () => {
     );
   }
 
+  const onReset = (form: any) => {
+    form.resetFields();
+    setPageData(pages);
+  };
+
+  const onSearch = (values: any) => {
+    const { bucket } = GetPagesFilteredResult(pages, values);
+    setPageData(bucket);
+  };
+
   return (
     <div className="padding-box">
       <Content className="site-layout-background site-box">
-        <Suspense fallback={<Spin />}>
-          <FilterMenu />
+        <Suspense
+          fallback={
+            <Row className="suspense-container">
+              <div style={{ marginTop: '200px' }}>
+                <Spin />
+              </div>
+            </Row>
+          }
+        >
+          <FilterMenu onReset={onReset} onSearch={onSearch} />
           <div className="margin-top">
             <Row style={{ position: 'relative' }}>
               <h4 className="transaction-chart-text">Payment Pages</h4>
@@ -253,7 +269,7 @@ const PaymentPages = () => {
             uploadButton={uploadButton}
             values={values}
             onSubmit={onSubmit}
-            isSubmit={isSubmit}
+            isSubmit={isSubmitting}
           />
         </Suspense>
       </Content>

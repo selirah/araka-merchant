@@ -11,7 +11,9 @@ import {
   exportTranxRequest,
 } from '../store/transactions';
 import { isEmpty } from '../helpers/isEmpty';
-import { Search /*, TransactionHistory*/ } from '../interfaces';
+import { Search } from '../interfaces';
+import { GetTransactionsFilteredResult } from '../helpers/transaction_functions';
+import moment from 'moment';
 
 import { WeeklyArea } from '../mock/WeeklyOverview';
 
@@ -27,18 +29,21 @@ const MerchantsPayouts = () => {
   const { transactions, loading, isExporting } = appSelector(
     (state) => state.transaction
   );
-  // const [transactionData, setTransactionData] = useState<TransactionHistory[]>(
-  //   transactions
-  // );
-  const [channelSearch /*, setChannelSearch*/] = useState('');
-  const [searchValue /*, setSearchValue*/] = useState('');
-  const [statusSearch /*, setStatusSearch*/] = useState('');
-  const [fromDate /*, setFromDate*/] = useState('');
-  const [toDate /*, setToDate*/] = useState('');
+  const [trans, setTrans] = useState(transactions);
+  const [channelSearch, setChannelSearch] = useState('');
+  const [searchValue, setSearchValue] = useState('');
+  const [statusSearch, setStatusSearch] = useState('');
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
   const [exportType, setExportType] = useState('');
+  // const [transaction, setTransaction] = useState(
+  //   null
+  // );
 
   useEffect(() => {
-    dispatch(getTransactions());
+    if (isEmpty(transactions) && !loading) {
+      dispatch(getTransactions());
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -68,7 +73,7 @@ const MerchantsPayouts = () => {
   if (loading) {
     render = (
       <div className="spinner">
-        <Spin size="large" />
+        <Spin />
       </div>
     );
   }
@@ -82,22 +87,50 @@ const MerchantsPayouts = () => {
   }
 
   if (!loading && !isEmpty(transactions)) {
-    render = <Details payouts={transactions} />;
+    render = <Details payouts={trans} />;
   }
+
+  const onReset = (form: any) => {
+    form.resetFields();
+    setTrans(transactions);
+  };
+
+  const onSearch = (values: any) => {
+    const { status, channel, periodFrom, periodTo, query } = values;
+    const { bucket } = GetTransactionsFilteredResult(transactions, values);
+    setChannelSearch(channel !== undefined ? channel : '');
+    setStatusSearch(status !== undefined ? status : '');
+    setSearchValue(query !== undefined ? query : '');
+    if (periodFrom !== undefined) {
+      setFromDate(moment(periodFrom._d, 'MMMM D, YYYY').format('MM/DD/YYYY'));
+    }
+    if (periodTo !== undefined) {
+      setToDate(moment(periodTo._d, 'MMMM D, YYYY').format('MM/DD/YYYY'));
+    }
+    setTrans(bucket);
+  };
 
   return (
     <div className="padding-box">
       <Content className="site-layout-background site-box">
-        <Suspense fallback={<Spin />}>
-          <Filters />
+        <Suspense
+          fallback={
+            <Row className="suspense-container">
+              <div style={{ marginTop: '200px' }}>
+                <Spin />
+              </div>
+            </Row>
+          }
+        >
+          <Filters transactions={trans} onReset={onReset} onSearch={onSearch} />
           {!isEmpty(transactions) ? (
-            <Cards areachartdata={WeeklyArea} transactions={transactions} />
+            <Cards areachartdata={WeeklyArea} transactions={trans} />
           ) : null}
           <div className="margin-top">
             <Row style={{ position: 'relative' }}>
               <h4 className="transaction-chart-text">Merchants Table</h4>
               <div className="utility-buttons">
-                {!isEmpty(transactions) ? (
+                {!isEmpty(trans) ? (
                   <>
                     <Button
                       type="primary"

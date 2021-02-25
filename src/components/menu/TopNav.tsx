@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Layout, Menu, Dropdown, Button, Row, Col } from 'antd';
 import { useDispatch } from 'react-redux';
-import { UserOutlined, DownOutlined, BellOutlined } from '@ant-design/icons';
+import {
+  UserOutlined,
+  DownOutlined /*, BellOutlined*/,
+} from '@ant-design/icons';
 import * as FeatherIcons from 'react-feather';
 import { logout } from '../../store/auth/actions';
 import { secure } from '../../utils/secure';
@@ -75,12 +78,12 @@ export const TopNav: React.FC<TopNavProps> = ({ collapsed, toggle }) => {
                   {active === 'en' ? 'EN' : 'FR'} <DownOutlined />
                 </Button>
               </Dropdown>
-              <Dropdown overlay={menu}>
+              {/* <Dropdown overlay={menu}>
                 <Button className="lang-buton">
                   <BellOutlined />
                   <DownOutlined />
                 </Button>
-              </Dropdown>
+              </Dropdown> */}
               <Dropdown overlay={settingsMenu}>
                 <Button className="lang-buton">
                   <UserOutlined className="grey-bg" />

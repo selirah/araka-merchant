@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
-import { Spin } from 'antd';
+import { Spin, Row } from 'antd';
 import { path } from '../helpers/path';
 
 const Dashboard = lazy(() => import('../pages/_dashboard'));
@@ -25,9 +25,17 @@ const Routes: React.FC = () => {
       <Switch>
         <Suspense
           fallback={
-            <div className="spin" style={{ textAlign: 'center' }}>
-              <Spin size="large" />
-            </div>
+            <Row
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+              }}
+            >
+              <div className="spin" style={{ textAlign: 'center' }}>
+                <Spin size="large" />
+              </div>
+            </Row>
           }
         >
           <Route exact path={path.login} component={Login} />

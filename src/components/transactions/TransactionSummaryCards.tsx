@@ -2,22 +2,27 @@ import React from 'react';
 import { Row, Col } from 'antd';
 import { CardView } from '../cards/CardView';
 import { TransactionHistory } from '../../interfaces';
-import { GetTransactionsAnalytics } from '../../helpers/transaction_fucntions';
+import {
+  CalculateTransactionTotals,
+  GetAreaAndBarPoints,
+} from '../../helpers/functions';
 
 interface TransactionSummaryCardsProps {
-  areachartdata: any;
   transactions: TransactionHistory[];
 }
 
 const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
-  areachartdata,
   transactions,
 }) => {
+  const { total, approved, declined } = CalculateTransactionTotals(
+    transactions,
+    'yearly'
+  );
   const {
-    totalAmountProcessed,
-    totalAmountDeclined,
-    totalTransactions,
-  } = GetTransactionsAnalytics(transactions);
+    trxAreaChart,
+    approvedAreaChart,
+    declinedAreaChart,
+  } = GetAreaAndBarPoints(transactions, 'yearly');
 
   return (
     <div className="margin-top-small">
@@ -30,22 +35,22 @@ const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Transactions"
-                title={`${totalTransactions}`}
-                data={areachartdata}
+                title={`${total}`}
+                data={trxAreaChart}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Approved"
-                title={`$${totalAmountProcessed.toFixed(2)}`}
-                data={areachartdata}
+                title={`$${approved.toFixed(2)}`}
+                data={approvedAreaChart}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Declined"
-                title={`$${totalAmountDeclined.toFixed(2)}`}
-                data={areachartdata}
+                title={`$${declined.toFixed(2)}`}
+                data={declinedAreaChart}
               />
             </Col>
           </Row>

@@ -11,6 +11,7 @@ import {
 } from '../store/vas-processed';
 import { isEmpty } from '../helpers/isEmpty';
 import { Search } from '../interfaces';
+import { GetVASFilteredResult } from '../helpers/report_functions';
 
 import { MonthlyArea } from '../mock/MonthlyOverview';
 
@@ -30,9 +31,12 @@ const VASProcessed = () => {
   const [statusSearch /*, setStatusSearch*/] = useState('');
   const [fromDate /*, setFromDate*/] = useState('');
   const [toDate /*, setToDate*/] = useState('');
+  const [vasData, setVasData] = useState(vas);
 
   useEffect(() => {
-    dispatch(getVasRequest());
+    if (isEmpty(vas) && !loading) {
+      dispatch(getVasRequest());
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -63,7 +67,7 @@ const VASProcessed = () => {
   if (loading) {
     render = (
       <div className="spinner">
-        <Spin size="large" />
+        <Spin />
       </div>
     );
   }
@@ -77,22 +81,40 @@ const VASProcessed = () => {
   }
 
   if (!loading && !isEmpty(vas)) {
-    render = <Details vas={vas} />;
+    render = <Details vas={vasData} />;
   }
+
+  const onReset = (form: any) => {
+    form.resetFields();
+    setVasData(vas);
+  };
+
+  const onSearch = (values: any) => {
+    const { bucket } = GetVASFilteredResult(vas, values);
+    setVasData(bucket);
+  };
 
   return (
     <div className="padding-box">
       <Content className="site-layout-background site-box">
-        <Suspense fallback={<Spin />}>
-          <Filters />
-          {!isEmpty(vas) ? (
-            <Cards areachartdata={MonthlyArea} vas={vas} />
+        <Suspense
+          fallback={
+            <Row className="suspense-container">
+              <div style={{ marginTop: '200px' }}>
+                <Spin />
+              </div>
+            </Row>
+          }
+        >
+          <Filters onReset={onReset} onSearch={onSearch} />
+          {!isEmpty(vasData) ? (
+            <Cards areachartdata={MonthlyArea} vas={vasData} />
           ) : null}
           <div className="margin-top">
             <Row style={{ position: 'relative' }}>
               <h4 className="transaction-chart-text">VAS Processed Table</h4>
               <div className="utility-buttons">
-                {!isEmpty(vas) ? (
+                {!isEmpty(vasData) ? (
                   <>
                     <Button
                       type="primary"
