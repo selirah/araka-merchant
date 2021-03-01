@@ -21,15 +21,17 @@ const Cards: React.FC<CardsProps> = ({ areadata }) => {
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Total Amount"
-                title="$22,056.12"
+                title={22056.12}
                 data={areadata}
+                currency="$"
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Araka Annual Fees"
-                title="$3,056.12"
+                title={3056.12}
                 data={areadata}
+                currency="$"
               />
             </Col>
           </Row>
@@ -41,22 +43,25 @@ const Cards: React.FC<CardsProps> = ({ areadata }) => {
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Total Araka Fees"
-                title="$9,012.00"
+                title={9012.0}
                 data={areadata}
+                currency="$"
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Total Araka Income"
-                title="$12,068.12"
+                title={12068.12}
                 data={areadata}
+                currency="$"
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24} className="pces-share">
               <CardView
                 value="PCES Share (50%)"
-                title="$6,034.06"
+                title={6034.06}
                 data={areadata}
+                currency="$"
               />
             </Col>
           </Row>

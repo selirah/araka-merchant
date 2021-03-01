@@ -3,7 +3,7 @@ import { Row, Col } from 'antd';
 import { CardView } from '../cards/CardView';
 import { TransactionHistory } from '../../interfaces';
 import { GetTransactionsAnalytics } from '../../helpers/transaction_functions';
-import { numberWithCommas } from '../../helpers/helperFunctions';
+// import { numberWithCommas } from '../../helpers/helperFunctions';
 
 interface CardsProps {
   transactions: TransactionHistory[];
@@ -29,22 +29,26 @@ const Cards: React.FC<CardsProps> = ({ transactions }) => {
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Merchants"
-                title={`${totalMerchants}`}
+                title={totalMerchants}
                 data={amtAreaChart}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Amount Processed"
-                title={`$${numberWithCommas(totalAmountProcessed.toFixed(2))}`}
+                title={totalAmountProcessed}
+                // title={`$${numberWithCommas(totalAmountProcessed.toFixed(2))}`}
                 data={amtAreaChart}
+                currency="$"
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Amount Paid Out"
-                title={`$${numberWithCommas(totalAmountPaidOut.toFixed(2))}`}
+                // title={`$${numberWithCommas(totalAmountPaidOut.toFixed(2))}`}
+                title={totalAmountPaidOut}
                 data={paidOutAreaChart}
+                currency="$"
               />
             </Col>
           </Row>
