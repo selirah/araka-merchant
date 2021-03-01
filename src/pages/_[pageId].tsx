@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter, useParams } from 'react-router-dom';
-import { Layout, Row, Col } from 'antd';
+import { Layout, Row, Col, Card } from 'antd';
 import { PageDetails } from '../components/[pageId]/PageDetails';
 import { PageTransactions } from '../components/[pageId]/PageTransactions';
 import { useDispatch } from 'react-redux';
@@ -36,26 +36,29 @@ const Page: React.FC<PageProps> = () => {
   }, [page]);
 
   return (
-    <Content
-      style={{
-        margin: '24px 16px',
-        padding: 0,
-        minHeight: 280,
-      }}
-    >
-      <Row>
-        <Col
-          span={12}
-          style={{ padding: 24 }}
-          className="site-layout-background"
-        >
-          <PageDetails />
-        </Col>
-        <Col span={12} className="bg-gray" style={{ padding: 24 }}>
-          <PageTransactions loading={loading} transactions={transactions} />
-        </Col>
-      </Row>
-    </Content>
+    <div className="padding-box">
+      <Content className="site-layout-background site-box">
+        <div className="margin-top">
+          <Card>
+            <Row>
+              <Col
+                span={12}
+                style={{ padding: 24 }}
+                className="site-layout-background"
+              >
+                <PageDetails />
+              </Col>
+              <Col span={12} className="bg-gray" style={{ padding: 24 }}>
+                <PageTransactions
+                  loading={loading}
+                  transactions={transactions}
+                />
+              </Col>
+            </Row>
+          </Card>
+        </div>
+      </Content>
+    </div>
   );
 };
 

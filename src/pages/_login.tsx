@@ -21,7 +21,6 @@ const Login: React.FC<LoginProps> = () => {
   const [values] = useState<Auth>({
     EmailAddress: '',
     Password: '',
-    RememberMe: false,
   });
   const [isSubmit, setIsSubmit] = useState(false);
   const [error, setError] = useState<Error | {}>({});
@@ -37,6 +36,11 @@ const Login: React.FC<LoginProps> = () => {
   }, []);
 
   const onSubmit = (values: Auth) => {
+    const payload: Auth = {
+      EmailAddress: values.EmailAddress,
+      Password: values.Password,
+    };
+    dispatch(loginRequest(payload));
     if (isEmpty(recaptchaValue)) {
       message.error(`${t('login.recaptcha')}`);
     } else {

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button, Modal, List } from 'antd';
-import { CreditCardOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import {
+  CreditCardOutlined /*, ShoppingCartOutlined*/,
+} from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 
 interface PaymentTypeModalProps {
@@ -15,7 +17,7 @@ type ModalProps = {
   description: React.ReactNode;
 };
 
-export const PaymentTypeModal: React.FC<PaymentTypeModalProps> = ({
+const PaymentTypeModal: React.FC<PaymentTypeModalProps> = ({
   choosePaymentPage,
   showPaymentTypeModal,
   onTogglePaymentTypeModal,
@@ -29,22 +31,27 @@ export const PaymentTypeModal: React.FC<PaymentTypeModalProps> = ({
       description: (
         <div className="option-desc">
           <span>{t('paymentPages.paymentTypeModal.oneTimePaymentDesc')}</span>
-          <Button onClick={() => choosePaymentPage()}>
+          <Button
+            onClick={() => choosePaymentPage()}
+            className="new-cancel-btn"
+          >
             {t('paymentPages.paymentTypeModal.choose')}
           </Button>
         </div>
       ),
     },
-    {
-      title: `${t('paymentPages.paymentTypeModal.paymentProduct')}`,
-      icon: <ShoppingCartOutlined style={{ fontSize: '30px' }} />,
-      description: (
-        <div className="option-desc">
-          <span>{t('paymentPages.paymentTypeModal.paymentProductDesc')}</span>
-          <Button>{t('paymentPages.paymentTypeModal.choose')}</Button>
-        </div>
-      ),
-    },
+    // {
+    //   title: `${t('paymentPages.paymentTypeModal.paymentProduct')}`,
+    //   icon: <ShoppingCartOutlined style={{ fontSize: '30px' }} />,
+    //   description: (
+    //     <div className="option-desc">
+    //       <span>{t('paymentPages.paymentTypeModal.paymentProductDesc')}</span>
+    //       <Button className="new-cancel-btn">
+    //         {t('paymentPages.paymentTypeModal.choose')}
+    //       </Button>
+    //     </div>
+    //   ),
+    // },
   ];
   return (
     <Modal
@@ -72,3 +79,5 @@ export const PaymentTypeModal: React.FC<PaymentTypeModalProps> = ({
     </Modal>
   );
 };
+
+export default PaymentTypeModal;

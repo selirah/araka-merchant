@@ -1,15 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Row,
-  Col,
-  // Image,
-  Input,
-  List,
-  // Button,
-  message,
-  Avatar,
-} from 'antd';
-// import { EditOutlined } from '@ant-design/icons';
+import { Input, List, message, Avatar } from 'antd';
 import { useHistory, useParams } from 'react-router-dom';
 import { appSelector } from '../../helpers/appSelector';
 import { path } from '../../helpers/path';
@@ -87,103 +77,96 @@ export const PageDetails: React.FC<PageDetailsProps> = () => {
   }
 
   return (
-    <Row>
-      <Col span={24}>
-        <div className="page-header">
-          <div className="page-image">
-            {pageDetails !== undefined && pageDetails.logo !== '' ? (
-              <Avatar size={100} src={pageDetails.logo} shape="square" />
-            ) : (
-              <Avatar
-                size={100}
-                style={{ backgroundColor: '#1890ff', verticalAlign: 'middle' }}
-                shape="square"
-              >
-                {name}
-              </Avatar>
-            )}
-            {/* <Image width={100} src="https://via.placeholder.com/150" /> */}
-          </div>
-          <div className="page-name">
-            <h4>Page Name</h4>
-            <h4>
-              {pageDetails !== undefined
-                ? pageDetails.pageName.toLocaleUpperCase()
-                : ''}
-            </h4>
-          </div>
-          <div className="page-url">
-            <Input
-              addonBefore={
-                <div style={{ cursor: 'pointer' }} onClick={() => copyLink()}>
-                  {isCopied ? 'Copied!' : 'Copy Link'}
-                </div>
-              }
-              value={paymentLink}
-              readOnly
-              addonAfter={
-                <a href={paymentLink} target="_blank" rel="noreferrer">
-                  Visit Link
-                </a>
-              }
-            />
-          </div>
+    <>
+      <div className="page-header">
+        <div className="page-image">
+          {pageDetails !== undefined && pageDetails.logo !== '' ? (
+            <Avatar size={100} src={pageDetails.logo} shape="square" />
+          ) : (
+            <Avatar
+              size={100}
+              style={{
+                backgroundColor: '#1890ff',
+                verticalAlign: 'middle',
+              }}
+              shape="square"
+            >
+              {name}
+            </Avatar>
+          )}
         </div>
+        <div className="page-name">
+          <h4>Page Name</h4>
+          <h4>
+            {pageDetails !== undefined
+              ? pageDetails.pageName.toLocaleUpperCase()
+              : ''}
+          </h4>
+        </div>
+        <div className="page-url">
+          <Input
+            addonBefore={
+              <div style={{ cursor: 'pointer' }} onClick={() => copyLink()}>
+                {isCopied ? 'Copied!' : 'Copy Link'}
+              </div>
+            }
+            value={paymentLink}
+            readOnly
+            addonAfter={
+              <a href={paymentLink} target="_blank" rel="noreferrer">
+                Visit Link
+              </a>
+            }
+          />
+        </div>
+      </div>
 
-        <List className="list">
-          <List.Item>
-            <h4 className="key">Page Type</h4>
-            <h4 className="value">Payment</h4>
-          </List.Item>
-          <List.Item>
-            <h4 className="key">Currency</h4>
-            <h4 className="value">
-              {pageDetails !== undefined ? pageDetails.currency : ''}
-            </h4>
-          </List.Item>
-          <List.Item>
-            <h4 className="key">Page Amount</h4>
-            <h4 className="value">
-              {pageDetails !== undefined && pageDetails.amount !== ''
-                ? `${pageDetails.currency} ${parseFloat(
-                    pageDetails.amount
-                  ).toFixed(2)}`
-                : 'Flexible'}
-            </h4>
-          </List.Item>
-          <List.Item>
-            <h4 className="key">Description</h4>
-            <h4 className="value">
-              {pageDetails !== undefined ? pageDetails.description : ''}
-            </h4>
-          </List.Item>
-          <List.Item>
-            <h4 className="key">Redirect URL</h4>
-            <h4 className="value">
-              {pageDetails !== undefined && pageDetails.redirectURL !== null
-                ? pageDetails.redirectURL
-                : ''}
-            </h4>
-          </List.Item>
-          <List.Item>
-            <h4 className="key">Created On</h4>
-            <h4 className="value">
-              {pageDetails !== undefined && pageDetails.createdWhen !== null
-                ? moment(pageDetails.createdWhen, 'YYYY/MM/DD HH:mm:ss').format(
-                    'MMMM D, YYYY (h:mm a)'
-                  )
-                : ''}
-            </h4>
-          </List.Item>
-        </List>
-      </Col>
-      {/* <Col span={24}>
-        <div className="page-buttons">
-          <Button type="default">
-            <EditOutlined /> Edit Page
-          </Button>
-        </div>
-      </Col> */}
-    </Row>
+      <List className="list">
+        <List.Item>
+          <h4 className="key">Page Type</h4>
+          <h4 className="value">Payment</h4>
+        </List.Item>
+        <List.Item>
+          <h4 className="key">Currency</h4>
+          <h4 className="value">
+            {pageDetails !== undefined ? pageDetails.currency : ''}
+          </h4>
+        </List.Item>
+        <List.Item>
+          <h4 className="key">Page Amount</h4>
+          <h4 className="value">
+            {pageDetails !== undefined && pageDetails.amount !== ''
+              ? `${pageDetails.currency} ${parseFloat(
+                  pageDetails.amount
+                ).toFixed(2)}`
+              : 'Flexible'}
+          </h4>
+        </List.Item>
+        <List.Item>
+          <h4 className="key">Description</h4>
+          <h4 className="value">
+            {pageDetails !== undefined ? pageDetails.description : ''}
+          </h4>
+        </List.Item>
+        <List.Item>
+          <h4 className="key">Redirect URL</h4>
+          <h4 className="value">
+            {pageDetails !== undefined && pageDetails.redirectURL !== null
+              ? pageDetails.redirectURL
+              : ''}
+          </h4>
+        </List.Item>
+        <List.Item>
+          <h4 className="key">Created On</h4>
+          <h4 className="value">
+            {pageDetails !== undefined && pageDetails.createdWhen !== null
+              ? moment(pageDetails.createdWhen, 'YYYY/MM/DD HH:mm:ss').format(
+                  'MMMM D, YYYY (h:mm a)'
+                )
+              : ''}
+          </h4>
+        </List.Item>
+      </List>
+    </>
   );
 };

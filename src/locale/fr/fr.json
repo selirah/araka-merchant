@@ -3,15 +3,25 @@
     "login": {
       "box-header": "Connectez-vous à votre compte",
       "email": "Email",
-      "email-placeholder": "Entrez votre adresse email..",
+      "email-placeholder": "Votre email",
       "email-error": "Veuillez saisir votre email!",
+      "email-valid": "Veuillez un email valide!",
       "password": "Mot de passe",
-      "password-placeholder": "Tapez votre mot de passe..",
+      "password-placeholder": "Votre mot de passe",
       "password-error": "Veuillez saisir votre mot de passe!",
       "remember-me": "Souviens-toi de moi",
       "btn-text": "Se connecter",
       "btn-loading": "Connectez-vous..",
-      "recaptcha": "Veuillez vérifier que vous n'êtes pas un robot!"
+      "recaptcha": "Veuillez vérifier que vous n'êtes pas un robot!",
+      "header": "Bienvenue sur le portail Marchand Araka",
+      "forgot-password": "Mot de passe oublié?",
+      "no-account": "Vous n'avez pas de compte?",
+      "sign-up": "S'inscrire",
+      "terms": "Conditions d'utilisation",
+      "compliance": "Conformité",
+      "support": "Soutien",
+      "contact": "Contacter",
+      "privacy": "Politique de confidentialité"
     },
     "topBar": {
       "home": "Accueil",
@@ -26,7 +36,18 @@
       "paymentPages": "Pages de paiement",
       "page": "La page",
       "payments": "Paiements",
-      "commerce": "Commerce"
+      "commerce": "Commerce",
+      "dashboards": "Dashboards",
+      "reports": "Rapports",
+      "merchantPayouts": "Paiements marchands",
+      "VASProcessed": "VAS traité",
+      "FEEReports": "Rapports de frais",
+      "configurations": "La configurations",
+      "settings": "Réglages",
+      "menuInfo": "Besoin d'aide pour intégrer Araka dans votre modèle commercial? Contactez-nous!",
+      "apiAssistance": "ASSISTANCE API",
+      "myPayout": "Mes paiements",
+      "merchantOverview": "Présentation du marchand"
     },
     "dashboard": {
       "last30Days": "Les 30 derniers jours",
@@ -43,7 +64,9 @@
       "abandoned": "abandonné",
       "amountPaid": "Montant payé (total)",
       "successful": "Réussie",
-      "processingErrors": "Erreurs de traitement"
+      "processingErrors": "Erreurs de traitement",
+      "transactionVolumeToday": "Volume de transactions",
+      "volumeAmount": "Volume du montant"
     },
     "transactions": {
       "noTransactions": "Aucune transaction",

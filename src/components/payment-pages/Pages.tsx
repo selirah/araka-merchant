@@ -1,15 +1,16 @@
 import React from 'react';
-import { Table, Tag, Space, Button } from 'antd';
-import { Link } from 'react-router-dom';
-import { EyeOutlined, LinkOutlined } from '@ant-design/icons';
+import { Table, Row, Col /*, Card*/ } from 'antd';
 import { Page } from '../../interfaces';
-import { path } from '../../helpers/path';
+import moment from 'moment-timezone';
+import { timeZones } from '../../helpers/constants';
 
 interface PagesProps {
   pages: Page[];
   copyLink(processId: string): void;
   isCopied: boolean;
   processId: string;
+  onClickRow(pageId: number): void;
+  onPreviewClick(processId: string): void;
 }
 
 interface TableData {
@@ -23,20 +24,58 @@ interface TableData {
   emailAddress: string;
   currency: string;
   processId: string;
+  createdWhen: string;
 }
 
-export const Pages: React.FC<PagesProps> = ({
+const Pages: React.FC<PagesProps> = ({
   pages,
   copyLink,
   isCopied,
   processId,
+  onClickRow,
+  onPreviewClick,
 }) => {
   const columns: any[] = [
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      align: 'center',
+      className: 'column-text',
+      render: (status: string) => {
+        // let color: string;
+        // switch (status) {
+        //   case transactionStatus.APPROVED:
+        //     color = '#41b883';
+        //     break;
+        //   case transactionStatus.DECLINED:
+        //     color = '#ff2e2e';
+        //     break;
+        //   case transactionStatus.CANCELED:
+        //     color = '#868686';
+        //     break;
+        //   default:
+        //     color = '#868686';
+        //     break;
+        // }
+        return (
+          <span style={{ fontSize: '2rem', color: '#41b883' }}>&bull;</span>
+        );
+      },
+    },
     {
       title: 'Page Name',
       dataIndex: 'pageName',
       key: 'pageName',
       align: 'left',
+      render: (pageName: string, page: TableData) => (
+        <span
+          style={{ color: '#35b9e6' }}
+          onClick={() => onClickRow(page.paymentPageId)}
+        >
+          {pageName}
+        </span>
+      ),
     },
     {
       title: 'Page Description',
@@ -45,105 +84,23 @@ export const Pages: React.FC<PagesProps> = ({
       align: 'left',
     },
     {
-      title: 'Customer Name',
-      dataIndex: 'customerName',
-      key: 'customerName',
-      align: 'center',
-      render: (customer: string) => {
-        let tag;
-        if (customer === 'true') {
-          tag = (
-            <Tag color="green" key={customer}>
-              Yes
-            </Tag>
-          );
-        } else if (customer === 'false') {
-          tag = (
-            <Tag color="volcano" key={customer}>
-              No
-            </Tag>
-          );
-        }
-        return tag;
-      },
-    },
-    {
       title: 'Amount',
       dataIndex: 'amount',
       key: 'amount',
       align: 'center',
     },
     {
-      title: 'Phone Number',
-      dataIndex: 'phoneNumber',
-      key: 'phoneNumber',
-      align: 'center',
-      render: (phone: string) => {
-        let tag;
-        if (phone === 'true') {
-          tag = (
-            <Tag color="green" key={phone}>
-              Yes
-            </Tag>
-          );
-        } else if (phone === 'false') {
-          tag = (
-            <Tag color="volcano" key={phone}>
-              No
-            </Tag>
-          );
-        }
-        return tag;
-      },
-    },
-    {
-      title: 'Email Address',
-      dataIndex: 'emailAddress',
-      key: 'emailAddress',
-      align: 'center',
-      render: (email: string) => {
-        let tag;
-        if (email === 'true') {
-          tag = (
-            <Tag color="green" key={email}>
-              Yes
-            </Tag>
-          );
-        } else if (email === 'false') {
-          tag = (
-            <Tag color="volcano" key={email}>
-              No
-            </Tag>
-          );
-        }
-        return tag;
-      },
-    },
-    {
-      title: 'Currency',
-      dataIndex: 'currency',
-      key: 'currency',
+      title: 'Created At',
+      dataIndex: 'createdWhen',
+      key: 'createdWhen',
       align: 'center',
     },
     {
-      title: 'Action',
+      title: 'Link',
       dataIndex: '',
       key: 'x',
       render: (page: TableData) => (
-        <Space>
-          <Link to={`${path.page}/${page.paymentPageId}`}>
-            <Button type="default" icon={<EyeOutlined />}>
-              View
-            </Button>
-          </Link>
-          <Button
-            type="primary"
-            icon={<LinkOutlined />}
-            onClick={() => copyLink(page.processId)}
-          >
-            {isCopied && processId === page.processId ? 'Copied!' : 'Copy Link'}
-          </Button>
-        </Space>
+        <span onClick={() => onPreviewClick(page.processId)}>Preview</span>
       ),
     },
   ];
@@ -157,15 +114,30 @@ export const Pages: React.FC<PagesProps> = ({
       description: page.description,
       customerName: page.customerName,
       amount:
-        page.amount !== '' ? parseFloat(page.amount).toFixed(2) : page.amount,
+        page.amount !== ''
+          ? `${page.currency} ${parseFloat(page.amount).toFixed(2)}`
+          : page.amount,
       phoneNumber: page.phoneNumber,
       emailAddress: page.emailAddress,
       currency: page.currency,
       processId: page.processId,
+      createdWhen: moment(page.createdWhen)
+        .tz(timeZones.kinshasa)
+        .format(`MMMM D, YYYY (h:mm a)`),
     });
   }
 
   return (
-    <Table dataSource={data} columns={columns} pagination={{ pageSize: 10 }} />
+    <Row gutter={20}>
+      <Col span={24}>
+        {/* <Card> */}
+        <div className="table-padding">
+          <Table dataSource={data} columns={columns} />
+        </div>
+        {/* </Card> */}
+      </Col>
+    </Row>
   );
 };
+
+export default Pages;

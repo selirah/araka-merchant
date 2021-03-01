@@ -8,7 +8,7 @@ export const GraphMenu: React.FC<GraphMenuProps> = () => {
   const { t } = useTranslation();
   const { Option } = Select;
   return (
-    <Select style={{ width: 200 }} placeholder={t('dashboard.last30Days')}>
+    <Select size="large" placeholder={t('dashboard.last30Days')}>
       <Option value={`${t('dashboard.last30Days')}`}>
         {t('dashboard.last30Days')}
       </Option>

@@ -10,7 +10,6 @@ import {
   Button,
   Select,
 } from 'antd';
-import { PlusOutlined, LoadingOutlined } from '@ant-design/icons';
 import { PaymentPage } from '../../interfaces';
 import { useTranslation } from 'react-i18next';
 
@@ -26,7 +25,7 @@ interface FormModalProps {
   isSubmit: boolean;
 }
 
-export const FormModal: React.FC<FormModalProps> = ({
+const FormModal: React.FC<FormModalProps> = ({
   showFormModal,
   onToggleFormModal,
   beforeUpload,
@@ -49,7 +48,12 @@ export const FormModal: React.FC<FormModalProps> = ({
       visible={showFormModal}
       onCancel={() => onToggleFormModal()}
       footer={[
-        <Button type="default" key="cancel" onClick={() => onToggleFormModal()}>
+        <Button
+          type="default"
+          key="cancel"
+          onClick={() => onToggleFormModal()}
+          className="new-cancel-btn"
+        >
           {t('paymentPages.formModal.close')}
         </Button>,
         <Button
@@ -57,8 +61,8 @@ export const FormModal: React.FC<FormModalProps> = ({
           key="submit"
           htmlType="submit"
           type="primary"
-          icon={isSubmit ? <LoadingOutlined /> : <PlusOutlined />}
-          disabled={isSubmit ? true : false}
+          loading={isSubmit}
+          className="new-page-btn"
         >
           {t('paymentPages.formModal.btnText')}
         </Button>,
@@ -185,3 +189,5 @@ export const FormModal: React.FC<FormModalProps> = ({
     </Modal>
   );
 };
+
+export default FormModal;
