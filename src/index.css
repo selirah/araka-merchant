@@ -1259,6 +1259,32 @@ thead[class*='ant-table-thead'] th {
   border-radius: 20px;
 }
 
+.new-page-btn {
+  background-color: #f55c29;
+  border: 1px solid #f55c29;
+  text-transform: uppercase;
+  border-radius: 20px;
+}
+
+.new-page-btn:hover {
+  background-color: #f55c29;
+  border: 1px solid #f55c29;
+}
+
+.new-cancel-btn {
+  background-color: #35b9e6;
+  border: 1px solid #35b9e6;
+  text-transform: uppercase;
+  border-radius: 20px;
+  color: #fff;
+}
+
+.new-cancel-btn:hover {
+  background-color: #35b9e6;
+  border: 1px solid #35b9e6;
+  color: #fff;
+}
+
 .utility-buttons .export-buttons {
   background-color: #35b9e6;
   border: 1px solid #35b9e6;
@@ -1558,6 +1584,23 @@ thead[class*='ant-table-thead'] th {
   margin-bottom: 25px !important;
   border: 1px solid #84d4ef;
 }
+
+.filter-form .ant-form-item {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5715;
+  list-style: none;
+  -webkit-font-feature-settings: 'tnum';
+  font-feature-settings: 'tnum', 'tnum';
+  margin-bottom: 0;
+  vertical-align: top;
+}
+
 /** END CONTENT **/
 
 /* Small devices (portrait tablets and large phones, 600px and up) */

@@ -48,7 +48,12 @@ const FormModal: React.FC<FormModalProps> = ({
       visible={showFormModal}
       onCancel={() => onToggleFormModal()}
       footer={[
-        <Button type="default" key="cancel" onClick={() => onToggleFormModal()}>
+        <Button
+          type="default"
+          key="cancel"
+          onClick={() => onToggleFormModal()}
+          className="new-cancel-btn"
+        >
           {t('paymentPages.formModal.close')}
         </Button>,
         <Button
@@ -57,6 +62,7 @@ const FormModal: React.FC<FormModalProps> = ({
           htmlType="submit"
           type="primary"
           loading={isSubmit}
+          className="new-page-btn"
         >
           {t('paymentPages.formModal.btnText')}
         </Button>,

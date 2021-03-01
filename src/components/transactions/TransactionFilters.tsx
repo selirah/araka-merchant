@@ -49,7 +49,12 @@ const TransactionFilters: React.FC<TransactionFiltersProps> = ({
           </h6>
         }
       >
-        <Form name="filter" form={form} onFinish={onSearch}>
+        <Form
+          name="filter"
+          form={form}
+          onFinish={onSearch}
+          className="filter-form"
+        >
           <Row gutter={10}>
             <Col span={6}>
               <Form.Item name="status">
