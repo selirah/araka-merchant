@@ -37,7 +37,7 @@ const Routes: React.FC = () => {
                 className="spin"
                 style={{ textAlign: 'center', marginTop: '200px' }}
               >
-                <Spin size="large" />
+                <Spin size="small" />
               </div>
             </Row>
           }

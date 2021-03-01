@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Card, Tag, Table } from 'antd';
+import { Row, Col, /*Card*,*/ Tag, Table } from 'antd';
 import moment from 'moment-timezone';
 import { TransactionHistory } from '../../interfaces';
 import { transactionStatus, timeZones } from '../../helpers/constants';
@@ -89,11 +89,11 @@ const Details: React.FC<DetailsProps> = ({ payouts }) => {
   return (
     <Row gutter={20}>
       <Col span={24}>
-        <Card>
-          <div className="table-padding">
-            <Table dataSource={dataSource} columns={columns} />
-          </div>
-        </Card>
+        {/* <Card> */}
+        <div className="table-padding">
+          <Table dataSource={dataSource} columns={columns} />
+        </div>
+        {/* </Card> */}
       </Col>
     </Row>
   );

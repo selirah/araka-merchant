@@ -1551,6 +1551,13 @@ thead[class*='ant-table-thead'] th {
   text-transform: uppercase;
   font-weight: 700;
 }
+
+.table-padding .ant-table {
+  border-radius: 5px;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.09) !important;
+  margin-bottom: 25px !important;
+  border: 1px solid #84d4ef;
+}
 /** END CONTENT **/
 
 /* Small devices (portrait tablets and large phones, 600px and up) */

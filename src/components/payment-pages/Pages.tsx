@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Row, Col, Card } from 'antd';
+import { Table, Row, Col /*, Card*/ } from 'antd';
 import { Page } from '../../interfaces';
 import moment from 'moment-timezone';
 import { timeZones } from '../../helpers/constants';
@@ -130,11 +130,11 @@ const Pages: React.FC<PagesProps> = ({
   return (
     <Row gutter={20}>
       <Col span={24}>
-        <Card>
-          <div className="table-padding">
-            <Table dataSource={data} columns={columns} />
-          </div>
-        </Card>
+        {/* <Card> */}
+        <div className="table-padding">
+          <Table dataSource={data} columns={columns} />
+        </div>
+        {/* </Card> */}
       </Col>
     </Row>
   );

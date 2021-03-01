@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Card, Table } from 'antd';
+import { Row, Col, /*Card,*/ Table } from 'antd';
 // import moment from 'moment-timezone';
 import { VASProcessed } from '../../interfaces';
 // import { isEmpty } from '../../helpers/isEmpty';
@@ -75,11 +75,11 @@ const Details: React.FC<DetailsProps> = ({ vas }) => {
   return (
     <Row gutter={20}>
       <Col span={24}>
-        <Card>
-          <div className="table-padding">
-            <Table dataSource={dataSource} columns={columns} />
-          </div>
-        </Card>
+        {/* <Card> */}
+        <div className="table-padding">
+          <Table dataSource={dataSource} columns={columns} />
+        </div>
+        {/* </Card> */}
       </Col>
     </Row>
   );

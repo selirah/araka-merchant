@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Card, Tag, Table } from 'antd';
+import { Row, Col, /*Card,*/ Tag, Table } from 'antd';
 // import moment from 'moment-timezone';
 import { MerchantOverview } from '../../interfaces';
 // import { isEmpty } from '../../helpers/isEmpty';
@@ -64,11 +64,11 @@ const Details: React.FC<DetailsProps> = ({ overviews }) => {
   return (
     <Row gutter={20}>
       <Col span={24}>
-        <Card>
-          <div className="table-padding">
-            <Table dataSource={dataSource} columns={columns} />
-          </div>
-        </Card>
+        {/* <Card> */}
+        <div className="table-padding">
+          <Table dataSource={dataSource} columns={columns} />
+        </div>
+        {/* </Card> */}
       </Col>
     </Row>
   );
