@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
 import { withRouter, useHistory } from 'react-router-dom';
-import { PaymentPage, Page } from '../interfaces';
+import { PaymentPage } from '../interfaces';
 import {
   getPaymentPagesRequest,
   addPaymentPageRequest,
@@ -49,7 +49,7 @@ const PaymentPages = () => {
     ProcessId: '',
     TransactionReference: '',
   });
-  const [pageData, setPageData] = useState<Page[]>(pages);
+  const [pageData, setPageData] = useState(pages);
   const [isCopied, setIsCopied] = useState(false);
   const [processId, setProcessId] = useState('');
   const { t } = useTranslation();

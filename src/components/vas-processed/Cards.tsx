@@ -3,17 +3,22 @@ import { Row, Col } from 'antd';
 import { CardView } from '../cards/CardView';
 import { VASProcessed } from '../../interfaces';
 import { GetVASAnalytics } from '../../helpers/vas_functions';
+import { numberWithCommas } from '../../helpers/helperFunctions';
 
 interface CardsProps {
-  areachartdata: any;
   vas: VASProcessed[];
 }
 
-const Cards: React.FC<CardsProps> = ({ areachartdata, vas }) => {
+const Cards: React.FC<CardsProps> = ({ vas }) => {
   const {
     totalArakaIncome,
     totalFeesCharged,
     totalProcessed,
+    vasAreaChart,
+    incomeAreaChart,
+    feesChargedAreaChart,
+    annualFeesAreaChart,
+    totalAnnualFees,
   } = GetVASAnalytics(vas);
 
   return (
@@ -24,25 +29,32 @@ const Cards: React.FC<CardsProps> = ({ areachartdata, vas }) => {
       <Row gutter={20}>
         <Col span={24}>
           <Row gutter={20}>
-            <Col span={8} sm={24} md={8} xs={24}>
+            <Col span={6} sm={24} md={6} xs={24}>
               <CardView
                 value="Vas Processed"
                 title={`${totalProcessed}`}
-                data={areachartdata}
+                data={vasAreaChart}
               />
             </Col>
-            <Col span={8} sm={24} md={8} xs={24}>
+            <Col span={6} sm={24} md={6} xs={24}>
               <CardView
-                value="Araka Income"
-                title={`$${totalArakaIncome.toFixed(2)}`}
-                data={areachartdata}
+                value="VAS Income"
+                title={`$${numberWithCommas(totalArakaIncome.toFixed(2))}`}
+                data={incomeAreaChart}
               />
             </Col>
-            <Col span={8} sm={24} md={8} xs={24}>
+            <Col span={6} sm={24} md={6} xs={24}>
+              <CardView
+                value="Annual Fees"
+                title={`$${numberWithCommas(totalAnnualFees.toFixed(2))}`}
+                data={annualFeesAreaChart}
+              />
+            </Col>
+            <Col span={6} sm={24} md={6} xs={24}>
               <CardView
                 value="Fees Charged"
-                title={`$${totalFeesCharged.toFixed(2)}`}
-                data={areachartdata}
+                title={`$${numberWithCommas(totalFeesCharged.toFixed(2))}`}
+                data={feesChargedAreaChart}
               />
             </Col>
           </Row>

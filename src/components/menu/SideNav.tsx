@@ -189,7 +189,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
           >
             <Link to={path.vasProcessed}>{t('sideBar.VASProcessed')}</Link>
           </Menu.Item>
-          {/* <Menu.Item
+          <Menu.Item
             key={menu.FEE_REPORTS}
             icon={
               <FeatherIcons.BarChart2
@@ -197,9 +197,10 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                 size={14}
               />
             }
+            onClick={() => switchMenu(menu.FEE_REPORTS, menuHeadings.REPORTS)}
           >
-            {t('sideBar.FEEReports')}
-          </Menu.Item> */}
+            <Link to={path.feeReports}>PCES Reports</Link>
+          </Menu.Item>
         </Menu.ItemGroup>
         <Menu.ItemGroup
           key="g5"
@@ -224,9 +225,11 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
       {!collapsed ? (
         <div className="menu-info">
           <p>{t('sideBar.menuInfo')}</p>
-          <Button type="primary" className="menu-info-btn">
-            {t('sideBar.apiAssistance')}
-          </Button>
+          <a href="mailto://info@proxypay.africa">
+            <Button type="primary" className="menu-info-btn">
+              {t('sideBar.apiAssistance')}
+            </Button>
+          </a>
         </div>
       ) : null}
     </Sider>

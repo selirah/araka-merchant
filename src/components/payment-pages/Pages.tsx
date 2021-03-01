@@ -132,11 +132,7 @@ const Pages: React.FC<PagesProps> = ({
       <Col span={24}>
         <Card>
           <div className="table-padding">
-            <Table
-              dataSource={data}
-              columns={columns}
-              pagination={{ pageSize: 15 }}
-            />
+            <Table dataSource={data} columns={columns} />
           </div>
         </Card>
       </Col>

@@ -15,8 +15,6 @@ import { Search } from '../interfaces';
 import { GetTransactionsFilteredResult } from '../helpers/transaction_functions';
 import moment from 'moment';
 
-import { WeeklyArea } from '../mock/WeeklyOverview';
-
 const { Content } = Layout;
 
 const Filters = lazy(() => import('../components/merchants-payout/Filters'));
@@ -46,6 +44,10 @@ const MerchantsPayouts = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setTrans(transactions);
+  }, [transactions]);
 
   const reloadTransaction = () => {
     dispatch(clearTransactions());
@@ -123,9 +125,7 @@ const MerchantsPayouts = () => {
           }
         >
           <Filters transactions={trans} onReset={onReset} onSearch={onSearch} />
-          {!isEmpty(transactions) ? (
-            <Cards areachartdata={WeeklyArea} transactions={trans} />
-          ) : null}
+          {!isEmpty(transactions) ? <Cards transactions={trans} /> : null}
           <div className="margin-top">
             <Row style={{ position: 'relative' }}>
               <h4 className="transaction-chart-text">Merchants Table</h4>

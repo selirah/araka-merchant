@@ -1,10 +1,11 @@
 import React from 'react';
 import { Card } from 'antd';
 import { AreaChart } from '../chart/AreaChart';
+// import CountUp from 'react-countup';
 
 interface CardViewProps {
   value: any;
-  title: string;
+  title: any;
   data: any;
 }
 
@@ -13,9 +14,11 @@ export const CardView: React.FC<CardViewProps> = ({ value, title, data }) => {
     <Card className="stats-padding">
       <div className="ecard">
         <div className="card-chunk">
-          <h1>{title}</h1>
+          <h1>
+            {/* <CountUp end={parseInt(title)} /> */}
+            {title}
+          </h1>
           <p>{value}</p>
-          {/* <Statistic title={title} value={value} precision={2} /> */}
         </div>
         <div className="card-chunk">
           <AreaChart info={data} />

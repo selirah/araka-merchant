@@ -9,6 +9,7 @@ interface DetailsProps {
 }
 
 const Details: React.FC<DetailsProps> = ({ overviews }) => {
+  console.log(overviews);
   const columns: any = [
     {
       title: 'Merchant',
@@ -65,11 +66,7 @@ const Details: React.FC<DetailsProps> = ({ overviews }) => {
       <Col span={24}>
         <Card>
           <div className="table-padding">
-            <Table
-              dataSource={dataSource}
-              columns={columns}
-              pagination={{ pageSize: 15 }}
-            />
+            <Table dataSource={dataSource} columns={columns} />
           </div>
         </Card>
       </Col>

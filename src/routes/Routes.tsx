@@ -18,6 +18,7 @@ const MerchantsOverview = lazy(() => import('../pages/_merchantsOverview'));
 const MerchantsPayouts = lazy(() => import('../pages/_merchantsPayouts'));
 const VASProcessed = lazy(() => import('../pages/_vasProcessed'));
 const Settings = lazy(() => import('../pages/_settings'));
+const FeeReports = lazy(() => import('../pages/_feeReports'));
 
 const Routes: React.FC = () => {
   return (
@@ -32,7 +33,10 @@ const Routes: React.FC = () => {
                 justifyContent: 'center',
               }}
             >
-              <div className="spin" style={{ textAlign: 'center' }}>
+              <div
+                className="spin"
+                style={{ textAlign: 'center', marginTop: '200px' }}
+              >
                 <Spin size="large" />
               </div>
             </Row>
@@ -68,6 +72,7 @@ const Routes: React.FC = () => {
             component={VASProcessed}
           />
           <PrivateRoute exact path={path.settings} component={Settings} />
+          <PrivateRoute exact path={path.feeReports} component={FeeReports} />
           <Route exact path={`${path.pay}/:processId`} component={Pay} />
           <Route
             exact

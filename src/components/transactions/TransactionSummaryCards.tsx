@@ -2,10 +2,9 @@ import React from 'react';
 import { Row, Col } from 'antd';
 import { CardView } from '../cards/CardView';
 import { TransactionHistory } from '../../interfaces';
-import {
-  CalculateTransactionTotals,
-  GetAreaAndBarPoints,
-} from '../../helpers/functions';
+import { GetAreaAndBarPoints } from '../../helpers/functions';
+import { GetTransactionsAnalytics } from '../../helpers/transaction_functions';
+import { numberWithCommas } from '../../helpers/helperFunctions';
 
 interface TransactionSummaryCardsProps {
   transactions: TransactionHistory[];
@@ -14,10 +13,12 @@ interface TransactionSummaryCardsProps {
 const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
   transactions,
 }) => {
-  const { total, approved, declined } = CalculateTransactionTotals(
-    transactions,
-    'yearly'
-  );
+  const {
+    totalTransactions,
+    totalAmountProcessed,
+    totalAmountDeclined,
+  } = GetTransactionsAnalytics(transactions);
+
   const {
     trxAreaChart,
     approvedAreaChart,
@@ -35,21 +36,21 @@ const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Transactions"
-                title={`${total}`}
+                title={`${totalTransactions}`}
                 data={trxAreaChart}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Approved"
-                title={`$${approved.toFixed(2)}`}
+                title={`$${numberWithCommas(totalAmountProcessed.toFixed(2))}`}
                 data={approvedAreaChart}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Declined"
-                title={`$${declined.toFixed(2)}`}
+                title={`$${numberWithCommas(totalAmountDeclined.toFixed(2))}`}
                 data={declinedAreaChart}
               />
             </Col>

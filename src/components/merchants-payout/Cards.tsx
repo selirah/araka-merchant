@@ -3,17 +3,19 @@ import { Row, Col } from 'antd';
 import { CardView } from '../cards/CardView';
 import { TransactionHistory } from '../../interfaces';
 import { GetTransactionsAnalytics } from '../../helpers/transaction_functions';
+import { numberWithCommas } from '../../helpers/helperFunctions';
 
 interface CardsProps {
-  areachartdata: any;
   transactions: TransactionHistory[];
 }
 
-const Cards: React.FC<CardsProps> = ({ areachartdata, transactions }) => {
+const Cards: React.FC<CardsProps> = ({ transactions }) => {
   const {
     totalAmountPaidOut,
     totalAmountProcessed,
     totalMerchants,
+    amtAreaChart,
+    paidOutAreaChart,
   } = GetTransactionsAnalytics(transactions);
 
   return (
@@ -28,21 +30,21 @@ const Cards: React.FC<CardsProps> = ({ areachartdata, transactions }) => {
               <CardView
                 value="Merchants"
                 title={`${totalMerchants}`}
-                data={areachartdata}
+                data={amtAreaChart}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Amount Processed"
-                title={`$${totalAmountProcessed.toFixed(2)}`}
-                data={areachartdata}
+                title={`$${numberWithCommas(totalAmountProcessed.toFixed(2))}`}
+                data={amtAreaChart}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Amount Paid Out"
-                title={`$${totalAmountPaidOut.toFixed(2)}`}
-                data={areachartdata}
+                title={`$${numberWithCommas(totalAmountPaidOut.toFixed(2))}`}
+                data={paidOutAreaChart}
               />
             </Col>
           </Row>

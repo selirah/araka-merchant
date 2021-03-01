@@ -7,4 +7,5 @@ export interface VASProcessed {
   totalArakaFees: number;
   totalArakaDiscount: number;
   totalArakaIncome: number;
+  annualFees: number;
 }

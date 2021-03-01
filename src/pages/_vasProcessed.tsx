@@ -13,8 +13,6 @@ import { isEmpty } from '../helpers/isEmpty';
 import { Search } from '../interfaces';
 import { GetVASFilteredResult } from '../helpers/report_functions';
 
-import { MonthlyArea } from '../mock/MonthlyOverview';
-
 const { Content } = Layout;
 
 const Filters = lazy(() => import('../components/vas-processed/Filters'));
@@ -39,6 +37,10 @@ const VASProcessed = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setVasData(vas);
+  }, [vas]);
 
   const reloadVas = () => {
     dispatch(clearVAS());
@@ -107,9 +109,7 @@ const VASProcessed = () => {
           }
         >
           <Filters onReset={onReset} onSearch={onSearch} />
-          {!isEmpty(vasData) ? (
-            <Cards areachartdata={MonthlyArea} vas={vasData} />
-          ) : null}
+          {!isEmpty(vasData) ? <Cards vas={vasData} /> : null}
           <div className="margin-top">
             <Row style={{ position: 'relative' }}>
               <h4 className="transaction-chart-text">VAS Processed Table</h4>

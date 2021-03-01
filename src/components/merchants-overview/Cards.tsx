@@ -3,17 +3,19 @@ import { Row, Col } from 'antd';
 import { CardView } from '../cards/CardView';
 import { MerchantOverview } from '../../interfaces';
 import { GetOverviewAnalytics } from '../../helpers/overview_functions';
+import { numberWithCommas } from '../../helpers/helperFunctions';
 
 interface CardsProps {
-  areachartdata: any;
   overviews: MerchantOverview[];
 }
 
-const Cards: React.FC<CardsProps> = ({ areachartdata, overviews }) => {
+const Cards: React.FC<CardsProps> = ({ overviews }) => {
   const {
     totalAmountProcessed,
     totalMerchants,
     totalTransactions,
+    trxAreaChart,
+    amtAreaChart,
   } = GetOverviewAnalytics(overviews);
 
   return (
@@ -28,21 +30,21 @@ const Cards: React.FC<CardsProps> = ({ areachartdata, overviews }) => {
               <CardView
                 value="Merchants"
                 title={`${totalMerchants}`}
-                data={areachartdata}
+                data={trxAreaChart}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Amount Processed"
-                title={`$${totalAmountProcessed.toFixed(2)}`}
-                data={areachartdata}
+                title={`$${numberWithCommas(totalAmountProcessed.toFixed(2))}`}
+                data={amtAreaChart}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Total Transactions"
                 title={`${totalTransactions}`}
-                data={areachartdata}
+                data={trxAreaChart}
               />
             </Col>
           </Row>

@@ -2,6 +2,7 @@ import { TransactionHistory } from '../interfaces';
 import { transactionStatus } from './constants';
 import { isEmpty } from './isEmpty';
 import moment from 'moment';
+import { getAreaOptions } from './functions';
 
 export const GetTransactionsAnalytics = (
   transactions: TransactionHistory[]
@@ -12,31 +13,59 @@ export const GetTransactionsAnalytics = (
   let totalAmountPaidOut = 0.0;
   let totalTransactions = 0;
   let merchants: string[] = [];
+  let amtAreaChart = {};
+  let paidOutAreaChart = {};
+  let labels: string[] = [];
+  let amtLabel: number[] = [];
+  let paidLabel: number[] = [];
 
   for (let trx of transactions) {
     const over = merchants.find((o) => o === trx.merchant);
     if (over === undefined) {
       merchants.push(trx.merchant);
     }
-
     totalTransactions += 1;
 
     if (trx.status === transactionStatus.APPROVED) {
       totalAmountProcessed += trx.amountPaid;
+      const lbl = labels.find((l) => l === trx.merchant);
+      if (lbl === undefined) {
+        labels.push(trx.merchant);
+      }
     }
 
-    if (trx.status === transactionStatus.DECLINED) {
+    if (
+      trx.status === transactionStatus.DECLINED ||
+      trx.status === transactionStatus.CANCELED
+    ) {
       totalAmountDeclined += trx.amountPaid;
     }
   }
+
+  for (let lbl of labels) {
+    let merchantAmount = 0.0;
+    for (let trx of transactions) {
+      if (trx.merchant === lbl && trx.status === transactionStatus.APPROVED) {
+        merchantAmount += trx.amountPaid;
+      }
+    }
+    amtLabel.push(merchantAmount);
+    paidLabel.push(0); // for now paid out is 0
+  }
+
   totalMerchants = merchants.length;
-  totalAmountPaidOut = 0;
+  totalAmountPaidOut = 0; // for now paid out is 0
+  amtAreaChart = getAreaOptions(labels, amtLabel, '#D81B60', '#F48FB1');
+  paidOutAreaChart = getAreaOptions(labels, paidLabel, '#C0CA33', '#E6EE9C');
+
   return {
     totalMerchants,
     totalAmountProcessed,
     totalAmountPaidOut,
     totalAmountDeclined,
     totalTransactions,
+    amtAreaChart,
+    paidOutAreaChart,
   };
 };
 

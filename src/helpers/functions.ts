@@ -87,8 +87,8 @@ export const GetAreaAndBarPoints = (
   review: string
 ) => {
   let labels = getLabels(review)!;
-  let trxAreaChart,
-    approvedAreaChart,
+  let trxAreaChart = {},
+    approvedAreaChart = {},
     declinedAreaChart = {};
   let trxData = [];
   let trxApproved = [];
@@ -117,18 +117,18 @@ export const GetAreaAndBarPoints = (
         merchantsArr.push(merchants);
       }
 
-      trxAreaChart = getAreaOptions(labels, trxData, '#03A9F4', '#B3E5FC');
+      trxAreaChart = getAreaOptions(labels, trxData, '#1976D2', '#BBDEFB');
       approvedAreaChart = getAreaOptions(
         labels,
         trxApprovedAmt,
-        '#03A9F4',
-        '#B3E5FC'
+        '#FFD600',
+        '#FFF176'
       );
       declinedAreaChart = getAreaOptions(
         labels,
         trxDeclinedAmt,
-        '#03A9F4',
-        '#B3E5FC'
+        '#F50057',
+        '#F48FB1'
       );
       barChart = getBarOptions(labels, trxApproved, trxDeclined);
       break;
@@ -185,12 +185,12 @@ export const GetAreaAndBarPoints = (
         trxDeclinedAmt.push(declinedAmt);
         merchantsArr.push(merchants);
       }
-      trxAreaChart = getAreaOptions(labels, trxData, '#5E35B1', '#D1C4E9');
+      trxAreaChart = getAreaOptions(labels, trxData, '#00C853', '#00E676');
       approvedAreaChart = getAreaOptions(
         labels,
         trxApprovedAmt,
-        '#5E35B1',
-        '#D1C4E9'
+        '#0097A7',
+        '#B2EBF2'
       );
       declinedAreaChart = getAreaOptions(
         labels,
@@ -223,14 +223,14 @@ export const GetAreaAndBarPoints = (
       approvedAreaChart = getAreaOptions(
         labels,
         trxApprovedAmt,
-        '#FFA000',
-        '#FFE082'
+        '#00C853',
+        '#00E676'
       );
       declinedAreaChart = getAreaOptions(
         labels,
         trxDeclinedAmt,
-        '#FFA000',
-        '#FFE082'
+        '#5D4037',
+        '#A1887F'
       );
       barChart = getBarOptions(labels, trxApproved, trxDeclined);
       break;
@@ -320,7 +320,7 @@ const getLabels = (review: string) => {
   return labels;
 };
 
-const getAreaOptions = (
+export const getAreaOptions = (
   labels: string[],
   dataPoints: any[],
   borderColor: string,
@@ -551,4 +551,44 @@ const getMerchantsAmount = (merchantsArr: any[], merchant: string) => {
     }
   }
   return amt;
+};
+
+export const TopMerchantAreaChart = (
+  theMerchant: any,
+  transactions: TransactionHistory[],
+  review: string,
+  borderColor: string,
+  backgroundColor: string
+) => {
+  const { merchant } = theMerchant;
+  let filteredTransactions: TransactionHistory[] = [];
+
+  let labels = getLabels(review);
+  let merchantAreaChart = {};
+  let trxApproved = [];
+
+  // let's filter out the merchant's approved transactions
+  for (let trx of transactions) {
+    if (
+      trx.merchant === merchant &&
+      trx.status === transactionStatus.APPROVED
+    ) {
+      filteredTransactions.push(trx);
+    }
+  }
+
+  for (let lbl of labels) {
+    // we need only the approved amounts paid
+    const { approvedAmt } = calculateYearValues(filteredTransactions, lbl);
+    trxApproved.push(approvedAmt);
+  }
+
+  merchantAreaChart = getAreaOptions(
+    labels,
+    trxApproved,
+    borderColor,
+    backgroundColor
+  );
+
+  return merchantAreaChart;
 };

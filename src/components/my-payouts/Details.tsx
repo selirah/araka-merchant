@@ -76,11 +76,7 @@ const Details: React.FC<DetailsProps> = ({ payouts }) => {
         <Col span={24}>
           <Card>
             <div className="table-padding">
-              <Table
-                dataSource={dataSource}
-                columns={columns}
-                pagination={{ pageSize: 15 }}
-              />
+              <Table dataSource={dataSource} columns={columns} />
             </div>
           </Card>
         </Col>

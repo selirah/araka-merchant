@@ -1131,7 +1131,7 @@ thead[class*='ant-table-thead'] th {
 }
 
 .ecard .card-chunk h1 {
-  font-size: 3rem;
+  font-size: 2.2rem;
   font-family: 'Mukta', sans-serif !important;
   font-weight: 300;
   margin-bottom: 4px;
@@ -1525,6 +1525,31 @@ thead[class*='ant-table-thead'] th {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.tranaction-table .ant-table-thead > tr > th,
+.tranaction-table .ant-table-tbody > tr > td,
+.tranaction-table .ant-table tfoot > tr > th,
+.tranaction-table .ant-table tfoot > tr > td {
+  position: relative;
+  padding: 2px 16px;
+  overflow-wrap: break-word;
+}
+
+.pces-share .ecard .card-chunk h1 {
+  font-size: 2.2rem;
+  font-family: 'Mukta', sans-serif !important;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: #f55c29 !important;
+}
+
+.pces-share .ecard .card-chunk p {
+  color: #f55c29;
+  font-size: 0.9rem;
+  font-family: 'Mukta', sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
 }
 /** END CONTENT **/
 

@@ -7,7 +7,7 @@ export const menu = {
   PAYMENT_PAGES: 'Payment Pages',
   MERCHANT_PAYOUTS: 'Merchant Payouts',
   VAS_PROCESSED: 'VAS Processed',
-  FEE_REPORTS: 'Fee Reports',
+  FEE_REPORTS: 'PCES Reports',
   SETTINGS: 'Settings',
   MY_PAYOUTS: 'My Payouts',
   MERCHANT_OVERVIEW: 'Merchant Overview',

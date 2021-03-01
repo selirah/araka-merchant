@@ -13,8 +13,6 @@ import { isEmpty } from '../helpers/isEmpty';
 import { Search } from '../interfaces';
 import { GetOverviewsFilteredResult } from '../helpers/report_functions';
 
-import { DailyArea } from '../mock/DailyOverview';
-
 const { Content } = Layout;
 
 const Filters = lazy(() => import('../components/merchants-overview/Filters'));
@@ -43,6 +41,10 @@ const MerchantsOverview = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setOverviewdata(overviews);
+  }, [overviews]);
 
   const reloadOverviews = () => {
     dispatch(clearOverview());
@@ -115,9 +117,7 @@ const MerchantsOverview = () => {
             onSearch={onSearch}
             overviews={overviewdata}
           />
-          {!isEmpty(overviews) ? (
-            <Cards areachartdata={DailyArea} overviews={overviewdata} />
-          ) : null}
+          {!isEmpty(overviews) ? <Cards overviews={overviewdata} /> : null}
           <div className="margin-top">
             <Row style={{ position: 'relative' }}>
               <h4 className="transaction-chart-text">Merchants Table</h4>

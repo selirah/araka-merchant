@@ -145,10 +145,11 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
             <Table
               dataSource={dataSource}
               columns={columns}
-              pagination={{ pageSize: 15 }}
+              // pagination={{ pageSize: 15 }}
               onRow={(t: TT) => ({
                 onClick: () => onClickRow(t.transactionId),
               })}
+              className="tranaction-table"
             />
           </div>
         </Card>

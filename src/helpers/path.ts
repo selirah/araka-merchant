@@ -12,4 +12,5 @@ export const path = {
   vasProcessed: '/vas-processed',
   merchantPayouts: '/merchants-payouts',
   settings: '/settings',
+  feeReports: '/fee-reports',
 };

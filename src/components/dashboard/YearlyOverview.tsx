@@ -8,7 +8,9 @@ import {
   CalculateTransactionTotals,
   GetAreaAndBarPoints,
   GetTopMerchants,
+  TopMerchantAreaChart,
 } from '../../helpers/functions';
+import { numberWithCommas } from '../../helpers/helperFunctions';
 import { isEmpty } from '../../helpers/isEmpty';
 import { Clock } from '../../utils/clock';
 
@@ -52,6 +54,20 @@ const YearlyOverview: React.FC<YearlyOverviewProps> = ({ transactions }) => {
     thirdMerchant = merchantTotals[2];
   }
 
+  const topMerchantChart = TopMerchantAreaChart(
+    topMerchant,
+    transactions,
+    'yearly',
+    '#1976D2',
+    '#BBDEFB'
+  );
+
+  // const secondMerchantChart = TopMerchantAreaChart(
+  //   secondMerchant,
+  //   transactions,
+  //   'yearly'
+  // );
+
   return (
     <>
       <Row gutter={10}>
@@ -76,14 +92,14 @@ const YearlyOverview: React.FC<YearlyOverviewProps> = ({ transactions }) => {
               <Col span={8} sm={24} md={8} xs={24}>
                 <CardView
                   value="Approved"
-                  title={`$${approved.toFixed(2)}`}
+                  title={`$${numberWithCommas(approved.toFixed(2))}`}
                   data={approvedAreaChart}
                 />
               </Col>
               <Col span={8} sm={24} md={8} xs={24}>
                 <CardView
                   value="Declined"
-                  title={`$${declined.toFixed(2)}`}
+                  title={`$${numberWithCommas(declined.toFixed(2))}`}
                   data={declinedAreaChart}
                 />
               </Col>
@@ -116,7 +132,7 @@ const YearlyOverview: React.FC<YearlyOverviewProps> = ({ transactions }) => {
                 mainTitle="#1 Top Merchant"
                 paragraph={`3% of revenue by ${topMerchant.merchant}`}
                 amount={`$${topMerchant.amount.toFixed(2)}`}
-                data={approvedAreaChart}
+                data={topMerchantChart}
               />
             </Col>
             <Col span={8}>

@@ -9,6 +9,7 @@ import {
   GetAreaAndBarPoints,
   GetTopMerchants,
 } from '../../helpers/functions';
+import { numberWithCommas } from '../../helpers/helperFunctions';
 import { isEmpty } from '../../helpers/isEmpty';
 import { Clock } from '../../utils/clock';
 
@@ -77,14 +78,14 @@ const MonthlyOverview: React.FC<MonthlyOverviewProps> = ({ transactions }) => {
               <Col span={8} sm={24} md={8} xs={24}>
                 <CardView
                   value="Approved"
-                  title={`$${approved.toFixed(2)}`}
+                  title={`$${numberWithCommas(approved.toFixed(2))}`}
                   data={approvedAreaChart}
                 />
               </Col>
               <Col span={8} sm={24} md={8} xs={24}>
                 <CardView
                   value="Declined"
-                  title={`$${declined.toFixed(2)}`}
+                  title={`$${numberWithCommas(declined.toFixed(2))}`}
                   data={declinedAreaChart}
                 />
               </Col>

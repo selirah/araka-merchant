@@ -28,21 +28,21 @@ const Details: React.FC<DetailsProps> = ({ vas }) => {
       className: 'column-text',
     },
     {
-      title: 'Total Fee Charged',
+      title: 'Fees Charged',
       dataIndex: 'totalFeesCharged',
       key: 'totalFeesCharged',
       align: 'left',
       className: 'column-text',
     },
     {
-      title: 'Araka Fee Charged',
-      dataIndex: 'totalArakaFees',
-      key: 'totalArakaFees',
+      title: 'Annual Fee',
+      dataIndex: 'annualFees',
+      key: 'annualFees',
       align: 'left',
       className: 'column-text',
     },
     {
-      title: 'Araka Discount',
+      title: 'Other Fees',
       dataIndex: 'totalArakaDiscount',
       key: 'totalArakaDiscount',
       align: 'left',
@@ -67,6 +67,8 @@ const Details: React.FC<DetailsProps> = ({ vas }) => {
       totalArakaFees: `${v.currency} ${v.totalArakaFees}`,
       totalArakaDiscount: `${v.currency} ${v.totalArakaDiscount}`,
       totalArakaIncome: `${v.currency} ${v.totalArakaIncome}`,
+      // annualFees: `${v.currency} ${v.annualFees}`,
+      annualFees: `${v.currency} 0.00`,
     });
   }
 
@@ -75,11 +77,7 @@ const Details: React.FC<DetailsProps> = ({ vas }) => {
       <Col span={24}>
         <Card>
           <div className="table-padding">
-            <Table
-              dataSource={dataSource}
-              columns={columns}
-              pagination={{ pageSize: 15 }}
-            />
+            <Table dataSource={dataSource} columns={columns} />
           </div>
         </Card>
       </Col>
