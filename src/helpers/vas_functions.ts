@@ -20,7 +20,7 @@ export const GetVASAnalytics = (vas: VASProcessed[]) => {
     totalProcessed += v.totalTransactions;
     totalArakaIncome += v.totalArakaIncome;
     // totalAnnualFees += v.annualFees;
-    totalFeesCharged = v.totalFeesCharged;
+    totalFeesCharged += v.totalFeesCharged;
     labels.push(v.month);
     totalProcessedLabels.push(v.totalTransactions);
     totalArakaIncomeLabels.push(v.totalArakaIncome);

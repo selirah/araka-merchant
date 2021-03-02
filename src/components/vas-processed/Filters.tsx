@@ -39,6 +39,7 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
                   placeholder="Month: Default=All"
                   style={{ width: '100%' }}
                 >
+                  <Option value="All">All</Option>
                   <Option value="January">January</Option>
                   <Option value="February">February</Option>
                   <Option value="March">March</Option>

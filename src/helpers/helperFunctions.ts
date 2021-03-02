@@ -50,7 +50,7 @@ export const calculateWeeklyTransactionTotals = (
   const todayDate = moment(new Date()).format('X');
 
   let sevenDays = moment(new Date())
-    .subtract(6, 'days')
+    .subtract(7, 'days')
     .format('MM/DD/YYYY 00:00:00');
 
   const last7Days = moment(sevenDays, 'MM/DD/YYYY HH:mm:ss').format('X');
@@ -241,7 +241,7 @@ export const calculateWeeklyValues = (
 
   const todayDate = moment(new Date()).format('X');
   let sevenDays = moment(new Date())
-    .subtract(6, 'days')
+    .subtract(7, 'days')
     .format('MM/DD/YYYY 00:00:00');
 
   const last7Days = moment(sevenDays, 'MM/DD/YYYY HH:mm:ss').format('X');

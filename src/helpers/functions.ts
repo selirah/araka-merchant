@@ -239,6 +239,7 @@ export const GetAreaAndBarPoints = (
       barChart = getBarOptions(labels, trxApproved, trxDeclined);
       break;
   }
+  console.log(labels, trxApprovedAmt);
   return {
     trxAreaChart,
     approvedAreaChart,
@@ -269,12 +270,12 @@ const getLabels = (review: string) => {
       }
       break;
     case 'weekly':
-      const tDate = moment(new Date()).format('ddd');
+      // const tDate = moment(new Date()).format('ddd');
       for (let d = 0; d < 7; d++) {
         let day = moment(new Date()).subtract(d, 'days').format('ddd');
-        if (day === tDate) {
-          day = 'Today';
-        }
+        // if (day === tDate) {
+        //   day = 'Today';
+        // }
         labels.push(day);
       }
 
@@ -282,13 +283,13 @@ const getLabels = (review: string) => {
     case 'monthly':
       // this is a special case
       // we have to get last 30 days dates
-      const todayDate = moment(new Date()).format('MMM DD');
+      // const todayDate = moment(new Date()).format('MMM DD');
       // have to get for all 30 days
       for (let d = 0; d < 30; d++) {
         let date = moment(new Date()).subtract(d, 'd').format('MMM DD');
-        if (date === todayDate) {
-          date = 'Today';
-        }
+        // if (date === todayDate) {
+        //   date = 'Today';
+        // }
         labels.push(date);
       }
       break;

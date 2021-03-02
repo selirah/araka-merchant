@@ -44,12 +44,16 @@ export const GetVASFilteredResult = (vas: VASProcessed[], values: any) => {
 
   if (!isEmpty(month)) {
     let filtered: VASProcessed[] = [];
-    for (let v of bucket) {
-      if (v.month === month) {
-        filtered.push(v);
+    if (month === 'All') {
+      bucket = vas;
+    } else {
+      for (let v of bucket) {
+        if (v.month === month) {
+          filtered.push(v);
+        }
       }
+      bucket = filtered;
     }
-    bucket = filtered;
   }
 
   if (!isEmpty(query)) {
