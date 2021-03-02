@@ -9,8 +9,6 @@ import { SideNav } from '../components/menu/SideNav';
 import { TopNav } from '../components/menu/TopNav';
 import { FooterLayout as Footer } from '../components/menu/Footer';
 
-const { Content } = Layout;
-
 const PrivateRoute: React.FC<any> = ({ component: Component, ...rest }) => {
   const auth = appSelector((state) => state.auth);
   const { isAuthenticated } = auth;
@@ -31,11 +29,10 @@ const PrivateRoute: React.FC<any> = ({ component: Component, ...rest }) => {
               <Layout className="site-layout">
                 <TopNav collapsed={collapsed} toggle={toggle} />
                 <Component {...props} />
-                <div className="padding-box">
-                  <Content className="site-layout-background site-box">
-                    <Divider />
-                    <Footer />
-                  </Content>
+
+                <div className="footer-padding">
+                  <Divider />
+                  <Footer />
                 </div>
               </Layout>
             </Layout>

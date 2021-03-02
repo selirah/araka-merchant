@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Col, /*Card,*/ Tag, Table } from 'antd';
 // import moment from 'moment-timezone';
 import { MerchantOverview } from '../../interfaces';
+import { numberWithCommas } from '../../helpers/helperFunctions';
 // import { isEmpty } from '../../helpers/isEmpty';
 
 interface DetailsProps {
@@ -53,11 +54,13 @@ const Details: React.FC<DetailsProps> = ({ overviews }) => {
     dataSource.push({
       key: Math.random(),
       merchant: overview.merchant,
-      amountProcessed: `${
-        overview.currency
-      } ${overview.totalAmountProcessed.toFixed(2)}`,
+      amountProcessed: `${overview.currency} ${numberWithCommas(
+        overview.totalAmountProcessed.toFixed(2)
+      )}`,
       totalTransactions: `${overview.totalTransactions}`,
-      totalFees: `${overview.currency} ${overview.totalArakaFees.toFixed(2)}`,
+      totalFees: `${overview.currency} ${numberWithCommas(
+        overview.totalArakaFees.toFixed(2)
+      )}`,
     });
   }
 

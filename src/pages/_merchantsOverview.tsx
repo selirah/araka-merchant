@@ -112,12 +112,16 @@ const MerchantsOverview = () => {
             </Row>
           }
         >
-          <Filters
-            onReset={onReset}
-            onSearch={onSearch}
-            overviews={overviewdata}
-          />
-          {!isEmpty(overviews) ? <Cards overviews={overviewdata} /> : null}
+          {!isEmpty(overviews) ? (
+            <>
+              <Filters
+                onReset={onReset}
+                onSearch={onSearch}
+                overviews={overviewdata}
+              />
+              <Cards overviews={overviewdata} />
+            </>
+          ) : null}
           <div className="margin-top">
             <Row style={{ position: 'relative' }}>
               <h4 className="transaction-chart-text">Merchants Table</h4>

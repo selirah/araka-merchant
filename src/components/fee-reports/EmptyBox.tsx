@@ -8,7 +8,7 @@ interface EmptyBoxProps {
 
 const EmptyBox: React.FC<EmptyBoxProps> = ({ header, description }) => {
   return (
-    <Card>
+    <Card className="margin-top-big">
       <Empty
         className="no-data-field"
         imageStyle={{

@@ -16,7 +16,6 @@ export const CardView: React.FC<CardViewProps> = ({
   data,
   currency,
 }) => {
-  console.log(title);
   return (
     <Card className="stats-padding">
       <div className="ecard">

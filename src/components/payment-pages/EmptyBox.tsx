@@ -14,7 +14,7 @@ const EmptyBox: React.FC<EmptyBoxProps> = ({
   children,
 }) => {
   return (
-    <Card>
+    <Card className="margin-top-big">
       <Empty
         className="no-data-field"
         image={image}

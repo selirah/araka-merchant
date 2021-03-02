@@ -36,7 +36,7 @@ const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Transactions"
-                title={`${totalTransactions}`}
+                title={totalTransactions}
                 data={trxAreaChart}
               />
             </Col>

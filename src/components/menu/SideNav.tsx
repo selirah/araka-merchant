@@ -189,7 +189,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
           >
             <Link to={path.vasProcessed}>{t('sideBar.VASProcessed')}</Link>
           </Menu.Item>
-          {/* <Menu.Item
+          <Menu.Item
             key={menu.FEE_REPORTS}
             icon={
               <FeatherIcons.BarChart2
@@ -200,7 +200,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             onClick={() => switchMenu(menu.FEE_REPORTS, menuHeadings.REPORTS)}
           >
             <Link to={path.feeReports}>PCES Reports</Link>
-          </Menu.Item> */}
+          </Menu.Item>
         </Menu.ItemGroup>
         <Menu.ItemGroup
           key="g5"

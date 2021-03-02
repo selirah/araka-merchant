@@ -1,6 +1,6 @@
 import { TransactionHistory } from '../interfaces';
-import { transactionStatus } from './constants';
-import moment from 'moment';
+import { transactionStatus, timeZones } from './constants';
+import moment from 'moment-timezone';
 import {
   calculateDailyTransactionTotals,
   calculateDailyValues,
@@ -100,6 +100,7 @@ export const GetAreaAndBarPoints = (
 
   switch (review) {
     case 'yearly':
+      labels = labels.reverse();
       for (let lbl of labels) {
         const {
           total,
@@ -117,22 +118,25 @@ export const GetAreaAndBarPoints = (
         merchantsArr.push(merchants);
       }
 
+      // console.log(merchantsArr);
+
       trxAreaChart = getAreaOptions(labels, trxData, '#1976D2', '#BBDEFB');
       approvedAreaChart = getAreaOptions(
         labels,
         trxApprovedAmt,
-        '#FFD600',
-        '#FFF176'
+        '#1976D2',
+        '#BBDEFB'
       );
       declinedAreaChart = getAreaOptions(
         labels,
         trxDeclinedAmt,
-        '#F50057',
-        '#F48FB1'
+        '#1976D2',
+        '#BBDEFB'
       );
       barChart = getBarOptions(labels, trxApproved, trxDeclined);
       break;
     case 'daily':
+      labels = labels.reverse();
       for (let label of labels) {
         let hour = label.split(':')[0];
         let ampm = label.split(':')[1].split(' ')[1];
@@ -185,12 +189,12 @@ export const GetAreaAndBarPoints = (
         trxDeclinedAmt.push(declinedAmt);
         merchantsArr.push(merchants);
       }
-      trxAreaChart = getAreaOptions(labels, trxData, '#00C853', '#00E676');
+      trxAreaChart = getAreaOptions(labels, trxData, '#5E35B1', '#D1C4E9');
       approvedAreaChart = getAreaOptions(
         labels,
         trxApprovedAmt,
-        '#0097A7',
-        '#B2EBF2'
+        '#5E35B1',
+        '#D1C4E9'
       );
       declinedAreaChart = getAreaOptions(
         labels,
@@ -223,14 +227,14 @@ export const GetAreaAndBarPoints = (
       approvedAreaChart = getAreaOptions(
         labels,
         trxApprovedAmt,
-        '#00C853',
-        '#00E676'
+        '#FFA000',
+        '#FFE082'
       );
       declinedAreaChart = getAreaOptions(
         labels,
         trxDeclinedAmt,
-        '#5D4037',
-        '#A1887F'
+        '#FFA000',
+        '#FFE082'
       );
       barChart = getBarOptions(labels, trxApproved, trxDeclined);
       break;
@@ -248,54 +252,26 @@ const getLabels = (review: string) => {
   let labels: string[] = [];
   switch (review) {
     case 'yearly':
-      labels = [
-        'Dec',
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-      ];
+      // get months in hours
+      for (let m = 0; m < 12; m++) {
+        let month = moment(new Date()).subtract(m, 'months').format('MMM');
+        labels.push(month);
+      }
       break;
     case 'daily':
-      labels = [
-        '12:00 AM',
-        '01:00 AM',
-        '02:00 AM',
-        '03:00 AM',
-        '04:00 AM',
-        '05:00 AM',
-        '06:00 AM',
-        '07:00 AM',
-        '08:00 AM',
-        '09:00 AM',
-        '10:00 AM',
-        '11:00 AM',
-        '12:00 PM',
-        '01:00 PM',
-        '02:00 PM',
-        '03:00 PM',
-        '04:00 PM',
-        '05:00 PM',
-        '06:00 PM',
-        '07:00 PM',
-        '08:00 PM',
-        '09:00 PM',
-        '10:00 PM',
-        '11:00 PM',
-      ];
+      // get time in hours in dr congo time
+      for (let t = 0; t < 24; t++) {
+        let time = moment(new Date())
+          .subtract(t, 'hours')
+          .tz(timeZones.kinshasa)
+          .format('hh:00 A');
+        labels.push(time);
+      }
       break;
     case 'weekly':
-      // labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
       const tDate = moment(new Date()).format('ddd');
       for (let d = 0; d < 7; d++) {
-        let day = moment(new Date()).subtract(d, 'd').format('ddd');
+        let day = moment(new Date()).subtract(d, 'days').format('ddd');
         if (day === tDate) {
           day = 'Today';
         }
@@ -563,7 +539,7 @@ export const TopMerchantAreaChart = (
   const { merchant } = theMerchant;
   let filteredTransactions: TransactionHistory[] = [];
 
-  let labels = getLabels(review);
+  let labels = getLabels(review).reverse();
   let merchantAreaChart = {};
   let trxApproved = [];
 

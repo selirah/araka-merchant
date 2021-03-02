@@ -16,7 +16,7 @@ const Cards: React.FC<CardsProps> = ({ areadata }) => {
         <Col span={24}>
           <Row gutter={20}>
             <Col span={8} sm={24} md={8} xs={24}>
-              <CardView value="Transactions" title="1240" data={areadata} />
+              <CardView value="Transactions" title={1240} data={areadata} />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView

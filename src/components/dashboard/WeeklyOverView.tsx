@@ -8,8 +8,9 @@ import {
   CalculateTransactionTotals,
   GetAreaAndBarPoints,
   GetTopMerchants,
+  TopMerchantAreaChart,
 } from '../../helpers/functions';
-// import { numberWithCommas } from '../../helpers/helperFunctions';
+import { numberWithCommas } from '../../helpers/helperFunctions';
 import { isEmpty } from '../../helpers/isEmpty';
 import { Clock } from '../../utils/clock';
 
@@ -52,6 +53,30 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({ transactions }) => {
     secondMerchant = merchantTotals[1];
     thirdMerchant = merchantTotals[2];
   }
+
+  const topMerchantChart = TopMerchantAreaChart(
+    topMerchant,
+    transactions,
+    'weekly',
+    '#5E35B1',
+    '#D1C4E9'
+  );
+
+  const secondMerchantChart = TopMerchantAreaChart(
+    secondMerchant,
+    transactions,
+    'weekly',
+    '#5E35B1',
+    '#D1C4E9'
+  );
+
+  const thirdMerchantChart = TopMerchantAreaChart(
+    thirdMerchant,
+    transactions,
+    'weekly',
+    '#5E35B1',
+    '#D1C4E9'
+  );
 
   return (
     <>
@@ -120,24 +145,30 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({ transactions }) => {
               <ProfitCard
                 mainTitle="#1 Top Merchant"
                 paragraph={`3% of revenue by ${topMerchant.merchant}`}
-                amount={`$${topMerchant.amount.toFixed(2)}`}
-                data={trxAreaChart}
+                amount={`$${numberWithCommas(
+                  (topMerchant.amount * 0.03).toFixed(2)
+                )}`}
+                data={topMerchantChart}
               />
             </Col>
             <Col span={8}>
               <ProfitCard
                 mainTitle="#2 Top Merchant"
                 paragraph={`3% of revenue by ${secondMerchant.merchant}`}
-                amount={`$${secondMerchant.amount.toFixed(2)}`}
-                data={declinedAreaChart}
+                amount={`$${numberWithCommas(
+                  (secondMerchant.amount * 0.03).toFixed(2)
+                )}`}
+                data={secondMerchantChart}
               />
             </Col>
             <Col span={8}>
               <ProfitCard
                 mainTitle="#3 Top Merchant"
                 paragraph={`3% of revenue by ${thirdMerchant.merchant}`}
-                amount={`$${thirdMerchant.amount.toFixed(2)}`}
-                data={declinedAreaChart}
+                amount={`$${numberWithCommas(
+                  (thirdMerchant.amount * 0.03).toFixed(2)
+                )}`}
+                data={thirdMerchantChart}
               />
             </Col>
           </Row>

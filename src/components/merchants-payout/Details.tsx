@@ -3,6 +3,7 @@ import { Row, Col, /*Card*,*/ Tag, Table } from 'antd';
 import moment from 'moment-timezone';
 import { TransactionHistory } from '../../interfaces';
 import { transactionStatus, timeZones } from '../../helpers/constants';
+import { numberWithCommas } from '../../helpers/helperFunctions';
 // import { isEmpty } from '../../helpers/isEmpty';
 
 interface DetailsProps {
@@ -78,7 +79,9 @@ const Details: React.FC<DetailsProps> = ({ payouts }) => {
     dataSource.push({
       key: Math.random(),
       merchant: payout.merchant,
-      balance: `${payout.currency} ${payout.amountPaid.toFixed(2)}`,
+      balance: `${payout.currency} ${numberWithCommas(
+        payout.amountPaid.toFixed(2)
+      )}`,
       paidOn: moment(payout.createdAt, 'MM/DD/YYYY HH:mm:ss')
         .tz(timeZones.kinshasa)
         .format(`MMMM D, YYYY (h:mm a)`),

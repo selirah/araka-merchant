@@ -21,7 +21,9 @@ const Cards: React.FC<CardsProps> = ({ overviews }) => {
   return (
     <div className="margin-top-small">
       <Row>
-        <h4 className="transaction-chart-text">Merchants Overview</h4>
+        <h4 className="transaction-chart-text">
+          Merchants Overview (ONLY APPROVED)
+        </h4>
       </Row>
       <Row gutter={20}>
         <Col span={24}>
