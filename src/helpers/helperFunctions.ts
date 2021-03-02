@@ -48,7 +48,13 @@ export const calculateWeeklyTransactionTotals = (
 ) => {
   // let's get current date and 7 days from current date
   const todayDate = moment(new Date()).format('X');
-  const last7Days = moment(new Date()).subtract(6, 'days').format('X');
+
+  let sevenDays = moment(new Date())
+    .subtract(6, 'days')
+    .format('MM/DD/YYYY 00:00:00');
+
+  const last7Days = moment(sevenDays, 'MM/DD/YYYY HH:mm:ss').format('X');
+
   let lastSevenDaysTransactions: TransactionHistory[] = [];
   let trxTotal = 0,
     totalApprovedAmt = 0.0,
@@ -63,7 +69,6 @@ export const calculateWeeklyTransactionTotals = (
     }
   }
 
-  console.log(lastSevenDaysTransactions);
   // now let's loop through our new data to get the actual calculations
   for (let trx of lastSevenDaysTransactions) {
     const day = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('ddd');
@@ -235,7 +240,11 @@ export const calculateWeeklyValues = (
   let merchants: any = {};
 
   const todayDate = moment(new Date()).format('X');
-  const last7Days = moment(new Date()).subtract(6, 'days').format('X');
+  let sevenDays = moment(new Date())
+    .subtract(6, 'days')
+    .format('MM/DD/YYYY 00:00:00');
+
+  const last7Days = moment(sevenDays, 'MM/DD/YYYY HH:mm:ss').format('X');
   let lastSevenDaysTransactions: TransactionHistory[] = [];
 
   // get transactions that falls within those last 7 days
