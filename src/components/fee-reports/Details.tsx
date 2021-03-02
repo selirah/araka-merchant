@@ -1,5 +1,6 @@
 import React from 'react';
 import { Row, Col, /*Card,*/ Table } from 'antd';
+import { numberWithCommas } from '../../helpers/helperFunctions';
 
 interface DetailsProps {
   reports: any[];
@@ -59,11 +60,11 @@ const Details: React.FC<DetailsProps> = ({ reports }) => {
     dataSource.push({
       key: Math.random(),
       merchant: v.merchant,
-      totalAmount: `${v.currency} ${v.totalAmount}`,
-      arakaFees: `${v.currency} ${v.arakaFees}`,
-      otherFees: `${v.currency} ${v.otherFees}`,
-      annualFees: `${v.currency} ${v.annualFees}`,
-      totalArakaIncome: `${v.currency} ${v.totalArakaIncome}`,
+      totalAmount: `${v.currency} ${numberWithCommas(v.totalAmount)}`,
+      arakaFees: `${v.currency} ${numberWithCommas(v.arakaFees)}`,
+      otherFees: `${v.currency} ${numberWithCommas(v.otherFees)}`,
+      annualFees: `${v.currency} ${numberWithCommas(v.annualFees)}`,
+      totalArakaIncome: `${v.currency} ${numberWithCommas(v.totalArakaIncome)}`,
     });
   }
 
@@ -72,7 +73,7 @@ const Details: React.FC<DetailsProps> = ({ reports }) => {
       <Col span={24}>
         {/* <Card> */}
         <div className="table-padding">
-          <Table dataSource={dataSource} columns={columns} />
+          <Table dataSource={dataSource} columns={columns} bordered />
         </div>
         {/* </Card> */}
       </Col>

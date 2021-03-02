@@ -8,16 +8,23 @@ import {
   CalculateTransactionTotals,
   GetAreaAndBarPoints,
   GetTopMerchants,
+  TopMerchantAreaChart,
 } from '../../helpers/functions';
-// import { numberWithCommas } from '../../helpers/helperFunctions';
+import { numberWithCommas } from '../../helpers/helperFunctions';
 import { isEmpty } from '../../helpers/isEmpty';
 import { Clock } from '../../utils/clock';
+import { roles } from '../../helpers/constants';
 
 interface MonthlyOverviewProps {
   transactions: TransactionHistory[];
+  userRoles: string[];
 }
 
-const MonthlyOverview: React.FC<MonthlyOverviewProps> = ({ transactions }) => {
+const MonthlyOverview: React.FC<MonthlyOverviewProps> = ({
+  transactions,
+  userRoles,
+}) => {
+  const role = userRoles.find((r) => r === roles.SuperMerchant);
   const { time } = Clock();
   const { total, approved, declined } = CalculateTransactionTotals(
     transactions,
@@ -32,26 +39,58 @@ const MonthlyOverview: React.FC<MonthlyOverviewProps> = ({ transactions }) => {
     merchantsArr,
   } = GetAreaAndBarPoints(transactions, 'monthly');
 
-  const { merchantTotals } = GetTopMerchants(
-    transactions,
-    'monthly',
-    merchantsArr
-  );
+  let topMerchant,
+    secondMerchant,
+    thirdMerchant,
+    topMerchantChart,
+    secondMerchantChart,
+    thirdMerchantChart;
 
-  const sorter = (a: any, b: any) => {
-    return b.amount - a.amount; // descending order;
-  };
+  if (role !== undefined && role === roles.SuperMerchant) {
+    const { merchantTotals } = GetTopMerchants(
+      transactions,
+      'monthly',
+      merchantsArr
+    );
 
-  const sortByAmount = (arr: any[]) => {
-    arr.sort(sorter);
-  };
+    const sorter = (a: any, b: any) => {
+      return b.amount - a.amount; // descending order;
+    };
 
-  let topMerchant, secondMerchant, thirdMerchant;
-  if (!isEmpty(merchantTotals)) {
-    sortByAmount(merchantTotals);
-    topMerchant = merchantTotals[0];
-    secondMerchant = merchantTotals[1];
-    thirdMerchant = merchantTotals[2];
+    const sortByAmount = (arr: any[]) => {
+      arr.sort(sorter);
+    };
+
+    if (!isEmpty(merchantTotals)) {
+      sortByAmount(merchantTotals);
+      topMerchant = merchantTotals[0];
+      secondMerchant = merchantTotals[1];
+      thirdMerchant = merchantTotals[2];
+    }
+
+    topMerchantChart = TopMerchantAreaChart(
+      topMerchant,
+      transactions,
+      'monthly',
+      '#FFA000',
+      '#FFE082'
+    );
+
+    secondMerchantChart = TopMerchantAreaChart(
+      secondMerchant,
+      transactions,
+      'monthly',
+      '#FFA000',
+      '#FFE082'
+    );
+
+    thirdMerchantChart = TopMerchantAreaChart(
+      thirdMerchant,
+      transactions,
+      'monthly',
+      '#FFA000',
+      '#FFE082'
+    );
   }
 
   return (
@@ -111,7 +150,7 @@ const MonthlyOverview: React.FC<MonthlyOverviewProps> = ({ transactions }) => {
           </Col>
         </Row>
       </div>
-      {topMerchant.amount > 0 ? (
+      {role !== undefined && role === roles.SuperMerchant ? (
         <div className="margin-top">
           <Row>
             <h4 className="transaction-chart-text">Profits by Merchants</h4>
@@ -121,24 +160,30 @@ const MonthlyOverview: React.FC<MonthlyOverviewProps> = ({ transactions }) => {
               <ProfitCard
                 mainTitle="#1 Top Merchant"
                 paragraph={`3% of revenue by ${topMerchant.merchant}`}
-                amount={`$${topMerchant.amount.toFixed(2)}`}
-                data={trxAreaChart}
+                amount={`$${numberWithCommas(
+                  (topMerchant.amount * 0.03).toFixed(2)
+                )}`}
+                data={topMerchantChart}
               />
             </Col>
             <Col span={8}>
               <ProfitCard
                 mainTitle="#2 Top Merchant"
                 paragraph={`3% of revenue by ${secondMerchant.merchant}`}
-                amount={`$${secondMerchant.amount.toFixed(2)}`}
-                data={approvedAreaChart}
+                amount={`$${numberWithCommas(
+                  (secondMerchant.amount * 0.03).toFixed(2)
+                )}`}
+                data={secondMerchantChart}
               />
             </Col>
             <Col span={8}>
               <ProfitCard
                 mainTitle="#3 Top Merchant"
                 paragraph={`3% of revenue by ${thirdMerchant.merchant}`}
-                amount={`$${thirdMerchant.amount.toFixed(2)}`}
-                data={declinedAreaChart}
+                amount={`$${numberWithCommas(
+                  (thirdMerchant.amount * 0.03).toFixed(2)
+                )}`}
+                data={thirdMerchantChart}
               />
             </Col>
           </Row>

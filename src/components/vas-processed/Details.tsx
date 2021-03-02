@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Col, /*Card,*/ Table } from 'antd';
 // import moment from 'moment-timezone';
 import { VASProcessed } from '../../interfaces';
+import { numberWithCommas } from '../../helpers/helperFunctions';
 // import { isEmpty } from '../../helpers/isEmpty';
 
 interface DetailsProps {
@@ -62,11 +63,21 @@ const Details: React.FC<DetailsProps> = ({ vas }) => {
     dataSource.push({
       key: Math.random(),
       month: v.month,
-      totalAmountProcessed: `${v.currency} ${v.totalAmountProcessed}`,
-      totalFeesCharged: `${v.currency} ${v.totalFeesCharged}`,
-      totalArakaFees: `${v.currency} ${v.totalArakaFees}`,
-      totalArakaDiscount: `${v.currency} ${v.totalArakaDiscount}`,
-      totalArakaIncome: `${v.currency} ${v.totalArakaIncome}`,
+      totalAmountProcessed: `${v.currency} ${numberWithCommas(
+        v.totalAmountProcessed.toFixed(2)
+      )}`,
+      totalFeesCharged: `${v.currency} ${numberWithCommas(
+        v.totalFeesCharged.toFixed(2)
+      )}`,
+      totalArakaFees: `${v.currency} ${numberWithCommas(
+        v.totalArakaFees.toFixed(2)
+      )}`,
+      totalArakaDiscount: `${v.currency} ${numberWithCommas(
+        v.totalArakaDiscount.toFixed(2)
+      )}`,
+      totalArakaIncome: `${v.currency} ${numberWithCommas(
+        v.totalArakaIncome.toFixed(2)
+      )}`,
       // annualFees: `${v.currency} ${v.annualFees}`,
       annualFees: `${v.currency} 0.00`,
     });
@@ -77,7 +88,7 @@ const Details: React.FC<DetailsProps> = ({ vas }) => {
       <Col span={24}>
         {/* <Card> */}
         <div className="table-padding">
-          <Table dataSource={dataSource} columns={columns} />
+          <Table dataSource={dataSource} columns={columns} bordered />
         </div>
         {/* </Card> */}
       </Col>

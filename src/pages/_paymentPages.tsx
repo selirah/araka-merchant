@@ -232,25 +232,31 @@ const PaymentPages = () => {
             </Row>
           }
         >
-          <FilterMenu onReset={onReset} onSearch={onSearch} />
+          {!isEmpty(pageData) ? (
+            <FilterMenu onReset={onReset} onSearch={onSearch} />
+          ) : null}
           <div className="margin-top">
             <Row style={{ position: 'relative' }}>
               <h4 className="transaction-chart-text">Payment Pages</h4>
               <div className="utility-buttons">
-                <Button
-                  type="primary"
-                  className="export-buttons"
-                  onClick={() => onTogglePaymentTypeModal()}
-                >
-                  {t('paymentPages.newPageText')}
-                </Button>
-                <Button
-                  type="primary"
-                  className="export-buttons reload"
-                  onClick={() => reloadPages()}
-                >
-                  {t('paymentPages.refresh')}
-                </Button>
+                {!isEmpty(pageData) ? (
+                  <>
+                    <Button
+                      type="primary"
+                      className="export-buttons"
+                      onClick={() => onTogglePaymentTypeModal()}
+                    >
+                      {t('paymentPages.newPageText')}
+                    </Button>
+                    <Button
+                      type="primary"
+                      className="export-buttons reload"
+                      onClick={() => reloadPages()}
+                    >
+                      {t('paymentPages.refresh')}
+                    </Button>
+                  </>
+                ) : null}
               </div>
             </Row>
           </div>

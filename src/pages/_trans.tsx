@@ -166,13 +166,15 @@ const Transactions = () => {
         >
           {!switchView ? (
             <>
-              <TransactionFilters
-                transactions={trans}
-                onSearch={onSearch}
-                onReset={onReset}
-              />
-              {!isEmpty(transactions) ? (
-                <TransactionSummaryCards transactions={trans} />
+              {!isEmpty(trans) ? (
+                <>
+                  <TransactionFilters
+                    transactions={trans}
+                    onSearch={onSearch}
+                    onReset={onReset}
+                  />
+                  <TransactionSummaryCards transactions={trans} />{' '}
+                </>
               ) : null}
               <div className="margin-top">
                 <Row style={{ position: 'relative' }}>

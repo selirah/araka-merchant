@@ -108,8 +108,12 @@ const VASProcessed = () => {
             </Row>
           }
         >
-          <Filters onReset={onReset} onSearch={onSearch} />
-          {!isEmpty(vasData) ? <Cards vas={vasData} /> : null}
+          {!isEmpty(vasData) ? (
+            <>
+              <Filters onReset={onReset} onSearch={onSearch} />
+              <Cards vas={vasData} />
+            </>
+          ) : null}
           <div className="margin-top">
             <Row style={{ position: 'relative' }}>
               <h4 className="transaction-chart-text">VAS Processed Table</h4>

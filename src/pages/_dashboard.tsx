@@ -60,19 +60,32 @@ const Dashboard = () => {
   } else if (!loading && !isEmpty(transactions)) {
     switch (activeMenu) {
       case menu.DASHBOARD_YEARLY:
-        container = <YearlyOverview transactions={transactions} />;
+        container = (
+          <YearlyOverview transactions={transactions} userRoles={user!.roles} />
+        );
         break;
       case menu.DASHBOARD_DAILY:
-        container = <DailyOverview transactions={transactions} />;
+        container = (
+          <DailyOverview transactions={transactions} userRoles={user!.roles} />
+        );
         break;
       case menu.DASHBOARD_WEEKLY:
-        container = <WeeklyOverview transactions={transactions} />;
+        container = (
+          <WeeklyOverview transactions={transactions} userRoles={user!.roles} />
+        );
         break;
       case menu.DASHBOARD_MONTHLY:
-        container = <MonthlyOverview transactions={transactions} />;
+        container = (
+          <MonthlyOverview
+            transactions={transactions}
+            userRoles={user!.roles}
+          />
+        );
         break;
       default:
-        container = <YearlyOverview transactions={transactions} />;
+        container = (
+          <YearlyOverview transactions={transactions} userRoles={user!.roles} />
+        );
     }
   }
 

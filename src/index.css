@@ -106,7 +106,7 @@ a {
   margin: 16px 24px 16px 0;
   float: left;
   margin: 16px;
-  background: rgba(255, 255, 255, 0.3);
+  background: transparent;
 }
 
 .logo-inner {
@@ -642,14 +642,6 @@ thead[class*='ant-table-thead'] th {
   outline: none;
 }
 
-.ant-layout-sider {
-  position: relative;
-  min-width: 0;
-  background: #fff;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
-}
-
 .highcharts-container {
   position: relative;
   overflow-x: auto !important;
@@ -782,7 +774,7 @@ thead[class*='ant-table-thead'] th {
   flex: auto;
   -ms-flex-direction: column;
   flex-direction: column;
-  min-height: 0;
+  min-height: 100vh;
   background: #ffffff;
 }
 
@@ -792,7 +784,7 @@ thead[class*='ant-table-thead'] th {
   background: #f9f9f9;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
-  padding: 10px;
+  /* padding: 10px; */
 }
 
 .ant-menu-item-group-title {
@@ -881,13 +873,13 @@ thead[class*='ant-table-thead'] th {
 .ant-menu-submenu-selected {
   color: #425466 !important;
   background-color: #d8e6eb;
-  border-radius: 5px;
+  /* border-radius: 5px; */
 }
 
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
   background-color: #f27649;
   color: #ffffff !important;
-  border-radius: 5px;
+  /* border-radius: 2px; */
 }
 
 .ant-menu-vertical .ant-menu-item::after,
@@ -926,7 +918,6 @@ thead[class*='ant-table-thead'] th {
   cursor: pointer;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
-  width: 180px !important;
 }
 
 .menu-info {
@@ -934,7 +925,8 @@ thead[class*='ant-table-thead'] th {
   background-color: #eff2f6;
   border-radius: 2px;
   width: 180px;
-  margin-top: 50px !important;
+  margin-top: 100px !important;
+  margin-left: 10px !important;
 }
 
 .menu-info p {
@@ -973,8 +965,12 @@ thead[class*='ant-table-thead'] th {
 .site-box {
   padding-left: 15px !important;
   padding-right: 15px !important;
-  min-height: 280px;
+  min-height: 80vh;
   padding-top: 20px;
+}
+
+.margin-top-big {
+  margin-top: 100px;
 }
 
 .top-nav-first {
@@ -1043,8 +1039,14 @@ thead[class*='ant-table-thead'] th {
   color: rgba(0, 0, 0, 0.85);
   font-size: 14px;
   background: #ffffff;
-  height: 50px;
+  max-height: 50px;
   text-align: left;
+}
+
+.footer-padding {
+  padding: 0px 30px 0px 30px;
+  position: relative;
+  bottom: 0;
 }
 
 .ant-layout-footer h4 {
@@ -1465,7 +1467,7 @@ thead[class*='ant-table-thead'] th {
 
 .settings-page {
   background: #f9f9f9;
-  min-height: 100vh;
+  height: 70vh;
 }
 
 .profile-box {
@@ -1553,7 +1555,6 @@ thead[class*='ant-table-thead'] th {
   justify-content: center;
 }
 
-.tranaction-table .ant-table-thead > tr > th,
 .tranaction-table .ant-table-tbody > tr > td,
 .tranaction-table .ant-table tfoot > tr > th,
 .tranaction-table .ant-table tfoot > tr > td {
@@ -1583,6 +1584,7 @@ thead[class*='ant-table-thead'] th {
   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.09) !important;
   margin-bottom: 25px !important;
   border: 1px solid #84d4ef;
+  /* margin: 0px -10px 0px -10px; */
 }
 
 .filter-form .ant-form-item {

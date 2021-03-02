@@ -12,7 +12,8 @@ export const GetPagesFilteredResult = (pages: Page[], values: any) => {
   // check if dates are not empty
   if (!isEmpty(periodFrom) && !isEmpty(periodTo)) {
     let filtered: Page[] = [];
-    from = moment(periodFrom._d).format('X');
+    let pFrom = moment(periodFrom).format('MM/DD/YYYY 00:00:00');
+    from = moment(pFrom, 'MM/DD/YYYY 00:00:00').format('X');
     to = moment(periodTo._d).format('X');
     for (let page of bucket) {
       const createdAt = moment(page.createdWhen, 'MM/DD/YYYY HH:mm:ss').format(

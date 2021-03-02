@@ -6,6 +6,7 @@ import { transactionStatus, timeZones } from '../../helpers/constants';
 import { useTranslation } from 'react-i18next';
 import { TransactionTable as TT } from '../../interfaces';
 import { isEmpty } from '../../helpers/isEmpty';
+import { numberWithCommas } from '../../helpers/helperFunctions';
 
 interface TransactionTableProps {
   transactionHistory: TransactionHistory[];
@@ -122,7 +123,9 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
   for (let transaction of transactionHistory) {
     dataSource.push({
       key: Math.random(),
-      amount: `${transaction.currency} ${transaction.amountPaid.toFixed(2)}`,
+      amount: `${transaction.currency} ${numberWithCommas(
+        transaction.amountPaid.toFixed(2)
+      )}`,
       customer: transaction.customer,
       transactionId: transaction.transactionId,
       date: moment(transaction.createdAt, 'MM/DD/YYYY HH:mm:ss')
@@ -150,6 +153,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
               onClick: () => onClickRow(t.transactionId),
             })}
             className="tranaction-table"
+            bordered
           />
         </div>
         {/* </Card> */}

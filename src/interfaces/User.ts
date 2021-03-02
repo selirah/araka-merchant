@@ -6,4 +6,5 @@ export interface User {
   emailAddress: string;
   isBusiness: boolean;
   userId: number;
+  roles: string[];
 }

@@ -48,7 +48,13 @@ export const calculateWeeklyTransactionTotals = (
 ) => {
   // let's get current date and 7 days from current date
   const todayDate = moment(new Date()).format('X');
-  const last7Days = moment(new Date()).subtract(7, 'd').format('X');
+
+  let sevenDays = moment(new Date())
+    .subtract(6, 'days')
+    .format('MM/DD/YYYY 00:00:00');
+
+  const last7Days = moment(sevenDays, 'MM/DD/YYYY HH:mm:ss').format('X');
+
   let lastSevenDaysTransactions: TransactionHistory[] = [];
   let trxTotal = 0,
     totalApprovedAmt = 0.0,
@@ -62,6 +68,7 @@ export const calculateWeeklyTransactionTotals = (
       lastSevenDaysTransactions.push(trx);
     }
   }
+
   // now let's loop through our new data to get the actual calculations
   for (let trx of lastSevenDaysTransactions) {
     const day = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('ddd');
@@ -138,13 +145,20 @@ export const calculateYearValues = (
     if (m === month && trx.status === transactionStatus.APPROVED) {
       approvedAmt += trx.amountPaid;
       totalApproved += 1;
-      merchants[trx.merchant] = trx.amountPaid;
+      // if merchant is already there, let us add their amount to what is current there
+      if (merchants[trx.merchant]) {
+        merchants[trx.merchant] = merchants[trx.merchant] + trx.amountPaid;
+      } else {
+        // add afresh
+        merchants[trx.merchant] = trx.amountPaid;
+      }
     }
     if (m === month && trx.status === transactionStatus.DECLINED) {
       declinedAmt += trx.amountPaid;
       totalDeclined += 1;
     }
   }
+  // console.log(merchants);
   return {
     total,
     approvedAmt,
@@ -187,7 +201,13 @@ export const calculateDailyValues = (
     ) {
       approvedAmt += trx.amountPaid;
       totalApproved += 1;
-      merchants[trx.merchant] = trx.amountPaid;
+      // if merchant is already there, let us add their amount to what is current there
+      if (merchants[trx.merchant]) {
+        merchants[trx.merchant] = merchants[trx.merchant] + trx.amountPaid;
+      } else {
+        // add afresh
+        merchants[trx.merchant] = trx.amountPaid;
+      }
     }
     if (
       tDate === cDate &&
@@ -220,7 +240,11 @@ export const calculateWeeklyValues = (
   let merchants: any = {};
 
   const todayDate = moment(new Date()).format('X');
-  const last7Days = moment(new Date()).subtract(7, 'd').format('X');
+  let sevenDays = moment(new Date())
+    .subtract(6, 'days')
+    .format('MM/DD/YYYY 00:00:00');
+
+  const last7Days = moment(sevenDays, 'MM/DD/YYYY HH:mm:ss').format('X');
   let lastSevenDaysTransactions: TransactionHistory[] = [];
 
   // get transactions that falls within those last 7 days
@@ -241,7 +265,13 @@ export const calculateWeeklyValues = (
     if (d === day && trx.status === transactionStatus.APPROVED) {
       approvedAmt += trx.amountPaid;
       totalApproved += 1;
-      merchants[trx.merchant] = trx.amountPaid;
+      // if merchant is already there, let us add their amount to what is current there
+      if (merchants[trx.merchant]) {
+        merchants[trx.merchant] = merchants[trx.merchant] + trx.amountPaid;
+      } else {
+        // add afresh
+        merchants[trx.merchant] = trx.amountPaid;
+      }
     }
     if (d === day && trx.status === transactionStatus.DECLINED) {
       declinedAmt += trx.amountPaid;
@@ -296,7 +326,13 @@ export const calculateMonthlyValues = (
     if (date === day && trx.status === transactionStatus.APPROVED) {
       approvedAmt += trx.amountPaid;
       totalApproved += 1;
-      merchants[trx.merchant] = trx.amountPaid;
+      // if merchant is already there, let us add their amount to what is current there
+      if (merchants[trx.merchant]) {
+        merchants[trx.merchant] = merchants[trx.merchant] + trx.amountPaid;
+      } else {
+        // add afresh
+        merchants[trx.merchant] = trx.amountPaid;
+      }
     }
     if (date === day && trx.status === transactionStatus.DECLINED) {
       declinedAmt += trx.amountPaid;

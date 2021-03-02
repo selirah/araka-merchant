@@ -82,8 +82,10 @@ export const GetTransactionsFilteredResult = (
   // check if dates are not empty
   if (!isEmpty(periodFrom) && !isEmpty(periodTo)) {
     let filtered: TransactionHistory[] = [];
-    from = moment(periodFrom._d).format('X');
+    let pFrom = moment(periodFrom).format('MM/DD/YYYY 00:00:00');
+    from = moment(pFrom, 'MM/DD/YYYY 00:00:00').format('X');
     to = moment(periodTo._d).format('X');
+
     for (let trx of bucket) {
       const createdAt = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format(
         'X'
