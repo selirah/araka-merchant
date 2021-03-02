@@ -121,7 +121,7 @@ const Pages: React.FC<PagesProps> = ({
       emailAddress: page.emailAddress,
       currency: page.currency,
       processId: page.processId,
-      createdWhen: moment(page.createdWhen)
+      createdWhen: moment(page.createdWhen, 'MM/DD/YYYY HH:mm:ss')
         .tz(timeZones.kinshasa)
         .format(`MMMM D, YYYY (h:mm a)`),
     });

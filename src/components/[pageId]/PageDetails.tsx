@@ -160,7 +160,7 @@ export const PageDetails: React.FC<PageDetailsProps> = () => {
           <h4 className="key">Created On</h4>
           <h4 className="value">
             {pageDetails !== undefined && pageDetails.createdWhen !== null
-              ? moment(pageDetails.createdWhen, 'YYYY/MM/DD HH:mm:ss').format(
+              ? moment(pageDetails.createdWhen, 'MM/DD/YYYY HH:mm:ss').format(
                   'MMMM D, YYYY (h:mm a)'
                 )
               : ''}
