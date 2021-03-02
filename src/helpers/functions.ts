@@ -553,10 +553,41 @@ export const TopMerchantAreaChart = (
     }
   }
 
-  for (let lbl of labels) {
-    // we need only the approved amounts paid
-    const { approvedAmt } = calculateYearValues(filteredTransactions, lbl);
-    trxApproved.push(approvedAmt);
+  switch (review) {
+    case 'yearly':
+      for (let lbl of labels) {
+        // we need only the approved amounts paid
+        const { approvedAmt } = calculateYearValues(filteredTransactions, lbl);
+        trxApproved.push(approvedAmt);
+      }
+      break;
+    case 'daily':
+      for (let lbl of labels) {
+        // we need only the approved amounts paid
+        const { approvedAmt } = calculateDailyValues(filteredTransactions, lbl);
+        trxApproved.push(approvedAmt);
+      }
+      break;
+    case 'weekly':
+      for (let lbl of labels) {
+        // we need only the approved amounts paid
+        const { approvedAmt } = calculateWeeklyValues(
+          filteredTransactions,
+          lbl
+        );
+        trxApproved.push(approvedAmt);
+      }
+      break;
+    case 'monthly':
+      for (let lbl of labels) {
+        // we need only the approved amounts paid
+        const { approvedAmt } = calculateMonthlyValues(
+          filteredTransactions,
+          lbl
+        );
+        trxApproved.push(approvedAmt);
+      }
+      break;
   }
 
   merchantAreaChart = getAreaOptions(
