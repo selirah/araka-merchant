@@ -73,7 +73,7 @@ const Details: React.FC<DetailsProps> = ({ reports }) => {
       <Col span={24}>
         {/* <Card> */}
         <div className="table-padding">
-          <Table dataSource={dataSource} columns={columns} />
+          <Table dataSource={dataSource} columns={columns} bordered />
         </div>
         {/* </Card> */}
       </Col>

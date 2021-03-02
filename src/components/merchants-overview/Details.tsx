@@ -69,7 +69,7 @@ const Details: React.FC<DetailsProps> = ({ overviews }) => {
       <Col span={24}>
         {/* <Card> */}
         <div className="table-padding">
-          <Table dataSource={dataSource} columns={columns} />
+          <Table dataSource={dataSource} columns={columns} bordered />
         </div>
         {/* </Card> */}
       </Col>

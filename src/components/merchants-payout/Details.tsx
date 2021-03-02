@@ -94,7 +94,7 @@ const Details: React.FC<DetailsProps> = ({ payouts }) => {
       <Col span={24}>
         {/* <Card> */}
         <div className="table-padding">
-          <Table dataSource={dataSource} columns={columns} />
+          <Table dataSource={dataSource} columns={columns} bordered />
         </div>
         {/* </Card> */}
       </Col>

@@ -925,7 +925,8 @@ thead[class*='ant-table-thead'] th {
   background-color: #eff2f6;
   border-radius: 2px;
   width: 180px;
-  margin-top: 50px !important;
+  margin-top: 100px !important;
+  margin-left: 10px !important;
 }
 
 .menu-info p {

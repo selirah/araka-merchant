@@ -132,7 +132,7 @@ const Pages: React.FC<PagesProps> = ({
       <Col span={24}>
         {/* <Card> */}
         <div className="table-padding">
-          <Table dataSource={data} columns={columns} />
+          <Table dataSource={data} columns={columns} bordered />
         </div>
         {/* </Card> */}
       </Col>

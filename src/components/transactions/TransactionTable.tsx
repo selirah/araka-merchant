@@ -153,6 +153,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
               onClick: () => onClickRow(t.transactionId),
             })}
             className="tranaction-table"
+            bordered
           />
         </div>
         {/* </Card> */}
