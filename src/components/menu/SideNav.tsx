@@ -11,6 +11,7 @@ import { menu, menuHeadings } from '../../helpers/menu';
 import { appSelector } from '../../helpers/appSelector';
 import { AppDispatch } from '../../helpers/appDispatch';
 import { path } from '../../helpers/path';
+import { roles } from '../../helpers/constants';
 
 interface SideNavProps {
   collapsed: boolean;
@@ -24,6 +25,14 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
   const { t } = useTranslation();
   const utils = appSelector((state) => state.utils);
   const [activeMenu, setActiveMenu] = useState(utils.activeMenu);
+  const { user } = appSelector((state) => state.auth);
+  let role;
+
+  if (user) {
+    role = user.roles.find((r) => r === roles.SuperMerchant);
+  } else {
+    role = roles.SuperMerchant;
+  }
 
   useEffect(() => {
     const { activeMenu } = utils;
@@ -145,62 +154,72 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
           >
             <Link to={path.myPayouts}>{t('sideBar.myPayout')}</Link>
           </Menu.Item>
-          <Menu.Item
-            key={menu.MERCHANT_OVERVIEW}
-            icon={
-              <FeatherIcons.Users
-                className="ant-menu-item-icon anticon"
-                size={14}
-              />
-            }
-            onClick={() =>
-              switchMenu(menu.MERCHANT_OVERVIEW, menuHeadings.REPORTS)
-            }
-          >
-            <Link to={path.merchantsOverview}>
-              {t('sideBar.merchantOverview')}
-            </Link>
-          </Menu.Item>
-          <Menu.Item
-            key={menu.MERCHANT_PAYOUTS}
-            icon={
-              <FeatherIcons.CreditCard
-                className="ant-menu-item-icon anticon"
-                size={14}
-              />
-            }
-            onClick={() =>
-              switchMenu(menu.MERCHANT_PAYOUTS, menuHeadings.REPORTS)
-            }
-          >
-            <Link to={path.merchantPayouts}>
-              {t('sideBar.merchantPayouts')}
-            </Link>
-          </Menu.Item>
-          <Menu.Item
-            key={menu.VAS_PROCESSED}
-            icon={
-              <FeatherIcons.Cpu
-                className="ant-menu-item-icon anticon"
-                size={14}
-              />
-            }
-            onClick={() => switchMenu(menu.VAS_PROCESSED, menuHeadings.REPORTS)}
-          >
-            <Link to={path.vasProcessed}>{t('sideBar.VASProcessed')}</Link>
-          </Menu.Item>
-          <Menu.Item
-            key={menu.FEE_REPORTS}
-            icon={
-              <FeatherIcons.BarChart2
-                className="ant-menu-item-icon anticon"
-                size={14}
-              />
-            }
-            onClick={() => switchMenu(menu.FEE_REPORTS, menuHeadings.REPORTS)}
-          >
-            <Link to={path.feeReports}>PCES Reports</Link>
-          </Menu.Item>
+          {role !== undefined && role === roles.SuperMerchant ? (
+            <Menu.Item
+              key={menu.MERCHANT_OVERVIEW}
+              icon={
+                <FeatherIcons.Users
+                  className="ant-menu-item-icon anticon"
+                  size={14}
+                />
+              }
+              onClick={() =>
+                switchMenu(menu.MERCHANT_OVERVIEW, menuHeadings.REPORTS)
+              }
+            >
+              <Link to={path.merchantsOverview}>
+                {t('sideBar.merchantOverview')}
+              </Link>
+            </Menu.Item>
+          ) : null}
+          {role !== undefined && role === roles.SuperMerchant ? (
+            <Menu.Item
+              key={menu.MERCHANT_PAYOUTS}
+              icon={
+                <FeatherIcons.CreditCard
+                  className="ant-menu-item-icon anticon"
+                  size={14}
+                />
+              }
+              onClick={() =>
+                switchMenu(menu.MERCHANT_PAYOUTS, menuHeadings.REPORTS)
+              }
+            >
+              <Link to={path.merchantPayouts}>
+                {t('sideBar.merchantPayouts')}
+              </Link>
+            </Menu.Item>
+          ) : null}
+          {role !== undefined && role === roles.SuperMerchant ? (
+            <Menu.Item
+              key={menu.VAS_PROCESSED}
+              icon={
+                <FeatherIcons.Cpu
+                  className="ant-menu-item-icon anticon"
+                  size={14}
+                />
+              }
+              onClick={() =>
+                switchMenu(menu.VAS_PROCESSED, menuHeadings.REPORTS)
+              }
+            >
+              <Link to={path.vasProcessed}>{t('sideBar.VASProcessed')}</Link>
+            </Menu.Item>
+          ) : null}
+          {role !== undefined && role === roles.SuperMerchant ? (
+            <Menu.Item
+              key={menu.FEE_REPORTS}
+              icon={
+                <FeatherIcons.BarChart2
+                  className="ant-menu-item-icon anticon"
+                  size={14}
+                />
+              }
+              onClick={() => switchMenu(menu.FEE_REPORTS, menuHeadings.REPORTS)}
+            >
+              <Link to={path.feeReports}>PCES Reports</Link>
+            </Menu.Item>
+          ) : null}
         </Menu.ItemGroup>
         <Menu.ItemGroup
           key="g5"
