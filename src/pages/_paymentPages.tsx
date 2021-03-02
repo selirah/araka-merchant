@@ -70,7 +70,8 @@ const PaymentPages = () => {
     if (failure) {
       message.error(error, 5);
     }
-  }, [success, error, failure, t]);
+    setPageData(pages);
+  }, [success, error, failure, t, pages]);
 
   const reloadPages = () => {
     dispatch(clearPaymentPages());
