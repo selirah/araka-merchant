@@ -13,12 +13,18 @@ import {
 import { numberWithCommas } from '../../helpers/helperFunctions';
 import { isEmpty } from '../../helpers/isEmpty';
 import { Clock } from '../../utils/clock';
+import { roles } from '../../helpers/constants';
 
 interface WeeklyOverViewProps {
   transactions: TransactionHistory[];
+  userRoles: string[];
 }
 
-const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({ transactions }) => {
+const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({
+  transactions,
+  userRoles,
+}) => {
+  const role = userRoles.find((r) => r === roles.SuperMerchant);
   const { time } = Clock();
   const { total, approved, declined } = CalculateTransactionTotals(
     transactions,
@@ -32,51 +38,59 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({ transactions }) => {
     merchantsArr,
   } = GetAreaAndBarPoints(transactions, 'weekly');
 
-  const { merchantTotals } = GetTopMerchants(
-    transactions,
-    'weekly',
-    merchantsArr
-  );
-
-  const sorter = (a: any, b: any) => {
-    return b.amount - a.amount; // descending order;
-  };
-
-  const sortByAmount = (arr: any[]) => {
-    arr.sort(sorter);
-  };
-
-  let topMerchant, secondMerchant, thirdMerchant;
-  if (!isEmpty(merchantTotals)) {
-    sortByAmount(merchantTotals);
-    topMerchant = merchantTotals[0];
-    secondMerchant = merchantTotals[1];
-    thirdMerchant = merchantTotals[2];
-  }
-
-  const topMerchantChart = TopMerchantAreaChart(
-    topMerchant,
-    transactions,
-    'weekly',
-    '#5E35B1',
-    '#D1C4E9'
-  );
-
-  const secondMerchantChart = TopMerchantAreaChart(
+  let topMerchant,
     secondMerchant,
-    transactions,
-    'weekly',
-    '#5E35B1',
-    '#D1C4E9'
-  );
-
-  const thirdMerchantChart = TopMerchantAreaChart(
     thirdMerchant,
-    transactions,
-    'weekly',
-    '#5E35B1',
-    '#D1C4E9'
-  );
+    topMerchantChart,
+    secondMerchantChart,
+    thirdMerchantChart;
+
+  if (role !== undefined && role === roles.SuperMerchant) {
+    const { merchantTotals } = GetTopMerchants(
+      transactions,
+      'weekly',
+      merchantsArr
+    );
+
+    const sorter = (a: any, b: any) => {
+      return b.amount - a.amount; // descending order;
+    };
+
+    const sortByAmount = (arr: any[]) => {
+      arr.sort(sorter);
+    };
+
+    if (!isEmpty(merchantTotals)) {
+      sortByAmount(merchantTotals);
+      topMerchant = merchantTotals[0];
+      secondMerchant = merchantTotals[1];
+      thirdMerchant = merchantTotals[2];
+    }
+
+    topMerchantChart = TopMerchantAreaChart(
+      topMerchant,
+      transactions,
+      'weekly',
+      '#5E35B1',
+      '#D1C4E9'
+    );
+
+    secondMerchantChart = TopMerchantAreaChart(
+      secondMerchant,
+      transactions,
+      'weekly',
+      '#5E35B1',
+      '#D1C4E9'
+    );
+
+    thirdMerchantChart = TopMerchantAreaChart(
+      thirdMerchant,
+      transactions,
+      'weekly',
+      '#5E35B1',
+      '#D1C4E9'
+    );
+  }
 
   return (
     <>
@@ -135,7 +149,7 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({ transactions }) => {
           </Col>
         </Row>
       </div>
-      {topMerchant.amount > 0 ? (
+      {role !== undefined && role === roles.SuperMerchant ? (
         <div className="margin-top">
           <Row>
             <h4 className="transaction-chart-text">Profits by Merchants</h4>

@@ -13,17 +13,24 @@ import {
 import { numberWithCommas } from '../../helpers/helperFunctions';
 import { isEmpty } from '../../helpers/isEmpty';
 import { Clock } from '../../utils/clock';
+import { roles } from '../../helpers/constants';
 
 interface YearlyOverviewProps {
   transactions: TransactionHistory[];
+  userRoles: string[];
 }
 
-const YearlyOverview: React.FC<YearlyOverviewProps> = ({ transactions }) => {
+const YearlyOverview: React.FC<YearlyOverviewProps> = ({
+  transactions,
+  userRoles,
+}) => {
+  const role = userRoles.find((r) => r === roles.SuperMerchant);
   const { time } = Clock();
   const { total, approved, declined } = CalculateTransactionTotals(
     transactions,
     'yearly'
   );
+
   const {
     trxAreaChart,
     approvedAreaChart,
@@ -32,51 +39,58 @@ const YearlyOverview: React.FC<YearlyOverviewProps> = ({ transactions }) => {
     merchantsArr,
   } = GetAreaAndBarPoints(transactions, 'yearly');
 
-  const { merchantTotals } = GetTopMerchants(
-    transactions,
-    'yearly',
-    merchantsArr
-  );
-
-  const sorter = (a: any, b: any) => {
-    return b.amount - a.amount; // descending order;
-  };
-
-  const sortByAmount = (arr: any[]) => {
-    arr.sort(sorter);
-  };
-
-  let topMerchant, secondMerchant, thirdMerchant;
-  if (!isEmpty(merchantTotals)) {
-    sortByAmount(merchantTotals);
-    topMerchant = merchantTotals[0];
-    secondMerchant = merchantTotals[1];
-    thirdMerchant = merchantTotals[2];
-  }
-
-  const topMerchantChart = TopMerchantAreaChart(
-    topMerchant,
-    transactions,
-    'yearly',
-    '#1976D2',
-    '#BBDEFB'
-  );
-
-  const secondMerchantChart = TopMerchantAreaChart(
+  let topMerchant,
     secondMerchant,
-    transactions,
-    'yearly',
-    '#1976D2',
-    '#BBDEFB'
-  );
-
-  const thirdMerchantChart = TopMerchantAreaChart(
     thirdMerchant,
-    transactions,
-    'yearly',
-    '#1976D2',
-    '#BBDEFB'
-  );
+    topMerchantChart,
+    secondMerchantChart,
+    thirdMerchantChart;
+  if (role !== undefined && role === roles.SuperMerchant) {
+    const { merchantTotals } = GetTopMerchants(
+      transactions,
+      'yearly',
+      merchantsArr
+    );
+
+    const sorter = (a: any, b: any) => {
+      return b.amount - a.amount; // descending order;
+    };
+
+    const sortByAmount = (arr: any[]) => {
+      arr.sort(sorter);
+    };
+
+    if (!isEmpty(merchantTotals)) {
+      sortByAmount(merchantTotals);
+      topMerchant = merchantTotals[0];
+      secondMerchant = merchantTotals[1];
+      thirdMerchant = merchantTotals[2];
+    }
+
+    topMerchantChart = TopMerchantAreaChart(
+      topMerchant,
+      transactions,
+      'yearly',
+      '#1976D2',
+      '#BBDEFB'
+    );
+
+    secondMerchantChart = TopMerchantAreaChart(
+      secondMerchant,
+      transactions,
+      'yearly',
+      '#1976D2',
+      '#BBDEFB'
+    );
+
+    thirdMerchantChart = TopMerchantAreaChart(
+      thirdMerchant,
+      transactions,
+      'yearly',
+      '#1976D2',
+      '#BBDEFB'
+    );
+  }
 
   return (
     <>
@@ -136,7 +150,7 @@ const YearlyOverview: React.FC<YearlyOverviewProps> = ({ transactions }) => {
           </Col>
         </Row>
       </div>
-      {topMerchant.amount > 0 ? (
+      {role !== undefined && role === roles.SuperMerchant ? (
         <div className="margin-top">
           <Row>
             <h4 className="transaction-chart-text">Profits by Merchants</h4>

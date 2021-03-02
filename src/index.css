@@ -1555,7 +1555,6 @@ thead[class*='ant-table-thead'] th {
   justify-content: center;
 }
 
-.tranaction-table .ant-table-thead > tr > th,
 .tranaction-table .ant-table-tbody > tr > td,
 .tranaction-table .ant-table tfoot > tr > th,
 .tranaction-table .ant-table tfoot > tr > td {
