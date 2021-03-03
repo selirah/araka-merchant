@@ -39,6 +39,7 @@ const Details: React.FC<DetailsProps> = ({ overviews }) => {
       key: 'totalTransactions',
       align: 'center',
       className: 'column-text',
+      responsive: ['md'],
     },
     {
       title: 'Total Araka Fees',
@@ -73,7 +74,7 @@ const Details: React.FC<DetailsProps> = ({ overviews }) => {
             dataSource={dataSource}
             columns={columns}
             bordered
-            // className="tranaction-table"
+            className="tranaction-table"
           />
         </div>
         {/* </Card> */}

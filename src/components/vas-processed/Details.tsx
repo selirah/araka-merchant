@@ -41,6 +41,7 @@ const Details: React.FC<DetailsProps> = ({ vas }) => {
       key: 'annualFees',
       align: 'left',
       className: 'column-text',
+      responsive: ['md'],
     },
     {
       title: 'Other Fees',
@@ -48,6 +49,7 @@ const Details: React.FC<DetailsProps> = ({ vas }) => {
       key: 'totalArakaDiscount',
       align: 'left',
       className: 'column-text',
+      responsive: ['md'],
     },
     {
       title: 'Total Araka Income',

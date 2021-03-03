@@ -62,6 +62,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
       render: (name: string) => {
         return <span style={{ color: '#35b9e6' }}>{name}</span>;
       },
+      responsive: ['md'],
     },
     {
       title: `${t('transactions.table.transactionId')}`,
@@ -70,6 +71,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
       align: 'center',
       sorter: (a: TT, b: TT) => a.transactionId - b.transactionId,
       className: 'column-text',
+      responsive: ['md'],
     },
     {
       title: `${t('transactions.table.paidOn')}`,
@@ -80,6 +82,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
         moment(a.date).tz(timeZones.kinshasa).unix() -
         moment(b.date).tz(timeZones.kinshasa).unix(),
       className: 'column-text',
+      responsive: ['lg'],
     },
     {
       title: `${t('transactions.table.channel')}`,
@@ -101,6 +104,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
       key: 'reason',
       align: 'center',
       className: 'column-text',
+      responsive: ['lg'],
     },
     {
       title: `${t('transactions.table.merchant')}`,

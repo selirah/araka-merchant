@@ -255,7 +255,7 @@ export const calculateWeeklyValues = (
     }
   }
 
-  console.log(lastSevenDaysTransactions);
+  // console.log(lastSevenDaysTransactions);
 
   // now let's loop through our new data to get the actual calculations
   for (let trx of lastSevenDaysTransactions) {

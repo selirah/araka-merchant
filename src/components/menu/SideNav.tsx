@@ -45,7 +45,13 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
   };
 
   return (
-    <Sider collapsible collapsed={collapsed} onCollapse={onCollapsed}>
+    <Sider
+      collapsible
+      collapsed={collapsed}
+      onCollapse={onCollapsed}
+      collapsedWidth="0"
+      breakpoint="lg"
+    >
       <div className="logo">
         {collapsed ? (
           <Image src={logo2} alt="logo" preview={false} />

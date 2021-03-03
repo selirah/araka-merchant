@@ -135,7 +135,7 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({
           </Col>
         </Row>
       </div>
-      <div className="margin-top">
+      <div className="margin-top mobile-off">
         <Row>
           <h4 className="transaction-chart-text">Transactions Chart</h4>
         </Row>
@@ -155,7 +155,7 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({
             <h4 className="transaction-chart-text">Profits by Merchants</h4>
           </Row>
           <Row gutter={40}>
-            <Col span={8}>
+            <Col span={8} sm={24} md={8} xs={24}>
               <ProfitCard
                 mainTitle="#1 Top Merchant"
                 paragraph={`3% of revenue by ${topMerchant.merchant}`}
@@ -165,7 +165,7 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({
                 data={topMerchantChart}
               />
             </Col>
-            <Col span={8}>
+            <Col span={8} sm={24} md={8} xs={24}>
               <ProfitCard
                 mainTitle="#2 Top Merchant"
                 paragraph={`3% of revenue by ${secondMerchant.merchant}`}
@@ -175,7 +175,7 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({
                 data={secondMerchantChart}
               />
             </Col>
-            <Col span={8}>
+            <Col span={8} sm={24} md={8} xs={24}>
               <ProfitCard
                 mainTitle="#3 Top Merchant"
                 paragraph={`3% of revenue by ${thirdMerchant.merchant}`}

@@ -64,6 +64,7 @@ const Details: React.FC<DetailsProps> = ({ payouts }) => {
       key: 'paidOn',
       align: 'center',
       className: 'column-text',
+      responsive: ['md'],
     },
     {
       title: 'Transaction ID',

@@ -1,6 +1,6 @@
 import { TransactionHistory } from '../interfaces';
-import { transactionStatus, timeZones } from './constants';
-import moment from 'moment-timezone';
+import { transactionStatus } from './constants';
+import moment from 'moment';
 import {
   calculateDailyTransactionTotals,
   calculateDailyValues,
@@ -264,10 +264,7 @@ const getLabels = (review: string) => {
     case 'daily':
       // get time in hours in dr congo time
       for (let t = 0; t < 24; t++) {
-        let time = moment(new Date())
-          .subtract(t, 'hours')
-          .tz(timeZones.kinshasa)
-          .format('hh:00 A');
+        let time = moment(new Date()).subtract(t, 'hours').format('hh:00 A');
         labels.push(time);
       }
       break;
@@ -555,6 +552,8 @@ export const TopMerchantAreaChart = (
       filteredTransactions.push(trx);
     }
   }
+
+  // console.log(filteredTransactions);
 
   switch (review) {
     case 'yearly':
