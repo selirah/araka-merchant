@@ -169,6 +169,7 @@ export const GetAreaAndBarPoints = (
         '#1ce1ac',
         '#1ce1ac50'
       );
+      labels[labels.length - 1] = 'Now';
       barChart = getBarOptions(labels, trxApproved, trxDeclined);
       break;
     case 'weekly':
@@ -202,6 +203,7 @@ export const GetAreaAndBarPoints = (
         '#5E35B1',
         '#D1C4E9'
       );
+      labels[labels.length - 1] = 'Today';
       barChart = getBarOptions(labels, trxApproved, trxDeclined);
       break;
     case 'monthly':
@@ -236,10 +238,10 @@ export const GetAreaAndBarPoints = (
         '#FFA000',
         '#FFE082'
       );
+      labels[labels.length - 1] = 'Today';
       barChart = getBarOptions(labels, trxApproved, trxDeclined);
       break;
   }
-  console.log(labels, trxApprovedAmt);
   return {
     trxAreaChart,
     approvedAreaChart,

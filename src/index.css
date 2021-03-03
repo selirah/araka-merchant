@@ -822,7 +822,7 @@ thead[class*='ant-table-thead'] th {
   min-width: 14px;
   margin-left: 0;
   font-size: 14px;
-  right: 0px;
+  right: 4px;
   top: 30%;
   -webkit-transition: font-size 0.15s cubic-bezier(0.215, 0.61, 0.355, 1),
     margin 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),

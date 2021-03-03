@@ -74,7 +74,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                 switchMenu(menu.DASHBOARD_YEARLY, menuHeadings.DASHBOARDS)
               }
             >
-              <Link to={path.home}>{menu.DASHBOARD_YEARLY}</Link>
+              <Link to={path.dashboardMain}>{menu.DASHBOARD_YEARLY}</Link>
             </Menu.Item>
             <Menu.Item
               key={menu.DASHBOARD_DAILY}
@@ -82,7 +82,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                 switchMenu(menu.DASHBOARD_DAILY, menuHeadings.DASHBOARDS)
               }
             >
-              <Link to={path.home}>{menu.DASHBOARD_DAILY}</Link>
+              <Link to={path.dashboardDaily}>{menu.DASHBOARD_DAILY}</Link>
             </Menu.Item>
             <Menu.Item
               key={menu.DASHBOARD_WEEKLY}
@@ -90,7 +90,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                 switchMenu(menu.DASHBOARD_WEEKLY, menuHeadings.DASHBOARDS)
               }
             >
-              <Link to={path.home}>{menu.DASHBOARD_WEEKLY}</Link>
+              <Link to={path.dashboardWeekly}>{menu.DASHBOARD_WEEKLY}</Link>
             </Menu.Item>
             <Menu.Item
               key={menu.DASHBOARD_MONTHLY}
@@ -98,7 +98,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                 switchMenu(menu.DASHBOARD_MONTHLY, menuHeadings.DASHBOARDS)
               }
             >
-              <Link to={path.home}>{menu.DASHBOARD_MONTHLY}</Link>
+              <Link to={path.dashboardMonthly}>{menu.DASHBOARD_MONTHLY}</Link>
             </Menu.Item>
           </Menu.SubMenu>
         </Menu.ItemGroup>
@@ -206,7 +206,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
               <Link to={path.vasProcessed}>{t('sideBar.VASProcessed')}</Link>
             </Menu.Item>
           ) : null}
-          {role !== undefined && role === roles.SuperMerchant ? (
+          {/* {role !== undefined && role === roles.SuperMerchant ? (
             <Menu.Item
               key={menu.FEE_REPORTS}
               icon={
@@ -219,7 +219,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             >
               <Link to={path.feeReports}>PCES Reports</Link>
             </Menu.Item>
-          ) : null}
+          ) : null} */}
         </Menu.ItemGroup>
         <Menu.ItemGroup
           key="g5"
