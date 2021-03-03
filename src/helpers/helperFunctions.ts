@@ -1,7 +1,6 @@
 import { TransactionHistory } from '../interfaces';
 import { transactionStatus } from './constants';
-import { timeZones } from './constants';
-import moment from 'moment-timezone';
+import moment from 'moment';
 
 export const calculateDailyTransactionTotals = (
   transactions: TransactionHistory[],
@@ -13,13 +12,11 @@ export const calculateDailyTransactionTotals = (
   // we have to make sure transactions were performed today
   let cDate = moment(new Date()).format('MM/DD/YYYY');
   for (let trx of transactions) {
-    const tDate = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss')
-      .tz(timeZones.kinshasa)
-      .format('MM/DD/YYYY');
+    const tDate = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format(
+      'MM/DD/YYYY'
+    );
 
-    let t = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss')
-      .tz(timeZones.kinshasa)
-      .format('hh:mm A');
+    let t = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('hh:mm A');
     let hour = t.split(':')[0];
     let ampm = t.split(':')[1].split(' ')[1];
     const time = `${hour}${ampm}`;
@@ -53,13 +50,10 @@ export const calculateWeeklyTransactionTotals = (
   const todayDate = moment(new Date()).format('X');
 
   let sevenDays = moment(new Date())
-    .tz(timeZones.kinshasa)
-    .subtract(6, 'days')
-    .format('MM/DD/YYYY 00:00:00');
+    .subtract(7, 'days')
+    .format('MM/DD/YYYY 23:59:59');
 
-  const last7Days = moment(sevenDays, 'MM/DD/YYYY HH:mm:ss')
-    .tz(timeZones.kinshasa)
-    .format('X');
+  const last7Days = moment(sevenDays, 'MM/DD/YYYY HH:mm:ss').format('X');
 
   let lastSevenDaysTransactions: TransactionHistory[] = [];
   let trxTotal = 0,
@@ -68,9 +62,7 @@ export const calculateWeeklyTransactionTotals = (
 
   // get transactions that falls within those last 7 days
   for (let trx of transactions) {
-    const tDate = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss')
-      .tz(timeZones.kinshasa)
-      .format('X');
+    const tDate = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('X');
     // check if trasnaction exists within these dates
     if (tDate >= last7Days && tDate <= todayDate) {
       lastSevenDaysTransactions.push(trx);
@@ -79,9 +71,7 @@ export const calculateWeeklyTransactionTotals = (
 
   // now let's loop through our new data to get the actual calculations
   for (let trx of lastSevenDaysTransactions) {
-    const day = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss')
-      .tz(timeZones.kinshasa)
-      .format('ddd');
+    const day = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('ddd');
     if (day === label) {
       trxTotal += 1;
     }
@@ -100,11 +90,8 @@ export const calculateMonthlyTransactionTotal = (
   label: string
 ) => {
   // let's get current date and 30 days from current date
-  const todayDate = moment(new Date()).tz(timeZones.kinshasa).format('X');
-  const last30Days = moment(new Date())
-    .tz(timeZones.kinshasa)
-    .subtract(30, 'd')
-    .format('X');
+  const todayDate = moment(new Date()).format('X');
+  const last30Days = moment(new Date()).subtract(30, 'd').format('X');
 
   let last30DaysTransactions: TransactionHistory[] = [];
   let trxTotal = 0,
@@ -112,9 +99,7 @@ export const calculateMonthlyTransactionTotal = (
     totalDeclinedAmt = 0.0;
   // get transactions that falls within those last 30 days
   for (let trx of transactions) {
-    const tDate = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss')
-      .tz(timeZones.kinshasa)
-      .format('X');
+    const tDate = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('X');
     // check if trasnaction exists within these dates
     if (tDate >= last30Days && tDate <= todayDate) {
       last30DaysTransactions.push(trx);
@@ -122,11 +107,9 @@ export const calculateMonthlyTransactionTotal = (
   }
 
   // now let's loop through our new data to get the actual calculations
-  const cDate = moment(new Date()).tz(timeZones.kinshasa).format('MMM DD');
+  const cDate = moment(new Date()).format('MMM DD');
   for (let trx of last30DaysTransactions) {
-    let date = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss')
-      .tz(timeZones.kinshasa)
-      .format('MMM DD');
+    let date = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('MMM DD');
     if (date === cDate) {
       date = 'Today';
     }
@@ -155,9 +138,7 @@ export const calculateYearValues = (
   let merchants: any = {};
 
   for (let trx of transactions) {
-    const m = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss')
-      .tz(timeZones.kinshasa)
-      .format('MMM');
+    const m = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('MMM');
     if (m === month) {
       total += 1;
     }
@@ -200,14 +181,12 @@ export const calculateDailyValues = (
   let merchants: any = {};
 
   // we have to make sure transactions were performed today
-  let cDate = moment(new Date()).tz(timeZones.kinshasa).format('MM/DD/YYYY');
+  let cDate = moment(new Date()).format('MM/DD/YYYY');
   for (let trx of transactions) {
-    const tDate = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss')
-      .tz(timeZones.kinshasa)
-      .format('MM/DD/YYYY');
-    let t = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss')
-      .tz(timeZones.kinshasa)
-      .format('hh:mm A');
+    const tDate = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format(
+      'MM/DD/YYYY'
+    );
+    let t = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('hh:mm A');
     let hour = t.split(':')[0];
     let ampm = t.split(':')[1].split(' ')[1];
     const tm = `${hour}${ampm}`;
@@ -261,20 +240,15 @@ export const calculateWeeklyValues = (
   let merchants: any = {};
 
   const sevenDays = moment(new Date())
-    .tz(timeZones.kinshasa)
-    .subtract(6, 'days')
-    .format('MM/DD/YYYY 00:00:00');
+    .subtract(7, 'days')
+    .format('MM/DD/YYYY 23:59:59');
 
-  const last7Days = moment(sevenDays, 'MM/DD/YYYY HH:mm:ss')
-    .tz(timeZones.kinshasa)
-    .format('X');
+  const last7Days = moment(sevenDays, 'MM/DD/YYYY HH:mm:ss').format('X');
   let lastSevenDaysTransactions: TransactionHistory[] = [];
 
   // get transactions that falls within those last 7 days
   for (let trx of transactions) {
-    const tDate = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss')
-      .tz(timeZones.kinshasa)
-      .format('X');
+    const tDate = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('X');
     // check if trasnaction exists within these dates
     if (tDate >= last7Days) {
       lastSevenDaysTransactions.push(trx);
@@ -285,9 +259,7 @@ export const calculateWeeklyValues = (
 
   // now let's loop through our new data to get the actual calculations
   for (let trx of lastSevenDaysTransactions) {
-    const d = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss')
-      .tz(timeZones.kinshasa)
-      .format('ddd');
+    const d = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('ddd');
 
     if (d === day) {
       total += 1;
@@ -330,18 +302,13 @@ export const calculateMonthlyValues = (
   let merchants: any = {};
 
   // let's get current date and 30 days from current date
-  const todayDate = moment(new Date()).tz(timeZones.kinshasa).format('X');
-  const last30Days = moment(new Date())
-    .tz(timeZones.kinshasa)
-    .subtract(30, 'd')
-    .format('X');
+  const todayDate = moment(new Date()).format('X');
+  const last30Days = moment(new Date()).subtract(30, 'd').format('X');
 
   let last30DaysTransactions: TransactionHistory[] = [];
   // get transactions that falls within those last 30 days
   for (let trx of transactions) {
-    const tDate = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss')
-      .tz(timeZones.kinshasa)
-      .format('X');
+    const tDate = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('X');
     // check if trasnaction exists within these dates
     if (tDate >= last30Days && tDate <= todayDate) {
       last30DaysTransactions.push(trx);
@@ -349,11 +316,9 @@ export const calculateMonthlyValues = (
   }
 
   // now let's loop through our new data to get the actual calculations
-  const cDate = moment(new Date()).tz(timeZones.kinshasa).format('MMM DD');
+  const cDate = moment(new Date()).format('MMM DD');
   for (let trx of last30DaysTransactions) {
-    let date = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss')
-      .tz(timeZones.kinshasa)
-      .format('MMM DD');
+    let date = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('MMM DD');
     if (date === cDate) {
       date = 'Today';
     }
