@@ -10,7 +10,6 @@ interface DetailsProps {
 }
 
 const Details: React.FC<DetailsProps> = ({ overviews }) => {
-  console.log(overviews);
   const columns: any = [
     {
       title: 'Merchant',

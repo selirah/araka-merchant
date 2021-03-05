@@ -48,7 +48,6 @@ function* updateUser({ payload }: { type: string; payload: Client }) {
 function* changePassword({ payload }: { type: string; payload: any }) {
   try {
     const res = yield call(callApiPost, 'login/changepassword', payload);
-    console.log(res);
     if (res.status === 200) {
       yield put(changePasswordSuccess());
     } else {
