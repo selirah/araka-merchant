@@ -4,7 +4,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { ConnectedRouter } from 'connected-react-router';
 import { Store } from 'redux';
 import { History } from 'history';
-import Routes from './routes/Routes';
+import Routes from './routes/RoutesFast';
 import { ApplicationState } from './store';
 import { message } from 'antd';
 import { logout } from './store/auth';

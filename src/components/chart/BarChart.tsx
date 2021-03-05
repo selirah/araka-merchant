@@ -1,7 +1,11 @@
 import React from 'react';
-import { Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 
-const AreaChart = ({ info }) => {
+interface BarChartProps {
+  info: any;
+}
+
+const BarChart: React.FC<BarChartProps> = ({ info }) => {
   const [barData] = React.useState(info);
 
   const { datasets, height, labels, options } = barData;
@@ -13,9 +17,9 @@ const AreaChart = ({ info }) => {
 
   return (
     <div className="chart">
-      <Line data={data} height={height} options={options} />
+      <Bar data={data} height={height} options={options} />
     </div>
   );
 };
 
-export { AreaChart };
+export default BarChart;

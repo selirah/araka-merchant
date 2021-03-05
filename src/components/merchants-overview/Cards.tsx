@@ -1,9 +1,8 @@
 import React from 'react';
 import { Row, Col } from 'antd';
-import { CardView } from '../cards/CardView';
+import CardView from '../cards/CardView';
 import { MerchantOverview } from '../../interfaces';
 import { GetOverviewAnalytics } from '../../helpers/overview_functions';
-// import { numberWithCommas } from '../../helpers/helperFunctions';
 
 interface CardsProps {
   overviews: MerchantOverview[];

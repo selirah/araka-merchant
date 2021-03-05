@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'antd';
-import { CardView } from '../cards/CardView';
+import CardView from '../cards/CardView';
 import { TransactionHistory } from '../../interfaces';
 import { GetTransactionsAnalytics } from '../../helpers/transaction_functions';
 // import { numberWithCommas } from '../../helpers/helperFunctions';

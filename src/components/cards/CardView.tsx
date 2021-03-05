@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from 'antd';
-import { AreaChart } from '../chart/AreaChart';
+import AreaChart from '../chart/AreaChart';
 import CountUp from 'react-countup';
 
 interface CardViewProps {
@@ -10,7 +10,7 @@ interface CardViewProps {
   currency?: string;
 }
 
-export const CardView: React.FC<CardViewProps> = ({
+const CardView: React.FC<CardViewProps> = ({
   value,
   title,
   data,
@@ -38,3 +38,5 @@ export const CardView: React.FC<CardViewProps> = ({
     </Card>
   );
 };
+
+export default CardView;

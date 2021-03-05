@@ -9,6 +9,7 @@ import {
   calculateWeeklyTransactionTotals,
   calculateWeeklyValues,
   calculateYearValues,
+  getTopMerchantAreaChartDataPoints,
 } from './helperFunctions';
 
 export const CalculateTransactionTotals = (
@@ -117,8 +118,6 @@ export const GetAreaAndBarPoints = (
         trxDeclinedAmt.push(declinedAmt);
         merchantsArr.push(merchants);
       }
-
-      // console.log(merchantsArr);
 
       trxAreaChart = getAreaOptions(labels, trxData, '#1976D2', '#BBDEFB');
       approvedAreaChart = getAreaOptions(
@@ -251,7 +250,7 @@ export const GetAreaAndBarPoints = (
   };
 };
 
-const getLabels = (review: string) => {
+export const getLabels = (review: string) => {
   let labels: string[] = [];
   switch (review) {
     case 'yearly':
@@ -537,59 +536,20 @@ export const TopMerchantAreaChart = (
   backgroundColor: string
 ) => {
   const { merchant } = theMerchant;
-  let filteredTransactions: TransactionHistory[] = [];
 
   let labels = getLabels(review).reverse();
   let merchantAreaChart = {};
   let trxApproved = [];
 
-  // let's filter out the merchant's approved transactions
-  for (let trx of transactions) {
-    if (
-      trx.merchant === merchant &&
-      trx.status === transactionStatus.APPROVED
-    ) {
-      filteredTransactions.push(trx);
-    }
-  }
-
-  // console.log(filteredTransactions);
-
-  switch (review) {
-    case 'yearly':
-      for (let lbl of labels) {
-        // we need only the approved amounts paid
-        const { approvedAmt } = calculateYearValues(filteredTransactions, lbl);
-        trxApproved.push(approvedAmt);
-      }
-      break;
-    case 'daily':
-      for (let lbl of labels) {
-        // we need only the approved amounts paid
-        const { approvedAmt } = calculateDailyValues(filteredTransactions, lbl);
-        trxApproved.push(approvedAmt);
-      }
-      break;
-    case 'weekly':
-      for (let lbl of labels) {
-        // we need only the approved amounts paid
-        const { approvedAmt } = calculateWeeklyValues(
-          filteredTransactions,
-          lbl
-        );
-        trxApproved.push(approvedAmt);
-      }
-      break;
-    case 'monthly':
-      for (let lbl of labels) {
-        // we need only the approved amounts paid
-        const { approvedAmt } = calculateMonthlyValues(
-          filteredTransactions,
-          lbl
-        );
-        trxApproved.push(approvedAmt);
-      }
-      break;
+  for (let lbl of labels) {
+    // we need only the approved amounts paid
+    const { approvedAmt } = getTopMerchantAreaChartDataPoints(
+      transactions,
+      lbl,
+      review,
+      merchant
+    );
+    trxApproved.push(approvedAmt);
   }
 
   merchantAreaChart = getAreaOptions(

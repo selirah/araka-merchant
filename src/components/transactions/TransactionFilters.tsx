@@ -114,6 +114,7 @@ const TransactionFilters: React.FC<TransactionFiltersProps> = ({
                 <Select
                   placeholder="Merchant: Default=All"
                   style={{ width: '100%' }}
+                  allowClear
                 >
                   {merchants.map((m) => (
                     <Option value={m} key={Math.random()}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from 'antd';
-import { AreaChart } from '../chart/AreaChart';
+import AreaChart from '../chart/AreaChart';
 
 interface ProfitCardProps {
   mainTitle: string;
@@ -9,7 +9,7 @@ interface ProfitCardProps {
   data: any;
 }
 
-export const ProfitCard: React.FC<ProfitCardProps> = ({
+const ProfitCard: React.FC<ProfitCardProps> = ({
   mainTitle,
   paragraph,
   amount,
@@ -30,3 +30,5 @@ export const ProfitCard: React.FC<ProfitCardProps> = ({
     </Card>
   );
 };
+
+export default ProfitCard;

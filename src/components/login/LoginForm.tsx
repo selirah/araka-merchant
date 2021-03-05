@@ -34,7 +34,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     <React.Fragment>
       <Row className="login-row-first">
         <Col>
-          <Image src={logo} width={150} alt="" />
+          <Image src={logo} width={150} alt="" preview={false} />
         </Col>
       </Row>
       <Row className="login-row-second">
