@@ -158,6 +158,13 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
             })}
             className="tranaction-table"
             bordered
+            pagination={{
+              hideOnSinglePage: true,
+              total: dataSource.length,
+              showTotal: (total, range) => {
+                return `Showing ${range[0]} - ${range[1]} of ${total} results`;
+              },
+            }}
           />
         </div>
         {/* </Card> */}

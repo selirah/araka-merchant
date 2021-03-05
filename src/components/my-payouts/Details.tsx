@@ -76,7 +76,18 @@ const Details: React.FC<DetailsProps> = ({ payouts }) => {
         <Col span={24}>
           {/* <Card> */}
           <div className="table-padding">
-            <Table dataSource={dataSource} columns={columns} bordered />
+            <Table
+              dataSource={dataSource}
+              columns={columns}
+              bordered
+              pagination={{
+                hideOnSinglePage: true,
+                total: dataSource.length,
+                showTotal: (total, range) => {
+                  return `Showing ${range[0]} - ${range[1]} of ${total} results`;
+                },
+              }}
+            />
           </div>
           {/* </Card> */}
         </Col>

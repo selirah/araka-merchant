@@ -132,7 +132,18 @@ const Pages: React.FC<PagesProps> = ({
       <Col span={24}>
         {/* <Card> */}
         <div className="table-padding">
-          <Table dataSource={data} columns={columns} bordered />
+          <Table
+            dataSource={data}
+            columns={columns}
+            bordered
+            pagination={{
+              hideOnSinglePage: true,
+              total: data.length,
+              showTotal: (total, range) => {
+                return `Showing ${range[0]} - ${range[1]} of ${total} results`;
+              },
+            }}
+          />
         </div>
         {/* </Card> */}
       </Col>
