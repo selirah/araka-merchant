@@ -56,7 +56,7 @@ const TransactionDetail: React.FC<TransactionDetailProps> = ({
       <Row
         style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
       >
-        <Col span={12} sm={24} xs={24}>
+        <Col span={12} sm={24} xs={24} md={12}>
           <div className="trans-detail-header-box">
             <Button style={{ visibility: 'hidden' }}>Refund</Button>
             <Button
