@@ -134,6 +134,10 @@
     width: 100%;
     padding: 0 !important;
   }
+
+  .ant-pagination-total-text {
+    display: none !important;
+  }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -164,5 +168,9 @@
   .profile-box {
     width: 100%;
     padding: 0 !important;
+  }
+
+  .ant-pagination-total-text {
+    display: none !important;
   }
 }
