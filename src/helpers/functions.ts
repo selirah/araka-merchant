@@ -11,6 +11,7 @@ import {
   calculateYearValues,
   getTopMerchantAreaChartDataPoints,
 } from './helperFunctions';
+import { isEmpty } from './isEmpty';
 
 export const CalculateTransactionTotals = (
   transactions: TransactionHistory[],
@@ -535,21 +536,22 @@ export const TopMerchantAreaChart = (
   borderColor: string,
   backgroundColor: string
 ) => {
-  const { merchant } = theMerchant;
-
   let labels = getLabels(review).reverse();
   let merchantAreaChart = {};
   let trxApproved = [];
 
   for (let lbl of labels) {
     // we need only the approved amounts paid
-    const { approvedAmt } = getTopMerchantAreaChartDataPoints(
-      transactions,
-      lbl,
-      review,
-      merchant
-    );
-    trxApproved.push(approvedAmt);
+    if (!isEmpty(theMerchant) && !isEmpty(theMerchant.merchant)) {
+      const { merchant } = theMerchant;
+      const { approvedAmt } = getTopMerchantAreaChartDataPoints(
+        transactions,
+        lbl,
+        review,
+        merchant
+      );
+      trxApproved.push(approvedAmt);
+    }
   }
 
   merchantAreaChart = getAreaOptions(

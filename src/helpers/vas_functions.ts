@@ -30,29 +30,29 @@ export const GetVASAnalytics = (vas: VASProcessed[]) => {
   }
 
   vasAreaChart = getAreaOptions(
-    labels,
-    totalProcessedLabels,
+    labels.reverse(),
+    totalProcessedLabels.reverse(),
     '#039BE5',
     '#B3E5FC'
   );
 
   incomeAreaChart = getAreaOptions(
-    labels,
-    totalArakaIncomeLabels,
+    labels.reverse(),
+    totalArakaIncomeLabels.reverse(),
     '#388E3C',
     '#69F0AE'
   );
 
   feesChargedAreaChart = getAreaOptions(
-    labels,
-    totalFeesChargedLabels,
+    labels.reverse(),
+    totalFeesChargedLabels.reverse(),
     '#FFA000',
     '#FFD54F'
   );
 
   annualFeesAreaChart = getAreaOptions(
-    labels,
-    totalAnnualFeeLabels,
+    labels.reverse(),
+    totalAnnualFeeLabels.reverse(),
     '#7B1FA2',
     '#CE93D8'
   );

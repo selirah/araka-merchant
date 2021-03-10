@@ -6,9 +6,9 @@ interface BarChartProps {
 }
 
 const BarChart: React.FC<BarChartProps> = ({ info }) => {
-  const [barData] = React.useState(info);
+  const [chartData] = React.useState(info);
 
-  const { datasets, height, labels, options } = barData;
+  const { datasets, height, labels, options } = chartData;
 
   const data = {
     datasets,

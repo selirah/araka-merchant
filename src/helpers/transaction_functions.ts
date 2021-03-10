@@ -3,6 +3,7 @@ import { transactionStatus } from './constants';
 import { isEmpty } from './isEmpty';
 import moment from 'moment';
 import { getAreaOptions } from './functions';
+import { sortMerchantPayout } from './sorter';
 
 export const GetTransactionsAnalytics = (
   transactions: TransactionHistory[]
@@ -50,9 +51,12 @@ export const GetTransactionsAnalytics = (
     paidLabel.push(0); // for now paid out is 0
   }
 
+  // sort the merchants
+  const { a, b } = sortMerchantPayout(labels, amtLabel);
+
   totalMerchants = merchants.length;
   totalAmountPaidOut = 0; // for now paid out is 0
-  amtAreaChart = getAreaOptions(labels, amtLabel, '#D81B60', '#F48FB1');
+  amtAreaChart = getAreaOptions(a.reverse(), b.reverse(), '#D81B60', '#F48FB1');
   paidOutAreaChart = getAreaOptions(labels, paidLabel, '#C0CA33', '#E6EE9C');
 
   return {
