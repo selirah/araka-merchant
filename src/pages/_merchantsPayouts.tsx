@@ -87,8 +87,15 @@ const MerchantsPayouts = () => {
       />
     );
   }
-
+  let merchants: string[] = [];
   if (!loading && !isEmpty(transactions)) {
+    transactions.map((t) => {
+      const merchant = merchants.find((m) => m === t.merchant);
+      if (merchant === undefined) {
+        merchants.push(t.merchant);
+      }
+      return merchants;
+    });
     render = <Details payouts={trans} />;
   }
 
@@ -124,7 +131,11 @@ const MerchantsPayouts = () => {
             </Row>
           }
         >
-          <Filters transactions={trans} onReset={onReset} onSearch={onSearch} />
+          <Filters
+            merchants={merchants}
+            onReset={onReset}
+            onSearch={onSearch}
+          />
           {!isEmpty(transactions) ? <Cards transactions={trans} /> : null}
           <div className="margin-top">
             <Row style={{ position: 'relative' }}>

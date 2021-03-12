@@ -102,7 +102,15 @@ const Transactions = () => {
     );
   }
 
+  let merchants: string[] = [];
   if (!loading && !isEmpty(transactions)) {
+    transactions.map((t) => {
+      const merchant = merchants.find((m) => m === t.merchant);
+      if (merchant === undefined) {
+        merchants.push(t.merchant);
+      }
+      return merchants;
+    });
     render = (
       <TransactionTable transactionHistory={trans} onClickRow={onClickRow} />
     );
@@ -167,7 +175,7 @@ const Transactions = () => {
           {!switchView ? (
             <>
               <TransactionFilters
-                transactions={trans}
+                merchants={merchants}
                 onSearch={onSearch}
                 onReset={onReset}
               />

@@ -1,10 +1,9 @@
 import React from 'react';
 import { Row, Col, Input, Button, Collapse, Select, Form } from 'antd';
 import { Clock } from '../../utils/clock';
-import { MerchantOverview } from '../../interfaces/MerchantOverview';
 
 interface FiltersProps {
-  overviews: MerchantOverview[];
+  merchants: string[];
   onSearch(values: any): void;
   onReset(form: any): void;
 }
@@ -12,17 +11,9 @@ interface FiltersProps {
 const { Panel } = Collapse;
 const { Option } = Select;
 
-const Filters: React.FC<FiltersProps> = ({ overviews, onReset, onSearch }) => {
+const Filters: React.FC<FiltersProps> = ({ merchants, onReset, onSearch }) => {
   const { time } = Clock();
   const [form] = Form.useForm();
-
-  let merchants: string[] = [];
-  for (let overview of overviews) {
-    const merchant = merchants.find((m) => m === overview.merchant);
-    if (merchant === undefined) {
-      merchants.push(overview.merchant);
-    }
-  }
 
   return (
     <Collapse style={{ marginTop: '5px' }}>

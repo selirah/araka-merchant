@@ -86,7 +86,15 @@ const MerchantsOverview = () => {
     );
   }
 
+  let merchants: string[] = [];
   if (!loading && !isEmpty(overviews)) {
+    overviews.map((t) => {
+      const merchant = merchants.find((m) => m === t.merchant);
+      if (merchant === undefined) {
+        merchants.push(t.merchant);
+      }
+      return merchants;
+    });
     render = <Details overviews={overviewdata} />;
   }
 
@@ -115,7 +123,7 @@ const MerchantsOverview = () => {
           <Filters
             onReset={onReset}
             onSearch={onSearch}
-            overviews={overviewdata}
+            merchants={merchants}
           />
           {!isEmpty(overviews) ? <Cards overviews={overviewdata} /> : null}
           <div className="margin-top">

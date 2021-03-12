@@ -10,10 +10,9 @@ import {
   Form,
 } from 'antd';
 import { Clock } from '../../utils/clock';
-import { TransactionHistory } from '../../interfaces';
 
 interface TransactionFiltersProps {
-  transactions: TransactionHistory[];
+  merchants: string[];
   onSearch(values: any): void;
   onReset(form: any): void;
 }
@@ -22,20 +21,12 @@ const { Option } = Select;
 const { Panel } = Collapse;
 
 const TransactionFilters: React.FC<TransactionFiltersProps> = ({
-  transactions,
+  merchants,
   onSearch,
   onReset,
 }) => {
   const { time } = Clock();
   const [form] = Form.useForm();
-
-  let merchants: string[] = [];
-  for (let trx of transactions) {
-    const merchant = merchants.find((m) => m === trx.merchant);
-    if (merchant === undefined) {
-      merchants.push(trx.merchant);
-    }
-  }
 
   return (
     <Collapse style={{ marginTop: '5px' }}>
