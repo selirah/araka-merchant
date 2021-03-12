@@ -64,6 +64,7 @@ const Details: React.FC<DetailsProps> = ({ payouts }) => {
       key: 'paidOn',
       align: 'center',
       className: 'column-text',
+      responsive: ['md'],
     },
     {
       title: 'Transaction ID',
@@ -99,6 +100,13 @@ const Details: React.FC<DetailsProps> = ({ payouts }) => {
             columns={columns}
             bordered
             className="tranaction-table"
+            pagination={{
+              hideOnSinglePage: true,
+              total: dataSource.length,
+              showTotal: (total, range) => {
+                return `Showing ${range[0]} - ${range[1]} of ${total} results`;
+              },
+            }}
           />
         </div>
         {/* </Card> */}

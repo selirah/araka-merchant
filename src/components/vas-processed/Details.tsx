@@ -41,6 +41,7 @@ const Details: React.FC<DetailsProps> = ({ vas }) => {
       key: 'annualFees',
       align: 'left',
       className: 'column-text',
+      responsive: ['md'],
     },
     {
       title: 'Other Fees',
@@ -48,6 +49,7 @@ const Details: React.FC<DetailsProps> = ({ vas }) => {
       key: 'totalArakaDiscount',
       align: 'left',
       className: 'column-text',
+      responsive: ['md'],
     },
     {
       title: 'Total Araka Income',
@@ -88,7 +90,18 @@ const Details: React.FC<DetailsProps> = ({ vas }) => {
       <Col span={24}>
         {/* <Card> */}
         <div className="table-padding">
-          <Table dataSource={dataSource} columns={columns} bordered />
+          <Table
+            dataSource={dataSource}
+            columns={columns}
+            bordered
+            pagination={{
+              hideOnSinglePage: true,
+              total: dataSource.length,
+              showTotal: (total, range) => {
+                return `Showing ${range[0]} - ${range[1]} of ${dataSource.length} results`;
+              },
+            }}
+          />
         </div>
         {/* </Card> */}
       </Col>

@@ -5,6 +5,9 @@ import { Spin, Row } from 'antd';
 import { path } from '../helpers/path';
 
 const Dashboard = lazy(() => import('../pages/_dashboard'));
+const DashboardDaily = lazy(() => import('../pages/_dashboardDaily'));
+const DashboardWeekly = lazy(() => import('../pages/_dashboardWeekly'));
+const DashboardMonthly = lazy(() => import('../pages/_dashboardMonthly'));
 const Transactions = lazy(() => import('../pages/_trans'));
 const PaymentPages = lazy(() => import('../pages/_paymentPages'));
 const Page = lazy(() => import('../pages/_[pageId]'));
@@ -35,7 +38,7 @@ const Routes: React.FC = () => {
             >
               <div
                 className="spin"
-                style={{ textAlign: 'center', marginTop: '200px' }}
+                style={{ textAlign: 'center', marginTop: '300px' }}
               >
                 <Spin size="small" />
               </div>
@@ -44,6 +47,22 @@ const Routes: React.FC = () => {
         >
           <Route exact path={path.login} component={Login} />
           <PrivateRoute exact path={path.home} component={Dashboard} />
+          <PrivateRoute exact path={path.dashboardMain} component={Dashboard} />
+          <PrivateRoute
+            exact
+            path={path.dashboardDaily}
+            component={DashboardDaily}
+          />
+          <PrivateRoute
+            exact
+            path={path.dashboardWeekly}
+            component={DashboardWeekly}
+          />
+          <PrivateRoute
+            exact
+            path={path.dashboardMonthly}
+            component={DashboardMonthly}
+          />
           <PrivateRoute
             exact
             path={path.tranasctions}

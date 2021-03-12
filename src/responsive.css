@@ -1,0 +1,176 @@
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media screen and (max-width: 600px) {
+  .pay-form-col {
+    display: block;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .ant-layout-header {
+    padding: 0 !important;
+    height: 64px;
+    line-height: 64px;
+  }
+
+  .site-box {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    min-height: 80vh;
+    padding-top: 0;
+  }
+
+  .topNavHeaderSub {
+    display: none;
+  }
+
+  .upper-header {
+    position: relative;
+    margin-top: 2px;
+  }
+
+  .upper-header h4 {
+    position: absolute;
+    padding: 0px;
+    left: 0;
+    font-weight: 500;
+    font-size: 0.8rem;
+  }
+
+  .upper-header h6 {
+    position: absolute;
+    padding: 0px;
+    right: 0;
+    font-weight: 300;
+    font-size: 0.8rem;
+  }
+
+  .ecard .card-chunk h1 {
+    font-size: 1.5rem;
+  }
+
+  .padding-box {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  .margin-top {
+    margin-top: 20px;
+  }
+
+  .chart-padding {
+    padding: 20px;
+  }
+
+  .ant-layout-sider-zero-width-trigger {
+    top: 15px;
+  }
+
+  .topNavIcons {
+    position: absolute;
+    left: 30px;
+  }
+
+  .topNavHeaders {
+    position: absolute;
+    top: 3px;
+    left: 90px;
+  }
+
+  .table-padding {
+    padding: 0 !important;
+  }
+
+  .utility-buttons {
+    position: relative;
+  }
+
+  .utility-buttons .export-buttons:nth-child(1) {
+    margin-right: 5px;
+    font-size: 0.6rem;
+  }
+
+  .utility-buttons .export-buttons:nth-child(2) {
+    margin-right: 5px;
+    font-size: 0.6rem;
+  }
+
+  .utility-buttons .export-buttons:nth-child(3) {
+    margin-left: 2px;
+    background-color: #f55c29;
+    border: 1px solid #f55c29;
+    text-transform: uppercase;
+    border-radius: 20px;
+    font-size: 0.6rem;
+  }
+
+  .transaction-chart-text {
+    display: none;
+  }
+
+  .mobile-off {
+    display: none;
+  }
+
+  .tranaction-table .ant-table-tbody > tr > td,
+  .tranaction-table .ant-table tfoot > tr > th,
+  .tranaction-table .ant-table tfoot > tr > td {
+    position: relative;
+    /* padding: 2px 8px; */
+    overflow-wrap: break-word;
+    font-size: 0.6rem;
+  }
+
+  .ant-table-thead > tr > th {
+    font-size: 0.5rem;
+    padding: 2px 8px;
+  }
+
+  .table-tag-merchant {
+    font-size: 0.6rem;
+  }
+
+  .profile-box {
+    width: 100%;
+    padding: 0 !important;
+  }
+
+  .ant-pagination-total-text {
+    display: none !important;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media screen and (max-width: 800px) {
+  .pay-form-col {
+    display: block;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .ecard .card-chunk p {
+    color: rgba(0, 0, 0, 0.3);
+    font-size: 0.6rem;
+    font-family: 'Mukta', sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .ecard .card-chunk h1 {
+    font-size: 2rem;
+    font-family: 'Mukta', sans-serif !important;
+    font-weight: 300;
+    margin-bottom: 4px;
+    color: #141322 !important;
+  }
+
+  .profile-box {
+    width: 100%;
+    padding: 0 !important;
+  }
+
+  .ant-pagination-total-text {
+    display: none !important;
+  }
+}

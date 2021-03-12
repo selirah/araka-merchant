@@ -1,10 +1,14 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 
-const AreaChart = ({ info }) => {
-  const [barData] = React.useState(info);
+interface AreaChartProps {
+  info: any;
+}
 
-  const { datasets, height, labels, options } = barData;
+const AreaChart: React.FC<AreaChartProps> = ({ info }) => {
+  const [chartData] = React.useState(info);
+
+  const { datasets, height, labels, options } = chartData;
 
   const data = {
     datasets,
@@ -18,4 +22,4 @@ const AreaChart = ({ info }) => {
   );
 };
 
-export { AreaChart };
+export default AreaChart;

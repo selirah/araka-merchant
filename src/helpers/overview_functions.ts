@@ -1,5 +1,6 @@
 import { MerchantOverview } from '../interfaces';
 import { getAreaOptions } from './functions';
+import { sortMerchantOverview } from './sorter';
 
 export const GetOverviewAnalytics = (overviews: MerchantOverview[]) => {
   let totalMerchants = 0;
@@ -12,7 +13,7 @@ export const GetOverviewAnalytics = (overviews: MerchantOverview[]) => {
   let trxAreaChart = {};
   let amtAreaChart = {};
 
-  for (let overview of overviews) {
+  for (let overview of sortMerchantOverview(overviews)) {
     const over = merchants.find((o) => o === overview.merchant);
     if (over === undefined) {
       merchants.push(overview.merchant);

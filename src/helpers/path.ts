@@ -1,5 +1,9 @@
 export const path = {
   home: '/',
+  dashboardMain: '/dashboard/main',
+  dashboardDaily: '/dashboard/daily',
+  dashboardWeekly: '/dashboard/weekly',
+  dashboardMonthly: '/dashboard/monthly',
   tranasctions: '/transactions',
   paymentPages: '/payment-pages',
   page: '/page',

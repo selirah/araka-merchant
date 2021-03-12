@@ -9,13 +9,14 @@ import { isEmpty } from '../helpers/isEmpty';
 import { getTransactions, clearTransactions } from '../store/transactions';
 
 const { Content } = Layout;
-const YearlyOverview = lazy(
-  () => import('../components/dashboard/YearlyOverview')
+
+const WeeklyOverview = lazy(
+  () => import('../components/dashboard/WeeklyOverView')
 );
 
 const EmptyBox = lazy(() => import('../components/dashboard/EmptyBox'));
 
-const Dashboard = () => {
+const DashboardWeekly = () => {
   const dispatch: AppDispatch = useDispatch();
   const { user } = appSelector((state) => state.auth);
   const { client } = appSelector((state) => state.settings);
@@ -48,7 +49,7 @@ const Dashboard = () => {
     container = <EmptyBox onReloadTransaction={onReloadTransaction} />;
   } else if (!loading && !isEmpty(transactions)) {
     container = (
-      <YearlyOverview transactions={transactions} userRoles={user!.roles} />
+      <WeeklyOverview transactions={transactions} userRoles={user!.roles} />
     );
   }
 
@@ -71,4 +72,4 @@ const Dashboard = () => {
   );
 };
 
-export default withRouter(Dashboard);
+export default withRouter(DashboardWeekly);

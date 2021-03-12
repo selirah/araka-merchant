@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.css';
 import 'flag-icon-css/css/flag-icon.min.css';
 import './index.css';
+import './responsive.css';
 
 import App from './App';
 import { I18nextProvider } from 'react-i18next';

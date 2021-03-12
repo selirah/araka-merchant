@@ -1,8 +1,8 @@
 import React from 'react';
 import { Row, Col, Card } from 'antd';
-import { CardView } from '../cards/CardView';
-import { BarChart } from '../chart/BarChart';
-import { ProfitCard } from '../cards/ProfitCard';
+import CardView from '../cards/CardView';
+import BarChart from '../chart/BarChart';
+import ProfitCard from '../cards/ProfitCard';
 import { TransactionHistory } from '../../interfaces';
 import {
   CalculateTransactionTotals,
@@ -11,9 +11,11 @@ import {
   TopMerchantAreaChart,
 } from '../../helpers/functions';
 import { numberWithCommas } from '../../helpers/helperFunctions';
+import { sortByAmount } from '../../helpers/sorter';
 import { isEmpty } from '../../helpers/isEmpty';
 import { Clock } from '../../utils/clock';
 import { roles } from '../../helpers/constants';
+import moment from 'moment';
 
 interface WeeklyOverViewProps {
   transactions: TransactionHistory[];
@@ -26,17 +28,33 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({
 }) => {
   const role = userRoles.find((r) => r === roles.SuperMerchant);
   const { time } = Clock();
+
+  // let us first filter the transactions to get those conducted for the week
+  let filteredTransactions: TransactionHistory[] = [];
+  let sevenDays = moment(new Date())
+    .subtract(7, 'days')
+    .format('MM/DD/YYYY 23:59:59');
+  const last7Days = moment(sevenDays, 'MM/DD/YYYY HH:mm:ss').format('X');
+  for (let trx of transactions) {
+    const weekDate = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('X');
+    // check if trasnaction exists within these dates
+    if (weekDate >= last7Days) {
+      filteredTransactions.push(trx);
+    }
+  }
+
   const { total, approved, declined } = CalculateTransactionTotals(
-    transactions,
+    filteredTransactions,
     'weekly'
   );
+
   const {
     trxAreaChart,
     approvedAreaChart,
     declinedAreaChart,
     barChart,
     merchantsArr,
-  } = GetAreaAndBarPoints(transactions, 'weekly');
+  } = GetAreaAndBarPoints(filteredTransactions, 'weekly');
 
   let topMerchant,
     secondMerchant,
@@ -47,49 +65,41 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({
 
   if (role !== undefined && role === roles.SuperMerchant) {
     const { merchantTotals } = GetTopMerchants(
-      transactions,
+      filteredTransactions,
       'weekly',
       merchantsArr
     );
-
-    const sorter = (a: any, b: any) => {
-      return b.amount - a.amount; // descending order;
-    };
-
-    const sortByAmount = (arr: any[]) => {
-      arr.sort(sorter);
-    };
 
     if (!isEmpty(merchantTotals)) {
       sortByAmount(merchantTotals);
       topMerchant = merchantTotals[0];
       secondMerchant = merchantTotals[1];
       thirdMerchant = merchantTotals[2];
+
+      topMerchantChart = TopMerchantAreaChart(
+        topMerchant,
+        filteredTransactions,
+        'weekly',
+        '#5E35B1',
+        '#D1C4E9'
+      );
+
+      secondMerchantChart = TopMerchantAreaChart(
+        secondMerchant,
+        filteredTransactions,
+        'weekly',
+        '#5E35B1',
+        '#D1C4E9'
+      );
+
+      thirdMerchantChart = TopMerchantAreaChart(
+        thirdMerchant,
+        filteredTransactions,
+        'weekly',
+        '#5E35B1',
+        '#D1C4E9'
+      );
     }
-
-    topMerchantChart = TopMerchantAreaChart(
-      topMerchant,
-      transactions,
-      'weekly',
-      '#5E35B1',
-      '#D1C4E9'
-    );
-
-    secondMerchantChart = TopMerchantAreaChart(
-      secondMerchant,
-      transactions,
-      'weekly',
-      '#5E35B1',
-      '#D1C4E9'
-    );
-
-    thirdMerchantChart = TopMerchantAreaChart(
-      thirdMerchant,
-      transactions,
-      'weekly',
-      '#5E35B1',
-      '#D1C4E9'
-    );
   }
 
   return (
@@ -116,7 +126,6 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({
               <Col span={8} sm={24} md={8} xs={24}>
                 <CardView
                   value="Approved"
-                  // title={`$${numberWithCommas(approved.toFixed(2))}`}
                   title={approved}
                   data={approvedAreaChart}
                   currency="$"
@@ -125,7 +134,6 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({
               <Col span={8} sm={24} md={8} xs={24}>
                 <CardView
                   value="Declined"
-                  // title={`$${numberWithCommas(declined.toFixed(2))}`}
                   title={declined}
                   data={declinedAreaChart}
                   currency="$"
@@ -135,7 +143,7 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({
           </Col>
         </Row>
       </div>
-      <div className="margin-top">
+      <div className="margin-top mobile-off">
         <Row>
           <h4 className="transaction-chart-text">Transactions Chart</h4>
         </Row>
@@ -155,34 +163,48 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({
             <h4 className="transaction-chart-text">Profits by Merchants</h4>
           </Row>
           <Row gutter={40}>
-            <Col span={8}>
+            <Col span={8} sm={24} md={8} xs={24}>
               <ProfitCard
                 mainTitle="#1 Top Merchant"
-                paragraph={`3% of revenue by ${topMerchant.merchant}`}
-                amount={`$${numberWithCommas(
-                  (topMerchant.amount * 0.03).toFixed(2)
-                )}`}
-                data={topMerchantChart}
+                paragraph={`3% of revenue by ${
+                  topMerchant ? topMerchant.merchant : 'N/A'
+                }`}
+                amount={`$${
+                  topMerchant
+                    ? numberWithCommas((topMerchant.amount * 0.03).toFixed(2))
+                    : '0.00'
+                }`}
+                data={topMerchant ? topMerchantChart : {}}
               />
             </Col>
-            <Col span={8}>
+            <Col span={8} sm={24} md={8} xs={24}>
               <ProfitCard
                 mainTitle="#2 Top Merchant"
-                paragraph={`3% of revenue by ${secondMerchant.merchant}`}
-                amount={`$${numberWithCommas(
-                  (secondMerchant.amount * 0.03).toFixed(2)
-                )}`}
-                data={secondMerchantChart}
+                paragraph={`3% of revenue by ${
+                  secondMerchant ? secondMerchant.merchant : 'N/A'
+                }`}
+                amount={`$${
+                  secondMerchant
+                    ? numberWithCommas(
+                        (secondMerchant.amount * 0.03).toFixed(2)
+                      )
+                    : '0.00'
+                }`}
+                data={secondMerchant ? secondMerchantChart : {}}
               />
             </Col>
-            <Col span={8}>
+            <Col span={8} sm={24} md={8} xs={24}>
               <ProfitCard
                 mainTitle="#3 Top Merchant"
-                paragraph={`3% of revenue by ${thirdMerchant.merchant}`}
-                amount={`$${numberWithCommas(
-                  (thirdMerchant.amount * 0.03).toFixed(2)
-                )}`}
-                data={thirdMerchantChart}
+                paragraph={`3% of revenue by ${
+                  thirdMerchant ? thirdMerchant.merchant : 'N/A'
+                }`}
+                amount={`$${
+                  thirdMerchant
+                    ? numberWithCommas((thirdMerchant.amount * 0.03).toFixed(2))
+                    : '0.00'
+                }`}
+                data={thirdMerchant ? thirdMerchantChart : {}}
               />
             </Col>
           </Row>

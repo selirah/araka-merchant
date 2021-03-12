@@ -33,7 +33,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
           justifyContent: 'center',
         }}
       >
-        <Col span={20} className="profile-box">
+        <Col span={20} md={20} sm={24} xs={24} className="profile-box">
           <h3>Your Profile</h3>
           <Row>
             <Col span={24}>
@@ -47,7 +47,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
                   <Col span={6} className="form-label">
                     <h4>Fullname</h4>
                   </Col>
-                  <Col span={6}>
+                  <Col span={6} sm={8} xs={8}>
                     <Form.Item
                       name="firstName"
                       rules={[
@@ -60,7 +60,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
                       />
                     </Form.Item>
                   </Col>
-                  <Col span={6}>
+                  <Col span={6} sm={8} xs={8}>
                     <Form.Item
                       name="lastName"
                       rules={[
@@ -78,7 +78,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
                   <Col span={6} className="form-label">
                     <h4>Email</h4>
                   </Col>
-                  <Col span={12}>
+                  <Col span={12} sm={16} xs={16}>
                     <Form.Item
                       name="email"
                       rules={[
@@ -97,7 +97,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
                   <Col span={6} className="form-label">
                     <h4>Phone Number</h4>
                   </Col>
-                  <Col span={12}>
+                  <Col span={12} sm={16} xs={16}>
                     <Form.Item
                       name="phoneNumber"
                       rules={[
@@ -115,7 +115,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
                   <Col span={6} className="form-label">
                     <h4>Technical Skill</h4>
                   </Col>
-                  <Col span={12} className="tech-skill">
+                  <Col span={12} className="tech-skill" sm={16} xs={16}>
                     <Form.Item name="techinicalSkill" valuePropName="checked">
                       <Checkbox>I am a developer</Checkbox>
                     </Form.Item>

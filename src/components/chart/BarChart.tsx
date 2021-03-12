@@ -1,10 +1,14 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 
-const BarChart = ({ info }) => {
-  const [barData] = React.useState(info);
+interface BarChartProps {
+  info: any;
+}
 
-  const { datasets, height, labels, options } = barData;
+const BarChart: React.FC<BarChartProps> = ({ info }) => {
+  const [chartData] = React.useState(info);
+
+  const { datasets, height, labels, options } = chartData;
 
   const data = {
     datasets,
@@ -18,4 +22,4 @@ const BarChart = ({ info }) => {
   );
 };
 
-export { BarChart };
+export default BarChart;

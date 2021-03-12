@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Layout, Menu, Image, Button } from 'antd';
 import * as FeatherIcons from 'react-feather';
 import { useDispatch } from 'react-redux';
@@ -45,7 +45,13 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
   };
 
   return (
-    <Sider collapsible collapsed={collapsed} onCollapse={onCollapsed}>
+    <Sider
+      collapsible
+      collapsed={collapsed}
+      onCollapse={onCollapsed}
+      collapsedWidth="0"
+      breakpoint="lg"
+    >
       <div className="logo">
         {collapsed ? (
           <Image src={logo2} alt="logo" preview={false} />
@@ -74,7 +80,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                 switchMenu(menu.DASHBOARD_YEARLY, menuHeadings.DASHBOARDS)
               }
             >
-              <Link to={path.home}>{menu.DASHBOARD_YEARLY}</Link>
+              <NavLink to={path.dashboardMain}>{menu.DASHBOARD_YEARLY}</NavLink>
             </Menu.Item>
             <Menu.Item
               key={menu.DASHBOARD_DAILY}
@@ -82,7 +88,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                 switchMenu(menu.DASHBOARD_DAILY, menuHeadings.DASHBOARDS)
               }
             >
-              <Link to={path.home}>{menu.DASHBOARD_DAILY}</Link>
+              <NavLink to={path.dashboardDaily}>{menu.DASHBOARD_DAILY}</NavLink>
             </Menu.Item>
             <Menu.Item
               key={menu.DASHBOARD_WEEKLY}
@@ -90,7 +96,9 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                 switchMenu(menu.DASHBOARD_WEEKLY, menuHeadings.DASHBOARDS)
               }
             >
-              <Link to={path.home}>{menu.DASHBOARD_WEEKLY}</Link>
+              <NavLink to={path.dashboardWeekly}>
+                {menu.DASHBOARD_WEEKLY}
+              </NavLink>
             </Menu.Item>
             <Menu.Item
               key={menu.DASHBOARD_MONTHLY}
@@ -98,7 +106,9 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                 switchMenu(menu.DASHBOARD_MONTHLY, menuHeadings.DASHBOARDS)
               }
             >
-              <Link to={path.home}>{menu.DASHBOARD_MONTHLY}</Link>
+              <NavLink to={path.dashboardMonthly}>
+                {menu.DASHBOARD_MONTHLY}
+              </NavLink>
             </Menu.Item>
           </Menu.SubMenu>
         </Menu.ItemGroup>
@@ -116,7 +126,9 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             }
             onClick={() => switchMenu(menu.TRANSACTIONS, menuHeadings.PAYMENTS)}
           >
-            <Link to={path.tranasctions}>{t('sideBar.transactions')}</Link>
+            <NavLink to={path.tranasctions}>
+              {t('sideBar.transactions')}
+            </NavLink>
           </Menu.Item>
         </Menu.ItemGroup>
         <Menu.ItemGroup
@@ -135,7 +147,9 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
               switchMenu(menu.PAYMENT_PAGES, menuHeadings.COMMERCE)
             }
           >
-            <Link to={path.paymentPages}>{t('sideBar.paymentPages')}</Link>
+            <NavLink to={path.paymentPages}>
+              {t('sideBar.paymentPages')}
+            </NavLink>
           </Menu.Item>
         </Menu.ItemGroup>
         <Menu.ItemGroup
@@ -152,7 +166,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             }
             onClick={() => switchMenu(menu.MY_PAYOUTS, menuHeadings.REPORTS)}
           >
-            <Link to={path.myPayouts}>{t('sideBar.myPayout')}</Link>
+            <NavLink to={path.myPayouts}>{t('sideBar.myPayout')}</NavLink>
           </Menu.Item>
           {role !== undefined && role === roles.SuperMerchant ? (
             <Menu.Item
@@ -167,9 +181,9 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                 switchMenu(menu.MERCHANT_OVERVIEW, menuHeadings.REPORTS)
               }
             >
-              <Link to={path.merchantsOverview}>
+              <NavLink to={path.merchantsOverview}>
                 {t('sideBar.merchantOverview')}
-              </Link>
+              </NavLink>
             </Menu.Item>
           ) : null}
           {role !== undefined && role === roles.SuperMerchant ? (
@@ -185,9 +199,9 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                 switchMenu(menu.MERCHANT_PAYOUTS, menuHeadings.REPORTS)
               }
             >
-              <Link to={path.merchantPayouts}>
+              <NavLink to={path.merchantPayouts}>
                 {t('sideBar.merchantPayouts')}
-              </Link>
+              </NavLink>
             </Menu.Item>
           ) : null}
           {role !== undefined && role === roles.SuperMerchant ? (
@@ -203,10 +217,12 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                 switchMenu(menu.VAS_PROCESSED, menuHeadings.REPORTS)
               }
             >
-              <Link to={path.vasProcessed}>{t('sideBar.VASProcessed')}</Link>
+              <NavLink to={path.vasProcessed}>
+                {t('sideBar.VASProcessed')}
+              </NavLink>
             </Menu.Item>
           ) : null}
-          {role !== undefined && role === roles.SuperMerchant ? (
+          {/* {role !== undefined && role === roles.SuperMerchant ? (
             <Menu.Item
               key={menu.FEE_REPORTS}
               icon={
@@ -217,9 +233,9 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
               }
               onClick={() => switchMenu(menu.FEE_REPORTS, menuHeadings.REPORTS)}
             >
-              <Link to={path.feeReports}>PCES Reports</Link>
+              <NavLink to={path.feeReports}>PCES Reports</NavLink>
             </Menu.Item>
-          ) : null}
+          ) : null} */}
         </Menu.ItemGroup>
         <Menu.ItemGroup
           key="g5"
@@ -237,7 +253,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
               switchMenu(menu.SETTINGS, menuHeadings.CONFIGURATION)
             }
           >
-            <Link to={path.settings}>{t('sideBar.settings')}</Link>
+            <NavLink to={path.settings}>{t('sideBar.settings')}</NavLink>
           </Menu.Item>
         </Menu.ItemGroup>
       </Menu>

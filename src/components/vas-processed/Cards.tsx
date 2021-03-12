@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'antd';
-import { CardView } from '../cards/CardView';
+import CardView from '../cards/CardView';
 import { VASProcessed } from '../../interfaces';
 import { GetVASAnalytics } from '../../helpers/vas_functions';
 // import { numberWithCommas } from '../../helpers/helperFunctions';
