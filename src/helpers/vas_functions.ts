@@ -1,5 +1,16 @@
 import { VASProcessed } from '../interfaces';
 import { getAreaOptions } from './functions';
+// import moment from 'moment';
+
+// const getMonths = () => {
+//   let labels: string[] = [];
+//   for (let m = 0; m < 12; m++) {
+//     let month = moment(new Date()).subtract(m, 'months').format('MMMM');
+//     labels.push(month);
+//   }
+
+//   return labels;
+// };
 
 export const GetVASAnalytics = (vas: VASProcessed[]) => {
   let totalProcessed = 0;
@@ -19,9 +30,9 @@ export const GetVASAnalytics = (vas: VASProcessed[]) => {
   for (let v of vas) {
     totalProcessed += v.totalTransactions;
     totalArakaIncome += v.totalArakaIncome;
+    labels.push(v.month);
     // totalAnnualFees += v.annualFees;
     totalFeesCharged += v.totalFeesCharged;
-    labels.push(v.month);
     totalProcessedLabels.push(v.totalTransactions);
     totalArakaIncomeLabels.push(v.totalArakaIncome);
     totalFeesChargedLabels.push(v.totalFeesCharged);
@@ -29,30 +40,36 @@ export const GetVASAnalytics = (vas: VASProcessed[]) => {
     totalAnnualFeeLabels.push(0);
   }
 
+  labels = labels.reverse();
+  totalProcessedLabels = totalProcessedLabels.reverse();
+  totalArakaIncomeLabels = totalArakaIncomeLabels.reverse();
+  totalFeesChargedLabels = totalFeesChargedLabels.reverse();
+  totalAnnualFeeLabels = totalAnnualFeeLabels.reverse();
+
   vasAreaChart = getAreaOptions(
-    labels.reverse(),
-    totalProcessedLabels.reverse(),
+    labels,
+    totalProcessedLabels,
     '#039BE5',
     '#B3E5FC'
   );
 
   incomeAreaChart = getAreaOptions(
-    labels.reverse(),
-    totalArakaIncomeLabels.reverse(),
+    labels,
+    totalArakaIncomeLabels,
     '#388E3C',
     '#69F0AE'
   );
 
   feesChargedAreaChart = getAreaOptions(
-    labels.reverse(),
-    totalFeesChargedLabels.reverse(),
+    labels,
+    totalFeesChargedLabels,
     '#FFA000',
     '#FFD54F'
   );
 
   annualFeesAreaChart = getAreaOptions(
-    labels.reverse(),
-    totalAnnualFeeLabels.reverse(),
+    labels,
+    totalAnnualFeeLabels,
     '#7B1FA2',
     '#CE93D8'
   );
