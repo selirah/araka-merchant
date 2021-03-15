@@ -255,14 +255,14 @@ export const getLabels = (review: string) => {
   let labels: string[] = [];
   switch (review) {
     case 'yearly':
-      // get months in hours
+      // get months
       for (let m = 0; m < 12; m++) {
         let month = moment(new Date()).subtract(m, 'months').format('MMM');
         labels.push(month);
       }
       break;
     case 'daily':
-      // get time in hours in dr congo time
+      // get time in hours
       for (let t = 0; t < 24; t++) {
         let time = moment(new Date()).subtract(t, 'hours').format('hh:00 A');
         labels.push(time);
@@ -316,7 +316,8 @@ export const getAreaOptions = (
       },
     ],
     options: {
-      maintainAspectRatio: true,
+      maintainAspectRatio: false,
+      responsive: true,
       hover: {
         mode: 'nearest',
         intersect: false,
@@ -371,6 +372,25 @@ export const getAreaOptions = (
             },
           },
         ],
+      },
+      tooltips: {
+        position: 'nearest',
+        intersect: false,
+        custom: function (tooltip: any) {
+          if (!tooltip) return;
+          // disable displaying the color box;
+          tooltip.displayColors = false;
+        },
+        callbacks: {
+          // use label callback to return the desired label
+          label: function (tooltipItem: any, data: any) {
+            return tooltipItem.xLabel + ': ' + tooltipItem.yLabel;
+          },
+          // remove title
+          title: function (tooltipItem: any, data: any) {
+            return;
+          },
+        },
       },
     },
   };
