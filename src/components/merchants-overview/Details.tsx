@@ -10,6 +10,16 @@ interface DetailsProps {
 }
 
 const Details: React.FC<DetailsProps> = ({ overviews }) => {
+  const sortOverview = (a: MerchantOverview, b: MerchantOverview) => {
+    return b.totalAmountProcessed - a.totalAmountProcessed; // descending
+  };
+
+  const sortMerchantOverview = (arr: MerchantOverview[]) => {
+    arr.sort(sortOverview);
+
+    return arr;
+  };
+
   const columns: any = [
     {
       title: 'Merchant',
@@ -50,9 +60,10 @@ const Details: React.FC<DetailsProps> = ({ overviews }) => {
   ];
 
   let dataSource = [];
+  overviews = sortMerchantOverview(overviews);
   for (let overview of overviews) {
     dataSource.push({
-      key: Math.random(),
+      key: overview.id,
       merchant: overview.merchant,
       amountProcessed: `${overview.currency} ${numberWithCommas(
         overview.totalAmountProcessed.toFixed(2)
