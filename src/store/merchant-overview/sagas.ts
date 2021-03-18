@@ -12,6 +12,7 @@ import { DataStream, Search } from '../../interfaces';
 function* getOverview() {
   try {
     const res = yield call(callApiGet, 'payments/getmerchantsoverview');
+    console.log(res.data);
     if (res.status === 200) {
       yield put(getMerchantsOverviewSuccess(res.data));
     } else {

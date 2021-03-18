@@ -13,7 +13,9 @@ export const GetOverviewAnalytics = (overviews: MerchantOverview[]) => {
   let trxAreaChart = {};
   let amtAreaChart = {};
 
-  for (let overview of sortMerchantOverview(overviews)) {
+  overviews = sortMerchantOverview(overviews);
+
+  for (let overview of overviews) {
     const over = merchants.find((o) => o === overview.merchant);
     if (over === undefined) {
       merchants.push(overview.merchant);

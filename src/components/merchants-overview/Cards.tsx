@@ -37,7 +37,6 @@ const Cards: React.FC<CardsProps> = ({ overviews }) => {
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Amount Processed"
-                // title={`$${numberWithCommas(totalAmountProcessed.toFixed(2))}`}
                 title={totalAmountProcessed}
                 data={amtAreaChart}
                 currency="$"
