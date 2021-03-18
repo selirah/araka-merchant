@@ -156,7 +156,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
           key="g4"
           title={t('sideBar.reports').toLocaleUpperCase()}
         >
-          <Menu.Item
+          {/* <Menu.Item
             key={menu.MY_PAYOUTS}
             icon={
               <FeatherIcons.CreditCard
@@ -167,7 +167,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             onClick={() => switchMenu(menu.MY_PAYOUTS, menuHeadings.REPORTS)}
           >
             <NavLink to={path.myPayouts}>{t('sideBar.myPayout')}</NavLink>
-          </Menu.Item>
+          </Menu.Item> */}
           {role !== undefined && role === roles.SuperMerchant ? (
             <Menu.Item
               key={menu.MERCHANT_OVERVIEW}
