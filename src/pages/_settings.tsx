@@ -1,6 +1,7 @@
 import React, { lazy, Suspense, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Layout, Spin, Row, Col, message } from 'antd';
+import { Layout, Spin, Row, message, Tabs, Form } from 'antd';
+import { SettingOutlined, UserAddOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
@@ -9,17 +10,43 @@ import {
   changePasswordRequest,
   clearSomeBooleans,
   updateUserRequest,
+  createMerchantRequest,
 } from '../store/settings';
 import { isEmpty } from '../helpers/isEmpty';
-import { Clock } from '../utils/clock';
+import { Register } from '../interfaces';
 
 const { Content } = Layout;
+const { TabPane } = Tabs;
 
 const UserProfile = lazy(() => import('../components/settings/UserProfile'));
+const CreateMerchant = lazy(
+  () => import('../components/settings/CreateMerchant')
+);
+
+interface Merchant {
+  Name: string;
+  PhoneNumber: {
+    short: string;
+    code: number;
+    phone: string;
+  };
+  EmailAddress: string;
+  Password: string;
+  Confirm: string;
+}
 
 export const Settings = () => {
   const dispatch: AppDispatch = useDispatch();
   const { user } = appSelector((state) => state.auth);
+  const [form] = Form.useForm();
+  const initialValues: Merchant = {
+    Name: '',
+    Confirm: '',
+    EmailAddress: '',
+    Password: '',
+    PhoneNumber: { short: 'cd', code: 0, phone: '' },
+  };
+
   const {
     client,
     isSubmitting,
@@ -29,15 +56,17 @@ export const Settings = () => {
     changePasswordFailure,
     error,
     editFailure,
+    createMerchantSuccess,
+    merchantError,
+    singleError,
   } = appSelector((state) => state.settings);
-  const { time } = Clock();
 
   useEffect(() => {
-    dispatch(clearSomeBooleans());
     if (user && isEmpty(client)) {
       // fetch user details
       dispatch(getCurrentUser(user.userId));
     }
+    dispatch(clearSomeBooleans());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -47,6 +76,17 @@ export const Settings = () => {
 
   const onChangePassword = (values: any) => {
     dispatch(changePasswordRequest(values));
+  };
+
+  const createMerchant = (values: Merchant) => {
+    const payload: Register = {
+      EmailAddress: values.EmailAddress,
+      IsBusiness: true,
+      Name: values.Name,
+      Password: values.Password,
+      PhoneNumber: `${values.PhoneNumber.code}${values.PhoneNumber.phone}`,
+    };
+    dispatch(createMerchantRequest(payload));
   };
 
   useEffect(() => {
@@ -62,12 +102,17 @@ export const Settings = () => {
     if (editFailure) {
       message.error(JSON.stringify(error));
     }
+    if (createMerchantSuccess) {
+      form.resetFields();
+    }
   }, [
     changePasswordFailure,
     changePasswordSuccess,
     error,
     editFailure,
     editSuccess,
+    createMerchantSuccess,
+    form,
   ]);
 
   return (
@@ -82,22 +127,43 @@ export const Settings = () => {
             </Row>
           }
         >
-          <Row gutter={10}>
-            <Col span={24}>
-              <div className="upper-header">
-                <h4>PROFILE</h4>
-                <h6>{time}</h6>
-              </div>
-            </Col>
-          </Row>
-          <div className="margin-top settings-page">
-            <UserProfile
-              onUpdateProfile={onUpdateProfile}
-              isSubmitting={isSubmitting}
-              isChangingPassword={isChangingPassword}
-              onChangePassword={onChangePassword}
-              user={user}
-            />
+          <div className="settings-page">
+            <Tabs defaultActiveKey="1">
+              <TabPane
+                tab={
+                  <span onClick={() => dispatch(clearSomeBooleans())}>
+                    <SettingOutlined /> Profile
+                  </span>
+                }
+                key="1"
+              >
+                <UserProfile
+                  onUpdateProfile={onUpdateProfile}
+                  isSubmitting={isSubmitting}
+                  isChangingPassword={isChangingPassword}
+                  onChangePassword={onChangePassword}
+                  user={user}
+                />
+              </TabPane>
+              <TabPane
+                tab={
+                  <span onClick={() => dispatch(clearSomeBooleans())}>
+                    <UserAddOutlined /> Create Merchant
+                  </span>
+                }
+                key="2"
+              >
+                <CreateMerchant
+                  Form={Form}
+                  errors={singleError ? singleError : merchantError}
+                  form={form}
+                  isSubmitting={isSubmitting}
+                  onSubmit={createMerchant}
+                  success={createMerchantSuccess}
+                  values={initialValues}
+                />
+              </TabPane>
+            </Tabs>
           </div>
         </Suspense>
       </Content>

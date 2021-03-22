@@ -1064,7 +1064,7 @@ thead[class*='ant-table-thead'] th {
 
 .upper-header {
   position: relative;
-  margin-top: 30px;
+  margin-top: 5px;
 }
 
 .upper-header h4 {
@@ -1481,20 +1481,42 @@ thead[class*='ant-table-thead'] th {
 
 .settings-page {
   background: #f9f9f9;
-  height: 80vh;
+  height: 100vh;
+  padding: 20px;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #f55c29;
+  font-weight: 500;
+}
+
+.ant-tabs-ink-bar {
+  position: absolute;
+  background: #f55c29;
+  pointer-events: none;
+}
+
+.ant-tabs-tab .anticon {
+  margin-right: 0px;
+}
+
+.ant-tabs > .ant-tabs-nav,
+.ant-tabs > div > .ant-tabs-nav {
+  background: #fff;
+  padding: 20px;
 }
 
 .profile-box {
   background: #fff;
-  margin-top: 30px;
+  margin-top: 10px;
   padding: 10px 50px 10px 50px;
   text-align: center;
   border: 1px solid #fafafa;
 }
 
 .profile-box h3 {
-  font-weight: 700;
-  font-size: 1rem;
+  font-weight: 300;
+  font-size: 1.2rem;
   margin-top: 1.2rem;
   margin-bottom: 2rem;
 }
@@ -1615,6 +1637,60 @@ thead[class*='ant-table-thead'] th {
   font-feature-settings: 'tnum', 'tnum';
   margin-bottom: 0;
   vertical-align: top;
+}
+
+.form-container {
+  max-width: 600px;
+  width: 100%;
+  margin: 0px 0 20px;
+}
+
+.form-container .ant-form-item {
+  margin-bottom: 10px;
+}
+
+.form-container
+  .ant-form-item
+  .ant-form-item-control
+  .ant-form-item-control-input
+  .ant-form-item-control-input-content
+  .ant-input,
+.ant-select-selector {
+  /* height: 50px; */
+  padding-left: 15px;
+  padding-right: 15px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.form-container
+  .ant-form-item
+  .ant-form-item-control
+  .ant-form-item-control-input
+  .ant-form-item-control-input-content
+  .ant-input::placeholder {
+  color: #8c90b5;
+}
+
+.form-container
+  .ant-form-item
+  .ant-form-item-control
+  .ant-form-item-control-input
+  .ant-form-item-control-input-content
+  .ant-input,
+.ant-select-selector .ant-select-selection-placeholder {
+  line-height: 50px;
+}
+
+.form-container button {
+  border-radius: 6px;
+  height: 54px;
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: capitalize;
+  width: 100%;
+  margin-top: 15px;
+  background-color: #0090fe;
 }
 
 /** END CONTENT **/

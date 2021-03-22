@@ -17,3 +17,4 @@ export * from './MerchantOverview';
 export * from './MerchantPayout';
 export * from './VASProcessed';
 export * from './Client';
+export * from './Register';
