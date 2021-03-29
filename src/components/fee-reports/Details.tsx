@@ -12,7 +12,7 @@ const Details: React.FC<DetailsProps> = ({ reports }) => {
       title: 'Merchant',
       dataIndex: 'merchant',
       key: 'merchant',
-      align: 'left',
+      align: 'center',
       className: 'column-text',
       render: (merchant: string) => {
         return <span style={{ color: '#35b9e6' }}>{merchant}</span>;
@@ -22,35 +22,35 @@ const Details: React.FC<DetailsProps> = ({ reports }) => {
       title: 'Total Amount',
       dataIndex: 'totalAmount',
       key: 'totalAmount',
-      align: 'left',
+      align: 'center',
       className: 'column-text',
     },
     {
       title: 'Araka Fees',
       dataIndex: 'arakaFees',
       key: 'arakaFees',
-      align: 'left',
+      align: 'center',
       className: 'column-text',
     },
     {
       title: 'Other Fees',
       dataIndex: 'otherFees',
       key: 'otherFees',
-      align: 'left',
+      align: 'center',
       className: 'column-text',
     },
     {
       title: 'Annual Fee',
       dataIndex: 'annualFees',
       key: 'annualFees',
-      align: 'left',
+      align: 'center',
       className: 'column-text',
     },
     {
       title: 'Total Araka Income',
       dataIndex: 'totalArakaIncome',
       key: 'totalArakaIncome',
-      align: 'left',
+      align: 'center',
       className: 'column-text',
     },
   ];
@@ -77,6 +77,7 @@ const Details: React.FC<DetailsProps> = ({ reports }) => {
             dataSource={dataSource}
             columns={columns}
             bordered
+            className="tranaction-table"
             pagination={{
               hideOnSinglePage: true,
               total: dataSource.length,

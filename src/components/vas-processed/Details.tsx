@@ -15,7 +15,7 @@ const Details: React.FC<DetailsProps> = ({ vas }) => {
       title: 'Month',
       dataIndex: 'month',
       key: 'month',
-      align: 'left',
+      align: 'center',
       className: 'column-text',
       render: (month: string) => {
         return <span style={{ color: '#35b9e6' }}>{month}</span>;
@@ -25,21 +25,21 @@ const Details: React.FC<DetailsProps> = ({ vas }) => {
       title: 'Total Amount Sold',
       dataIndex: 'totalAmountProcessed',
       key: 'totalAmountProcessed',
-      align: 'left',
+      align: 'center',
       className: 'column-text',
     },
     {
       title: 'Fees Charged',
       dataIndex: 'totalFeesCharged',
       key: 'totalFeesCharged',
-      align: 'left',
+      align: 'center',
       className: 'column-text',
     },
     {
       title: 'Annual Fee',
       dataIndex: 'annualFees',
       key: 'annualFees',
-      align: 'left',
+      align: 'center',
       className: 'column-text',
       responsive: ['md'],
     },
@@ -47,7 +47,7 @@ const Details: React.FC<DetailsProps> = ({ vas }) => {
       title: 'Other Fees',
       dataIndex: 'totalArakaDiscount',
       key: 'totalArakaDiscount',
-      align: 'left',
+      align: 'center',
       className: 'column-text',
       responsive: ['md'],
     },
@@ -55,7 +55,7 @@ const Details: React.FC<DetailsProps> = ({ vas }) => {
       title: 'Total Araka Income',
       dataIndex: 'totalArakaIncome',
       key: 'totalArakaIncome',
-      align: 'left',
+      align: 'center',
       className: 'column-text',
     },
   ];
@@ -94,6 +94,7 @@ const Details: React.FC<DetailsProps> = ({ vas }) => {
             dataSource={dataSource}
             columns={columns}
             bordered
+            className="tranaction-table"
             pagination={{
               hideOnSinglePage: true,
               total: dataSource.length,

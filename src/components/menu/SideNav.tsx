@@ -222,7 +222,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
               </NavLink>
             </Menu.Item>
           ) : null}
-          {/* {role !== undefined && role === roles.SuperMerchant ? (
+          {role !== undefined && role === roles.SuperMerchant ? (
             <Menu.Item
               key={menu.FEE_REPORTS}
               icon={
@@ -235,7 +235,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             >
               <NavLink to={path.feeReports}>PCES Reports</NavLink>
             </Menu.Item>
-          ) : null} */}
+          ) : null}
         </Menu.ItemGroup>
         <Menu.ItemGroup
           key="g5"

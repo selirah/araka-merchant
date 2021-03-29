@@ -130,7 +130,7 @@ const Transactions = () => {
         statusSearch.charAt(0).toUpperCase() +
         statusSearch.slice(1).toLowerCase(),
     };
-    // console.log(payload);
+    console.log(payload);
     dispatch(exportTranxRequest(payload));
   };
 
