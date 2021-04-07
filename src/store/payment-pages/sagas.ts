@@ -17,7 +17,12 @@ import {
   getPageTranxFailure,
 } from './actions';
 
-function* addPaymentPage({ payload }: { type: string; payload: PaymentPage }) {
+function* addPaymentPage({
+  payload,
+}: {
+  type: string;
+  payload: PaymentPage;
+}): any {
   try {
     const res = yield call(callApiPost, 'payments/addpaymentpage', payload);
     yield put(addPaymentPageSuccess(res.data));
@@ -37,7 +42,7 @@ function* updatePaymentPage({
 }: {
   type: string;
   payload: PaymentPage;
-}) {
+}): any {
   try {
     const res = yield call(callApiPost, '', payload);
     yield put(updatePaymentPageSuccess(res.data));
@@ -54,7 +59,12 @@ function* updatePaymentPage({
   }
 }
 
-function* deletePaymentPage({ payload }: { type: string; payload: string }) {
+function* deletePaymentPage({
+  payload,
+}: {
+  type: string;
+  payload: string;
+}): any {
   try {
     yield call(callApiPost, '', payload);
     yield put(deletePaymentPageSuccess(payload));
@@ -71,7 +81,7 @@ function* deletePaymentPage({ payload }: { type: string; payload: string }) {
   }
 }
 
-function* getPaymentPages() {
+function* getPaymentPages(): any {
   try {
     const res = yield call(callApiGet, 'payments/merchantpaymentpages');
     if (res.status === 200) {
@@ -86,7 +96,7 @@ function* getPaymentPages() {
   }
 }
 
-function* paymentPage({ payload }: { type: string; payload: string }) {
+function* paymentPage({ payload }: { type: string; payload: string }): any {
   try {
     const res = yield call(callApiGet, `payments/getpaymentpage/${payload}`);
     if (res.status === 200) {
@@ -101,7 +111,7 @@ function* paymentPage({ payload }: { type: string; payload: string }) {
   }
 }
 
-function* pageTranx({ payload }: { type: string; payload: number }) {
+function* pageTranx({ payload }: { type: string; payload: number }): any {
   try {
     const res = yield call(
       callApiGet,

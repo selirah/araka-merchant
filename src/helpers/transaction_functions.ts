@@ -122,13 +122,14 @@ export const GetTransactionsFilteredResult = (
     filtered = bucket.filter((tranx) => {
       const tranxId = `${tranx.transactionId}`;
       const amount = `${tranx.amountPaid.toFixed(2)}`;
-      const customer = tranx.customer.toLocaleLowerCase();
+      const customer = tranx.customer.toLowerCase();
       return (
         tranxId.includes(query) ||
         amount.includes(query) ||
         customer.includes(query)
       );
     });
+    console.log(filtered);
     bucket = filtered;
   }
 

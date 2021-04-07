@@ -84,7 +84,7 @@ function* getDownloadReceiptStream({
 }: {
   type: string;
   payload: number;
-}) {
+}): any {
   try {
     const res = yield call(
       callApiGet,

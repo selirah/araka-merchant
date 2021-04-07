@@ -14,7 +14,7 @@ import {
 import { callApiGet, callApiPost } from '../../utils/api';
 import { Client, Register } from '../../interfaces';
 
-function* getUser({ payload }: { type: string; payload: number }) {
+function* getUser({ payload }: { type: string; payload: number }): any {
   try {
     const res = yield call(callApiGet, `payments/clientdetails/${payload}`);
     if (res.status === 200) {
@@ -31,7 +31,7 @@ function* getUser({ payload }: { type: string; payload: number }) {
   }
 }
 
-function* updateUser({ payload }: { type: string; payload: Client }) {
+function* updateUser({ payload }: { type: string; payload: Client }): any {
   try {
     const res = yield call(callApiPost, 'payments/clientdetails', payload);
     if (res.status === 200) {
@@ -48,7 +48,7 @@ function* updateUser({ payload }: { type: string; payload: Client }) {
   }
 }
 
-function* changePassword({ payload }: { type: string; payload: any }) {
+function* changePassword({ payload }: { type: string; payload: any }): any {
   try {
     const res = yield call(callApiPost, 'login/changepassword', payload);
     if (res.status === 200) {
@@ -65,7 +65,12 @@ function* changePassword({ payload }: { type: string; payload: any }) {
   }
 }
 
-function* createMerchant({ payload }: { type: string; payload: Register }) {
+function* createMerchant({
+  payload,
+}: {
+  type: string;
+  payload: Register;
+}): any {
   try {
     const res = yield call(callApiPost, 'login/register', payload);
     yield put(createMerchantSuccess(res.data));

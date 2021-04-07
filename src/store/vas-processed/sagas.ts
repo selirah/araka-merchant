@@ -9,7 +9,7 @@ import {
 import { callApiGet, callApiPost } from '../../utils/api';
 import { DataStream, Search } from '../../interfaces';
 
-function* getVas() {
+function* getVas(): any {
   try {
     const res = yield call(callApiGet, 'payments/getvasoverview');
     if (res.status === 200) {
@@ -26,7 +26,7 @@ function* getVas() {
   }
 }
 
-function* getExportVas({ payload }: { type: string; payload: Search }) {
+function* getExportVas({ payload }: { type: string; payload: Search }): any {
   try {
     const res = yield call(callApiPost, `payments/exportvasoverview`, payload);
     if (res.status === 200) {

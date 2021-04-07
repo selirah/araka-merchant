@@ -30,7 +30,7 @@ export const GetPagesFilteredResult = (pages: Page[], values: any) => {
     let filtered: Page[] = [];
     filtered = bucket.filter((page) => {
       const amount = `${page.amount}`;
-      const pageName = page.pageName.toLocaleLowerCase();
+      const pageName = page.pageName.toLowerCase();
       return amount.includes(query) || pageName.includes(query);
     });
     bucket = filtered;
