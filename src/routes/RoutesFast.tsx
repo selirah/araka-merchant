@@ -20,6 +20,10 @@ import MerchantsPayouts from '../pages/_merchantsPayouts';
 import VASProcessed from '../pages/_vasProcessed';
 import Settings from '../pages/_settings';
 import FeeReports from '../pages/_feeReports';
+import ProxyPaySubscribers from '../pages/_proxyPaySubscribers';
+import ProxyPayTransactions from '../pages/_proxyPayTransactions';
+import ProxyPayOverview from '../pages/_proxyPayOverview';
+import ProxyPayOVolumes from '../pages/_proxyPayVolumes';
 
 const Routes: React.FC = () => {
   return (
@@ -60,6 +64,26 @@ const Routes: React.FC = () => {
         <PrivateRoute exact path={path.vasProcessed} component={VASProcessed} />
         <PrivateRoute exact path={path.settings} component={Settings} />
         <PrivateRoute exact path={path.feeReports} component={FeeReports} />
+        <PrivateRoute
+          exact
+          path={path.proxyPaySubscribers}
+          component={ProxyPaySubscribers}
+        />
+        <PrivateRoute
+          exact
+          path={path.proxyPayTransactions}
+          component={ProxyPayTransactions}
+        />
+        <PrivateRoute
+          exact
+          path={path.proxyPayOverview}
+          component={ProxyPayOverview}
+        />
+        <PrivateRoute
+          exact
+          path={path.proxyPayVolumes}
+          component={ProxyPayOVolumes}
+        />
         <Route exact path={`${path.pay}/:processId`} component={Pay} />
         <Route
           exact

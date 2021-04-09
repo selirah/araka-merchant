@@ -18,3 +18,5 @@ export * from './MerchantPayout';
 export * from './VASProcessed';
 export * from './Client';
 export * from './Register';
+export * from './Subsciber';
+export * from './ProxyPayTrx';

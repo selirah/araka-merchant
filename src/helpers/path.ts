@@ -17,4 +17,8 @@ export const path = {
   merchantPayouts: '/merchants-payouts',
   settings: '/settings',
   feeReports: '/fee-reports',
+  proxyPaySubscribers: '/proxypay-subscribers',
+  proxyPayTransactions: '/proxypay-transactions',
+  proxyPayVolumes: '/proxypay-volumes',
+  proxyPayOverview: '/proxypay-overview',
 };

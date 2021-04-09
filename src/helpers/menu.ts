@@ -11,6 +11,11 @@ export const menu = {
   SETTINGS: 'Settings',
   MY_PAYOUTS: 'My Payouts',
   MERCHANT_OVERVIEW: 'Merchant Overview',
+  PROXYPAY_REPORTS: 'ProxyPay Reports',
+  PROXYPAY_SUBSCRIBERS: 'Subscribers',
+  PROXYPAY_TRANSACTIONS: 'Transaction',
+  PROXYPAY_VOLUMES: 'Volumes',
+  PROXYPAY_OVERVIEW: 'ProxyPay Reports',
 };
 
 export const menuHeadings = {
