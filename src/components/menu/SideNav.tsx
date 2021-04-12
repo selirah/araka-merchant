@@ -66,10 +66,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
         )}
       </div>
       <Menu theme="light" mode="inline" defaultSelectedKeys={[activeMenu]}>
-        <Menu.ItemGroup
-          key="g1"
-          title={t('sideBar.dashboards').toLocaleUpperCase()}
-        >
+        <Menu.ItemGroup key="g1" title={t('sideBar.dashboards').toUpperCase()}>
           <Menu.SubMenu
             key="sub1"
             icon={
@@ -118,10 +115,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             </Menu.Item>
           </Menu.SubMenu>
         </Menu.ItemGroup>
-        <Menu.ItemGroup
-          key="g2"
-          title={t('sideBar.payments').toLocaleUpperCase()}
-        >
+        <Menu.ItemGroup key="g2" title={t('sideBar.payments').toUpperCase()}>
           <Menu.Item
             key={menu.TRANSACTIONS}
             icon={
@@ -137,10 +131,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             </NavLink>
           </Menu.Item>
         </Menu.ItemGroup>
-        <Menu.ItemGroup
-          key="g3"
-          title={t('sideBar.commerce').toLocaleUpperCase()}
-        >
+        <Menu.ItemGroup key="g3" title={t('sideBar.commerce').toUpperCase()}>
           <Menu.Item
             key={menu.PAYMENT_PAGES}
             icon={
@@ -158,10 +149,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             </NavLink>
           </Menu.Item>
         </Menu.ItemGroup>
-        <Menu.ItemGroup
-          key="g4"
-          title={t('sideBar.reports').toLocaleUpperCase()}
-        >
+        <Menu.ItemGroup key="g4" title={t('sideBar.reports').toUpperCase()}>
           <Menu.Item
             key={menu.MY_PAYOUTS}
             icon={
@@ -287,7 +275,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
         </Menu.ItemGroup>
         <Menu.ItemGroup
           key="g5"
-          title={t('sideBar.configurations').toLocaleUpperCase()}
+          title={t('sideBar.configurations').toUpperCase()}
         >
           <Menu.Item
             key={menu.SETTINGS}

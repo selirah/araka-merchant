@@ -20,3 +20,4 @@ export * from './Client';
 export * from './Register';
 export * from './Subsciber';
 export * from './ProxyPayTrx';
+export * from './Fee';

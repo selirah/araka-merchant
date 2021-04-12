@@ -1,6 +1,6 @@
 import { action } from 'typesafe-actions';
 import { PaymentPagesTypes } from './types';
-import { PaymentPage, Page, TransactionHistory } from '../../interfaces';
+import { PaymentPage, Page, TransactionHistory, Fee } from '../../interfaces';
 
 export const addPaymentPageRequest = (payload: PaymentPage) =>
   action(PaymentPagesTypes.ADD_PAYMENT_PAGE_REQUEST, payload);
@@ -60,3 +60,14 @@ export const clearStates = () => action(PaymentPagesTypes.CLEAR_STATES);
 
 export const clearPaymentPages = () =>
   action(PaymentPagesTypes.CLEAR_PAYMENT_PAGES);
+
+export const postFeeRequest = (payload: any) =>
+  action(PaymentPagesTypes.REQUEST_FEE, payload);
+
+export const postFeeSuccess = (data: Fee) =>
+  action(PaymentPagesTypes.REQUEST_FEE_SUCCESS, data);
+
+export const postFeeFailure = (error: any) =>
+  action(PaymentPagesTypes.REQUEST_FEE_FAILURE, error);
+
+export const clearFee = () => action(PaymentPagesTypes.CLEAR_FEE);

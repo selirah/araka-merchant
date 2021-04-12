@@ -15,6 +15,8 @@ import {
   paymentPageFailure,
   getPageTranxSuccess,
   getPageTranxFailure,
+  postFeeSuccess,
+  postFeeFailure,
 } from './actions';
 
 function* addPaymentPage({
@@ -129,6 +131,25 @@ function* pageTranx({ payload }: { type: string; payload: number }): any {
   }
 }
 
+function* processFeeRequest({ payload }: { type: string; payload: any }): any {
+  try {
+    const res = yield call(callApiPost, 'payments/getfees', payload);
+    if (res.status === 200) {
+      yield put(postFeeSuccess(res.data));
+    } else {
+      yield put(postFeeFailure(res.data));
+    }
+  } catch (err) {
+    if (err && err.response) {
+      yield put(
+        postFeeFailure('An error occured when making request to server')
+      );
+    } else {
+      throw err;
+    }
+  }
+}
+
 function* watchAddPaymentPage() {
   yield takeEvery(PaymentPagesTypes.ADD_PAYMENT_PAGE_REQUEST, addPaymentPage);
 }
@@ -159,6 +180,10 @@ function* watchGetPageTranx() {
   yield takeEvery(PaymentPagesTypes.GET_PAGE_TRANX_REQUEST, pageTranx);
 }
 
+function* watchPostFeeRequest() {
+  yield takeEvery(PaymentPagesTypes.REQUEST_FEE, processFeeRequest);
+}
+
 function* paymentPagesSaga(): Generator {
   yield all([
     fork(watchAddPaymentPage),
@@ -167,6 +192,7 @@ function* paymentPagesSaga(): Generator {
     fork(watchGetPaymentPages),
     fork(watchGetPaymentPage),
     fork(watchGetPageTranx),
+    fork(watchPostFeeRequest),
   ]);
 }
 

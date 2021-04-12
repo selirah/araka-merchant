@@ -7,9 +7,14 @@ import { appSelector } from '../helpers/appSelector';
 import { PaymentForm } from '../components/[genericPay]/PaymentForm';
 import visa from '../images/visa.png';
 import mastercard from '../images/master-card.png';
-import { Merchant, Error, Page } from '../interfaces';
+import { Merchant, Error, Page, Fee } from '../interfaces';
 import { paymentRequest, clearPaymentData } from '../store/home';
-import { paymentPageRequest, clearStates } from '../store/payment-pages';
+import {
+  paymentPageRequest,
+  clearStates,
+  postFeeRequest,
+  clearFee,
+} from '../store/payment-pages';
 import { isEmpty } from '../helpers/isEmpty';
 
 interface GenericPayProps {}
@@ -30,10 +35,12 @@ const GenericPay: React.FC<GenericPayProps> = () => {
   const [errorData, setErrorData] = useState<Error | {}>({});
   const query = new URLSearchParams(useLocation().search);
   const transactionStatus = query.get('transactionStatus');
+  const [fee, setFee] = useState<Fee | undefined>(undefined);
 
   useEffect(() => {
     dispatch(clearStates());
     dispatch(clearPaymentData());
+    dispatch(clearFee());
     dispatch(paymentPageRequest(processId));
     if (!isEmpty(transactionStatus)) {
       switch (transactionStatus) {
@@ -49,7 +56,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
   }, []);
 
   useEffect(() => {
-    const { singlePage, loading } = page;
+    const { singlePage, loading, fee } = page;
     const {
       isPaymentFailure,
       isPaymentSuccess,
@@ -68,10 +75,33 @@ const GenericPay: React.FC<GenericPayProps> = () => {
     if (isPaymentFailure && error !== undefined) {
       setErrorData(error);
     }
+    if (singlePage !== undefined && fee === undefined) {
+      if (singlePage.amount !== '') {
+        const payload = {
+          data: {
+            Amount: singlePage.amount,
+            processId: singlePage.processId,
+          },
+        };
+        dispatch(postFeeRequest(payload));
+      }
+    }
+    setFee(fee);
   }, [page, home, dispatch]);
 
   const onSubmit = (values: Merchant) => {
     dispatch(paymentRequest(values));
+  };
+
+  const onCalculateFee = (e: React.FormEvent<EventTarget>) => {
+    const { value } = e.target as HTMLTextAreaElement;
+    const payload = {
+      data: {
+        Amount: value,
+        processId: singlePage!.processId,
+      },
+    };
+    dispatch(postFeeRequest(payload));
   };
 
   let initials: string[] = [];
@@ -131,6 +161,8 @@ const GenericPay: React.FC<GenericPayProps> = () => {
         isSubmit={isSubmit}
         error={errorData}
         onSubmit={onSubmit}
+        fee={fee}
+        onCalculateFee={onCalculateFee}
       />
     );
     methods = (

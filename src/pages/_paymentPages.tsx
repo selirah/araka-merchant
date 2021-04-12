@@ -11,6 +11,7 @@ import {
   addPaymentPageRequest,
   clearStates,
   clearPaymentPages,
+  clearFee,
 } from '../store/payment-pages';
 import { isEmpty } from '../helpers/isEmpty';
 import { path } from '../helpers/path';
@@ -168,6 +169,7 @@ const PaymentPages = () => {
   const onPreviewClick = (processId: string) => {
     const { location } = window;
     const path = `${location.protocol}//${location.host}/payment/${processId}`;
+    dispatch(clearFee());
     window.open(path, '_blank');
   };
 
