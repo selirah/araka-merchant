@@ -208,7 +208,7 @@ const Payouts: React.FC = () => {
 
   let render: React.ReactNode;
 
-  if (loading) {
+  if (loading && isEmpty(payouts)) {
     render = (
       <div className="spinner">
         <Spin />
@@ -216,7 +216,7 @@ const Payouts: React.FC = () => {
     );
   }
 
-  if (!loading && isEmpty(reports.payouts)) {
+  if (!loading && isEmpty(payouts)) {
     render = (
       <EmptyBox
         header="Merchant Payouts"
@@ -226,7 +226,7 @@ const Payouts: React.FC = () => {
     );
   }
 
-  if (!loading && !isEmpty(reports.payouts)) {
+  if (!loading && !isEmpty(payouts)) {
     render = <Details payouts={payouts} currency={currency} />;
   }
 
