@@ -43,53 +43,19 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
         >
           <Row gutter={10}>
             <Col span={6}>
-              <Form.Item name="period">
-                <Select
-                  placeholder="Period: Default=All time"
-                  style={{ width: '100%' }}
-                >
-                  <Option value="January">January</Option>
-                  <Option value="February">February</Option>
-                  <Option value="March">March</Option>
-                  <Option value="April">April</Option>
-                  <Option value="May">May</Option>
-                  <Option value="June">June</Option>
-                  <Option value="July">July</Option>
-                  <Option value="August">August</Option>
-                  <Option value="September">September</Option>
-                  <Option value="October">October</Option>
-                  <Option value="November">November</Option>
-                  <Option value="December">December</Option>
+              <Form.Item name="merchant">
+                <Select placeholder="Merchant" style={{ width: '100%' }}>
+                  <Option value="January">INRB</Option>
+                  <Option value="February">MAPAPA</Option>
+                  <Option value="March">Airtel</Option>
                 </Select>
               </Form.Item>
             </Col>
             <Col span={10}>
               <Form.Item name="query">
                 <Input
-                  placeholder="Search by Merchant/Fee/Discount/Income"
+                  placeholder="Search by Fee/Discount/Income"
                   style={{ width: '100%' }}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row style={{ marginTop: '10px' }} gutter={10}>
-            <Col span={6}>
-              <Form.Item name="periodFrom">
-                <DatePicker
-                  style={{ width: '100%' }}
-                  format="MMMM D, YYYY"
-                  allowClear
-                  placeholder="Custom Period: From"
-                />
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <Form.Item name="periodTo">
-                <DatePicker
-                  style={{ width: '100%' }}
-                  format="MMMM D, YYYY"
-                  allowClear
-                  placeholder="Custom Period: To"
                 />
               </Form.Item>
             </Col>

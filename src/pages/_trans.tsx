@@ -37,7 +37,6 @@ const TransactionDetail = lazy(
 const EmptyBox = lazy(() => import('../components/transactions/EmptyBox'));
 
 const Transactions = () => {
-  const [switchView, setSwitchView] = useState(false);
   const dispatch: AppDispatch = useDispatch();
   const {
     transactions,
@@ -56,6 +55,7 @@ const Transactions = () => {
   const [transaction, setTransaction] = useState<TransactionHistory | null>(
     null
   );
+  const [switchView, setSwitchView] = useState(false);
 
   const onClickRow = (transactionID: number) => {
     setSwitchView(!switchView);

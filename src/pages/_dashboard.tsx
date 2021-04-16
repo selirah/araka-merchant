@@ -7,6 +7,7 @@ import { AppDispatch } from '../helpers/appDispatch';
 import { getCurrentUser } from '../store/settings';
 import { isEmpty } from '../helpers/isEmpty';
 import { getTransactions, clearTransactions } from '../store/transactions';
+import { getMerchantsRequest } from '../store/reports';
 
 const { Content } = Layout;
 const YearlyOverview = lazy(
@@ -18,6 +19,7 @@ const EmptyBox = lazy(() => import('../components/dashboard/EmptyBox'));
 const Dashboard = () => {
   const dispatch: AppDispatch = useDispatch();
   const { user } = appSelector((state) => state.auth);
+  const { merchants } = appSelector((state) => state.reports);
   const { client } = appSelector((state) => state.settings);
   const { transactions, loading } = appSelector((state) => state.transaction);
 
@@ -29,6 +31,10 @@ const Dashboard = () => {
     if (isEmpty(transactions) && !loading) {
       dispatch(getTransactions());
     }
+    if (isEmpty(merchants)) {
+      dispatch(getMerchantsRequest());
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

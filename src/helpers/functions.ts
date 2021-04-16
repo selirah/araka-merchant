@@ -316,7 +316,7 @@ export const getAreaOptions = (
       },
     ],
     options: {
-      maintainAspectRatio: false,
+      maintainAspectRatio: true,
       responsive: true,
       hover: {
         mode: 'nearest',

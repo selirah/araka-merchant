@@ -52,17 +52,6 @@ const Filter: React.FC<FilterProps> = ({ onReset, onSearch }) => {
                 />
               </Form.Item>
             </Col>
-            <Col span={10}>
-              <Form.Item name="status">
-                <Select
-                  placeholder="Predefined period: Default=All time"
-                  style={{ width: '100%' }}
-                >
-                  <Option value="ACTIVE">ACTIVE</Option>
-                  <Option value="INACTIVE">INACTIVE</Option>
-                </Select>
-              </Form.Item>
-            </Col>
             <Col span={4}>
               <Row gutter={5}>
                 <Form.Item>

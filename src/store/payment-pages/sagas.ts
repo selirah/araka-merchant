@@ -181,7 +181,7 @@ function* watchGetPageTranx() {
 }
 
 function* watchPostFeeRequest() {
-  yield takeEvery(PaymentPagesTypes.REQUEST_FEE, processFeeRequest);
+  yield takeEvery(PaymentPagesTypes.REQUEST_FEE_REQUEST, processFeeRequest);
 }
 
 function* paymentPagesSaga(): Generator {

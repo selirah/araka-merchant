@@ -5,7 +5,7 @@ import CountUp from 'react-countup';
 interface RawCardViewProps {
   value: any;
   title: any;
-  desc: string;
+  desc?: string;
   currency?: string;
 }
 
@@ -20,14 +20,14 @@ const RawCardView: React.FC<RawCardViewProps> = ({
       <div className="ecard">
         <div className="card-chunk-raw">
           <h1>
-            {currency !== undefined ? currency : null}
+            {currency !== undefined ? currency : null}{' '}
             <CountUp
               end={title}
               decimals={currency !== undefined ? 2 : 0}
               separator=","
             />
           </h1>
-          <p className="value">{value}</p>
+          <p className={`value ${!desc ? 'padding' : null}`}>{value}</p>
           <p className="desc">{desc}</p>
         </div>
       </div>

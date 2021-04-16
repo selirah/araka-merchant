@@ -21,4 +21,5 @@ export const path = {
   proxyPayTransactions: '/proxypay-transactions',
   proxyPayVolumes: '/proxypay-volumes',
   proxyPayOverview: '/proxypay-overview',
+  payouts: '/payouts',
 };

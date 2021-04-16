@@ -345,6 +345,14 @@ a {
   padding: 15px;
 }
 
+.comment-section .ant-input {
+  border: 1px dashed #d9d9d9;
+}
+
+.comment-section .ant-input:hover {
+  border: 1px dashed #d9d9d9;
+}
+
 /* iframe {
   display: none !important;
 } */
@@ -1165,6 +1173,10 @@ thead[class*='ant-table-thead'] th {
   font-weight: 700;
 }
 
+.ecard .card-chunk-raw .padding {
+  padding-bottom: 10px;
+}
+
 .ecard .card-chunk-raw .desc {
   color: rgba(0, 0, 0, 0.3);
   font-size: 0.7rem;
@@ -1339,6 +1351,20 @@ thead[class*='ant-table-thead'] th {
   border-radius: 20px;
 }
 
+.new-payout .ant-btn-primary[disabled],
+.new-payout .ant-btn-primary[disabled]:hover,
+.new-payout .ant-btn-primary[disabled]:focus,
+.new-payout .ant-btn-primary[disabled]:active {
+  color: rgba(0, 0, 0, 0.25);
+  background-color: #81cce6;
+  border: 1px solid #81cce6;
+  text-shadow: none;
+  color: #fff;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  opacity: 0.5;
+}
+
 .new-page-btn {
   background-color: #f55c29;
   border: 1px solid #f55c29;
@@ -1421,6 +1447,105 @@ thead[class*='ant-table-thead'] th {
   border: 1px solid #d9dee9;
   border-radius: 20px;
   text-transform: uppercase;
+  font-weight: 300;
+}
+
+.new-record-box {
+  position: relative;
+  border: 1px solid #eef0f5;
+  padding: 5px 15px 5px 15px;
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.new-record-box .amount-details {
+  padding: 5px;
+}
+
+.new-record-box .amount-details h4 {
+  font-size: 13px;
+  color: #999bbf;
+}
+
+.new-record-box .amount-details h2 {
+  font-size: 30px;
+  color: #63669d;
+  font-weight: 300;
+}
+
+.new-record-box .payout-button-box {
+  position: absolute;
+  right: 15px;
+  top: 40px;
+}
+
+.new-record-box .payout-button-box button {
+  padding-right: 40px;
+  padding-left: 40px;
+  border-radius: 20px;
+  background-color: #35b9e6;
+  border: 1px solid #35b9e6;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+.new-record-box .payout-button-box button:hover {
+  background-color: #35b9e6;
+  border: 1px solid #35b9e6;
+}
+
+.merchant-box {
+  margin-top: 10px;
+  border: 1px solid #35b9e6;
+  padding: 5px;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.09) !important;
+  border-radius: 5px;
+  position: relative;
+}
+
+.merchant-box .avatar {
+  padding: 10px;
+}
+
+.merchant-box .ant-avatar {
+  width: 50px !important;
+  height: 50px !important;
+  border: 1px solid #8489b7;
+}
+
+.merchant-box .ant-avatar .ant-avatar-string {
+  top: 15%;
+  font-size: 14px !important;
+}
+
+.merchant-box .merchant-amount {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.merchant-box .merchant-amount h2 {
+  font-size: 30px;
+  font-weight: 300;
+}
+
+.merchant-box .footer-box {
+  position: relative;
+  padding: 7px;
+}
+
+.merchant-box .footer-box .footer {
+  position: absolute;
+  right: 10px;
+  bottom: -1px;
+}
+
+.merchant-box .footer-box .footer h4 {
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #ababc8;
   font-weight: 300;
 }
 

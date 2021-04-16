@@ -47,7 +47,8 @@
       "menuInfo": "Need assistance integrating Araka into your business model? Reach out to us!",
       "apiAssistance": "API ASSISTANCE",
       "myPayout": "My Payouts",
-      "merchantOverview": "Merchants Overview"
+      "merchantOverview": "Merchants Overview",
+      "payouts": "Payouts"
     },
     "dashboard": {
       "last30Days": "Last 30 days",

@@ -21,7 +21,7 @@ export enum PaymentPagesTypes {
   GET_PAGE_TRANX_SUCCESS = '@@payment-pages/GET_PAGE_TRANX_SUCCESS',
   GET_PAGE_TRANX_FAILURE = '@@payment-pages/GET_PAGE_TRANX_FAILURE',
   CLEAR_PAYMENT_PAGES = '@@payment-pages/CLEAR_PAYMENT_PAGES',
-  REQUEST_FEE = '@@payment-pages/REQUEST_FEE',
+  REQUEST_FEE_REQUEST = '@@payment-pages/REQUEST_FEE_REQUEST',
   REQUEST_FEE_SUCCESS = '@@payment-pages/REQUEST_FEE_SUCCESS',
   REQUEST_FEE_FAILURE = '@@payment-pages/REQUEST_FEE_FAILURE',
   CLEAR_FEE = '@@payment-pages/CLEAR_FEE',

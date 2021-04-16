@@ -1,18 +1,30 @@
 import React from 'react';
-import { Row, Col, DatePicker, Input, Button, Collapse, Form } from 'antd';
+import { Row, Col, Button, Collapse, Select, Form, DatePicker } from 'antd';
 import { Clock } from '../../utils/clock';
+import { MerchantData } from '../../interfaces';
+import { isEmpty } from '../../helpers/isEmpty';
+import { roles } from '../../helpers/constants';
 
-interface FiltersProps {
+interface FilterProps {
   onSearch(values: any): void;
   onReset(form: any): void;
+  merchants: MerchantData[];
+  onChangeMerchant(merchantId: number): void;
+  role: string | undefined;
 }
 
 const { Panel } = Collapse;
+const { Option } = Select;
 
-const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
+const Filter: React.FC<FilterProps> = ({
+  onReset,
+  onSearch,
+  merchants,
+  onChangeMerchant,
+  role,
+}) => {
   const { time } = Clock();
   const [form] = Form.useForm();
-
   return (
     <Collapse style={{ marginTop: '5px' }}>
       <Panel
@@ -38,7 +50,7 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
                   style={{ width: '100%' }}
                   format="MMMM D, YYYY"
                   allowClear
-                  placeholder="Payout Date: From"
+                  placeholder="Date Period: From"
                 />
               </Form.Item>
             </Col>
@@ -48,22 +60,31 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
                   style={{ width: '100%' }}
                   format="MMMM D, YYYY"
                   allowClear
-                  placeholder="Payout Date: To"
+                  placeholder="Date Period: To"
                 />
               </Form.Item>
             </Col>
-            <Col span={12}>
-              <Form.Item name="query">
-                <Input
-                  placeholder="Balance before/Balance after/Amount/Fee"
-                  style={{ width: '100%' }}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row style={{ marginTop: '10px' }} gutter={10}>
+            {role !== undefined && role === roles.SuperMerchant ? (
+              <Col span={6}>
+                <Form.Item name="merchant">
+                  <Select
+                    placeholder="Merchant: Default=All"
+                    style={{ width: '100%' }}
+                    allowClear
+                    onChange={onChangeMerchant}
+                  >
+                    {!isEmpty(merchants) &&
+                      merchants.map((m) => (
+                        <Option value={m.merchantId} key={m.merchantId}>
+                          {m.name}
+                        </Option>
+                      ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+            ) : null}
             <Col span={6}>
-              <Row gutter={5}>
+              <Row gutter={10}>
                 <Form.Item>
                   <Col span={6}>
                     <Button
@@ -93,4 +114,4 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
   );
 };
 
-export default Filters;
+export default Filter;

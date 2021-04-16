@@ -149,20 +149,22 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             </NavLink>
           </Menu.Item>
         </Menu.ItemGroup>
-        <Menu.ItemGroup key="g4" title={t('sideBar.reports').toUpperCase()}>
+        <Menu.ItemGroup key="g4" title={t('sideBar.payouts').toUpperCase()}>
           <Menu.Item
-            key={menu.MY_PAYOUTS}
+            key={menu.PAYOUTS}
             icon={
-              <FeatherIcons.CreditCard
+              <FeatherIcons.ShoppingBag
                 className="ant-menu-item-icon anticon"
                 size={14}
               />
             }
-            onClick={() => switchMenu(menu.MY_PAYOUTS, menuHeadings.REPORTS)}
+            onClick={() => switchMenu(menu.PAYOUTS, menuHeadings.PAYOUTS)}
           >
-            <NavLink to={path.myPayouts}>{t('sideBar.myPayout')}</NavLink>
+            <NavLink to={path.payouts}>{t('sideBar.payouts')}</NavLink>
           </Menu.Item>
-          {role !== undefined && role === roles.SuperMerchant ? (
+        </Menu.ItemGroup>
+        {role !== undefined && role === roles.SuperMerchant ? (
+          <Menu.ItemGroup key="g5" title={t('sideBar.reports').toUpperCase()}>
             <Menu.Item
               key={menu.MERCHANT_OVERVIEW}
               icon={
@@ -179,8 +181,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                 {t('sideBar.merchantOverview')}
               </NavLink>
             </Menu.Item>
-          ) : null}
-          {role !== undefined && role === roles.SuperMerchant ? (
+
             <Menu.Item
               key={menu.MERCHANT_PAYOUTS}
               icon={
@@ -197,8 +198,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                 {t('sideBar.merchantPayouts')}
               </NavLink>
             </Menu.Item>
-          ) : null}
-          {role !== undefined && role === roles.SuperMerchant ? (
+
             <Menu.Item
               key={menu.VAS_PROCESSED}
               icon={
@@ -215,8 +215,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                 {t('sideBar.VASProcessed')}
               </NavLink>
             </Menu.Item>
-          ) : null}
-          {role !== undefined && role === roles.SuperMerchant ? (
+
             <Menu.Item
               key={menu.FEE_REPORTS}
               icon={
@@ -229,52 +228,53 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             >
               <NavLink to={path.feeReports}>PCES Reports</NavLink>
             </Menu.Item>
-          ) : null}
-          <Menu.SubMenu
-            key="sub2"
-            icon={
-              <FeatherIcons.BarChart
-                className="ant-menu-item-icon anticon"
-                size={14}
-              />
-            }
-            title="ProxyPay Reports"
-            onTitleClick={() => openOverview()}
-          >
-            <Menu.Item
-              key={menu.PROXYPAY_SUBSCRIBERS}
-              onClick={() =>
-                switchMenu(menu.PROXYPAY_SUBSCRIBERS, menuHeadings.REPORTS)
+
+            <Menu.SubMenu
+              key="sub2"
+              icon={
+                <FeatherIcons.BarChart
+                  className="ant-menu-item-icon anticon"
+                  size={14}
+                />
               }
+              title="ProxyPay Reports"
+              onTitleClick={() => openOverview()}
             >
-              <NavLink to={path.proxyPaySubscribers}>
-                {menu.PROXYPAY_SUBSCRIBERS}
-              </NavLink>
-            </Menu.Item>
-            <Menu.Item
-              key={menu.PROXYPAY_TRANSACTIONS}
-              onClick={() =>
-                switchMenu(menu.PROXYPAY_TRANSACTIONS, menuHeadings.REPORTS)
-              }
-            >
-              <NavLink to={path.proxyPayTransactions}>
-                {menu.PROXYPAY_TRANSACTIONS}
-              </NavLink>
-            </Menu.Item>
-            <Menu.Item
-              key={menu.PROXYPAY_VOLUMES}
-              onClick={() =>
-                switchMenu(menu.PROXYPAY_VOLUMES, menuHeadings.REPORTS)
-              }
-            >
-              <NavLink to={path.proxyPayVolumes}>
-                {menu.PROXYPAY_VOLUMES}
-              </NavLink>
-            </Menu.Item>
-          </Menu.SubMenu>
-        </Menu.ItemGroup>
+              <Menu.Item
+                key={menu.PROXYPAY_SUBSCRIBERS}
+                onClick={() =>
+                  switchMenu(menu.PROXYPAY_SUBSCRIBERS, menuHeadings.REPORTS)
+                }
+              >
+                <NavLink to={path.proxyPaySubscribers}>
+                  {menu.PROXYPAY_SUBSCRIBERS}
+                </NavLink>
+              </Menu.Item>
+              <Menu.Item
+                key={menu.PROXYPAY_TRANSACTIONS}
+                onClick={() =>
+                  switchMenu(menu.PROXYPAY_TRANSACTIONS, menuHeadings.REPORTS)
+                }
+              >
+                <NavLink to={path.proxyPayTransactions}>
+                  {menu.PROXYPAY_TRANSACTIONS}
+                </NavLink>
+              </Menu.Item>
+              <Menu.Item
+                key={menu.PROXYPAY_VOLUMES}
+                onClick={() =>
+                  switchMenu(menu.PROXYPAY_VOLUMES, menuHeadings.REPORTS)
+                }
+              >
+                <NavLink to={path.proxyPayVolumes}>
+                  {menu.PROXYPAY_VOLUMES}
+                </NavLink>
+              </Menu.Item>
+            </Menu.SubMenu>
+          </Menu.ItemGroup>
+        ) : null}
         <Menu.ItemGroup
-          key="g5"
+          key="g6"
           title={t('sideBar.configurations').toUpperCase()}
         >
           <Menu.Item

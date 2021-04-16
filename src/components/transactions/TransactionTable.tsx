@@ -21,7 +21,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
 
   const columns: any = [
     {
-      title: `${t('transactions.table.status')}`,
+      title: <span style={{ fontSize: '2rem', color: '#868686' }}>&bull;</span>,
       dataIndex: 'status',
       key: 'status',
       align: 'center',

@@ -175,7 +175,7 @@ const reducer: Reducer<PaymentPagesState> = (state = initialState, action) => {
         ...state,
         pages: [],
       };
-    case PaymentPagesTypes.REQUEST_FEE:
+    case PaymentPagesTypes.REQUEST_FEE_REQUEST:
       return {
         ...state,
         feeError: initialState.feeError,

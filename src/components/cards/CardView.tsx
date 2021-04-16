@@ -21,7 +21,7 @@ const CardView: React.FC<CardViewProps> = ({
       <div className="ecard">
         <div className="card-chunk">
           <h1>
-            {currency !== undefined ? currency : null}
+            {currency !== undefined ? currency : null}{' '}
             <CountUp
               end={title}
               decimals={currency !== undefined ? 2 : 0}

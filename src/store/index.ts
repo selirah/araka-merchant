@@ -11,6 +11,7 @@ import { paymentPagesSaga } from './payment-pages/sagas';
 import { settingsSaga } from './settings/sagas';
 import { overviewSaga } from './merchant-overview/sagas';
 import { vasSaga } from './vas-processed/sagas';
+import { reportsSaga } from './reports/sagas';
 
 import { AuthState, authReducer } from './auth';
 import { HomeState, homeReducer } from './home';
@@ -20,6 +21,7 @@ import { UtilsState, utilsReducer } from './utils';
 import { SettingsState, settingsReducer } from './settings';
 import { MerchantsOverviewState, overviewReducer } from './merchant-overview';
 import { VASProcessedState, vasReducer } from './vas-processed';
+import { ReportsState, reportsReducer } from './reports';
 
 export type ApplicationState = {
   auth: AuthState;
@@ -30,6 +32,7 @@ export type ApplicationState = {
   settings: SettingsState;
   overviews: MerchantsOverviewState;
   vas: VASProcessedState;
+  reports: ReportsState;
   router: RouterState;
 };
 
@@ -45,6 +48,7 @@ const persistConfig = {
     'settings',
     'overviews',
     'vas',
+    'reports',
     'router',
   ],
 };
@@ -61,6 +65,7 @@ export const persistingReducer = (history: History) =>
       settings: settingsReducer,
       overviews: overviewReducer,
       vas: vasReducer,
+      reports: reportsReducer,
       router: connectRouter(history),
     })
   );
@@ -74,5 +79,6 @@ export function* rootSaga() {
     fork(settingsSaga),
     fork(overviewSaga),
     fork(vasSaga),
+    fork(reportsSaga),
   ]);
 }

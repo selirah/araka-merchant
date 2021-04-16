@@ -62,7 +62,7 @@ export const clearPaymentPages = () =>
   action(PaymentPagesTypes.CLEAR_PAYMENT_PAGES);
 
 export const postFeeRequest = (payload: any) =>
-  action(PaymentPagesTypes.REQUEST_FEE, payload);
+  action(PaymentPagesTypes.REQUEST_FEE_REQUEST, payload);
 
 export const postFeeSuccess = (data: Fee) =>
   action(PaymentPagesTypes.REQUEST_FEE_SUCCESS, data);

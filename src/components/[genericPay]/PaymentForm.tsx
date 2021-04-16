@@ -130,15 +130,15 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
             </Col>
           </Row>
           <Row gutter={10}>
-            <Col span={8}>
+            <Col span={4}>
               <Form.Item name="currency" label="Amount">
                 <Input readOnly disabled />
               </Form.Item>
             </Col>
             {page.amount !== '' ? (
-              <Col span={16}>
+              <Col span={20}>
                 <Row gutter={5}>
-                  <Col span={8}>
+                  <Col span={12}>
                     <Form.Item
                       name="amount"
                       label="Amount"
@@ -147,7 +147,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
                       <Input readOnly disabled />
                     </Form.Item>
                   </Col>
-                  <Col span={8}>
+                  <Col span={6}>
                     <Form.Item label="Fee">
                       <Input
                         readOnly
@@ -156,7 +156,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
                       />
                     </Form.Item>
                   </Col>
-                  <Col span={8}>
+                  <Col span={6}>
                     <Form.Item label="VAT">
                       <Input
                         readOnly
@@ -168,9 +168,9 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
                 </Row>
               </Col>
             ) : (
-              <Col span={16}>
+              <Col span={20}>
                 <Row gutter={5}>
-                  <Col span={8}>
+                  <Col span={12}>
                     <Form.Item
                       name="amount"
                       label="Amount"
@@ -183,7 +183,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
                       />
                     </Form.Item>
                   </Col>
-                  <Col span={8}>
+                  <Col span={6}>
                     <Form.Item label="Fee">
                       <Input
                         readOnly
@@ -192,7 +192,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
                       />
                     </Form.Item>
                   </Col>
-                  <Col span={8}>
+                  <Col span={6}>
                     <Form.Item label="VAT">
                       <Input
                         readOnly
