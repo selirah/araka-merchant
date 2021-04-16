@@ -103,9 +103,7 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
         success: false,
         failure: false,
         error: undefined,
-        loading: false,
         feeError: undefined,
-        feeLoading: false,
       };
     case ReportsActionTypes.GET_MERCHANTS_REQUEST:
       return {

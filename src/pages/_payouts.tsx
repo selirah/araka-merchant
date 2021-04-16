@@ -208,7 +208,7 @@ const Payouts: React.FC = () => {
 
   let render: React.ReactNode;
 
-  if (loading && isEmpty(payouts)) {
+  if (loading) {
     render = (
       <div className="spinner">
         <Spin />
