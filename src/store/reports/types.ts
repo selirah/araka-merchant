@@ -4,6 +4,7 @@ import {
   PayoutReport,
   MerchantData,
   Fee,
+  DataStream,
 } from '../../interfaces';
 
 export enum ReportsActionTypes {
@@ -26,6 +27,9 @@ export enum ReportsActionTypes {
   POST_PAYOUT_FEE_REQUEST = '@@reports/POST_PAYOUT_FEE_REQUEST',
   POST_PAYOUT_FEE_SUCCESS = '@@reports/POST_PAYOUT_FEE_SUCCESS',
   POST_PAYOUT_FEE_FAILURE = '@@reports/POST_PAYOUT_FEE_FAILURE',
+  EXPORT_REQUEST = '@@reports/EXPORT_REQUEST',
+  EXPORT_SUCCESS = '@@reports/EXPORT_SUCCESS',
+  EXPORT_FAILURE = '@@reports/EXPORT_FAILURE',
   CLEAR_FEE = '@@reports/CLEAR_FEE',
 }
 
@@ -42,4 +46,9 @@ export type ReportsState = {
   readonly fee: Fee | undefined;
   readonly feeError: any;
   readonly feeLoading: boolean;
+  readonly isExporting: boolean;
+  readonly isExportSuccess: boolean;
+  readonly isExportError: boolean;
+  readonly exportStream: DataStream | undefined;
+  readonly exportError: any;
 };

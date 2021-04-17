@@ -13,7 +13,7 @@ import {
 import { callApiGet, callApiPost } from '../../utils/api';
 import { DataStream, Search } from '../../interfaces';
 
-function* getTransactions() {
+function* getTransactions(): any {
   try {
     const res = yield call(callApiGet, 'payments/getmerchanttransactions');
     if (res.status === 200) {
@@ -30,7 +30,7 @@ function* getTransactions() {
   }
 }
 
-function* getCurrencies() {
+function* getCurrencies(): any {
   try {
     const res = yield call(callApiGet, 'payments/currencycodes');
     if (res.status === 200) {
@@ -52,7 +52,7 @@ function* getExportTransactions({
 }: {
   type: string;
   payload: Search;
-}) {
+}): any {
   try {
     const res = yield call(
       callApiPost,

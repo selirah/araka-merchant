@@ -1,11 +1,12 @@
 import React, { lazy, Suspense, useEffect, useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Layout, Spin, Row, Button } from 'antd';
 import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
 import { isEmpty } from '../helpers/isEmpty';
 import { MonthlyArea } from '../mock/MonthlyOverview';
+import { changeMenu, changeMenuHeader } from '../store/utils';
 
 const Filter = lazy(
   () => import('../components/proxypay-reports/overview/Filter')
@@ -37,11 +38,21 @@ const EbitdaOverviewCard = lazy(
 const { Content } = Layout;
 
 const ProxyPayOverview: React.FC = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const history = useHistory();
+
   const onReset = (form: any) => {
     form.resetFields();
   };
 
   const onSearch = (values: any) => {};
+
+  const onSeeDetailsClick = (path: string, menu: string, header: string) => {
+    dispatch(changeMenu(menu));
+    dispatch(changeMenuHeader(header));
+    history.push(path);
+  };
+
   return (
     <div className="padding-box">
       <Content className="site-layout-background site-box">
@@ -55,9 +66,18 @@ const ProxyPayOverview: React.FC = () => {
           }
         >
           <Filter onReset={onReset} onSearch={onSearch} />
-          <SubscribersCard areadata={MonthlyArea} />
-          <TransactionsCard areadata={MonthlyArea} />
-          <VolumesCard areadata={MonthlyArea} />
+          <SubscribersCard
+            areadata={MonthlyArea}
+            onSeeDetailsClick={onSeeDetailsClick}
+          />
+          <TransactionsCard
+            areadata={MonthlyArea}
+            onSeeDetailsClick={onSeeDetailsClick}
+          />
+          <VolumesCard
+            areadata={MonthlyArea}
+            onSeeDetailsClick={onSeeDetailsClick}
+          />
           <RevenueChannelCard areadata={MonthlyArea} />
           <RevenueServiceCard areadata={MonthlyArea} />
           <OpexOverviewCard />

@@ -32,6 +32,7 @@ export interface PayoutTableData {
   transactionId: number;
   paidOn: string;
   merchant: string;
+  netAmount: number;
 }
 
 export interface PCESReport {

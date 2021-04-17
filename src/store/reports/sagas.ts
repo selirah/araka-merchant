@@ -1,11 +1,7 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { ReportsActionTypes } from './types';
-import {
-  callApiPost,
-  callApiGet,
-  callApiPostQueryParams,
-} from '../../utils/api';
-import { PayoutNewRecord } from '../../interfaces';
+import { callApiPost, callApiGet } from '../../utils/api';
+import { PayoutNewRecord, DataStream } from '../../interfaces';
 import {
   getPCESFailure,
   getPCESSuccess,
@@ -19,7 +15,10 @@ import {
   getMerchantsSuccess,
   getPayoutFeeSuccess,
   getPayoutFeeFailure,
+  exportFailure,
+  exportSuccess,
 } from './actions';
+import { isEmpty } from '../../helpers/isEmpty';
 
 function* getPCESReport(): any {
   try {
@@ -50,7 +49,11 @@ function* getProxyPayReport({ payload }: { type: string; payload: any }): any {
 function* getPayoutReport({ payload }: { type: string; payload: any }): any {
   try {
     const res = yield call(callApiPost, 'payments/getproxypayouts', payload);
-    yield put(getPayoutSuccess(res.data));
+    if (isEmpty(res.data)) {
+      yield put(getPayoutSuccess(null));
+    } else {
+      yield put(getPayoutSuccess(res.data));
+    }
   } catch (err) {
     if (err && err.response) {
       yield put(getPayoutFailure(err.response.data));
@@ -108,6 +111,24 @@ function* postPayoutFee({ payload }: { type: string; payload: any }): any {
   }
 }
 
+function* getExport({ payload }: { type: string; payload: any }): any {
+  try {
+    const res = yield call(callApiPost, `payments/exportproxypayouts`, payload);
+    yield put(exportSuccess(res.data));
+    let file: DataStream = res.data;
+    const link = document.createElement('a');
+    link.href = `data:application/pdf;base64,${file.fileContents}`;
+    link.download = file.fileDownloadName;
+    link.click();
+  } catch (err) {
+    if (err && err.response) {
+      yield put(exportFailure(err.response.data));
+    } else {
+      yield put(exportFailure('An unknwon error occurred'));
+    }
+  }
+}
+
 function* watchGetPCESReport() {
   yield takeEvery(ReportsActionTypes.GET_PCES_REQUEST, getPCESReport);
 }
@@ -132,6 +153,10 @@ function* watchPostPayoutFee() {
   yield takeEvery(ReportsActionTypes.POST_PAYOUT_FEE_REQUEST, postPayoutFee);
 }
 
+function* watchExport() {
+  yield takeEvery(ReportsActionTypes.EXPORT_REQUEST, getExport);
+}
+
 function* reportsSaga(): Generator {
   yield all([
     fork(watchGetPCESReport),
@@ -140,6 +165,7 @@ function* reportsSaga(): Generator {
     fork(watchPostNewRecord),
     fork(watchGetMerchants),
     fork(watchPostPayoutFee),
+    fork(watchExport),
   ]);
 }
 

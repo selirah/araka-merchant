@@ -15,6 +15,11 @@ export const initialState: ReportsState = {
   fee: undefined,
   feeError: undefined,
   feeLoading: false,
+  exportError: undefined,
+  exportStream: undefined,
+  isExportError: false,
+  isExportSuccess: false,
+  isExporting: false,
 };
 
 const reducer: Reducer<ReportsState> = (state = initialState, action) => {
@@ -104,6 +109,8 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
         failure: false,
         error: undefined,
         feeError: undefined,
+        isExportError: false,
+        isExportSuccess: false,
       };
     case ReportsActionTypes.GET_MERCHANTS_REQUEST:
       return {
@@ -147,6 +154,30 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
       return {
         ...state,
         fee: undefined,
+      };
+
+    case ReportsActionTypes.EXPORT_REQUEST:
+      return {
+        ...state,
+        isExporting: true,
+      };
+    case ReportsActionTypes.EXPORT_SUCCESS:
+      return {
+        ...state,
+        isExporting: false,
+        exportStream: action.payload,
+        isExportError: false,
+        isExportSuccess: true,
+        exportError: undefined,
+      };
+    case ReportsActionTypes.EXPORT_FAILURE:
+      return {
+        ...state,
+        isExporting: false,
+        exportStream: undefined,
+        isExportError: true,
+        isExportSuccess: false,
+        exportError: action.payload,
       };
     default:
       return state;

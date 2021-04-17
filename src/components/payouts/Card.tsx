@@ -66,7 +66,7 @@ const Card: React.FC<CardProps> = ({
           </Col>
         ) : null}
       </Row>
-      {!isEmpty(payouts) && payoutReport ? (
+      {payoutReport ? (
         <Row gutter={10}>
           <Col span={8} sm={24} md={8} xs={24}>
             <CardView
@@ -76,14 +76,14 @@ const Card: React.FC<CardProps> = ({
               currency={currency}
             />
           </Col>
-          <Col span={4} sm={24} md={4} xs={24}>
+          <Col span={6} sm={24} md={6} xs={24}>
             <RawCardView
               value="Total Paid Out"
               title={payoutReport.totalPaidOut.value}
               currency={currency}
             />
           </Col>
-          <Col span={6} sm={24} md={6} xs={24}>
+          <Col span={4} sm={24} md={4} xs={24}>
             <RawCardView
               value="Fees Paid"
               title={payoutReport.feesPaid.value}

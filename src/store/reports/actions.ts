@@ -7,6 +7,7 @@ import {
   PayoutNewRecord,
   MerchantData,
   Fee,
+  DataStream,
 } from '../../interfaces';
 
 export const getPCESRequest = () => action(ReportsActionTypes.GET_PCES_REQUEST);
@@ -29,7 +30,7 @@ export const getProxyPayFailure = (error: any) =>
 export const getPayoutRequest = (payload: any) =>
   action(ReportsActionTypes.GET_PAYOUT_REQUEST, payload);
 
-export const getPayoutSuccess = (response: PayoutReport) =>
+export const getPayoutSuccess = (response: PayoutReport | null) =>
   action(ReportsActionTypes.GET_PAYOUT_SUCCESS, response);
 
 export const getPayoutFailure = (error: any) =>
@@ -65,3 +66,12 @@ export const getPayoutFeeFailure = (error: any) =>
   action(ReportsActionTypes.POST_PAYOUT_FEE_FAILURE, error);
 
 export const clearFee = () => action(ReportsActionTypes.CLEAR_FEE);
+
+export const exportRequest = (payload: any) =>
+  action(ReportsActionTypes.EXPORT_REQUEST, payload);
+
+export const exportSuccess = (data: DataStream) =>
+  action(ReportsActionTypes.EXPORT_SUCCESS, data);
+
+export const exportFailure = (error: any) =>
+  action(ReportsActionTypes.EXPORT_FAILURE, error);

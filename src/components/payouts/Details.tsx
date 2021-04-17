@@ -4,7 +4,6 @@ import { PayoutTableData } from '../../interfaces';
 import { numberWithCommas } from '../../helpers/helperFunctions';
 import moment from 'moment-timezone';
 import { timeZones } from '../../helpers/constants';
-import { roles } from '../../helpers/constants';
 
 interface DetailsProps {
   payouts: PayoutTableData[];
@@ -83,7 +82,7 @@ const Details: React.FC<DetailsProps> = ({ payouts, currency }) => {
       key: s.transactionId,
       amount: `${currency} ${numberWithCommas(s.amount.toFixed(2))}`,
       feesPaid: `${currency} ${numberWithCommas(s.feesPaid.toFixed(2))}`,
-      netAmount: `${currency} ${numberWithCommas(s.amount - s.feesPaid)}`,
+      netAmount: `${currency} ${numberWithCommas(s.netAmount.toFixed(2))}`,
       paidOn: moment(s.paidOn, 'MM/DD/YYYY HH:mm:ss')
         .tz(timeZones.kinshasa)
         .format(`MMMM D, YYYY (h:mm a)`),

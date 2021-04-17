@@ -11,8 +11,6 @@ import {
   PayoutTableData,
 } from '../interfaces';
 import { AppDispatch } from '../helpers/appDispatch';
-import { PayoutData } from '../mock/PayoutData';
-import { GetPayoutFilteredResult } from '../helpers/payout';
 import {
   getPayoutRequest,
   postPayoutRequest,
@@ -20,6 +18,7 @@ import {
   getPayoutFeeRequest,
   clearFee,
   clearBooleans,
+  exportRequest,
 } from '../store/reports';
 import { isEmpty } from '../helpers/isEmpty';
 import moment from 'moment';
@@ -62,6 +61,10 @@ const Payouts: React.FC = () => {
   const [amount, setAmount] = useState(0.0);
   const [periodFrom, setPeriodFrom] = useState('');
   const [periodTo, setPeriodTo] = useState('');
+  const [exportType, setExportType] = useState('');
+  const [isExporting, setIsExporting] = useState(false);
+  const [hasSelectMerchant, setHasSelectMerchant] = useState(false);
+
   let role;
   if (user) {
     role = user.roles.find((r) => r === roles.SuperMerchant);
@@ -70,15 +73,14 @@ const Payouts: React.FC = () => {
   }
 
   useEffect(() => {
-    const { loading, payouts, merchants } = reports;
-    if (isEmpty(payouts) && !loading) {
-      const payload = {
-        periodFrom: '',
-        periodTo: '',
-        currency: currency,
-      };
-      dispatch(getPayoutRequest(payload));
-    }
+    const { merchants } = reports;
+    const payload = {
+      periodFrom: '',
+      periodTo: '',
+      currency: currency,
+      merchant: merchant ? merchant.name : '',
+    };
+    dispatch(getPayoutRequest(payload));
     if (isEmpty(merchants)) {
       dispatch(getMerchantsRequest());
     }
@@ -97,6 +99,7 @@ const Payouts: React.FC = () => {
       failure,
       error,
       fee,
+      isExporting,
     } = reports;
     setLoading(loading);
     setPayouts(payouts ? payouts.data : []);
@@ -104,6 +107,7 @@ const Payouts: React.FC = () => {
     setFee(fee);
     setIsPayingOut(isSubmitting);
     setPayoutReport(payouts);
+    setIsExporting(isExporting);
     if (success) {
       message.success('Payout has been made successfully!', 5);
       dispatch(clearBooleans());
@@ -115,46 +119,62 @@ const Payouts: React.FC = () => {
       dispatch(clearBooleans());
       dispatch(clearFee());
     }
-  }, [reports, dispatch, form]);
+    if (!isEmpty(payouts) && hasSelectMerchant) {
+      setIsNewPayout(true);
+    }
+    if (isEmpty(payouts) && hasSelectMerchant) {
+      setIsNewPayout(false);
+    }
+    if (!isEmpty(payouts) && !hasSelectMerchant) {
+      setIsNewPayout(false);
+    }
+  }, [reports, dispatch, form, hasSelectMerchant]);
 
   const onReset = (form: any) => {
     form.resetFields();
     setIsNewPayout(false);
+    const payload = {
+      periodFrom: '',
+      periodTo: '',
+      currency: currency,
+      merchant: '',
+    };
+    dispatch(getPayoutRequest(payload));
+    setHasSelectMerchant(false);
   };
 
   const onSearch = (values: any) => {
     const { merchant, periodFrom, periodTo } = values;
-    if (merchant) {
-      const m = merchants.find((m) => m.merchantId === merchant);
-      const { bucket } = GetPayoutFilteredResult(PayoutData, values);
+    let pFrom: string = '',
+      pTo: string = '';
+    let m: MerchantData | undefined = undefined;
+
+    if (!isEmpty(periodFrom) && !isEmpty(periodTo)) {
+      pFrom = moment(periodFrom).format('MM/DD/YYYY');
+      pTo = moment(periodTo).format('MM/DD/YYYY');
+      setPeriodFrom(pFrom);
+      setPeriodTo(pTo);
+    }
+    if (!isEmpty(merchant)) {
+      m = merchants.find((m) => m.merchantId === merchant);
       if (m !== undefined) {
         setIsNewPayout(true);
         setMerchant(m);
       }
-      setPayouts(bucket);
     }
-
-    if (!isEmpty(periodFrom) && !isEmpty(periodTo)) {
-      const pFrom = moment(periodFrom).format('MM/DD/YYYY');
-      const pTo = moment(periodTo).format('MM/DD/YYYY');
-
-      setPeriodFrom(pFrom);
-      setPeriodTo(pTo);
-
-      const payload = {
-        periodFrom: pFrom,
-        periodTo: pTo,
-        currency: currency,
-      };
-
-      dispatch(getPayoutRequest(payload));
-    }
+    const payload = {
+      periodFrom: pFrom,
+      periodTo: pTo,
+      currency: currency,
+      merchant: m !== undefined ? m.name : '',
+    };
+    dispatch(getPayoutRequest(payload));
   };
 
   const onChangeMerchant = (value: number) => {
     const m = merchants.find((m) => m.merchantId === value);
     if (m !== undefined) {
-      setIsNewPayout(true);
+      setHasSelectMerchant(true);
       setMerchant(m);
     }
   };
@@ -167,8 +187,15 @@ const Payouts: React.FC = () => {
 
   const onCloseRecordView = () => {
     setSwitchView(false);
-    setPayouts(reports.payouts ? reports.payouts.data : []);
     setIsNewPayout(false);
+    const payload = {
+      periodFrom: '',
+      periodTo: '',
+      currency: currency,
+      merchant: '',
+    };
+    dispatch(getPayoutRequest(payload));
+    setHasSelectMerchant(false);
   };
 
   const onSelectCurrency = (value: string) => {
@@ -177,6 +204,7 @@ const Payouts: React.FC = () => {
       periodFrom: periodFrom,
       periodTo: periodTo,
       currency: value,
+      merchant: merchant ? merchant.name : '',
     };
     dispatch(getPayoutRequest(payload));
   };
@@ -198,12 +226,27 @@ const Payouts: React.FC = () => {
   };
 
   const reloadPayouts = () => {
+    setIsNewPayout(false);
+    setHasSelectMerchant(false);
     const payload = {
       periodFrom: periodFrom,
       periodTo: periodTo,
       currency: currency,
+      merchant: merchant ? merchant.name : '',
     };
     dispatch(getPayoutRequest(payload));
+  };
+
+  const onExportClick = (type: string) => {
+    setExportType(type);
+    const payload = {
+      periodFrom: periodFrom,
+      periodTo: periodTo,
+      currency: currency,
+      exportType: type,
+      merchant: merchant ? merchant.name : '',
+    };
+    dispatch(exportRequest(payload));
   };
 
   let render: React.ReactNode;
@@ -263,14 +306,25 @@ const Payouts: React.FC = () => {
               <div className="margin-top">
                 <Row style={{ position: 'relative' }}>
                   <h4 className="transaction-chart-text">Payout History</h4>
-                  <div className="utility-buttons">
+                  <div className="utility-buttons new-payout">
                     <Button
                       type="primary"
                       className="export-buttons"
-                      // onClick={() => onExportClick('EXCEL')}
-                      // loading={isExporting && exportType === 'EXCEL'}
+                      onClick={() => onExportClick('EXCEL')}
+                      loading={isExporting && exportType === 'EXCEL'}
+                      disabled={isEmpty(payouts)}
                     >
                       Export to Excel
+                    </Button>
+
+                    <Button
+                      type="primary"
+                      className="export-buttons"
+                      onClick={() => onExportClick('PDF')}
+                      loading={isExporting && exportType === 'PDF'}
+                      disabled={isEmpty(payouts)}
+                    >
+                      Export to PDF
                     </Button>
 
                     <Button

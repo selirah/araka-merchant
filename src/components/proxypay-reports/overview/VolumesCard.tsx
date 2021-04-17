@@ -1,14 +1,20 @@
 import React from 'react';
 import { Row, Col, Button, Select } from 'antd';
 import CardView from '../../cards/CardView';
+import { path } from '../../../helpers/path';
+import { menu, menuHeadings } from '../../../helpers/menu';
 
 interface VolumesCardProps {
   areadata: any;
+  onSeeDetailsClick(path: string, menu: string, header: string): void;
 }
 
 const { Option } = Select;
 
-const VolumesCard: React.FC<VolumesCardProps> = ({ areadata }) => {
+const VolumesCard: React.FC<VolumesCardProps> = ({
+  areadata,
+  onSeeDetailsClick,
+}) => {
   return (
     <div className="margin-top-small">
       <Row>
@@ -40,8 +46,13 @@ const VolumesCard: React.FC<VolumesCardProps> = ({ areadata }) => {
           <Button
             type="primary"
             className="export-buttons-excel"
-            // onClick={() => onExportClick('EXCEL')}
-            // loading={isExporting && exportType === 'EXCEL'}
+            onClick={() =>
+              onSeeDetailsClick(
+                path.proxyPayVolumes,
+                menu.PROXYPAY_VOLUMES,
+                menuHeadings.REPORTS
+              )
+            }
             style={{ marginBottom: 10 }}
           >
             See Details

@@ -1,12 +1,18 @@
 import React from 'react';
 import { Row, Col, Button } from 'antd';
 import CardView from '../../cards/CardView';
+import { path } from '../../../helpers/path';
+import { menu, menuHeadings } from '../../../helpers/menu';
 
 interface SubscribersCardProps {
   areadata: any;
+  onSeeDetailsClick(path: string, menu: string, header: string): void;
 }
 
-const SubscribersCard: React.FC<SubscribersCardProps> = ({ areadata }) => {
+const SubscribersCard: React.FC<SubscribersCardProps> = ({
+  areadata,
+  onSeeDetailsClick,
+}) => {
   return (
     <div className="margin-top-small">
       <Row>
@@ -27,8 +33,13 @@ const SubscribersCard: React.FC<SubscribersCardProps> = ({ areadata }) => {
           <Button
             type="primary"
             className="export-buttons-excel"
-            // onClick={() => onExportClick('EXCEL')}
-            // loading={isExporting && exportType === 'EXCEL'}
+            onClick={() =>
+              onSeeDetailsClick(
+                path.proxyPaySubscribers,
+                menu.PROXYPAY_SUBSCRIBERS,
+                menuHeadings.REPORTS
+              )
+            }
             style={{ marginBottom: 10 }}
           >
             See Details

@@ -1,12 +1,18 @@
 import React from 'react';
 import { Row, Col, Button } from 'antd';
 import CardView from '../../cards/CardView';
+import { path } from '../../../helpers/path';
+import { menu, menuHeadings } from '../../../helpers/menu';
 
 interface TransactionsCardProps {
   areadata: any;
+  onSeeDetailsClick(path: string, menu: string, header: string): void;
 }
 
-const TransactionsCard: React.FC<TransactionsCardProps> = ({ areadata }) => {
+const TransactionsCard: React.FC<TransactionsCardProps> = ({
+  areadata,
+  onSeeDetailsClick,
+}) => {
   return (
     <div className="margin-top-small">
       <Row>
@@ -26,8 +32,13 @@ const TransactionsCard: React.FC<TransactionsCardProps> = ({ areadata }) => {
           <Button
             type="primary"
             className="export-buttons-excel"
-            // onClick={() => onExportClick('EXCEL')}
-            // loading={isExporting && exportType === 'EXCEL'}
+            onClick={() =>
+              onSeeDetailsClick(
+                path.proxyPayTransactions,
+                menu.PROXYPAY_TRANSACTIONS,
+                menuHeadings.REPORTS
+              )
+            }
             style={{ marginBottom: 10 }}
           >
             See Details

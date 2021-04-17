@@ -182,7 +182,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
               </NavLink>
             </Menu.Item>
 
-            <Menu.Item
+            {/* <Menu.Item
               key={menu.MERCHANT_PAYOUTS}
               icon={
                 <FeatherIcons.CreditCard
@@ -197,7 +197,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
               <NavLink to={path.merchantPayouts}>
                 {t('sideBar.merchantPayouts')}
               </NavLink>
-            </Menu.Item>
+            </Menu.Item> */}
 
             <Menu.Item
               key={menu.VAS_PROCESSED}
