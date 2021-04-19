@@ -1,16 +1,56 @@
 import React from 'react';
 import { Row, Col, Button, Select } from 'antd';
 import CardView from '../../cards/CardView';
+import { ProxyPayReport } from '../../../interfaces';
+import { getAreaOptions } from '../../../helpers/functions';
+import { isEmpty } from '../../../helpers/isEmpty';
 
 interface RevenueChannelCardProps {
-  areadata: any;
+  proxyPayReport: ProxyPayReport | null;
+  onExportClick(type: string, page: string): void;
+  isExporting: boolean;
+  exportType: string;
+  exportPage: string;
+  currency: string;
+  onSelectCurrency(value: string): void;
 }
 
 const { Option } = Select;
 
 const RevenueChannelCard: React.FC<RevenueChannelCardProps> = ({
-  areadata,
+  proxyPayReport,
+  // exportPage,
+  // exportType,
+  // isExporting,
+  // onExportClick,
+  currency,
+  onSelectCurrency,
 }) => {
+  let cards: any = {},
+    mpesa: any = {},
+    airtel: any = {};
+
+  if (proxyPayReport && !isEmpty(proxyPayReport.revenues)) {
+    cards = getAreaOptions(
+      proxyPayReport.revenues.channel.card.graph.labels,
+      proxyPayReport.revenues.channel.card.graph.values,
+      '#FFA000',
+      '#FFE082'
+    );
+    mpesa = getAreaOptions(
+      proxyPayReport.revenues.channel.mpesa.graph.labels,
+      proxyPayReport.revenues.channel.mpesa.graph.values,
+      '#FFA000',
+      '#FFE082'
+    );
+    airtel = getAreaOptions(
+      proxyPayReport.revenues.channel.airtel.graph.labels,
+      proxyPayReport.revenues.channel.airtel.graph.values,
+      '#FFA000',
+      '#FFE082'
+    );
+  }
+
   return (
     <div className="margin-top-small">
       <Row>
@@ -21,7 +61,11 @@ const RevenueChannelCard: React.FC<RevenueChannelCardProps> = ({
               <span style={{ color: '#ababb0' }}> - By Channel</span>
             </h4>
             <div className="currency">
-              <Select defaultValue="USD" style={{ marginLeft: 20 }}>
+              <Select
+                defaultValue="USD"
+                style={{ marginLeft: 20 }}
+                onChange={onSelectCurrency}
+              >
                 <Option key="USD" value="USD">
                   USD
                 </Option>
@@ -33,40 +77,51 @@ const RevenueChannelCard: React.FC<RevenueChannelCardProps> = ({
           </div>
         </Col>
         <Col span={12} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Button
+          {/* <Button
             type="primary"
             className="export-buttons-excel"
-            // onClick={() => onExportClick('EXCEL')}
-            // loading={isExporting && exportType === 'EXCEL'}
             style={{ marginBottom: 10 }}
+            loading={
+              isExporting &&
+              exportType === 'EXCEL' &&
+              exportPage === 'REVENUES-CHANNEL'
+            }
+            onClick={() => onExportClick('EXCEL', 'REVENUES-CHANNEL')}
+            disabled={!proxyPayReport ? true : false}
           >
             Export to Excel
-          </Button>
+          </Button> */}
         </Col>
       </Row>
       <Row gutter={20}>
         <Col span={8} sm={24} md={8} xs={24}>
           <CardView
             value="From Cards - Successful"
-            title={3098}
-            data={areadata}
-            currency="$"
+            title={
+              proxyPayReport ? proxyPayReport.revenues.channel.card.value : 0
+            }
+            data={proxyPayReport ? cards : {}}
+            currency={currency}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
           <CardView
             value="From mPESA - Successful"
-            title={10094.9}
-            data={areadata}
-            currency="$"
+            title={
+              proxyPayReport ? proxyPayReport.revenues.channel.mpesa.value : 0
+            }
+            data={proxyPayReport ? mpesa : {}}
+            currency={currency}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
           <CardView
             value="From Airtel - Successful"
-            title={10094.9}
-            data={areadata}
-            currency="$"
+            title={
+              proxyPayReport ? proxyPayReport.revenues.channel.airtel.value : 0
+            }
+            data={proxyPayReport ? airtel : {}}
+            currency={currency}
           />
         </Col>
       </Row>

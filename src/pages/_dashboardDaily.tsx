@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { Layout, Spin, Row } from 'antd';
 import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
-import { getCurrentUser } from '../store/settings';
 import { isEmpty } from '../helpers/isEmpty';
 import { getTransactions, clearTransactions } from '../store/transactions';
 
@@ -19,13 +18,9 @@ const EmptyBox = lazy(() => import('../components/dashboard/EmptyBox'));
 const DashboardDaily = () => {
   const dispatch: AppDispatch = useDispatch();
   const { user } = appSelector((state) => state.auth);
-  const { client } = appSelector((state) => state.settings);
   const { transactions, loading } = appSelector((state) => state.transaction);
 
   useEffect(() => {
-    if (user && isEmpty(client)) {
-      dispatch(getCurrentUser(user.userId));
-    }
     // fetch transaction history
     if (isEmpty(transactions) && !loading) {
       dispatch(getTransactions());

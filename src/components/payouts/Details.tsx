@@ -8,9 +8,10 @@ import { timeZones } from '../../helpers/constants';
 interface DetailsProps {
   payouts: PayoutTableData[];
   currency: string;
+  onClickRow(record: any): void;
 }
 
-const Details: React.FC<DetailsProps> = ({ payouts, currency }) => {
+const Details: React.FC<DetailsProps> = ({ payouts, currency, onClickRow }) => {
   const columns: any = [
     {
       title: <span style={{ fontSize: '2rem', color: '#868686' }}>&bull;</span>,
@@ -107,6 +108,9 @@ const Details: React.FC<DetailsProps> = ({ payouts, currency }) => {
                 return `Showing ${range[0]} - ${range[1]} of ${total} results`;
               },
             }}
+            onRow={(record: any) => ({
+              onClick: () => onClickRow(record),
+            })}
           />
         </div>
       </Col>

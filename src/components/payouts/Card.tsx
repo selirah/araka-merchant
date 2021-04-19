@@ -24,10 +24,7 @@ const Card: React.FC<CardProps> = ({
   currency,
   role,
 }) => {
-  let processedTrx: any,
-    paidOut: any,
-    feesPaid: any,
-    outstanding: any = {};
+  let processedTrx: any = {};
   if (payoutReport) {
     processedTrx = getAreaOptions(
       payoutReport.processedTransactions.graph.labels,

@@ -1,3 +1,5 @@
+import { GraphData } from './Report';
+
 export interface TransactionHistory {
   transactionId: number;
   createdAt: string;
@@ -14,4 +16,11 @@ export interface TransactionHistory {
   transactionDetails: {
     data?: any;
   };
+}
+
+export interface TransactionReport {
+  total: GraphData;
+  approved: GraphData;
+  declined: GraphData;
+  data: TransactionHistory[];
 }

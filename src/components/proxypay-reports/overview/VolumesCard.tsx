@@ -3,18 +3,58 @@ import { Row, Col, Button, Select } from 'antd';
 import CardView from '../../cards/CardView';
 import { path } from '../../../helpers/path';
 import { menu, menuHeadings } from '../../../helpers/menu';
+import { ProxyPayReport } from '../../../interfaces';
+import { getAreaOptions } from '../../../helpers/functions';
+import { isEmpty } from '../../../helpers/isEmpty';
 
 interface VolumesCardProps {
-  areadata: any;
   onSeeDetailsClick(path: string, menu: string, header: string): void;
+  proxyPayReport: ProxyPayReport | null;
+  onExportClick(type: string, page: string): void;
+  isExporting: boolean;
+  exportType: string;
+  exportPage: string;
+  currency: string;
+  onSelectCurrency(value: string): void;
 }
 
 const { Option } = Select;
 
 const VolumesCard: React.FC<VolumesCardProps> = ({
-  areadata,
   onSeeDetailsClick,
+  proxyPayReport,
+  // exportPage,
+  // exportType,
+  // isExporting,
+  // onExportClick,
+  currency,
+  onSelectCurrency,
 }) => {
+  let moneyTransfers: any = {},
+    otherPayments: any = {},
+    airtimeRecharge: any = {};
+
+  if (proxyPayReport && !isEmpty(proxyPayReport.volumes)) {
+    moneyTransfers = getAreaOptions(
+      proxyPayReport.volumes.moneyTransfers.graph.labels,
+      proxyPayReport.volumes.moneyTransfers.graph.values,
+      '#FFA000',
+      '#FFE082'
+    );
+    otherPayments = getAreaOptions(
+      proxyPayReport.volumes.otherPayments.graph.labels,
+      proxyPayReport.volumes.otherPayments.graph.values,
+      '#FFA000',
+      '#FFE082'
+    );
+    airtimeRecharge = getAreaOptions(
+      proxyPayReport.volumes.airtimeRecharge.graph.labels,
+      proxyPayReport.volumes.airtimeRecharge.graph.values,
+      '#FFA000',
+      '#FFE082'
+    );
+  }
+
   return (
     <div className="margin-top-small">
       <Row>
@@ -22,7 +62,11 @@ const VolumesCard: React.FC<VolumesCardProps> = ({
           <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
             <h4 className="transaction-chart-text">Volumes Overview</h4>
             <div className="currency">
-              <Select defaultValue="USD" style={{ marginLeft: 20 }}>
+              <Select
+                defaultValue="USD"
+                style={{ marginLeft: 20 }}
+                onChange={onSelectCurrency}
+              >
                 <Option key="USD" value="USD">
                   USD
                 </Option>
@@ -34,15 +78,20 @@ const VolumesCard: React.FC<VolumesCardProps> = ({
           </div>
         </Col>
         <Col span={12} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Button
+          {/* <Button
             type="primary"
             className="export-buttons-excel"
-            // onClick={() => onExportClick('EXCEL')}
-            // loading={isExporting && exportType === 'EXCEL'}
+            onClick={() => onExportClick('EXCEL', 'VOLUMES')}
+            loading={
+              isExporting &&
+              exportType === 'EXCEL' &&
+              exportPage === 'TRANSACTIONS'
+            }
             style={{ marginBottom: 10 }}
+            disabled={!proxyPayReport ? true : false}
           >
             Export to Excel
-          </Button>
+          </Button> */}
           <Button
             type="primary"
             className="export-buttons-excel"
@@ -63,25 +112,31 @@ const VolumesCard: React.FC<VolumesCardProps> = ({
         <Col span={8} sm={24} md={8} xs={24}>
           <CardView
             value="Money Transfers-Successful"
-            title={120450}
-            data={areadata}
-            currency="$"
+            title={
+              proxyPayReport ? proxyPayReport.volumes.moneyTransfers.value : 0
+            }
+            data={proxyPayReport ? moneyTransfers : {}}
+            currency={currency}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
           <CardView
-            value="Money Payments - Successful"
-            title={405005}
-            data={areadata}
-            currency="$"
+            value="Other Payments - Successful"
+            title={
+              proxyPayReport ? proxyPayReport.volumes.otherPayments.value : 0
+            }
+            data={proxyPayReport ? otherPayments : {}}
+            currency={currency}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
           <CardView
             value="Airtime Recharge - Successful"
-            title={326401}
-            data={areadata}
-            currency="$"
+            title={
+              proxyPayReport ? proxyPayReport.volumes.airtimeRecharge.value : 0
+            }
+            data={proxyPayReport ? airtimeRecharge : {}}
+            currency={currency}
           />
         </Col>
       </Row>

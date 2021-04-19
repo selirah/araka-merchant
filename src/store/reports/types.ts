@@ -31,6 +31,9 @@ export enum ReportsActionTypes {
   EXPORT_SUCCESS = '@@reports/EXPORT_SUCCESS',
   EXPORT_FAILURE = '@@reports/EXPORT_FAILURE',
   CLEAR_FEE = '@@reports/CLEAR_FEE',
+  DOWNLOAD_RECEIPT_REQUEST = '@@reports/DOWNLOAD_RECEIPT_REQUEST',
+  DOWNLOAD_RECEIPT_SUCCESS = '@@reports/DOWNLOAD_RECEIPT_SUCCESS',
+  DOWNLOAD_RECEIPT_FAILURE = '@@reports/DOWNLOAD_RECEIPT_FAILURE',
 }
 
 export type ReportsState = {
@@ -51,4 +54,9 @@ export type ReportsState = {
   readonly isExportError: boolean;
   readonly exportStream: DataStream | undefined;
   readonly exportError: any;
+  readonly isRequestingDownload: boolean;
+  readonly downloadRecieptSuccess: boolean;
+  readonly downloadRecieptError: boolean;
+  readonly downloadReceiptStream: DataStream | undefined;
+  readonly downloadError: any;
 };

@@ -17,12 +17,14 @@ import {
   getPayoutFeeFailure,
   exportFailure,
   exportSuccess,
+  downloadReceiptSuccess,
+  downloadReceiptFailure,
 } from './actions';
 import { isEmpty } from '../../helpers/isEmpty';
 
-function* getPCESReport(): any {
+function* getPCESReport({ payload }: { type: string; payload: any }): any {
   try {
-    const res = yield call(callApiGet, '');
+    const res = yield call(callApiPost, 'payments/getpcesreports', payload);
     yield put(getPCESSuccess(res.data));
   } catch (err) {
     if (err && err.response) {
@@ -35,7 +37,7 @@ function* getPCESReport(): any {
 
 function* getProxyPayReport({ payload }: { type: string; payload: any }): any {
   try {
-    const res = yield call(callApiGet, '');
+    const res = yield call(callApiPost, 'payments/getproxypayreports', payload);
     yield put(getProxyPaySuccess(res.data));
   } catch (err) {
     if (err && err.response) {
@@ -129,6 +131,32 @@ function* getExport({ payload }: { type: string; payload: any }): any {
   }
 }
 
+function* getDownloadReceiptStream({
+  payload,
+}: {
+  type: string;
+  payload: number;
+}): any {
+  try {
+    const res = yield call(callApiPost, 'payments/getpayoutreceipt', payload);
+    if (res.status === 200) {
+      yield put(downloadReceiptSuccess(res.data));
+
+      let file: DataStream = res.data;
+      const link = document.createElement('a');
+      link.href = `data:application/pdf;base64,${file.fileContents}`;
+      link.download = file.fileDownloadName;
+      link.click();
+    }
+  } catch (err) {
+    if (err && err.response) {
+      yield put(downloadReceiptFailure(err.response.data));
+    } else {
+      yield put(downloadReceiptFailure('An unknwon error occurred'));
+    }
+  }
+}
+
 function* watchGetPCESReport() {
   yield takeEvery(ReportsActionTypes.GET_PCES_REQUEST, getPCESReport);
 }
@@ -157,6 +185,13 @@ function* watchExport() {
   yield takeEvery(ReportsActionTypes.EXPORT_REQUEST, getExport);
 }
 
+function* watchFetchGetDownloadReceiptStream() {
+  yield takeEvery(
+    ReportsActionTypes.DOWNLOAD_RECEIPT_REQUEST,
+    getDownloadReceiptStream
+  );
+}
+
 function* reportsSaga(): Generator {
   yield all([
     fork(watchGetPCESReport),
@@ -166,6 +201,7 @@ function* reportsSaga(): Generator {
     fork(watchGetMerchants),
     fork(watchPostPayoutFee),
     fork(watchExport),
+    fork(watchFetchGetDownloadReceiptStream),
   ]);
 }
 

@@ -10,7 +10,8 @@ import {
   DataStream,
 } from '../../interfaces';
 
-export const getPCESRequest = () => action(ReportsActionTypes.GET_PCES_REQUEST);
+export const getPCESRequest = (payload: any) =>
+  action(ReportsActionTypes.GET_PCES_REQUEST, payload);
 
 export const getPCESSuccess = (response: PCESReport) =>
   action(ReportsActionTypes.GET_PCES_SUCCESS, response);
@@ -75,3 +76,12 @@ export const exportSuccess = (data: DataStream) =>
 
 export const exportFailure = (error: any) =>
   action(ReportsActionTypes.EXPORT_FAILURE, error);
+
+export const downloadReceiptRequest = (payout: any) =>
+  action(ReportsActionTypes.DOWNLOAD_RECEIPT_REQUEST, payout);
+
+export const downloadReceiptSuccess = (data: DataStream) =>
+  action(ReportsActionTypes.DOWNLOAD_RECEIPT_SUCCESS, data);
+
+export const downloadReceiptFailure = (error: any) =>
+  action(ReportsActionTypes.DOWNLOAD_RECEIPT_FAILURE, error);

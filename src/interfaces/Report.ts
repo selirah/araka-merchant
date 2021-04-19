@@ -1,4 +1,4 @@
-interface PCESTableData {
+export interface PCESTableData {
   merchant: string;
   totalTransactions: number;
   totalAmount: number;
@@ -9,7 +9,7 @@ interface PCESTableData {
   currency: string;
 }
 
-interface GraphData {
+export interface GraphData {
   value: number;
   graph: {
     values: number[];
@@ -17,7 +17,7 @@ interface GraphData {
   };
 }
 
-interface ProxyPayTableData {
+export interface ProxyPayTableData {
   subscriberName: string;
   status: string;
   emailAddress: string;
@@ -49,7 +49,7 @@ export interface ProxyPayReport {
   subscribers: {
     total: GraphData;
     active: GraphData;
-    new: GraphData;
+    newsubscribers: GraphData;
     external: {
       total: GraphData;
       active: GraphData;
@@ -87,28 +87,26 @@ export interface ProxyPayReport {
   };
   revenues: {
     channel: {
-      cards: GraphData;
+      card: GraphData;
       mpesa: GraphData;
       airtel: GraphData;
     };
     service: {
-      cards: GraphData;
-      mpesa: GraphData;
-      airtel: GraphData;
+      moneyTransfers: GraphData;
+      otherPayments: GraphData;
+      airtimeRecharge: GraphData;
     };
   };
   opex: {
-    bankGatewayProvider: GraphData;
-    airtelMoney: GraphData;
-    orangeMoney: GraphData;
-    mpesa: GraphData;
+    bankGatewayProvider: number;
+    airtelMoney: number;
+    orangeMoney: number;
+    mpesa: number;
   };
   ebitda: {
-    proxyPayRevenue: {
-      total: GraphData;
-      cards: GraphData;
-      mobileMoney: GraphData;
-    };
+    proxyPayRevenue: GraphData;
+    cards: GraphData;
+    mobileMoney: GraphData;
   };
 }
 

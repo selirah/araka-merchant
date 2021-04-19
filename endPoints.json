@@ -408,5 +408,51 @@
       "comments": "",
       "currency": ""
     }
+  },
+  "transactions": {
+    "parameters": ["periodFrom", "periodTo", "type"],
+    "type": ["overall", "daily", "monthly", "weekly"],
+    "json-response": {
+      "total": {
+        "value": "",
+        "graph": {
+          "labels": [],
+          "values": []
+        }
+      },
+      "approved(in amount)": {
+        "value": "",
+        "graph": {
+          "labels": [],
+          "values": []
+        }
+      },
+      "declined (in amount)": {
+        "value": "",
+        "graph": {
+          "labels": [],
+          "values": []
+        }
+      },
+      "data": [
+        {
+          "transactionId": "",
+          "createdAt": "",
+          "currency": "",
+          "amountPaid": "",
+          "transactionDescription": "",
+          "charge": "",
+          "vat": "",
+          "customer": "",
+          "channel": "",
+          "status": "",
+          "statusMessage": "",
+          "merchant": "",
+          "transactionDetails": {
+            "data": ""
+          }
+        }
+      ]
+    }
   }
 }

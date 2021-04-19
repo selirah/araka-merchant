@@ -20,6 +20,11 @@ export const initialState: ReportsState = {
   isExportError: false,
   isExportSuccess: false,
   isExporting: false,
+  downloadError: undefined,
+  downloadReceiptStream: undefined,
+  downloadRecieptError: false,
+  downloadRecieptSuccess: false,
+  isRequestingDownload: false,
 };
 
 const reducer: Reducer<ReportsState> = (state = initialState, action) => {
@@ -111,6 +116,8 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
         feeError: undefined,
         isExportError: false,
         isExportSuccess: false,
+        downloadRecieptError: false,
+        downloadRecieptSuccess: false,
       };
     case ReportsActionTypes.GET_MERCHANTS_REQUEST:
       return {
@@ -178,6 +185,31 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
         isExportError: true,
         isExportSuccess: false,
         exportError: action.payload,
+      };
+    case ReportsActionTypes.DOWNLOAD_RECEIPT_REQUEST:
+      return {
+        ...state,
+        isRequestingDownload: true,
+      };
+
+    case ReportsActionTypes.DOWNLOAD_RECEIPT_SUCCESS:
+      return {
+        ...state,
+        isRequestingDownload: false,
+        downloadReceiptStream: action.payload,
+        downloadRecieptError: false,
+        downloadRecieptSuccess: true,
+        downloadError: undefined,
+      };
+
+    case ReportsActionTypes.DOWNLOAD_RECEIPT_FAILURE:
+      return {
+        ...state,
+        isRequestingDownload: false,
+        downloadReceiptStream: undefined,
+        downloadRecieptError: true,
+        downloadRecieptSuccess: false,
+        downloadError: action.payload,
       };
     default:
       return state;

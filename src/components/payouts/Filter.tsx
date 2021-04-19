@@ -72,6 +72,13 @@ const Filter: React.FC<FilterProps> = ({
                     style={{ width: '100%' }}
                     allowClear
                     onChange={onChangeMerchant}
+                    showSearch
+                    optionFilterProp="children"
+                    filterOption={(input: any, option: any) =>
+                      option.children
+                        .toLowerCase()
+                        .indexOf(input.toLowerCase()) >= 0
+                    }
                   >
                     {!isEmpty(merchants) &&
                       merchants.map((m) => (

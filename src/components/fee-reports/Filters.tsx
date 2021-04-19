@@ -1,25 +1,19 @@
 import React from 'react';
-import {
-  Row,
-  Col,
-  Input,
-  Button,
-  Collapse,
-  Select,
-  Form,
-  DatePicker,
-} from 'antd';
+import { Row, Col, Button, Collapse, Select, Form, DatePicker } from 'antd';
+import { MerchantData } from '../../interfaces';
 import { Clock } from '../../utils/clock';
+import { isEmpty } from '../../helpers/isEmpty';
 
 interface FiltersProps {
   onSearch(values: any): void;
   onReset(form: any): void;
+  merchants: MerchantData[];
 }
 
 const { Panel } = Collapse;
 const { Option } = Select;
 
-const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
+const Filters: React.FC<FiltersProps> = ({ onReset, onSearch, merchants }) => {
   const { time } = Clock();
   const [form] = Form.useForm();
 
@@ -43,20 +37,46 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
         >
           <Row gutter={10}>
             <Col span={6}>
-              <Form.Item name="merchant">
-                <Select placeholder="Merchant" style={{ width: '100%' }}>
-                  <Option value="January">INRB</Option>
-                  <Option value="February">MAPAPA</Option>
-                  <Option value="March">Airtel</Option>
-                </Select>
+              <Form.Item name="periodFrom">
+                <DatePicker
+                  style={{ width: '100%' }}
+                  format="MMMM D, YYYY"
+                  allowClear
+                  placeholder="Date Period: From"
+                />
               </Form.Item>
             </Col>
-            <Col span={10}>
-              <Form.Item name="query">
-                <Input
-                  placeholder="Search by Fee/Discount/Income"
+            <Col span={6}>
+              <Form.Item name="periodTo">
+                <DatePicker
                   style={{ width: '100%' }}
+                  format="MMMM D, YYYY"
+                  allowClear
+                  placeholder="Date Period: To"
                 />
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              <Form.Item name="merchant">
+                <Select
+                  placeholder="Merchant: Default=All"
+                  style={{ width: '100%' }}
+                  allowClear
+                  showSearch
+                  optionFilterProp="children"
+                  filterOption={(input: any, option: any) =>
+                    option.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
+                  }
+                >
+                  {!isEmpty(merchants) &&
+                    merchants.map((m) => (
+                      <Option value={m.merchantId} key={m.merchantId}>
+                        {m.name}
+                      </Option>
+                    ))}
+                </Select>
               </Form.Item>
             </Col>
             <Col span={6}>

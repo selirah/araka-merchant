@@ -24,17 +24,16 @@ const Dashboard = () => {
   const { transactions, loading } = appSelector((state) => state.transaction);
 
   useEffect(() => {
-    if (user && isEmpty(client)) {
-      dispatch(getCurrentUser(user.userId));
-    }
-    // fetch transaction history
+    // fetch transactions history
     if (isEmpty(transactions) && !loading) {
       dispatch(getTransactions());
+    }
+    if (user && isEmpty(client)) {
+      dispatch(getCurrentUser(user.userId));
     }
     if (isEmpty(merchants)) {
       dispatch(getMerchantsRequest());
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

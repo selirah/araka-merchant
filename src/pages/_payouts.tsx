@@ -19,6 +19,7 @@ import {
   clearFee,
   clearBooleans,
   exportRequest,
+  downloadReceiptRequest,
 } from '../store/reports';
 import { isEmpty } from '../helpers/isEmpty';
 import moment from 'moment';
@@ -34,6 +35,7 @@ const NewRecordPayout = lazy(
   () => import('../components/payouts/NewRecordPayout')
 );
 const EmptyBox = lazy(() => import('../components/payouts/EmptyBox'));
+const PayoutDetail = lazy(() => import('../components/payouts/PayoutDetail'));
 
 const { Content } = Layout;
 
@@ -64,6 +66,9 @@ const Payouts: React.FC = () => {
   const [exportType, setExportType] = useState('');
   const [isExporting, setIsExporting] = useState(false);
   const [hasSelectMerchant, setHasSelectMerchant] = useState(false);
+  const [switchDetailView, setSwitchDetailView] = useState(false);
+  const [payout, setPayout] = useState<any>({});
+  const [isDownlaoding, setIsDownloading] = useState(false);
 
   let role;
   if (user) {
@@ -100,6 +105,9 @@ const Payouts: React.FC = () => {
       error,
       fee,
       isExporting,
+      isRequestingDownload,
+      downloadError,
+      downloadRecieptError,
     } = reports;
     setLoading(loading);
     setPayouts(payouts ? payouts.data : []);
@@ -108,6 +116,7 @@ const Payouts: React.FC = () => {
     setIsPayingOut(isSubmitting);
     setPayoutReport(payouts);
     setIsExporting(isExporting);
+    setIsDownloading(isRequestingDownload);
     if (success) {
       message.success('Payout has been made successfully!', 5);
       dispatch(clearBooleans());
@@ -118,6 +127,10 @@ const Payouts: React.FC = () => {
       message.error(JSON.stringify(error), 5);
       dispatch(clearBooleans());
       dispatch(clearFee());
+    }
+    if (downloadRecieptError) {
+      message.error(JSON.stringify(downloadError), 5);
+      dispatch(clearBooleans());
     }
     if (!isEmpty(payouts) && hasSelectMerchant) {
       setIsNewPayout(true);
@@ -181,6 +194,7 @@ const Payouts: React.FC = () => {
 
   const onOpenRecordView = () => {
     setSwitchView(true);
+    setSwitchDetailView(false);
     dispatch(clearFee());
     dispatch(clearBooleans());
   };
@@ -188,6 +202,7 @@ const Payouts: React.FC = () => {
   const onCloseRecordView = () => {
     setSwitchView(false);
     setIsNewPayout(false);
+    setSwitchDetailView(false);
     const payload = {
       periodFrom: '',
       periodTo: '',
@@ -249,6 +264,40 @@ const Payouts: React.FC = () => {
     dispatch(exportRequest(payload));
   };
 
+  const onClickRow = (record: any) => {
+    setSwitchDetailView(true);
+    setSwitchView(false);
+    setPayout(record);
+  };
+
+  const onCloseScreen = () => {
+    setSwitchDetailView(false);
+    setSwitchView(false);
+    const payload = {
+      periodFrom: '',
+      periodTo: '',
+      currency: currency,
+      merchant: '',
+    };
+    dispatch(getPayoutRequest(payload));
+    setHasSelectMerchant(false);
+  };
+
+  const onDownloadReceiptClick = (transactionId: number) => {
+    const trx = payouts.find((t) => t.transactionId === transactionId);
+    if (trx !== undefined) {
+      const payload = {
+        merchant: trx.merchant,
+        amount: `${trx.amount}`,
+        currency: currency,
+        transactionId: `${trx.transactionId}`,
+        fee: `${trx.feesPaid}`,
+        date: trx.paidOn,
+      };
+      dispatch(downloadReceiptRequest(payload));
+    }
+  };
+
   let render: React.ReactNode;
 
   if (loading) {
@@ -270,7 +319,9 @@ const Payouts: React.FC = () => {
   }
 
   if (!loading && !isEmpty(payouts)) {
-    render = <Details payouts={payouts} currency={currency} />;
+    render = (
+      <Details payouts={payouts} currency={currency} onClickRow={onClickRow} />
+    );
   }
 
   return (
@@ -285,7 +336,7 @@ const Payouts: React.FC = () => {
             </Row>
           }
         >
-          {!switchView ? (
+          {!switchView && !switchDetailView ? (
             <>
               <Filter
                 onReset={onReset}
@@ -339,7 +390,7 @@ const Payouts: React.FC = () => {
                 {render}
               </div>
             </>
-          ) : (
+          ) : switchView ? (
             <NewRecordPayout
               isPayingOut={isPayingOut}
               merchant={merchant ? merchant : null}
@@ -352,6 +403,13 @@ const Payouts: React.FC = () => {
               onCalculateFee={onCalculateFee}
               fee={fee}
               amount={amount}
+            />
+          ) : (
+            <PayoutDetail
+              isDownloading={isDownlaoding}
+              onCloseScreen={onCloseScreen}
+              onDownloadReceiptClick={onDownloadReceiptClick}
+              payout={payout}
             />
           )}
         </Suspense>
