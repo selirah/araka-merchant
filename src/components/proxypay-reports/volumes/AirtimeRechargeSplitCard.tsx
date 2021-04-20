@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Select, Button } from 'antd';
+import { Row, Col, Select } from 'antd';
 import CardView from '../../cards/CardView';
 import { ProxyPayReport } from '../../../interfaces';
 import { getAreaOptions } from '../../../helpers/functions';

@@ -1,59 +1,78 @@
-import React, { lazy, Suspense, useEffect } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Layout, Spin, Row } from 'antd';
 import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
-import { getCurrentUser } from '../store/settings';
-import { isEmpty } from '../helpers/isEmpty';
+import { TransactionReport } from '../interfaces';
 import { getTransactions, clearTransactions } from '../store/transactions';
-import { getMerchantsRequest } from '../store/reports';
 
 const { Content } = Layout;
 const YearlyOverview = lazy(
   () => import('../components/dashboard/YearlyOverview')
 );
-
+const CurrencyFilter = lazy(
+  () => import('../components/dashboard/CurrencyFilter')
+);
 const EmptyBox = lazy(() => import('../components/dashboard/EmptyBox'));
 
 const Dashboard = () => {
   const dispatch: AppDispatch = useDispatch();
   const { user } = appSelector((state) => state.auth);
-  const { merchants } = appSelector((state) => state.reports);
-  const { client } = appSelector((state) => state.settings);
-  const { transactions, loading } = appSelector((state) => state.transaction);
+  const transaction = appSelector((state) => state.transaction);
+  const [loading, setLoading] = useState(false);
+  const [currency, setCurrency] = useState('USD');
+  const [trxReports, setTrxReports] = useState<TransactionReport | null>(null);
+  const params = {
+    currrency: currency,
+    fixedPeriod: 'overall',
+  };
 
   useEffect(() => {
     // fetch transactions history
-    if (isEmpty(transactions) && !loading) {
-      dispatch(getTransactions());
-    }
-    if (user && isEmpty(client)) {
-      dispatch(getCurrentUser(user.userId));
-    }
-    if (isEmpty(merchants)) {
-      dispatch(getMerchantsRequest());
-    }
+    dispatch(clearTransactions());
+    dispatch(getTransactions(params));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    const { loading, trxReports } = transaction;
+    setLoading(loading);
+    setTrxReports(trxReports);
+  }, [transaction]);
+
   const onReloadTransaction = () => {
     dispatch(clearTransactions());
-    dispatch(getTransactions());
+    dispatch(getTransactions(params));
+  };
+
+  const onSelectCurrency = (value: string) => {
+    setCurrency(value);
+    const params = {
+      currrency: value,
+      fixedPeriod: 'daily',
+    };
+    dispatch(getTransactions(params));
   };
 
   let container: React.ReactNode;
-  if (loading && isEmpty(transactions)) {
+  if (loading) {
     container = (
       <Row className="suspense-container">
         <Spin style={{ marginTop: '200px' }} />
       </Row>
     );
-  } else if (!loading && isEmpty(transactions)) {
+  }
+  if (!loading && !trxReports) {
     container = <EmptyBox onReloadTransaction={onReloadTransaction} />;
-  } else if (!loading && !isEmpty(transactions)) {
+  }
+  if (!loading && trxReports) {
     container = (
-      <YearlyOverview transactions={transactions} userRoles={user!.roles} />
+      <YearlyOverview
+        trxReports={trxReports}
+        userRoles={user!.roles}
+        currency={currency}
+      />
     );
   }
 
@@ -69,6 +88,7 @@ const Dashboard = () => {
             </Row>
           }
         >
+          <CurrencyFilter onSelectCurrency={onSelectCurrency} />
           {container}
         </Suspense>
       </Content>

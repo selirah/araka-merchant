@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Button, Collapse, Select, Form, DatePicker } from 'antd';
+import { Row, Col, Button, Collapse, Form, DatePicker } from 'antd';
 import { Clock } from '../../../utils/clock';
 
 interface FilterProps {
@@ -8,7 +8,6 @@ interface FilterProps {
 }
 
 const { Panel } = Collapse;
-const { Option } = Select;
 
 const Filter: React.FC<FilterProps> = ({ onReset, onSearch }) => {
   const { time } = Clock();

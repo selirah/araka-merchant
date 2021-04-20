@@ -308,7 +308,7 @@ const Payouts: React.FC = () => {
     );
   }
 
-  if (!loading && isEmpty(payouts)) {
+  if (!loading && !payoutReport) {
     render = (
       <EmptyBox
         header="Merchant Payouts"
@@ -318,7 +318,7 @@ const Payouts: React.FC = () => {
     );
   }
 
-  if (!loading && !isEmpty(payouts)) {
+  if (!loading && payoutReport) {
     render = (
       <Details payouts={payouts} currency={currency} onClickRow={onClickRow} />
     );

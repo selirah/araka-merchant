@@ -30,8 +30,7 @@ const Routes: React.FC = () => {
     <React.Fragment>
       <Switch>
         <Route exact path={path.login} component={Login} />
-        <PrivateRoute exact path={path.home} component={Dashboard} />
-        <PrivateRoute exact path={path.dashboardMain} component={Dashboard} />
+        <PrivateRoute exact path={path.home} component={DashboardDaily} />
         <PrivateRoute
           exact
           path={path.dashboardDaily}
@@ -47,6 +46,7 @@ const Routes: React.FC = () => {
           path={path.dashboardMonthly}
           component={DashboardMonthly}
         />
+        <PrivateRoute exact path={path.dashboardMain} component={Dashboard} />
         <PrivateRoute exact path={path.tranasctions} component={Transactions} />
         <PrivateRoute exact path={path.paymentPages} component={PaymentPages} />
         <PrivateRoute exact path={`${path.page}/:pageId`} component={Page} />

@@ -1,4 +1,9 @@
-import { TransactionHistory, Currency, DataStream } from '../../interfaces';
+import {
+  TransactionHistory,
+  Currency,
+  DataStream,
+  TransactionReport,
+} from '../../interfaces';
 
 export enum TransactionTypes {
   GET_TRANSACTIONS = '@@transaction/GET_TRANSACTIONS',
@@ -18,6 +23,7 @@ export enum TransactionTypes {
 
 export type TransactionState = {
   readonly transactions: TransactionHistory[];
+  readonly trxReports: TransactionReport | null;
   readonly loading: boolean;
   readonly error: any;
   readonly currencies: Currency[];

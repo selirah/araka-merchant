@@ -1,0 +1,97 @@
+{
+  "transactions": {
+    "parameters": [
+      "periodFrom",
+      "periodTo",
+      "fixedPeriod",
+      "merchant",
+      "status",
+      "channel",
+      "currrency",
+      "searchValue"
+    ],
+    "fixedPeriod": ["overall", "daily", "monthly", "weekly"],
+    "json-response": {
+      "total": {
+        "value": "",
+        "graph": {
+          "labels": [],
+          "values": []
+        }
+      },
+      "totalApproved": {
+        "value": "",
+        "graph": {
+          "labels": [],
+          "values": []
+        }
+      },
+      "totalDeclined": {
+        "value": "",
+        "graph": {
+          "labels": [],
+          "values": []
+        }
+      },
+      "totalAmountApproved": {
+        "value": "",
+        "graph": {
+          "labels": [],
+          "values": []
+        }
+      },
+      "totalAmountDeclined": {
+        "value": "",
+        "graph": {
+          "labels": [],
+          "values": []
+        }
+      },
+      "topMerchants": {
+        "firstTopMerchant": {
+          "name": "",
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
+          }
+        },
+        "secondTopMerchant": {
+          "name": "",
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
+          }
+        },
+        "thirdTopMerchant": {
+          "name": "",
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
+          }
+        }
+      },
+      "data": [
+        {
+          "transactionId": "",
+          "createdAt": "",
+          "currency": "",
+          "amountPaid": "",
+          "transactionDescription": "",
+          "charge": "",
+          "vat": "",
+          "customer": "",
+          "channel": "",
+          "status": "",
+          "statusMessage": "",
+          "merchant": "",
+          "transactionDetails": {
+            "data": ""
+          }
+        }
+      ]
+    }
+  }
+}

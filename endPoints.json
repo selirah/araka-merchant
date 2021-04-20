@@ -410,8 +410,17 @@
     }
   },
   "transactions": {
-    "parameters": ["periodFrom", "periodTo", "type"],
-    "type": ["overall", "daily", "monthly", "weekly"],
+    "parameters": [
+      "periodFrom",
+      "periodTo",
+      "fixedPeriod",
+      "merchant",
+      "status",
+      "channel",
+      "currrency",
+      "searchValue"
+    ],
+    "fixedPeriod": ["overall", "daily", "monthly", "weekly"],
     "json-response": {
       "total": {
         "value": "",
@@ -420,18 +429,55 @@
           "values": []
         }
       },
-      "approved(in amount)": {
+      "totalAmountApproved": {
         "value": "",
         "graph": {
           "labels": [],
           "values": []
         }
       },
-      "declined (in amount)": {
+      "totalAmountDeclined": {
         "value": "",
         "graph": {
           "labels": [],
           "values": []
+        }
+      },
+      "totalApproved": {
+        "value": "",
+        "graph": {
+          "labels": [],
+          "values": []
+        }
+      },
+      "totalDeclined": {
+        "value": "",
+        "graph": {
+          "labels": [],
+          "values": []
+        }
+      },
+      "topMerchants": {
+        "firstTopMerchant": {
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
+          }
+        },
+        "secondTopMerchant": {
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
+          }
+        },
+        "thirdTopMerchant": {
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
+          }
         }
       },
       "data": [

@@ -6,19 +6,12 @@ import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
 import { MerchantData, PCESReport, PCESTableData } from '../interfaces';
 import {
-  getPayoutRequest,
-  postPayoutRequest,
   getMerchantsRequest,
-  getPayoutFeeRequest,
-  clearFee,
   clearBooleans,
   exportRequest,
-  downloadReceiptRequest,
   getPCESRequest,
 } from '../store/reports';
 import moment from 'moment';
-
-import { MonthlyArea } from '../mock/MonthlyOverview';
 import { isEmpty } from '../helpers/isEmpty';
 
 const { Content } = Layout;
@@ -139,7 +132,7 @@ const FeeReports = () => {
     );
   }
 
-  if (!loading && isEmpty(pces)) {
+  if (!loading && isEmpty(pcesReport)) {
     render = (
       <EmptyBox
         header="PCES Reports"
@@ -149,7 +142,7 @@ const FeeReports = () => {
     );
   }
 
-  if (!loading && !isEmpty(pces)) {
+  if (!loading && !isEmpty(pcesReport)) {
     render = <Details pces={pces} />;
   }
 

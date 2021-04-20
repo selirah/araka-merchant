@@ -72,14 +72,6 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             title="Dashboard Main"
           >
             <Menu.Item
-              key={menu.DASHBOARD_YEARLY}
-              onClick={() =>
-                switchMenu(menu.DASHBOARD_YEARLY, menuHeadings.DASHBOARDS)
-              }
-            >
-              <NavLink to={path.dashboardMain}>{menu.DASHBOARD_YEARLY}</NavLink>
-            </Menu.Item>
-            <Menu.Item
               key={menu.DASHBOARD_DAILY}
               onClick={() =>
                 switchMenu(menu.DASHBOARD_DAILY, menuHeadings.DASHBOARDS)
@@ -106,6 +98,14 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
               <NavLink to={path.dashboardMonthly}>
                 {menu.DASHBOARD_MONTHLY}
               </NavLink>
+            </Menu.Item>
+            <Menu.Item
+              key={menu.DASHBOARD_YEARLY}
+              onClick={() =>
+                switchMenu(menu.DASHBOARD_YEARLY, menuHeadings.DASHBOARDS)
+              }
+            >
+              <NavLink to={path.dashboardMain}>{menu.DASHBOARD_YEARLY}</NavLink>
             </Menu.Item>
           </Menu.SubMenu>
         </Menu.ItemGroup>

@@ -1,5 +1,5 @@
 export const menu = {
-  DASHBOARD_YEARLY: 'Dashboard Main',
+  DASHBOARD_YEARLY: 'Dashboard Yearly',
   DASHBOARD_DAILY: 'Dashboard Daily',
   DASHBOARD_WEEKLY: 'Dashboard Weekly',
   DASHBOARD_MONTHLY: 'Dashboard Monthly',

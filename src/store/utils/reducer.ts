@@ -4,7 +4,7 @@ import { menu, menuHeadings } from '../../helpers/menu';
 import { AuthActionTypes } from '../auth';
 
 export const initialState: UtilsState = {
-  activeMenu: menu.DASHBOARD_YEARLY,
+  activeMenu: menu.DASHBOARD_DAILY,
   menuHeader: menuHeadings.DASHBOARDS,
 };
 

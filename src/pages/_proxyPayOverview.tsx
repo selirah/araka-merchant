@@ -59,15 +59,15 @@ const ProxyPayOverview: React.FC = () => {
   const [isExporting, setIsExporting] = useState(false);
 
   useEffect(() => {
-    const { loading, proxypay } = reports;
-    if (!loading && !proxypay) {
-      const payload = {
-        periodFrom: '',
-        periodTo: '',
-        currency: currency,
-      };
-      dispatch(getProxyPayRequest(payload));
-    }
+    // const { loading, proxypay } = reports;
+    // if (!loading && !proxypay) {
+    const payload = {
+      periodFrom: '',
+      periodTo: '',
+      currency: currency,
+    };
+    dispatch(getProxyPayRequest(payload));
+    // }
     dispatch(clearBooleans());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

@@ -83,6 +83,12 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
         moment(b.date).tz(timeZones.kinshasa).unix(),
       className: 'column-text',
       responsive: ['lg'],
+      render: (date: string) => {
+        const d = moment(date, 'MM/DD/YYYY HH:mm:ss')
+          .tz(timeZones.kinshasa)
+          .format(`MMMM D, YYYY (h:mm a)`);
+        return <span>{d}</span>;
+      },
     },
     {
       title: `${t('transactions.table.channel')}`,
@@ -126,16 +132,14 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
 
   for (let transaction of transactionHistory) {
     dataSource.push({
-      key: Math.random(),
+      key: transaction.transactionId,
       amount: `${transaction.currency} ${numberWithCommas(
         transaction.amountPaid.toFixed(2)
       )}`,
       customer: transaction.customer,
       transactionId: transaction.transactionId,
-      date: moment(transaction.createdAt, 'MM/DD/YYYY HH:mm:ss')
-        .tz(timeZones.kinshasa)
-        .format(`MMMM D, YYYY (h:mm a)`),
-      channel: transaction.channel.replace(/([a-z])([A-Z])/g, '$1 $2'),
+      date: transaction.createdAt,
+      channel: transaction.channel,
       status: transaction.status,
       reason: !isEmpty(transaction.statusMessage)
         ? transaction.statusMessage

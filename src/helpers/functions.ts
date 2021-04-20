@@ -397,7 +397,7 @@ export const getAreaOptions = (
   return data;
 };
 
-const getBarOptions = (
+export const getBarOptions = (
   labels: string[],
   approvedDataPoints: any[],
   declinedDataPoints: any[]

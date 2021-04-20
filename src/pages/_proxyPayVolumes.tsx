@@ -1,12 +1,11 @@
 import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { Layout, Spin, Row, Button } from 'antd';
+import { Layout, Spin, Row } from 'antd';
 import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
-import { MonthlyArea } from '../mock/MonthlyOverview';
 import { isEmpty } from '../helpers/isEmpty';
-import { ProxyPayReport, ProxyPayTrxTableData } from '../interfaces';
+import { ProxyPayReport } from '../interfaces';
 import { getProxyPayRequest, clearBooleans } from '../store/reports';
 import moment from 'moment';
 
@@ -31,7 +30,6 @@ const ProxyPayVolumes: React.FC = () => {
   const [proxyPayReport, setProxyPayReport] = useState<ProxyPayReport | null>(
     null
   );
-  const [transactions, setTransactions] = useState<ProxyPayTrxTableData[]>([]);
   const [loading, setLoading] = useState(false);
   const [periodFrom, setPeriodFrom] = useState('');
   const [periodTo, setPeriodTo] = useState('');
@@ -41,15 +39,15 @@ const ProxyPayVolumes: React.FC = () => {
   // const [isExporting, setIsExporting] = useState(false);
 
   useEffect(() => {
-    const { loading, proxypay } = reports;
-    if (!loading && !proxypay) {
-      const payload = {
-        periodFrom: '',
-        periodTo: '',
-        currency: currency,
-      };
-      dispatch(getProxyPayRequest(payload));
-    }
+    // const { loading, proxypay } = reports;
+    // if (!loading && !proxypay) {
+    const payload = {
+      periodFrom: '',
+      periodTo: '',
+      currency: currency,
+    };
+    dispatch(getProxyPayRequest(payload));
+    // }
     dispatch(clearBooleans());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -59,7 +57,6 @@ const ProxyPayVolumes: React.FC = () => {
     setLoading(loading);
     setProxyPayReport(proxypay);
     // setIsExporting(isExporting);
-    setTransactions(proxypay ? proxypay.transactions.data : []);
   }, [reports]);
 
   const onReset = (form: any) => {

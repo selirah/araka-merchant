@@ -46,14 +46,14 @@ const ProxyPayTransactions = () => {
   // const [isExporting, setIsExporting] = useState(false);
 
   useEffect(() => {
-    const { loading, proxypay } = reports;
-    if (!loading && !proxypay) {
-      const payload = {
-        periodFrom: '',
-        periodTo: '',
-      };
-      dispatch(getProxyPayRequest(payload));
-    }
+    // const { loading, proxypay } = reports;
+    // if (!loading && !proxypay) {
+    const payload = {
+      periodFrom: '',
+      periodTo: '',
+    };
+    dispatch(getProxyPayRequest(payload));
+    // }
     dispatch(clearBooleans());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -128,37 +128,23 @@ const ProxyPayTransactions = () => {
             </>
           )}
           <div className="margin-top">
-            <Row style={{ position: 'relative' }}>
-              <h4 className="transaction-chart-text">Subscribers Table</h4>
-              <div className="utility-buttons">
-                <>
-                  {/* <Button
-                    type="primary"
-                    className="export-buttons"
-                    // onClick={() => onExportClick('EXCEL')}
-                    // loading={isExporting && exportType === 'EXCEL'}
-                  >
-                    Export to Excel
-                  </Button> */}
-                  {/* <Button
-                    type="primary"
-                    className="export-buttons"
-                    // onClick={() => onExportClick('PDF')}
-                    // loading={isExporting && exportType === 'PDF'}
-                  >
-                    Export to PDF
-                  </Button> */}
-                </>
-                <Button
-                  type="primary"
-                  className="export-buttons reload"
-                  onClick={() => onReloadPage()}
-                >
-                  Refresh
-                </Button>
-              </div>
-            </Row>
-            <Details transactions={transactions} />
+            {loading ? null : (
+              <>
+                <Row style={{ position: 'relative' }}>
+                  <h4 className="transaction-chart-text">Subscribers Table</h4>
+                  <div className="utility-buttons">
+                    <Button
+                      type="primary"
+                      className="export-buttons reload"
+                      onClick={() => onReloadPage()}
+                    >
+                      Refresh
+                    </Button>
+                  </div>
+                </Row>
+                <Details transactions={transactions} />{' '}
+              </>
+            )}
           </div>
         </Suspense>
       </Content>
