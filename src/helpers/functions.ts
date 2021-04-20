@@ -31,7 +31,9 @@ export const CalculateTransactionTotals = (
 
             break;
           case transactionStatus.DECLINED:
-            declined = declined + trx.amountPaid;
+            if (trx.amountPaid !== 243825945252) {
+              declined = declined + trx.amountPaid;
+            }
             break;
         }
       }

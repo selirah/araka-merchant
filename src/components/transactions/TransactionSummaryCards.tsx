@@ -42,19 +42,17 @@ const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Approved"
-                // title={`$${numberWithCommas(totalAmountProcessed.toFixed(2))}`}
                 title={totalAmountProcessed}
                 data={approvedAreaChart}
-                currency="$"
+                currency="USD"
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Declined"
-                // title={`$${numberWithCommas(totalAmountDeclined.toFixed(2))}`}
                 title={totalAmountDeclined}
                 data={declinedAreaChart}
-                currency="$"
+                currency="USD"
               />
             </Col>
           </Row>

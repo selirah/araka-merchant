@@ -22,7 +22,11 @@ export const calculateDailyTransactionTotals = (
     if (time === label && trx.status === transactionStatus.APPROVED) {
       totalApprovedAmt += trx.amountPaid;
     }
-    if (time === label && trx.status === transactionStatus.DECLINED) {
+    if (
+      time === label &&
+      trx.status === transactionStatus.DECLINED &&
+      trx.amountPaid !== 243825945252
+    ) {
       totalDeclinedAmt += trx.amountPaid;
     }
   }
@@ -46,7 +50,11 @@ export const calculateWeeklyTransactionTotals = (
     if (day === label && trx.status === transactionStatus.APPROVED) {
       totalApprovedAmt += trx.amountPaid;
     }
-    if (day === label && trx.status === transactionStatus.DECLINED) {
+    if (
+      day === label &&
+      trx.status === transactionStatus.DECLINED &&
+      trx.amountPaid !== 243825945252
+    ) {
       totalDeclinedAmt += trx.amountPaid;
     }
   }
@@ -70,7 +78,11 @@ export const calculateMonthlyTransactionTotal = (
     if (date === label && trx.status === transactionStatus.APPROVED) {
       totalApprovedAmt += trx.amountPaid;
     }
-    if (date === label && trx.status === transactionStatus.DECLINED) {
+    if (
+      date === label &&
+      trx.status === transactionStatus.DECLINED &&
+      trx.amountPaid !== 243825945252
+    ) {
       totalDeclinedAmt += trx.amountPaid;
     }
   }
@@ -104,7 +116,11 @@ export const calculateYearValues = (
         merchants[trx.merchant] = trx.amountPaid;
       }
     }
-    if (m === month && trx.status === transactionStatus.DECLINED) {
+    if (
+      m === month &&
+      trx.status === transactionStatus.DECLINED &&
+      trx.amountPaid !== 243825945252
+    ) {
       declinedAmt += trx.amountPaid;
       totalDeclined += 1;
     }
@@ -151,7 +167,11 @@ export const calculateDailyValues = (
         merchants[trx.merchant] = trx.amountPaid;
       }
     }
-    if (tm === time && trx.status === transactionStatus.DECLINED) {
+    if (
+      tm === time &&
+      trx.status === transactionStatus.DECLINED &&
+      trx.amountPaid !== 243825945252
+    ) {
       declinedAmt += trx.amountPaid;
       totalDeclined += 1;
     }
@@ -194,7 +214,11 @@ export const calculateWeeklyValues = (
         merchants[trx.merchant] = trx.amountPaid;
       }
     }
-    if (d === day && trx.status === transactionStatus.DECLINED) {
+    if (
+      d === day &&
+      trx.status === transactionStatus.DECLINED &&
+      trx.amountPaid !== 243825945252
+    ) {
       declinedAmt += trx.amountPaid;
       totalDeclined += 1;
     }
@@ -238,7 +262,11 @@ export const calculateMonthlyValues = (
         merchants[trx.merchant] = trx.amountPaid;
       }
     }
-    if (date === day && trx.status === transactionStatus.DECLINED) {
+    if (
+      date === day &&
+      trx.status === transactionStatus.DECLINED &&
+      trx.amountPaid !== 243825945252
+    ) {
       declinedAmt += trx.amountPaid;
       totalDeclined += 1;
     }

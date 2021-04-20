@@ -129,7 +129,7 @@ const MonthlyOverview: React.FC<MonthlyOverviewProps> = ({
                   value="Approved"
                   title={approved}
                   data={approvedAreaChart}
-                  currency="$"
+                  currency="USD"
                 />
               </Col>
               <Col span={8} sm={24} md={8} xs={24}>
@@ -137,7 +137,7 @@ const MonthlyOverview: React.FC<MonthlyOverviewProps> = ({
                   value="Declined"
                   title={declined}
                   data={declinedAreaChart}
-                  currency="$"
+                  currency="USD"
                 />
               </Col>
             </Row>

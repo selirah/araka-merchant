@@ -35,7 +35,10 @@ export const GetTransactionsAnalytics = (
       }
     }
 
-    if (trx.status === transactionStatus.DECLINED) {
+    if (
+      trx.status === transactionStatus.DECLINED &&
+      trx.amountPaid !== 243825945252
+    ) {
       totalAmountDeclined += trx.amountPaid;
     }
   }
