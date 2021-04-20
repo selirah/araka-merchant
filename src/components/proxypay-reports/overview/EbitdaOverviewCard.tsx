@@ -1,9 +1,8 @@
 import React from 'react';
-import { Row, Col, Button, Select } from 'antd';
+import { Row, Col, /*Button,*/ Select } from 'antd';
 import CardView from '../../cards/CardView';
 import { ProxyPayReport } from '../../../interfaces';
 import { getAreaOptions } from '../../../helpers/functions';
-import { isEmpty } from '../../../helpers/isEmpty';
 
 interface EbitdaOverviewCardProps {
   proxyPayReport: ProxyPayReport | null;
@@ -26,30 +25,32 @@ const EbitdaOverviewCard: React.FC<EbitdaOverviewCardProps> = ({
   currency,
   onSelectCurrency,
 }) => {
-  let total: any = {},
-    cards: any = {},
-    momo: any = {};
+  const total = proxyPayReport
+    ? getAreaOptions(
+        proxyPayReport.ebitda.proxyPayRevenue.graph.labels,
+        proxyPayReport.ebitda.proxyPayRevenue.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
 
-  if (proxyPayReport && !isEmpty(proxyPayReport.ebitda)) {
-    total = getAreaOptions(
-      proxyPayReport.ebitda.proxyPayRevenue.graph.labels,
-      proxyPayReport.ebitda.proxyPayRevenue.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
-    cards = getAreaOptions(
-      proxyPayReport.ebitda.cards.graph.labels,
-      proxyPayReport.ebitda.cards.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
-    momo = getAreaOptions(
-      proxyPayReport.ebitda.mobileMoney.graph.labels,
-      proxyPayReport.ebitda.mobileMoney.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
-  }
+  const cards = proxyPayReport
+    ? getAreaOptions(
+        proxyPayReport.ebitda.cards.graph.labels,
+        proxyPayReport.ebitda.cards.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
+
+  const momo = proxyPayReport
+    ? getAreaOptions(
+        proxyPayReport.ebitda.mobileMoney.graph.labels,
+        proxyPayReport.ebitda.mobileMoney.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
 
   return (
     <div className="margin-top-small">
@@ -59,7 +60,7 @@ const EbitdaOverviewCard: React.FC<EbitdaOverviewCardProps> = ({
             <h4 className="transaction-chart-text">EBITDA Overview</h4>
             <div className="currency">
               <Select
-                defaultValue="USD"
+                defaultValue={currency}
                 style={{ marginLeft: 20 }}
                 onChange={onSelectCurrency}
               >

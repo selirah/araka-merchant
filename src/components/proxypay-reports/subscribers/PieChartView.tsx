@@ -62,7 +62,7 @@ export const PieChartView: React.FC<PieChartViewProps> = ({ data }) => {
               <h4 style={{ fontSize: '11px' }}>=</h4>
             </div>
             <div style={{ width: '60%' }}>
-              <h4 style={{ fontSize: '11px' }}>8 Subscribers, 65%</h4>
+              <h4 style={{ fontSize: '11px' }}>0 Subscribers, 0%</h4>
             </div>
           </div>
 
@@ -84,7 +84,7 @@ export const PieChartView: React.FC<PieChartViewProps> = ({ data }) => {
               <h4 style={{ fontSize: '11px' }}>=</h4>
             </div>
             <div style={{ width: '60%' }}>
-              <h4 style={{ fontSize: '11px' }}>4 Subscribers, 35%</h4>
+              <h4 style={{ fontSize: '11px' }}>0 Subscribers, 0%</h4>
             </div>
           </div>
 
@@ -106,7 +106,7 @@ export const PieChartView: React.FC<PieChartViewProps> = ({ data }) => {
               <h4 style={{ fontSize: '11px' }}>=</h4>
             </div>
             <div style={{ width: '60%' }}>
-              <h4 style={{ fontSize: '11px' }}>12 Subscribers</h4>
+              <h4 style={{ fontSize: '11px' }}>0 Subscribers</h4>
             </div>
           </div>
         </Col>

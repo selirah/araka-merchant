@@ -1,7 +1,7 @@
 import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { withRouter, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { Layout, Spin, Row, Button } from 'antd';
+import { Layout, Spin, Row } from 'antd';
 import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
 import { isEmpty } from '../helpers/isEmpty';
@@ -59,12 +59,15 @@ const ProxyPayOverview: React.FC = () => {
   const [isExporting, setIsExporting] = useState(false);
 
   useEffect(() => {
-    const payload = {
-      periodFrom: '',
-      periodTo: '',
-      currency: currency,
-    };
-    dispatch(getProxyPayRequest(payload));
+    const { loading, proxypay } = reports;
+    if (!loading && !proxypay) {
+      const payload = {
+        periodFrom: '',
+        periodTo: '',
+        currency: currency,
+      };
+      dispatch(getProxyPayRequest(payload));
+    }
     dispatch(clearBooleans());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -134,6 +137,15 @@ const ProxyPayOverview: React.FC = () => {
     dispatch(exportRequest(payload));
   };
 
+  const onReloadPage = () => {
+    const payload = {
+      periodFrom: '',
+      periodTo: '',
+      currency: currency,
+    };
+    dispatch(getProxyPayRequest(payload));
+  };
+
   return (
     <div className="padding-box">
       <Content className="site-layout-background site-box">
@@ -160,6 +172,7 @@ const ProxyPayOverview: React.FC = () => {
                 exportType={exportType}
                 isExporting={isExporting}
                 onExportClick={onExportClick}
+                onReloadPage={onReloadPage}
               />
               <TransactionsCard
                 onSeeDetailsClick={onSeeDetailsClick}

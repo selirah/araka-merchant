@@ -5,7 +5,6 @@ import { path } from '../../../helpers/path';
 import { menu, menuHeadings } from '../../../helpers/menu';
 import { ProxyPayReport } from '../../../interfaces';
 import { getAreaOptions } from '../../../helpers/functions';
-import { isEmpty } from '../../../helpers/isEmpty';
 
 interface TransactionsCardProps {
   onSeeDetailsClick(path: string, menu: string, header: string): void;
@@ -26,30 +25,32 @@ const TransactionsCard: React.FC<TransactionsCardProps> = ({
   // onExportClick,
   // currency,
 }) => {
-  let total: any = {},
-    successful: any = {},
-    failed: any = {};
+  const total = proxyPayReport
+    ? getAreaOptions(
+        proxyPayReport.transactions.overview.total.graph.labels,
+        proxyPayReport.transactions.overview.total.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
 
-  if (proxyPayReport && !isEmpty(proxyPayReport.transactions)) {
-    total = getAreaOptions(
-      proxyPayReport.transactions.overview.total.graph.labels,
-      proxyPayReport.transactions.overview.total.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
-    successful = getAreaOptions(
-      proxyPayReport.transactions.overview.successful.graph.labels,
-      proxyPayReport.transactions.overview.successful.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
-    failed = getAreaOptions(
-      proxyPayReport.transactions.overview.failed.graph.labels,
-      proxyPayReport.transactions.overview.failed.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
-  }
+  const successful = proxyPayReport
+    ? getAreaOptions(
+        proxyPayReport.transactions.overview.successful.graph.labels,
+        proxyPayReport.transactions.overview.successful.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
+
+  const failed = proxyPayReport
+    ? getAreaOptions(
+        proxyPayReport.transactions.overview.failed.graph.labels,
+        proxyPayReport.transactions.overview.failed.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
 
   return (
     <div className="margin-top-small">

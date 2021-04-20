@@ -1,12 +1,14 @@
 import React from 'react';
 import { Row, Col, Card } from 'antd';
 import PieChart from '../../chart/PieChart';
+import { numberWithCommas } from '../../../helpers/helperFunctions';
 
 interface PieChartViewProps {
   data: any;
+  load: any;
 }
 
-export const PieChartView: React.FC<PieChartViewProps> = ({ data }) => {
+export const PieChartView: React.FC<PieChartViewProps> = ({ data, load }) => {
   return (
     <Card className="stats-padding">
       <Row style={{ marginBottom: 10 }}>
@@ -62,7 +64,10 @@ export const PieChartView: React.FC<PieChartViewProps> = ({ data }) => {
               <h4 style={{ fontSize: '11px' }}>=</h4>
             </div>
             <div style={{ width: '60%' }}>
-              <h4 style={{ fontSize: '11px' }}>9,440 Transactions, 65%</h4>
+              <h4 style={{ fontSize: '11px' }}>
+                {numberWithCommas(load.successful)} Transactions,{' '}
+                {((load.successful / load.total) * 100).toFixed(2)} %
+              </h4>
             </div>
           </div>
 
@@ -84,7 +89,10 @@ export const PieChartView: React.FC<PieChartViewProps> = ({ data }) => {
               <h4 style={{ fontSize: '11px' }}>=</h4>
             </div>
             <div style={{ width: '60%' }}>
-              <h4 style={{ fontSize: '11px' }}>1,000 Transactions, 35%</h4>
+              <h4 style={{ fontSize: '11px' }}>
+                {numberWithCommas(load.failed)} Transactions,{' '}
+                {((load.failed / load.total) * 100).toFixed(2)} %
+              </h4>
             </div>
           </div>
 
@@ -106,7 +114,9 @@ export const PieChartView: React.FC<PieChartViewProps> = ({ data }) => {
               <h4 style={{ fontSize: '11px' }}>=</h4>
             </div>
             <div style={{ width: '60%' }}>
-              <h4 style={{ fontSize: '11px' }}>10,440 Transactions</h4>
+              <h4 style={{ fontSize: '11px' }}>
+                {numberWithCommas(load.total)} Transactions
+              </h4>
             </div>
           </div>
         </Col>

@@ -13,7 +13,7 @@ const MidCard: React.FC<MidCardProps> = ({ areadata }) => {
       labels: ['Active', 'Inactive'],
       datasets: [
         {
-          data: [8, 4],
+          data: [0, 0],
           backgroundColor: ['#46be8a', '#fb434a'],
           hoverOffset: 4,
           borderColor: ['#4b7cf3', '#4b7cf3'],
@@ -32,15 +32,15 @@ const MidCard: React.FC<MidCardProps> = ({ areadata }) => {
         <Col span={12} sm={24} md={12} xs={24}>
           <Row>
             <Col span={24} sm={24} md={24} xs={24}>
-              <CardView value="Total" title={12} data={areadata} />
+              <CardView value="Total" title={0} data={{}} />
             </Col>
           </Row>
           <Row gutter={20}>
             <Col span={12} sm={24} md={12} xs={24}>
-              <CardView value="Active" title={8} data={areadata} />
+              <CardView value="Active" title={0} data={{}} />
             </Col>
             <Col span={12} sm={24} md={12} xs={24}>
-              <CardView value="Inactive" title={4} data={areadata} />
+              <CardView value="Inactive" title={0} data={{}} />
             </Col>
           </Row>
         </Col>

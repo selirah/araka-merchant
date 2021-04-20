@@ -1,17 +1,29 @@
 import React from 'react';
 import { Row, Col } from 'antd';
-import CardView from '../../cards/CardView';
 import { PieChartView } from './PieChartView';
+import { ProxyPayReport } from '../../../interfaces';
 
-interface MidCardProps {}
+interface MidCardProps {
+  proxyPayReport: ProxyPayReport | null;
+}
 
-const MidCard: React.FC<MidCardProps> = () => {
+const MidCard: React.FC<MidCardProps> = ({ proxyPayReport }) => {
+  const total = proxyPayReport
+    ? proxyPayReport.transactions.overview.total.value
+    : 0;
+  const successful = proxyPayReport
+    ? proxyPayReport.transactions.overview.successful.value
+    : 0;
+  const failed = proxyPayReport
+    ? proxyPayReport.transactions.overview.failed.value
+    : 0;
+
   const info = {
     data: {
       labels: ['Successful', 'Failed'],
       datasets: [
         {
-          data: [9440, 1000],
+          data: [successful, failed],
           backgroundColor: ['#46be8a', '#fb434a'],
           hoverOffset: 4,
           borderColor: ['#4b7cf3', '#4b7cf3'],
@@ -20,6 +32,13 @@ const MidCard: React.FC<MidCardProps> = () => {
       ],
     },
   };
+
+  const load = {
+    total: total,
+    failed: failed,
+    successful: successful,
+  };
+
   return (
     <div className="margin-top-small">
       <Row>
@@ -38,7 +57,7 @@ const MidCard: React.FC<MidCardProps> = () => {
       </Row>
       <Row>
         <Col span={12} sm={24} md={12} xs={24}>
-          <PieChartView data={info} />
+          <PieChartView data={info} load={load} />
         </Col>
       </Row>
     </div>

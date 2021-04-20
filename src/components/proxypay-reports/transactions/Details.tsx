@@ -1,9 +1,10 @@
 import React from 'react';
 import { Row, Col, Table } from 'antd';
-import { ProxyPayTrx } from '../../../interfaces';
+import { ProxyPayTrxTableData } from '../../../interfaces';
+import { isEmpty } from '../../../helpers/isEmpty';
 
 interface DetailsProps {
-  transactions: ProxyPayTrx[];
+  transactions: ProxyPayTrxTableData[];
 }
 
 const Details: React.FC<DetailsProps> = ({ transactions }) => {
@@ -45,16 +46,19 @@ const Details: React.FC<DetailsProps> = ({ transactions }) => {
     },
   ];
   let dataSource = [];
-  for (let trx of transactions) {
-    dataSource.push({
-      key: Math.random(),
-      merchant: trx.merchant,
-      total: trx.total,
-      successful: trx.successful,
-      failed: trx.failed,
-      type: trx.type.toUpperCase(),
-    });
+  if (!isEmpty(transactions)) {
+    for (let trx of transactions) {
+      dataSource.push({
+        key: Math.random(),
+        merchant: trx.merchant,
+        total: trx.total,
+        successful: trx.successful,
+        failed: trx.failed,
+        type: trx.type.toUpperCase(),
+      });
+    }
   }
+
   return (
     <Row gutter={20}>
       <Col span={24}>

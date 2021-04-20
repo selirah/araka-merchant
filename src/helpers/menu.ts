@@ -15,7 +15,7 @@ export const menu = {
   PROXYPAY_SUBSCRIBERS: 'Subscribers',
   PROXYPAY_TRANSACTIONS: 'Transaction',
   PROXYPAY_VOLUMES: 'Volumes',
-  PROXYPAY_OVERVIEW: 'ProxyPay Reports',
+  PROXYPAY_OVERVIEW: 'Overview',
   PAYOUTS: 'Payouts',
 };
 

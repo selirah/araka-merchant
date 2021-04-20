@@ -26,6 +26,14 @@ export interface ProxyPayTableData {
   lastTransactionDate: string;
 }
 
+export interface ProxyPayTrxTableData {
+  merchant: string;
+  total: number;
+  successful: number;
+  failed: number;
+  type: string;
+}
+
 export interface PayoutTableData {
   amount: number;
   feesPaid: number;
@@ -68,11 +76,12 @@ export interface ProxyPayReport {
       successful: GraphData;
       failed: GraphData;
     };
-    mobileMoney: {
+    mobilemoney: {
       total: GraphData;
       successful: GraphData;
       failed: GraphData;
     };
+    data: ProxyPayTrxTableData[];
   };
   volumes: {
     moneyTransfers: GraphData;

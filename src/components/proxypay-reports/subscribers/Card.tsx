@@ -14,13 +14,13 @@ const Card: React.FC<CardProps> = ({ areadata }) => {
       </Row>
       <Row gutter={20}>
         <Col span={8} sm={24} md={8} xs={24}>
-          <CardView value="Total Subscribers" title={20} data={areadata} />
+          <CardView value="Total Subscribers" title={0} data={{}} />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
-          <CardView value="Active Subscribers" title={20} data={areadata} />
+          <CardView value="Active Subscribers" title={0} data={{}} />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
-          <CardView value="New Subscribers" title={5} data={areadata} />
+          <CardView value="New Subscribers" title={0} data={{}} />
         </Col>
       </Row>
     </div>

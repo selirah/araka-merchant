@@ -1,9 +1,8 @@
 import React from 'react';
-import { Row, Col, Button, Select } from 'antd';
+import { Row, Col, /*Button,*/ Select } from 'antd';
 import CardView from '../../cards/CardView';
 import { ProxyPayReport } from '../../../interfaces';
 import { getAreaOptions } from '../../../helpers/functions';
-import { isEmpty } from '../../../helpers/isEmpty';
 
 interface RevenueChannelCardProps {
   proxyPayReport: ProxyPayReport | null;
@@ -26,30 +25,32 @@ const RevenueChannelCard: React.FC<RevenueChannelCardProps> = ({
   currency,
   onSelectCurrency,
 }) => {
-  let cards: any = {},
-    mpesa: any = {},
-    airtel: any = {};
+  const cards = proxyPayReport
+    ? getAreaOptions(
+        proxyPayReport.revenues.channel.card.graph.labels,
+        proxyPayReport.revenues.channel.card.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
 
-  if (proxyPayReport && !isEmpty(proxyPayReport.revenues)) {
-    cards = getAreaOptions(
-      proxyPayReport.revenues.channel.card.graph.labels,
-      proxyPayReport.revenues.channel.card.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
-    mpesa = getAreaOptions(
-      proxyPayReport.revenues.channel.mpesa.graph.labels,
-      proxyPayReport.revenues.channel.mpesa.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
-    airtel = getAreaOptions(
-      proxyPayReport.revenues.channel.airtel.graph.labels,
-      proxyPayReport.revenues.channel.airtel.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
-  }
+  const mpesa = proxyPayReport
+    ? getAreaOptions(
+        proxyPayReport.revenues.channel.mpesa.graph.labels,
+        proxyPayReport.revenues.channel.mpesa.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
+
+  const airtel = proxyPayReport
+    ? getAreaOptions(
+        proxyPayReport.revenues.channel.airtel.graph.labels,
+        proxyPayReport.revenues.channel.airtel.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
 
   return (
     <div className="margin-top-small">
@@ -62,7 +63,7 @@ const RevenueChannelCard: React.FC<RevenueChannelCardProps> = ({
             </h4>
             <div className="currency">
               <Select
-                defaultValue="USD"
+                defaultValue={currency}
                 style={{ marginLeft: 20 }}
                 onChange={onSelectCurrency}
               >

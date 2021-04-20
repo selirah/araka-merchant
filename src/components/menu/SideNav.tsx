@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Layout, Menu, Image, Button } from 'antd';
 import * as FeatherIcons from 'react-feather';
 import { useDispatch } from 'react-redux';
@@ -22,7 +22,6 @@ const { Sider } = Layout;
 
 export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
   const dispatch: AppDispatch = useDispatch();
-  const history = useHistory();
   const { t } = useTranslation();
   const utils = appSelector((state) => state.utils);
   const [activeMenu, setActiveMenu] = useState(utils.activeMenu);
@@ -43,11 +42,6 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
   const switchMenu = (menu: string, header: string) => {
     dispatch(changeMenu(menu));
     dispatch(changeMenuHeader(header));
-  };
-
-  const openOverview = () => {
-    switchMenu(menu.PROXYPAY_OVERVIEW, menuHeadings.REPORTS);
-    history.push(path.proxyPayOverview);
   };
 
   return (
@@ -238,8 +232,17 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                 />
               }
               title="ProxyPay Reports"
-              onTitleClick={() => openOverview()}
             >
+              <Menu.Item
+                key={menu.PROXYPAY_OVERVIEW}
+                onClick={() =>
+                  switchMenu(menu.PROXYPAY_OVERVIEW, menuHeadings.REPORTS)
+                }
+              >
+                <NavLink to={path.proxyPayOverview}>
+                  {menu.PROXYPAY_OVERVIEW}
+                </NavLink>
+              </Menu.Item>
               <Menu.Item
                 key={menu.PROXYPAY_SUBSCRIBERS}
                 onClick={() =>

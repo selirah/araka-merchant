@@ -43,14 +43,16 @@ const FeeReports = () => {
   const [isExporting, setIsExporting] = useState(false);
 
   useEffect(() => {
-    const { merchants } = reports;
-    const payload = {
-      periodFrom: '',
-      periodTo: '',
-      merchant: merchant ? merchant.name : '',
-      currency: 'USD',
-    };
-    dispatch(getPCESRequest(payload));
+    const { merchants, loading, pces } = reports;
+    if (!loading && !pces) {
+      const payload = {
+        periodFrom: '',
+        periodTo: '',
+        merchant: merchant ? merchant.name : '',
+        currency: 'USD',
+      };
+      dispatch(getPCESRequest(payload));
+    }
     dispatch(clearBooleans());
     if (isEmpty(merchants)) {
       dispatch(getMerchantsRequest());

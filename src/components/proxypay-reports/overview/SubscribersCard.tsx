@@ -5,7 +5,6 @@ import { path } from '../../../helpers/path';
 import { menu, menuHeadings } from '../../../helpers/menu';
 import { ProxyPayReport } from '../../../interfaces';
 import { getAreaOptions } from '../../../helpers/functions';
-import { isEmpty } from '../../../helpers/isEmpty';
 
 interface SubscribersCardProps {
   onSeeDetailsClick(path: string, menu: string, header: string): void;
@@ -14,40 +13,43 @@ interface SubscribersCardProps {
   isExporting: boolean;
   exportType: string;
   exportPage: string;
+  onReloadPage(): void;
 }
 
 const SubscribersCard: React.FC<SubscribersCardProps> = ({
   onSeeDetailsClick,
   proxyPayReport,
+  onReloadPage,
   // exportPage,
   // exportType,
   // isExporting,
   // onExportClick,
 }) => {
-  let totalSubscribers: any = {},
-    activeSubscribers: any = {},
-    newSubscribers: any = {};
+  const totalSubscribers = proxyPayReport
+    ? getAreaOptions(
+        proxyPayReport.subscribers.total.graph.labels,
+        proxyPayReport.subscribers.total.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
+  const activeSubscribers = proxyPayReport
+    ? getAreaOptions(
+        proxyPayReport.subscribers.active.graph.labels,
+        proxyPayReport.subscribers.active.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
 
-  if (proxyPayReport && !isEmpty(proxyPayReport.subscribers)) {
-    totalSubscribers = getAreaOptions(
-      proxyPayReport.subscribers.total.graph.labels,
-      proxyPayReport.subscribers.total.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
-    activeSubscribers = getAreaOptions(
-      proxyPayReport.subscribers.active.graph.labels,
-      proxyPayReport.subscribers.active.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
-    newSubscribers = getAreaOptions(
-      proxyPayReport.subscribers.newsubscribers.graph.labels,
-      proxyPayReport.subscribers.newsubscribers.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
-  }
+  const newSubscribers = proxyPayReport
+    ? getAreaOptions(
+        proxyPayReport.subscribers.newsubscribers.graph.labels,
+        proxyPayReport.subscribers.newsubscribers.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
 
   return (
     <div className="margin-top-small">
@@ -74,6 +76,14 @@ const SubscribersCard: React.FC<SubscribersCardProps> = ({
           <Button
             type="primary"
             className="export-buttons-excel"
+            onClick={() => onReloadPage()}
+            style={{ marginBottom: 10 }}
+          >
+            Refresh
+          </Button>
+          <Button
+            type="primary"
+            className="export-buttons-excel"
             onClick={() =>
               onSeeDetailsClick(
                 path.proxyPaySubscribers,
@@ -92,14 +102,14 @@ const SubscribersCard: React.FC<SubscribersCardProps> = ({
           <CardView
             value="Total Subscribers"
             title={proxyPayReport ? proxyPayReport.subscribers.total.value : 0}
-            data={proxyPayReport ? totalSubscribers : {}}
+            data={totalSubscribers}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
           <CardView
             value="Active Subscribers"
             title={proxyPayReport ? proxyPayReport.subscribers.active.value : 0}
-            data={proxyPayReport ? activeSubscribers : {}}
+            data={activeSubscribers}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
@@ -110,7 +120,7 @@ const SubscribersCard: React.FC<SubscribersCardProps> = ({
                 ? proxyPayReport.subscribers.newsubscribers.value
                 : 0
             }
-            data={proxyPayReport ? newSubscribers : {}}
+            data={newSubscribers}
           />
         </Col>
       </Row>

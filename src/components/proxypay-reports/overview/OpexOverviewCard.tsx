@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Button, Select } from 'antd';
+import { Row, Col, /*Button,*/ Select } from 'antd';
 import RawCardView from '../../cards/RawCardView';
 import { ProxyPayReport } from '../../../interfaces';
 import { isEmpty } from '../../../helpers/isEmpty';
@@ -33,7 +33,7 @@ const OpexOverviewCard: React.FC<OpexOverviewProps> = ({
             <h4 className="transaction-chart-text">Opex Overview</h4>
             <div className="currency">
               <Select
-                defaultValue="USD"
+                defaultValue={currency}
                 style={{ marginLeft: 20 }}
                 onChange={onSelectCurrency}
               >
@@ -84,7 +84,7 @@ const OpexOverviewCard: React.FC<OpexOverviewProps> = ({
                 : 0
             }
             currency={currency}
-            desc="2.5% Free"
+            desc="2.5% Fee"
           />
         </Col>
         <Col span={6} sm={24} md={6} xs={24}>
@@ -96,7 +96,7 @@ const OpexOverviewCard: React.FC<OpexOverviewProps> = ({
                 : 0
             }
             currency={currency}
-            desc="1.5% Free"
+            desc="1.5% Fee"
           />
         </Col>
         <Col span={6} sm={24} md={6} xs={24}>
@@ -108,7 +108,7 @@ const OpexOverviewCard: React.FC<OpexOverviewProps> = ({
                 : 0
             }
             currency={currency}
-            desc="1.5% Free"
+            desc="1.5% Fee"
           />
         </Col>
       </Row>

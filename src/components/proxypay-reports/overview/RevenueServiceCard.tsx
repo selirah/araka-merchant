@@ -1,9 +1,8 @@
 import React from 'react';
-import { Row, Col, Button, Select } from 'antd';
+import { Row, Col, /*Button,*/ Select } from 'antd';
 import CardView from '../../cards/CardView';
 import { ProxyPayReport } from '../../../interfaces';
 import { getAreaOptions } from '../../../helpers/functions';
-import { isEmpty } from '../../../helpers/isEmpty';
 
 interface RevenueServiceCardProps {
   proxyPayReport: ProxyPayReport | null;
@@ -26,30 +25,32 @@ const RevenueServiceCard: React.FC<RevenueServiceCardProps> = ({
   currency,
   onSelectCurrency,
 }) => {
-  let cards: any = {},
-    mpesa: any = {},
-    airtel: any = {};
+  const cards = proxyPayReport
+    ? getAreaOptions(
+        proxyPayReport.revenues.service.moneyTransfers.graph.labels,
+        proxyPayReport.revenues.service.moneyTransfers.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
 
-  if (proxyPayReport && !isEmpty(proxyPayReport.revenues)) {
-    cards = getAreaOptions(
-      proxyPayReport.revenues.service.moneyTransfers.graph.labels,
-      proxyPayReport.revenues.service.moneyTransfers.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
-    mpesa = getAreaOptions(
-      proxyPayReport.revenues.service.otherPayments.graph.labels,
-      proxyPayReport.revenues.service.otherPayments.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
-    airtel = getAreaOptions(
-      proxyPayReport.revenues.service.airtimeRecharge.graph.labels,
-      proxyPayReport.revenues.service.airtimeRecharge.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
-  }
+  const mpesa = proxyPayReport
+    ? getAreaOptions(
+        proxyPayReport.revenues.service.otherPayments.graph.labels,
+        proxyPayReport.revenues.service.otherPayments.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
+
+  const airtel = proxyPayReport
+    ? getAreaOptions(
+        proxyPayReport.revenues.service.airtimeRecharge.graph.labels,
+        proxyPayReport.revenues.service.airtimeRecharge.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
 
   return (
     <div className="margin-top-small">
@@ -62,7 +63,7 @@ const RevenueServiceCard: React.FC<RevenueServiceCardProps> = ({
             </h4>
             <div className="currency">
               <Select
-                defaultValue="USD"
+                defaultValue={currency}
                 style={{ marginLeft: 20 }}
                 onChange={onSelectCurrency}
               >

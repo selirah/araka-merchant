@@ -5,7 +5,6 @@ import { path } from '../../../helpers/path';
 import { menu, menuHeadings } from '../../../helpers/menu';
 import { ProxyPayReport } from '../../../interfaces';
 import { getAreaOptions } from '../../../helpers/functions';
-import { isEmpty } from '../../../helpers/isEmpty';
 
 interface VolumesCardProps {
   onSeeDetailsClick(path: string, menu: string, header: string): void;
@@ -30,30 +29,32 @@ const VolumesCard: React.FC<VolumesCardProps> = ({
   currency,
   onSelectCurrency,
 }) => {
-  let moneyTransfers: any = {},
-    otherPayments: any = {},
-    airtimeRecharge: any = {};
+  const moneyTransfers = proxyPayReport
+    ? getAreaOptions(
+        proxyPayReport.volumes.moneyTransfers.graph.labels,
+        proxyPayReport.volumes.moneyTransfers.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
 
-  if (proxyPayReport && !isEmpty(proxyPayReport.volumes)) {
-    moneyTransfers = getAreaOptions(
-      proxyPayReport.volumes.moneyTransfers.graph.labels,
-      proxyPayReport.volumes.moneyTransfers.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
-    otherPayments = getAreaOptions(
-      proxyPayReport.volumes.otherPayments.graph.labels,
-      proxyPayReport.volumes.otherPayments.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
-    airtimeRecharge = getAreaOptions(
-      proxyPayReport.volumes.airtimeRecharge.graph.labels,
-      proxyPayReport.volumes.airtimeRecharge.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
-  }
+  const otherPayments = proxyPayReport
+    ? getAreaOptions(
+        proxyPayReport.volumes.otherPayments.graph.labels,
+        proxyPayReport.volumes.otherPayments.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
+
+  const airtimeRecharge = proxyPayReport
+    ? getAreaOptions(
+        proxyPayReport.volumes.airtimeRecharge.graph.labels,
+        proxyPayReport.volumes.airtimeRecharge.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
 
   return (
     <div className="margin-top-small">
@@ -63,7 +64,7 @@ const VolumesCard: React.FC<VolumesCardProps> = ({
             <h4 className="transaction-chart-text">Volumes Overview</h4>
             <div className="currency">
               <Select
-                defaultValue="USD"
+                defaultValue={currency}
                 style={{ marginLeft: 20 }}
                 onChange={onSelectCurrency}
               >
