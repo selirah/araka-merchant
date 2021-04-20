@@ -51,9 +51,9 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({
 
   const barChartData = trxReports
     ? getBarOptions(
-        trxReports.totalApproved.graph.labels,
-        trxReports.totalApproved.graph.values,
-        trxReports.totalDeclined.graph.values
+        trxReports.totalDeclined.graph.labels.reverse(),
+        trxReports.totalApproved.graph.values.reverse(),
+        trxReports.totalDeclined.graph.values.reverse()
       )
     : {};
 
