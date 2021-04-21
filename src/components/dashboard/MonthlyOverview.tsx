@@ -51,9 +51,9 @@ const MonthlyOverview: React.FC<MonthlyOverviewProps> = ({
 
   const barChartData = trxReports
     ? getBarOptions(
-        trxReports.totalApproved.graph.labels.reverse(),
-        trxReports.totalApproved.graph.values.reverse(),
-        trxReports.totalDeclined.graph.values.reverse()
+        trxReports.totalValues.labels,
+        trxReports.totalValues.approvedValues,
+        trxReports.totalValues.declinedValues
       )
     : {};
 

@@ -61,7 +61,19 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
       </div>
       <Menu theme="light" mode="inline" defaultSelectedKeys={[activeMenu]}>
         <Menu.ItemGroup key="g1" title={t('sideBar.dashboards').toUpperCase()}>
-          <Menu.SubMenu
+          <Menu.Item
+            key={menu.DASHBOARD}
+            icon={
+              <FeatherIcons.Home
+                className="ant-menu-item-icon anticon"
+                size={14}
+              />
+            }
+            onClick={() => switchMenu(menu.DASHBOARD, menuHeadings.DASHBOARD)}
+          >
+            <NavLink to={path.dashboard}>Dashboard</NavLink>
+          </Menu.Item>
+          {/* <Menu.SubMenu
             key="sub1"
             icon={
               <FeatherIcons.Home
@@ -74,7 +86,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             <Menu.Item
               key={menu.DASHBOARD_DAILY}
               onClick={() =>
-                switchMenu(menu.DASHBOARD_DAILY, menuHeadings.DASHBOARDS)
+                switchMenu(menu.DASHBOARD_DAILY, menuHeadings.DASHBOARD)
               }
             >
               <NavLink to={path.dashboardDaily}>{menu.DASHBOARD_DAILY}</NavLink>
@@ -82,7 +94,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             <Menu.Item
               key={menu.DASHBOARD_WEEKLY}
               onClick={() =>
-                switchMenu(menu.DASHBOARD_WEEKLY, menuHeadings.DASHBOARDS)
+                switchMenu(menu.DASHBOARD_WEEKLY, menuHeadings.DASHBOARD)
               }
             >
               <NavLink to={path.dashboardWeekly}>
@@ -92,7 +104,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             <Menu.Item
               key={menu.DASHBOARD_MONTHLY}
               onClick={() =>
-                switchMenu(menu.DASHBOARD_MONTHLY, menuHeadings.DASHBOARDS)
+                switchMenu(menu.DASHBOARD_MONTHLY, menuHeadings.DASHBOARD)
               }
             >
               <NavLink to={path.dashboardMonthly}>
@@ -102,12 +114,12 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             <Menu.Item
               key={menu.DASHBOARD_YEARLY}
               onClick={() =>
-                switchMenu(menu.DASHBOARD_YEARLY, menuHeadings.DASHBOARDS)
+                switchMenu(menu.DASHBOARD_YEARLY, menuHeadings.DASHBOARD)
               }
             >
               <NavLink to={path.dashboardMain}>{menu.DASHBOARD_YEARLY}</NavLink>
             </Menu.Item>
-          </Menu.SubMenu>
+          </Menu.SubMenu> */}
         </Menu.ItemGroup>
         <Menu.ItemGroup key="g2" title={t('sideBar.payments').toUpperCase()}>
           <Menu.Item
@@ -175,23 +187,6 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                 {t('sideBar.merchantOverview')}
               </NavLink>
             </Menu.Item>
-
-            {/* <Menu.Item
-              key={menu.MERCHANT_PAYOUTS}
-              icon={
-                <FeatherIcons.CreditCard
-                  className="ant-menu-item-icon anticon"
-                  size={14}
-                />
-              }
-              onClick={() =>
-                switchMenu(menu.MERCHANT_PAYOUTS, menuHeadings.REPORTS)
-              }
-            >
-              <NavLink to={path.merchantPayouts}>
-                {t('sideBar.merchantPayouts')}
-              </NavLink>
-            </Menu.Item> */}
 
             <Menu.Item
               key={menu.VAS_PROCESSED}

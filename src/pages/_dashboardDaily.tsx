@@ -5,7 +5,7 @@ import { Layout, Spin, Row } from 'antd';
 import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
 import { TransactionReport } from '../interfaces';
-import { getTransactions, clearTransactions } from '../store/transactions';
+import { getOverviewRequest, clearPaymentData } from '../store/home';
 import { isEmpty } from '../helpers/isEmpty';
 import { getCurrentUser } from '../store/settings';
 
@@ -23,7 +23,7 @@ const DashboardDaily = () => {
   const dispatch: AppDispatch = useDispatch();
   const { user } = appSelector((state) => state.auth);
   const { client } = appSelector((state) => state.settings);
-  const transaction = appSelector((state) => state.transaction);
+  const home = appSelector((state) => state.home);
   const [loading, setLoading] = useState(false);
   const [currency, setCurrency] = useState('USD');
   const [trxReports, setTrxReports] = useState<TransactionReport | null>(null);
@@ -34,8 +34,8 @@ const DashboardDaily = () => {
 
   useEffect(() => {
     // fetch transaction history
-    dispatch(clearTransactions());
-    dispatch(getTransactions(params));
+    dispatch(clearPaymentData());
+    dispatch(getOverviewRequest(params));
     if (user && isEmpty(client)) {
       dispatch(getCurrentUser(user.userId));
     }
@@ -43,14 +43,14 @@ const DashboardDaily = () => {
   }, []);
 
   useEffect(() => {
-    const { loading, trxReports } = transaction;
+    const { loading, trxReports } = home;
     setLoading(loading);
     setTrxReports(trxReports);
-  }, [transaction]);
+  }, [home]);
 
   const onReloadTransaction = () => {
-    dispatch(clearTransactions());
-    dispatch(getTransactions(params));
+    dispatch(clearPaymentData());
+    dispatch(getOverviewRequest(params));
   };
 
   const onSelectCurrency = (value: string) => {
@@ -59,7 +59,7 @@ const DashboardDaily = () => {
       currrency: value,
       fixedPeriod: 'daily',
     };
-    dispatch(getTransactions(params));
+    dispatch(getOverviewRequest(params));
   };
 
   let container: React.ReactNode;

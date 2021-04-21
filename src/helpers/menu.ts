@@ -1,4 +1,5 @@
 export const menu = {
+  DASHBOARD: 'Dashboard',
   DASHBOARD_YEARLY: 'Dashboard Yearly',
   DASHBOARD_DAILY: 'Dashboard Daily',
   DASHBOARD_WEEKLY: 'Dashboard Weekly',
@@ -20,7 +21,7 @@ export const menu = {
 };
 
 export const menuHeadings = {
-  DASHBOARDS: 'Dashboards',
+  DASHBOARD: 'Dashboard',
   PAYMENTS: 'Payments',
   COMMERCE: 'Commerce',
   REPORTS: 'Reports',

@@ -1,9 +1,7 @@
 import React from 'react';
-import { Row, Col, /*Card,*/ Tag, Table } from 'antd';
-// import moment from 'moment-timezone';
+import { Row, Col, Tag, Table } from 'antd';
 import { MerchantOverview } from '../../interfaces';
 import { numberWithCommas } from '../../helpers/helperFunctions';
-// import { isEmpty } from '../../helpers/isEmpty';
 
 interface DetailsProps {
   overviews: MerchantOverview[];
@@ -78,7 +76,6 @@ const Details: React.FC<DetailsProps> = ({ overviews }) => {
   return (
     <Row gutter={20}>
       <Col span={24}>
-        {/* <Card> */}
         <div className="table-padding">
           <Table
             dataSource={dataSource}
@@ -94,7 +91,6 @@ const Details: React.FC<DetailsProps> = ({ overviews }) => {
             }}
           />
         </div>
-        {/* </Card> */}
       </Col>
     </Row>
   );

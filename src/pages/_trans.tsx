@@ -5,19 +5,14 @@ import { useDispatch } from 'react-redux';
 import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
 import {
-  getTransactions,
+  getTransactionsRequest,
   clearTransactions,
   exportTranxRequest,
   downloadReceiptRequest,
 } from '../store/transactions';
 import { getMerchantsRequest } from '../store/reports';
 import { isEmpty } from '../helpers/isEmpty';
-import {
-  Search,
-  TransactionHistory,
-  TransactionReport,
-  MerchantData,
-} from '../interfaces';
+import { TransactionHistory, MerchantData, Transaction } from '../interfaces';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
@@ -46,6 +41,7 @@ const Transactions = () => {
   const transaction = appSelector((state) => state.transaction);
   const reports = appSelector((state) => state.reports);
   const [trans, setTrans] = useState<TransactionHistory[]>([]);
+  const [trxReport, setTrxReport] = useState<Transaction | null>(null);
   const { t } = useTranslation();
   const [channelSearch, setChannelSearch] = useState('');
   const [searchValue, setSearchValue] = useState('');
@@ -57,18 +53,28 @@ const Transactions = () => {
   const [switchView, setSwitchView] = useState(false);
   const [loading, setLoading] = useState(false);
   const [currency, setCurrency] = useState('USD');
-  const [trxReports, setTrxReports] = useState<TransactionReport | null>(null);
   const [merchants, setMerchants] = useState<MerchantData[]>(reports.merchants);
+  const [merchant, setMerchant] = useState<MerchantData | null>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [isDownlaoding, setIsDownloading] = useState(false);
+  const [pageSize, setPageSize] = useState(10);
+  const [skip, setSkip] = useState(0);
+
   const params = {
     currrency: currency,
-    fixedPeriod: 'overall',
+    pageSize: 10,
+    skip: skip,
+    periodFrom: fromDate,
+    periodTo: toDate,
+    merchant: merchant ? merchant.name : '',
+    status: statusSearch,
+    channel: channelSearch,
+    searchValue: searchValue,
   };
 
   useEffect(() => {
     // fetch transaction history
-    dispatch(getTransactions(params));
+    dispatch(getTransactionsRequest(params));
     const { merchants } = reports;
     if (isEmpty(merchants)) {
       dispatch(getMerchantsRequest());
@@ -79,23 +85,24 @@ const Transactions = () => {
   useEffect(() => {
     const {
       loading,
-      trxReports,
+      transactions,
       isExporting,
       isRequestingDownload,
+      trans,
     } = transaction;
     const { merchants } = reports;
     setLoading(loading);
-    setTrxReports(trxReports);
     setMerchants(merchants);
-    setTrans(trxReports ? trxReports.data : []);
+    setTrans(trans);
+    setTrxReport(transactions);
     setIsExporting(isExporting);
     setIsDownloading(isRequestingDownload);
   }, [transaction, reports]);
 
   const onClickRow = (transactionID: number) => {
     setSwitchView(!switchView);
-    if (trxReports && !isEmpty(trxReports.data)) {
-      const trx = trxReports.data.find(
+    if (!isEmpty(transaction.trans)) {
+      const trx = transaction.trans.find(
         (t) => t.transactionId === transactionID
       );
       if (trx !== undefined) {
@@ -110,7 +117,7 @@ const Transactions = () => {
 
   const reloadTransaction = () => {
     dispatch(clearTransactions());
-    dispatch(getTransactions(params));
+    dispatch(getTransactionsRequest(params));
   };
 
   const onDownloadReceiptClick = (transactionId: number): void => {
@@ -119,28 +126,21 @@ const Transactions = () => {
 
   const onSelectCurrency = (value: string) => {
     setCurrency(value);
-    const params = {
-      currrency: value,
-      fixedPeriod: 'overall',
-    };
-    dispatch(getTransactions(params));
+    params.skip = skip;
+    params.currrency = value;
+    dispatch(getTransactionsRequest(params));
+  };
+
+  const onLoadMore = () => {
+    setPageSize(pageSize + 10);
+    setSkip(pageSize + 1);
+    params.skip = pageSize + 1;
+    dispatch(getTransactionsRequest(params));
   };
 
   const onExportClick = (type: string) => {
     setExportType(type);
-    const payload: Search = {
-      ChannelSearch: channelSearch,
-      DateSearch: {
-        from: fromDate,
-        to: toDate,
-      },
-      ExportType: type,
-      SearchValue: searchValue,
-      StatusSearch:
-        statusSearch.charAt(0).toUpperCase() +
-        statusSearch.slice(1).toLowerCase(),
-    };
-    dispatch(exportTranxRequest(payload));
+    dispatch(exportTranxRequest(params));
   };
 
   const onSearch = (values: any) => {
@@ -160,27 +160,28 @@ const Transactions = () => {
     }
     if (merchant !== undefined) {
       m = merchants.find((m) => m.merchantId === merchant);
+      setMerchant(m !== undefined ? m : null);
     }
-    const payload = {
-      periodFrom: pFrom,
-      periodTo: pTo,
-      fixedPeriod: 'overall',
-      merchant: m !== undefined ? m.name : '',
-      status: status,
-      channel: channel,
-      currrency: currency,
-      searchValue: query,
-    };
-    dispatch(getTransactions(payload));
+    params.periodFrom = pFrom;
+    params.periodTo = pTo;
+    params.merchant = m !== undefined ? m.name : '';
+    params.status = status;
+    params.channel = channel;
+    params.searchValue = query;
+    dispatch(getTransactionsRequest(params));
   };
 
   const onReset = (form: any) => {
     form.resetFields();
-    const payload = {
-      currrency: currency,
-      fixedPeriod: 'overall',
-    };
-    dispatch(getTransactions(payload));
+    params.skip = 0;
+    params.periodFrom = '';
+    params.periodTo = '';
+    params.merchant = '';
+    params.status = '';
+    params.channel = '';
+    params.searchValue = '';
+    dispatch(clearTransactions());
+    dispatch(getTransactionsRequest(params));
   };
 
   let render: React.ReactNode;
@@ -191,7 +192,7 @@ const Transactions = () => {
       </div>
     );
   }
-  if (!loading && !trxReports) {
+  if (!loading && isEmpty(trans)) {
     render = (
       <EmptyBox
         header={`${t('transactions.noTransactions')}`}
@@ -200,9 +201,12 @@ const Transactions = () => {
     );
   }
 
-  if (!loading && trxReports) {
+  if (!loading && !isEmpty(trans)) {
     render = (
-      <TransactionTable transactionHistory={trans} onClickRow={onClickRow} />
+      <EmptyBox
+        header={`${t('transactions.noTransactions')}`}
+        description={`${t('transactions.noTransDesc')}`}
+      />
     );
   }
 
@@ -233,7 +237,7 @@ const Transactions = () => {
               />
               {!isEmpty(trans) ? (
                 <TransactionSummaryCards
-                  trxReports={trxReports}
+                  trxReports={trxReport}
                   currency={currency}
                 />
               ) : null}
@@ -243,6 +247,14 @@ const Transactions = () => {
                   <div className="utility-buttons">
                     {!isEmpty(trans) ? (
                       <>
+                        <Button
+                          type="primary"
+                          className="export-buttons"
+                          onClick={() => onLoadMore()}
+                          loading={loading}
+                        >
+                          Load More
+                        </Button>
                         <Button
                           type="primary"
                           className="export-buttons"

@@ -1,12 +1,18 @@
 import { GraphData } from './Report';
 
-export interface TopMerchantGraphData {
+interface TopMerchantGraphData {
   name: string;
   value: number;
   graph: {
     values: number[];
     labels: string[];
   };
+}
+
+interface BarGraphData {
+  labels: string[];
+  approvedValues: number[];
+  declinedValues: number[];
 }
 
 export interface TransactionHistory {
@@ -23,14 +29,20 @@ export interface TransactionHistory {
   statusMessage: string;
   merchant: string;
   transactionDetails: {
-    data?: any;
+    data: any;
   };
+}
+
+export interface Transaction {
+  total: GraphData;
+  totalAmountApproved: GraphData;
+  totalAmountDeclined: GraphData;
+  data: TransactionHistory[];
 }
 
 export interface TransactionReport {
   total: GraphData;
-  totalApproved: GraphData;
-  totalDeclined: GraphData;
+  totalValues: BarGraphData;
   totalAmountApproved: GraphData;
   totalAmountDeclined: GraphData;
   topMerchants: {
@@ -38,5 +50,4 @@ export interface TransactionReport {
     secondTopMerchant: TopMerchantGraphData;
     thirdTopMerchant: TopMerchantGraphData;
   };
-  data: TransactionHistory[];
 }

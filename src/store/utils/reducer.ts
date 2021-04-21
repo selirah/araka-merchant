@@ -4,8 +4,8 @@ import { menu, menuHeadings } from '../../helpers/menu';
 import { AuthActionTypes } from '../auth';
 
 export const initialState: UtilsState = {
-  activeMenu: menu.DASHBOARD_DAILY,
-  menuHeader: menuHeadings.DASHBOARDS,
+  activeMenu: menu.DASHBOARD,
+  menuHeader: menuHeadings.DASHBOARD,
 };
 
 const reducer: Reducer<UtilsState> = (state = initialState, action) => {

@@ -1,104 +1,143 @@
-import React, { lazy, Suspense } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
-import { Spin, Row } from 'antd';
 import { path } from '../helpers/path';
+import { roles } from '../helpers/constants';
+import { appSelector } from '../helpers/appSelector';
 
-const Dashboard = lazy(() => import('../pages/_dashboard'));
-const DashboardDaily = lazy(() => import('../pages/_dashboardDaily'));
-const DashboardWeekly = lazy(() => import('../pages/_dashboardWeekly'));
-const DashboardMonthly = lazy(() => import('../pages/_dashboardMonthly'));
-const Transactions = lazy(() => import('../pages/_trans'));
-const PaymentPages = lazy(() => import('../pages/_paymentPages'));
-const Page = lazy(() => import('../pages/_[pageId]'));
-const Login = lazy(() => import('../pages/_login'));
-// const NotFoundPage = lazy(() => import('../pages/_404'));
-const Pay = lazy(() => import('../pages/_[pay]'));
-const GenericPay = lazy(() => import('../pages/_[genericPay]'));
-const ExamplePay = lazy(() => import('../pages/_examplePay'));
-const MerchantsOverview = lazy(() => import('../pages/_merchantsOverview'));
-const MerchantsPayouts = lazy(() => import('../pages/_merchantsPayouts'));
-const VASProcessed = lazy(() => import('../pages/_vasProcessed'));
-const Settings = lazy(() => import('../pages/_settings'));
-const FeeReports = lazy(() => import('../pages/_feeReports'));
+// import Dashboard from '../pages/_dashboardYearly';
+import Dashboard from '../pages/_dashboard';
+// import DashboardDaily from '../pages/_dashboardDaily';
+// import DashboardWeekly from '../pages/_dashboardWeekly';
+// import DashboardMonthly from '../pages/_dashboardMonthly';
+import Transactions from '../pages/_trans';
+import PaymentPages from '../pages/_paymentPages';
+import Page from '../pages/_[pageId]';
+import Login from '../pages/_login';
+import Pay from '../pages/_[pay]';
+import GenericPay from '../pages/_[genericPay]';
+import ExamplePay from '../pages/_examplePay';
+import MerchantsOverview from '../pages/_merchantsOverview';
+import VASProcessed from '../pages/_vasProcessed';
+import Settings from '../pages/_settings';
+import FeeReports from '../pages/_feeReports';
+import ProxyPaySubscribers from '../pages/_proxyPaySubscribers';
+import ProxyPayTransactions from '../pages/_proxyPayTransactions';
+import ProxyPayOverview from '../pages/_proxyPayOverview';
+import ProxyPayOVolumes from '../pages/_proxyPayVolumes';
+import Payouts from '../pages/_payouts';
+import NotFound from '../pages/_404';
 
 const Routes: React.FC = () => {
+  const { user } = appSelector((state) => state.auth);
+
+  let role: any;
+  if (user) {
+    role = user.roles.find((r) => r === roles.SuperMerchant);
+  } else {
+    role = roles.SuperMerchant;
+  }
+
   return (
     <React.Fragment>
       <Switch>
-        <Suspense
-          fallback={
-            <Row
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                justifyContent: 'center',
-              }}
-            >
-              <div
-                className="spin"
-                style={{ textAlign: 'center', marginTop: '300px' }}
-              >
-                <Spin size="small" />
-              </div>
-            </Row>
-          }
-        >
-          <Route exact path={path.login} component={Login} />
-          <PrivateRoute exact path={path.home} component={DashboardDaily} />
+        <Route exact path={path.login} component={Login} />
+        <PrivateRoute exact path={path.home} component={Dashboard} />
+        <PrivateRoute exact path={path.dashboard} component={Dashboard} />
+        {/* <PrivateRoute
+          exact
+          path={path.dashboardDaily}
+          component={DashboardDaily}
+        />
+        <PrivateRoute
+          exact
+          path={path.dashboardWeekly}
+          component={DashboardWeekly}
+        />
+        <PrivateRoute
+          exact
+          path={path.dashboardMonthly}
+          component={DashboardMonthly}
+        />
+        <PrivateRoute exact path={path.dashboardMain} component={Dashboard} /> */}
+        <PrivateRoute exact path={path.tranasctions} component={Transactions} />
+        <PrivateRoute exact path={path.paymentPages} component={PaymentPages} />
+        <PrivateRoute exact path={`${path.page}/:pageId`} component={Page} />
+        <PrivateRoute exact path={path.payouts} component={Payouts} />
+        <Route exact path={`${path.pay}/:processId`} component={Pay} />
+        <Route
+          exact
+          path={`${path.payment}/:processId`}
+          component={GenericPay}
+        />
+        <Route exact path={path.example} component={ExamplePay} />
+        <PrivateRoute exact path={path.settings} component={Settings} />
+
+        {role !== undefined && role === roles.SuperMerchant ? (
           <PrivateRoute
             exact
-            path={path.dashboardDaily}
-            component={DashboardDaily}
+            path={path.proxyPayOverview}
+            component={ProxyPayOverview}
           />
-          <PrivateRoute
-            exact
-            path={path.dashboardWeekly}
-            component={DashboardWeekly}
-          />
-          <PrivateRoute
-            exact
-            path={path.dashboardMonthly}
-            component={DashboardMonthly}
-          />
-          <PrivateRoute exact path={path.dashboardMain} component={Dashboard} />
-          <PrivateRoute
-            exact
-            path={path.tranasctions}
-            component={Transactions}
-          />
-          <PrivateRoute
-            exact
-            path={path.paymentPages}
-            component={PaymentPages}
-          />
-          <PrivateRoute exact path={`${path.page}/:pageId`} component={Page} />
+        ) : (
+          <NotFound />
+        )}
+
+        {role !== undefined && role === roles.SuperMerchant ? (
           <PrivateRoute
             exact
             path={path.merchantsOverview}
             component={MerchantsOverview}
           />
-          <PrivateRoute
-            exact
-            path={path.merchantPayouts}
-            component={MerchantsPayouts}
-          />
+        ) : (
+          <NotFound />
+        )}
+
+        {role !== undefined && role === roles.SuperMerchant ? (
           <PrivateRoute
             exact
             path={path.vasProcessed}
             component={VASProcessed}
           />
-          <PrivateRoute exact path={path.settings} component={Settings} />
+        ) : (
+          <NotFound />
+        )}
+
+        {role !== undefined && role === roles.SuperMerchant ? (
           <PrivateRoute exact path={path.feeReports} component={FeeReports} />
-          <Route exact path={`${path.pay}/:processId`} component={Pay} />
-          <Route
+        ) : (
+          <NotFound />
+        )}
+
+        {role !== undefined && role === roles.SuperMerchant ? (
+          <PrivateRoute
             exact
-            path={`${path.payment}/:processId`}
-            component={GenericPay}
+            path={path.proxyPaySubscribers}
+            component={ProxyPaySubscribers}
           />
-          <Route exact path={path.example} component={ExamplePay} />
-          {/* <Route exact component={NotFoundPage} path="*" /> */}
-        </Suspense>
+        ) : (
+          <NotFound />
+        )}
+
+        {role !== undefined && role === roles.SuperMerchant ? (
+          <PrivateRoute
+            exact
+            path={path.proxyPayTransactions}
+            component={ProxyPayTransactions}
+          />
+        ) : (
+          <NotFound />
+        )}
+
+        {role !== undefined && role === roles.SuperMerchant ? (
+          <PrivateRoute
+            exact
+            path={path.proxyPayVolumes}
+            component={ProxyPayOVolumes}
+          />
+        ) : (
+          <NotFound />
+        )}
       </Switch>
     </React.Fragment>
   );

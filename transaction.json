@@ -1,16 +1,9 @@
 {
-  "transactions": {
-    "parameters": [
-      "periodFrom",
-      "periodTo",
-      "fixedPeriod",
-      "merchant",
-      "status",
-      "channel",
-      "currrency",
-      "searchValue"
-    ],
+  "overview": {
+    "endpoint": "payment/getmerchantoverview",
+    "parameters": ["fixedPeriod", "currrency"],
     "fixedPeriod": ["overall", "daily", "monthly", "weekly"],
+    "currency": ["USD", "CDF"],
     "json-response": {
       "total": {
         "value": "",
@@ -19,20 +12,12 @@
           "values": []
         }
       },
-      "totalApproved": {
-        "value": "",
-        "graph": {
-          "labels": [],
-          "values": []
-        }
+      "totalValues": {
+        "labels": [],
+        "approvedValues": [],
+        "declinedValues": []
       },
-      "totalDeclined": {
-        "value": "",
-        "graph": {
-          "labels": [],
-          "values": []
-        }
-      },
+
       "totalAmountApproved": {
         "value": "",
         "graph": {
@@ -72,26 +57,58 @@
             "values": []
           }
         }
-      },
-      "data": [
-        {
-          "transactionId": "",
-          "createdAt": "",
-          "currency": "",
-          "amountPaid": "",
-          "transactionDescription": "",
-          "charge": "",
-          "vat": "",
-          "customer": "",
-          "channel": "",
-          "status": "",
-          "statusMessage": "",
-          "merchant": "",
-          "transactionDetails": {
-            "data": ""
-          }
-        }
-      ]
+      }
     }
+  },
+  "transactions": {
+    "endpoint": "payment/getmerchanttransactions",
+    "parameters": [
+      "periodFrom",
+      "periodTo",
+      "merchant",
+      "status",
+      "channel",
+      "currrency",
+      "searchValue",
+      "pageSize",
+      "skip"
+    ],
+    "total": {
+      "value": "",
+      "graph": {
+        "labels": [],
+        "values": []
+      }
+    },
+    "totalAmountApproved": {
+      "value": "",
+      "graph": {
+        "labels": [],
+        "values": []
+      }
+    },
+    "totalAmountDeclined": {
+      "value": "",
+      "graph": {
+        "labels": [],
+        "values": []
+      }
+    },
+    "data": [
+      {
+        "transactionId": "",
+        "createdAt": "",
+        "currency": "",
+        "amountPaid": "",
+        "transactionDescription": "",
+        "charge": "",
+        "vat": "",
+        "customer": "",
+        "channel": "",
+        "status": "",
+        "statusMessage": "",
+        "merchant": ""
+      }
+    ]
   }
 }
