@@ -203,10 +203,7 @@ const Transactions = () => {
 
   if (!loading && !isEmpty(trans)) {
     render = (
-      <EmptyBox
-        header={`${t('transactions.noTransactions')}`}
-        description={`${t('transactions.noTransDesc')}`}
-      />
+      <TransactionTable transactionHistory={trans} onClickRow={onClickRow} />
     );
   }
 
