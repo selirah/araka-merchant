@@ -8,16 +8,15 @@ import { TransactionReport } from '../interfaces';
 import { getOverviewRequest, clearPaymentData } from '../store/home';
 
 const { Content } = Layout;
-
-const MonthlyOverview = lazy(
-  () => import('../components/dashboard/MonthlyOverview')
+const YearlyOverview = lazy(
+  () => import('../components/dashboard/YearlyOverview')
 );
 const CurrencyFilter = lazy(
   () => import('../components/dashboard/CurrencyFilter')
 );
 const EmptyBox = lazy(() => import('../components/dashboard/EmptyBox'));
 
-const DashboardMonthly = () => {
+const DashboardYearly = () => {
   const dispatch: AppDispatch = useDispatch();
   const { user } = appSelector((state) => state.auth);
   const home = appSelector((state) => state.home);
@@ -26,11 +25,11 @@ const DashboardMonthly = () => {
   const [trxReports, setTrxReports] = useState<TransactionReport | null>(null);
   const params = {
     currrency: currency,
-    fixedPeriod: 'monthly',
+    fixedPeriod: 'overall',
   };
 
   useEffect(() => {
-    // fetch transaction history
+    // fetch transactions history
     dispatch(clearPaymentData());
     dispatch(getOverviewRequest(params));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,7 +50,7 @@ const DashboardMonthly = () => {
     setCurrency(value);
     const params = {
       currrency: value,
-      fixedPeriod: 'monthly',
+      fixedPeriod: 'daily',
     };
     dispatch(getOverviewRequest(params));
   };
@@ -69,7 +68,7 @@ const DashboardMonthly = () => {
   }
   if (!loading && trxReports) {
     container = (
-      <MonthlyOverview
+      <YearlyOverview
         trxReports={trxReports}
         userRoles={user!.roles}
         currency={currency}
@@ -97,4 +96,4 @@ const DashboardMonthly = () => {
   );
 };
 
-export default withRouter(DashboardMonthly);
+export default withRouter(DashboardYearly);

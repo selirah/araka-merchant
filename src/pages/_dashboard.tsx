@@ -5,54 +5,67 @@ import { Layout, Spin, Row } from 'antd';
 import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
 import { TransactionReport } from '../interfaces';
-import { getTransactions, clearTransactions } from '../store/transactions';
+import { getOverviewRequest, clearPaymentData } from '../store/home';
+import { isEmpty } from '../helpers/isEmpty';
+import { getCurrentUser } from '../store/settings';
+
+const Overview = lazy(() => import('../components/dashboard/Overview'));
+const LiveFilter = lazy(() => import('../components/dashboard/LiveFilter'));
+const EmptyBox = lazy(() => import('../components/dashboard/EmptyBox'));
 
 const { Content } = Layout;
-const YearlyOverview = lazy(
-  () => import('../components/dashboard/YearlyOverview')
-);
-const CurrencyFilter = lazy(
-  () => import('../components/dashboard/CurrencyFilter')
-);
-const EmptyBox = lazy(() => import('../components/dashboard/EmptyBox'));
 
 const Dashboard = () => {
   const dispatch: AppDispatch = useDispatch();
   const { user } = appSelector((state) => state.auth);
-  const transaction = appSelector((state) => state.transaction);
+  const { client } = appSelector((state) => state.settings);
+  const home = appSelector((state) => state.home);
   const [loading, setLoading] = useState(false);
   const [currency, setCurrency] = useState('USD');
+  const [fixedPeriod, setFixedPeriod] = useState('daily');
   const [trxReports, setTrxReports] = useState<TransactionReport | null>(null);
   const params = {
     currrency: currency,
-    fixedPeriod: 'overall',
+    fixedPeriod: fixedPeriod,
   };
 
   useEffect(() => {
-    // fetch transactions history
-    dispatch(clearTransactions());
-    dispatch(getTransactions(params));
+    // fetch transaction history
+    dispatch(clearPaymentData());
+    dispatch(getOverviewRequest(params));
+    if (user && isEmpty(client)) {
+      dispatch(getCurrentUser(user.userId));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    const { loading, trxReports } = transaction;
+    const { loading, trxReports } = home;
     setLoading(loading);
     setTrxReports(trxReports);
-  }, [transaction]);
+  }, [home]);
 
   const onReloadTransaction = () => {
-    dispatch(clearTransactions());
-    dispatch(getTransactions(params));
+    dispatch(clearPaymentData());
+    dispatch(getOverviewRequest(params));
   };
 
   const onSelectCurrency = (value: string) => {
     setCurrency(value);
     const params = {
       currrency: value,
-      fixedPeriod: 'daily',
+      fixedPeriod: fixedPeriod,
     };
-    dispatch(getTransactions(params));
+    dispatch(getOverviewRequest(params));
+  };
+
+  const onSelectPeriod = (value: string) => {
+    setFixedPeriod(value);
+    const params = {
+      currrency: currency,
+      fixedPeriod: value,
+    };
+    dispatch(getOverviewRequest(params));
   };
 
   let container: React.ReactNode;
@@ -63,15 +76,17 @@ const Dashboard = () => {
       </Row>
     );
   }
+
   if (!loading && !trxReports) {
     container = <EmptyBox onReloadTransaction={onReloadTransaction} />;
   }
   if (!loading && trxReports) {
     container = (
-      <YearlyOverview
+      <Overview
         trxReports={trxReports}
         userRoles={user!.roles}
         currency={currency}
+        fixedPeriod={fixedPeriod}
       />
     );
   }
@@ -88,7 +103,12 @@ const Dashboard = () => {
             </Row>
           }
         >
-          <CurrencyFilter onSelectCurrency={onSelectCurrency} />
+          <LiveFilter
+            onSelectCurrency={onSelectCurrency}
+            currency={currency}
+            fixedPeriod={fixedPeriod}
+            onSelectPeriod={onSelectPeriod}
+          />
           {container}
         </Suspense>
       </Content>

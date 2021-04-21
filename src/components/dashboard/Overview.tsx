@@ -9,26 +9,49 @@ import { Clock } from '../../utils/clock';
 import { roles } from '../../helpers/constants';
 import { getAreaOptions, getBarOptions } from '../../helpers/functions';
 
-interface WeeklyOverViewProps {
+interface OverviewProps {
   trxReports: TransactionReport | null;
   userRoles: string[];
   currency: string;
+  fixedPeriod: string;
 }
 
-const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({
+const Overview: React.FC<OverviewProps> = ({
+  currency,
+  fixedPeriod,
   trxReports,
   userRoles,
-  currency,
 }) => {
   const role = userRoles.find((r) => r === roles.SuperMerchant);
   const { time } = Clock();
+  let borderColor: string;
+  let bgColor: string;
+
+  switch (fixedPeriod) {
+    case 'daily':
+      borderColor = '#1ce1ac';
+      bgColor = '#1ce1ac50';
+      break;
+    case 'weekly':
+      borderColor = '#5E35B1';
+      bgColor = '#D1C4E9';
+      break;
+    case 'monthly':
+      borderColor = '#FFA000';
+      bgColor = '#FFE082';
+      break;
+    default:
+      borderColor = '#1976D2';
+      bgColor = '#BBDEFB';
+      break;
+  }
 
   const totalTrx = trxReports
     ? getAreaOptions(
         trxReports.total.graph.labels,
         trxReports.total.graph.values,
-        '#5E35B1',
-        '#D1C4E9'
+        borderColor,
+        bgColor
       )
     : {};
 
@@ -36,16 +59,16 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({
     ? getAreaOptions(
         trxReports.totalAmountApproved.graph.labels,
         trxReports.totalAmountApproved.graph.values,
-        '#5E35B1',
-        '#D1C4E9'
+        borderColor,
+        bgColor
       )
     : {};
   const totalAmountDeclined = trxReports
     ? getAreaOptions(
         trxReports.totalAmountDeclined.graph.labels,
         trxReports.totalAmountDeclined.graph.values,
-        '#5E35B1',
-        '#D1C4E9'
+        borderColor,
+        bgColor
       )
     : {};
 
@@ -61,8 +84,8 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({
     ? getAreaOptions(
         trxReports.topMerchants.firstTopMerchant.graph.labels,
         trxReports.topMerchants.firstTopMerchant.graph.values,
-        '#5E35B1',
-        '#D1C4E9'
+        borderColor,
+        bgColor
       )
     : {};
 
@@ -70,8 +93,8 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({
     ? getAreaOptions(
         trxReports.topMerchants.secondTopMerchant.graph.labels,
         trxReports.topMerchants.secondTopMerchant.graph.values,
-        '#5E35B1',
-        '#D1C4E9'
+        borderColor,
+        bgColor
       )
     : {};
 
@@ -79,8 +102,8 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({
     ? getAreaOptions(
         trxReports.topMerchants.thirdTopMerchant.graph.labels,
         trxReports.topMerchants.thirdTopMerchant.graph.values,
-        '#5E35B1',
-        '#D1C4E9'
+        borderColor,
+        bgColor
       )
     : {};
 
@@ -89,11 +112,12 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({
       <Row gutter={10}>
         <Col span={24}>
           <div className="upper-header">
-            <h4>WEEKLY STATISTICS</h4>
+            <h4>{fixedPeriod.toUpperCase()} STATISTICS</h4>
             <h6>{time}</h6>
           </div>
         </Col>
       </Row>
+
       <div className="margin-top">
         <Row gutter={20}>
           <Col span={24}>
@@ -130,7 +154,7 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({
           <h4 className="transaction-chart-text">Transactions Chart</h4>
         </Row>
         <Row gutter={20}>
-          <Col span={24}>
+          <Col span={24} sm={24} md={24} xs={24}>
             <Card>
               <div className="chart-padding">
                 <BarChart info={barChartData} />
@@ -203,4 +227,4 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({
   );
 };
 
-export default WeeklyOverView;
+export default Overview;

@@ -50,9 +50,9 @@ const DailyOverview: React.FC<DailyOverviewProps> = ({
 
   const barChartData = trxReports
     ? getBarOptions(
-        trxReports.totalApproved.graph.labels,
-        trxReports.totalApproved.graph.values,
-        trxReports.totalDeclined.graph.values
+        trxReports.totalValues.labels,
+        trxReports.totalValues.approvedValues,
+        trxReports.totalValues.declinedValues
       )
     : {};
 

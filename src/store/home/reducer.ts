@@ -8,6 +8,8 @@ export const initialState: HomeState = {
   isPaymentSuccess: false,
   isSubmitting: false,
   orderResponse: undefined,
+  loading: false,
+  trxReports: null,
 };
 
 const reducer: Reducer<HomeState> = (state = initialState, action) => {
@@ -50,6 +52,25 @@ const reducer: Reducer<HomeState> = (state = initialState, action) => {
         isPaymentSuccess: false,
         isPaymentFailure: false,
         orderResponse: undefined,
+        trxReports: null,
+      };
+    case HomeTypes.GET_OVERVIEW_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: undefined,
+      };
+    case HomeTypes.GET_OVERVIEW_SUCCESS:
+      return {
+        ...state,
+        trxReports: action.payload,
+        loading: false,
+      };
+    case HomeTypes.GET_OVERVIEW_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       };
     default:
       return state;

@@ -11,7 +11,7 @@ import {
   downloadReceiptFailure,
 } from './actions';
 import { callApiGet, callApiPost } from '../../utils/api';
-import { DataStream, Search } from '../../interfaces';
+import { DataStream } from '../../interfaces';
 
 function* getTransactions({ payload }: { type: string; payload: any }): any {
   try {
@@ -55,7 +55,7 @@ function* getExportTransactions({
   payload,
 }: {
   type: string;
-  payload: Search;
+  payload: any;
 }): any {
   try {
     const res = yield call(
@@ -113,7 +113,7 @@ function* getDownloadReceiptStream({
 }
 
 function* watchGetTransactions() {
-  yield takeEvery(TransactionTypes.GET_TRANSACTIONS, getTransactions);
+  yield takeEvery(TransactionTypes.GET_TRANSACTIONS_REQUEST, getTransactions);
 }
 
 function* watchGetCurrencies() {

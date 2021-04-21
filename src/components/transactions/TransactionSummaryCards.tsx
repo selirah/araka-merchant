@@ -1,11 +1,11 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import CardView from '../cards/CardView';
-import { TransactionReport } from '../../interfaces';
+import { Transaction } from '../../interfaces';
 import { getAreaOptions } from '../../helpers/functions';
 
 interface TransactionSummaryCardsProps {
-  trxReports: TransactionReport | null;
+  trxReports: Transaction | null;
   currency: string;
 }
 

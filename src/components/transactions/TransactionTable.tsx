@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, /*Card,*/ Tag, Table } from 'antd';
+import { Row, Col, Tag, Table } from 'antd';
 import moment from 'moment-timezone';
 import { TransactionHistory } from '../../interfaces/TransactionHistory';
 import { transactionStatus, timeZones } from '../../helpers/constants';
@@ -151,12 +151,10 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
   return (
     <Row gutter={20}>
       <Col span={24}>
-        {/* <Card> */}
         <div className="table-padding">
           <Table
             dataSource={dataSource}
             columns={columns}
-            // pagination={{ pageSize: 15 }}
             onRow={(t: TT) => ({
               onClick: () => onClickRow(t.transactionId),
             })}
@@ -171,7 +169,6 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
             }}
           />
         </div>
-        {/* </Card> */}
       </Col>
     </Row>
   );
