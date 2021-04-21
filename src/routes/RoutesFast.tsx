@@ -2,6 +2,8 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
 import { path } from '../helpers/path';
+import { roles } from '../helpers/constants';
+import { appSelector } from '../helpers/appSelector';
 
 import Dashboard from '../pages/_dashboard';
 import DashboardDaily from '../pages/_dashboardDaily';
@@ -24,8 +26,18 @@ import ProxyPayTransactions from '../pages/_proxyPayTransactions';
 import ProxyPayOverview from '../pages/_proxyPayOverview';
 import ProxyPayOVolumes from '../pages/_proxyPayVolumes';
 import Payouts from '../pages/_payouts';
+import NotFound from '../pages/_404';
 
 const Routes: React.FC = () => {
+  const { user } = appSelector((state) => state.auth);
+
+  let role: any;
+  if (user) {
+    role = user.roles.find((r) => r === roles.SuperMerchant);
+  } else {
+    role = roles.SuperMerchant;
+  }
+
   return (
     <React.Fragment>
       <Switch>
@@ -50,41 +62,51 @@ const Routes: React.FC = () => {
         <PrivateRoute exact path={path.tranasctions} component={Transactions} />
         <PrivateRoute exact path={path.paymentPages} component={PaymentPages} />
         <PrivateRoute exact path={`${path.page}/:pageId`} component={Page} />
-        <PrivateRoute
-          exact
-          path={path.merchantsOverview}
-          component={MerchantsOverview}
-        />
-        <PrivateRoute
-          exact
-          path={path.merchantPayouts}
-          component={MerchantsPayouts}
-        />
-        <PrivateRoute exact path={path.vasProcessed} component={VASProcessed} />
-        <PrivateRoute exact path={path.settings} component={Settings} />
-        <PrivateRoute exact path={path.feeReports} component={FeeReports} />
-        <PrivateRoute
-          exact
-          path={path.proxyPaySubscribers}
-          component={ProxyPaySubscribers}
-        />
-        <PrivateRoute
-          exact
-          path={path.proxyPayTransactions}
-          component={ProxyPayTransactions}
-        />
-        <PrivateRoute
-          exact
-          path={path.proxyPayOverview}
-          component={ProxyPayOverview}
-        />
-        <PrivateRoute
-          exact
-          path={path.proxyPayVolumes}
-          component={ProxyPayOVolumes}
-        />
-        <PrivateRoute exact path={path.payouts} component={Payouts} />
 
+        {role !== undefined && role === roles.SuperMerchant ? (
+          <>
+            <PrivateRoute
+              exact
+              path={path.proxyPayOverview}
+              component={ProxyPayOverview}
+            />
+            <PrivateRoute
+              exact
+              path={path.merchantsOverview}
+              component={MerchantsOverview}
+            />
+            <PrivateRoute
+              exact
+              path={path.merchantPayouts}
+              component={MerchantsPayouts}
+            />
+            <PrivateRoute
+              exact
+              path={path.vasProcessed}
+              component={VASProcessed}
+            />
+            <PrivateRoute exact path={path.settings} component={Settings} />
+            <PrivateRoute exact path={path.feeReports} component={FeeReports} />
+            <PrivateRoute
+              exact
+              path={path.proxyPaySubscribers}
+              component={ProxyPaySubscribers}
+            />
+            <PrivateRoute
+              exact
+              path={path.proxyPayTransactions}
+              component={ProxyPayTransactions}
+            />
+            <PrivateRoute
+              exact
+              path={path.proxyPayVolumes}
+              component={ProxyPayOVolumes}
+            />
+          </>
+        ) : (
+          <NotFound />
+        )}
+        <PrivateRoute exact path={path.payouts} component={Payouts} />
         <Route exact path={`${path.pay}/:processId`} component={Pay} />
         <Route
           exact

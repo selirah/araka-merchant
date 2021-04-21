@@ -14,6 +14,7 @@ import {
 } from '../store/settings';
 import { isEmpty } from '../helpers/isEmpty';
 import { Register } from '../interfaces';
+import { roles } from '../helpers/constants';
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -60,6 +61,12 @@ export const Settings = () => {
     merchantError,
     singleError,
   } = appSelector((state) => state.settings);
+  let role;
+  if (user) {
+    role = user.roles.find((r) => r === roles.SuperMerchant);
+  } else {
+    role = roles.SuperMerchant;
+  }
 
   useEffect(() => {
     if (user && isEmpty(client)) {
@@ -145,24 +152,26 @@ export const Settings = () => {
                   user={user}
                 />
               </TabPane>
-              <TabPane
-                tab={
-                  <span onClick={() => dispatch(clearSomeBooleans())}>
-                    <UserAddOutlined /> Create Merchant
-                  </span>
-                }
-                key="2"
-              >
-                <CreateMerchant
-                  Form={Form}
-                  errors={singleError ? singleError : merchantError}
-                  form={form}
-                  isSubmitting={isSubmitting}
-                  onSubmit={createMerchant}
-                  success={createMerchantSuccess}
-                  values={initialValues}
-                />
-              </TabPane>
+              {role !== undefined && role === roles.SuperMerchant ? (
+                <TabPane
+                  tab={
+                    <span onClick={() => dispatch(clearSomeBooleans())}>
+                      <UserAddOutlined /> Create Merchant
+                    </span>
+                  }
+                  key="2"
+                >
+                  <CreateMerchant
+                    Form={Form}
+                    errors={singleError ? singleError : merchantError}
+                    form={form}
+                    isSubmitting={isSubmitting}
+                    onSubmit={createMerchant}
+                    success={createMerchantSuccess}
+                    values={initialValues}
+                  />
+                </TabPane>
+              ) : null}
             </Tabs>
           </div>
         </Suspense>

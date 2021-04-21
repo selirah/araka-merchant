@@ -132,7 +132,7 @@ const FeeReports = () => {
     );
   }
 
-  if (!loading && isEmpty(pcesReport)) {
+  if (!loading && isEmpty(pces)) {
     render = (
       <EmptyBox
         header="PCES Reports"
@@ -142,7 +142,7 @@ const FeeReports = () => {
     );
   }
 
-  if (!loading && !isEmpty(pcesReport)) {
+  if (!loading && !isEmpty(pces)) {
     render = <Details pces={pces} />;
   }
 

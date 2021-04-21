@@ -131,7 +131,7 @@ const ProxyPayTransactions = () => {
             {loading ? null : (
               <>
                 <Row style={{ position: 'relative' }}>
-                  <h4 className="transaction-chart-text">Subscribers Table</h4>
+                  <h4 className="transaction-chart-text">Transactions Table</h4>
                   <div className="utility-buttons">
                     <Button
                       type="primary"
