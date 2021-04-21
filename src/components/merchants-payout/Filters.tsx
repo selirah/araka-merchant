@@ -10,9 +10,11 @@ import {
   Form,
 } from 'antd';
 import { Clock } from '../../utils/clock';
+import { MerchantData } from '../../interfaces';
+import { isEmpty } from '../../helpers/isEmpty';
 
 interface FiltersProps {
-  merchants: string[];
+  merchants: MerchantData[];
   onSearch(values: any): void;
   onReset(form: any): void;
 }
@@ -43,6 +45,19 @@ const Filters: React.FC<FiltersProps> = ({ merchants, onSearch, onReset }) => {
           className="filter-form"
         >
           <Row gutter={10}>
+            <Col span={6}>
+              <Form.Item name="fixedPeriod">
+                <Select
+                  placeholder="Period: Default=Overall"
+                  style={{ width: '100%' }}
+                >
+                  <Option value="overall">Overall</Option>
+                  <Option value="daily">Daily</Option>
+                  <Option value="weekly">Weekly</Option>
+                  <Option value="monthly">Monthly</Option>
+                </Select>
+              </Form.Item>
+            </Col>
             <Col span={6}>
               <Form.Item name="status">
                 <Select
@@ -101,12 +116,21 @@ const Filters: React.FC<FiltersProps> = ({ merchants, onSearch, onReset }) => {
                 <Select
                   placeholder="Merchant: Default=All"
                   style={{ width: '100%' }}
+                  allowClear
+                  showSearch
+                  optionFilterProp="children"
+                  filterOption={(input: any, option: any) =>
+                    option.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
+                  }
                 >
-                  {merchants.map((m) => (
-                    <Option value={m} key={Math.random()}>
-                      {m}
-                    </Option>
-                  ))}
+                  {!isEmpty(merchants) &&
+                    merchants.map((m) => (
+                      <Option value={m.merchantId} key={m.merchantId}>
+                        {m.name}
+                      </Option>
+                    ))}
                 </Select>
               </Form.Item>
             </Col>

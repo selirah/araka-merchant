@@ -316,7 +316,7 @@ export const getAreaOptions = (
       },
     ],
     options: {
-      maintainAspectRatio: false,
+      maintainAspectRatio: true,
       responsive: true,
       hover: {
         mode: 'nearest',
@@ -397,7 +397,7 @@ export const getAreaOptions = (
   return data;
 };
 
-const getBarOptions = (
+export const getBarOptions = (
   labels: string[],
   approvedDataPoints: any[],
   declinedDataPoints: any[]

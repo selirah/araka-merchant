@@ -3,105 +3,86 @@ import { Row, Col, Card } from 'antd';
 import CardView from '../cards/CardView';
 import BarChart from '../chart/BarChart';
 import ProfitCard from '../cards/ProfitCard';
-import { TransactionHistory } from '../../interfaces';
-import {
-  CalculateTransactionTotals,
-  GetAreaAndBarPoints,
-  GetTopMerchants,
-  TopMerchantAreaChart,
-} from '../../helpers/functions';
+import { TransactionReport } from '../../interfaces';
 import { numberWithCommas } from '../../helpers/helperFunctions';
-import { sortByAmount } from '../../helpers/sorter';
-import { isEmpty } from '../../helpers/isEmpty';
 import { Clock } from '../../utils/clock';
 import { roles } from '../../helpers/constants';
-import moment from 'moment';
+import { getAreaOptions, getBarOptions } from '../../helpers/functions';
 
 interface MonthlyOverviewProps {
-  transactions: TransactionHistory[];
+  trxReports: TransactionReport | null;
   userRoles: string[];
+  currency: string;
 }
 
 const MonthlyOverview: React.FC<MonthlyOverviewProps> = ({
-  transactions,
+  trxReports,
   userRoles,
+  currency,
 }) => {
   const role = userRoles.find((r) => r === roles.SuperMerchant);
   const { time } = Clock();
 
-  // let us first filter the transactions to get those conducted for the last 30 days
-  let filteredTransactions: TransactionHistory[] = [];
-  const thirtyDays = moment(new Date())
-    .subtract(30, 'days')
-    .format('MM/DD/YYYY 23:59:59');
-  const last30Days = moment(thirtyDays, 'MM/DD/YYYY HH:mm:ss').format('X');
-
-  for (let trx of transactions) {
-    const tDate = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('X');
-    // check if trasnaction exists within these dates
-    if (tDate >= last30Days) {
-      filteredTransactions.push(trx);
-    }
-  }
-
-  const { total, approved, declined } = CalculateTransactionTotals(
-    filteredTransactions,
-    'monthly'
-  );
-
-  const {
-    trxAreaChart,
-    approvedAreaChart,
-    declinedAreaChart,
-    barChart,
-    merchantsArr,
-  } = GetAreaAndBarPoints(filteredTransactions, 'monthly');
-
-  let topMerchant,
-    secondMerchant,
-    thirdMerchant,
-    topMerchantChart,
-    secondMerchantChart,
-    thirdMerchantChart;
-
-  if (role !== undefined && role === roles.SuperMerchant) {
-    const { merchantTotals } = GetTopMerchants(
-      filteredTransactions,
-      'monthly',
-      merchantsArr
-    );
-
-    if (!isEmpty(merchantTotals)) {
-      sortByAmount(merchantTotals);
-      topMerchant = merchantTotals[0];
-      secondMerchant = merchantTotals[1];
-      thirdMerchant = merchantTotals[2];
-
-      topMerchantChart = TopMerchantAreaChart(
-        topMerchant,
-        filteredTransactions,
-        'monthly',
+  const totalTrx = trxReports
+    ? getAreaOptions(
+        trxReports.total.graph.labels,
+        trxReports.total.graph.values,
         '#FFA000',
         '#FFE082'
-      );
+      )
+    : {};
 
-      secondMerchantChart = TopMerchantAreaChart(
-        secondMerchant,
-        filteredTransactions,
-        'monthly',
+  const totalAmountApproved = trxReports
+    ? getAreaOptions(
+        trxReports.totalAmountApproved.graph.labels,
+        trxReports.totalAmountApproved.graph.values,
         '#FFA000',
         '#FFE082'
-      );
-
-      thirdMerchantChart = TopMerchantAreaChart(
-        thirdMerchant,
-        filteredTransactions,
-        'monthly',
+      )
+    : {};
+  const totalAmountDeclined = trxReports
+    ? getAreaOptions(
+        trxReports.totalAmountDeclined.graph.labels,
+        trxReports.totalAmountDeclined.graph.values,
         '#FFA000',
         '#FFE082'
-      );
-    }
-  }
+      )
+    : {};
+
+  const barChartData = trxReports
+    ? getBarOptions(
+        trxReports.totalApproved.graph.labels.reverse(),
+        trxReports.totalApproved.graph.values.reverse(),
+        trxReports.totalDeclined.graph.values.reverse()
+      )
+    : {};
+
+  const firstTopMerchant = trxReports
+    ? getAreaOptions(
+        trxReports.topMerchants.firstTopMerchant.graph.labels,
+        trxReports.topMerchants.firstTopMerchant.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
+
+  const secondTopMerchant = trxReports
+    ? getAreaOptions(
+        trxReports.topMerchants.secondTopMerchant.graph.labels,
+        trxReports.topMerchants.secondTopMerchant.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
+
+  const thirdTopMerchant = trxReports
+    ? getAreaOptions(
+        trxReports.topMerchants.thirdTopMerchant.graph.labels,
+        trxReports.topMerchants.thirdTopMerchant.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
 
   return (
     <>
@@ -120,24 +101,24 @@ const MonthlyOverview: React.FC<MonthlyOverviewProps> = ({
               <Col span={8} sm={24} md={8} xs={24}>
                 <CardView
                   value="Transactions"
-                  title={total}
-                  data={trxAreaChart}
+                  title={trxReports ? trxReports.total.value : 0}
+                  data={totalTrx}
                 />
               </Col>
               <Col span={8} sm={24} md={8} xs={24}>
                 <CardView
                   value="Approved"
-                  title={approved}
-                  data={approvedAreaChart}
-                  currency="$"
+                  title={trxReports ? trxReports.totalAmountApproved.value : 0}
+                  data={totalAmountApproved}
+                  currency={currency}
                 />
               </Col>
               <Col span={8} sm={24} md={8} xs={24}>
                 <CardView
                   value="Declined"
-                  title={declined}
-                  data={declinedAreaChart}
-                  currency="$"
+                  title={trxReports ? trxReports.totalAmountDeclined.value : 0}
+                  data={totalAmountDeclined}
+                  currency={currency}
                 />
               </Col>
             </Row>
@@ -152,7 +133,7 @@ const MonthlyOverview: React.FC<MonthlyOverviewProps> = ({
           <Col span={24}>
             <Card>
               <div className="chart-padding">
-                <BarChart info={barChart} />
+                <BarChart info={barChartData} />
               </div>
             </Card>
           </Col>
@@ -168,44 +149,51 @@ const MonthlyOverview: React.FC<MonthlyOverviewProps> = ({
               <ProfitCard
                 mainTitle="#1 Top Merchant"
                 paragraph={`3% of revenue by ${
-                  topMerchant ? topMerchant.merchant : 'N/A'
+                  trxReports && trxReports.topMerchants.firstTopMerchant.name
+                    ? trxReports.topMerchants.firstTopMerchant.name
+                    : 'N/A'
                 }`}
-                amount={`$${
-                  topMerchant
-                    ? numberWithCommas((topMerchant.amount * 0.03).toFixed(2))
-                    : '0.00'
-                }`}
-                data={topMerchant ? topMerchantChart : {}}
+                amount={`${currency} ${numberWithCommas(
+                  (trxReports && trxReports.topMerchants.firstTopMerchant.value
+                    ? trxReports.topMerchants.firstTopMerchant.value
+                    : 0
+                  ).toFixed(2)
+                )}`}
+                data={firstTopMerchant}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <ProfitCard
                 mainTitle="#2 Top Merchant"
                 paragraph={`3% of revenue by ${
-                  secondMerchant ? secondMerchant.merchant : 'N/A'
+                  trxReports && trxReports.topMerchants.secondTopMerchant.name
+                    ? trxReports.topMerchants.secondTopMerchant.name
+                    : 'N/A'
                 }`}
-                amount={`$${
-                  secondMerchant
-                    ? numberWithCommas(
-                        (secondMerchant.amount * 0.03).toFixed(2)
-                      )
-                    : '0.00'
-                }`}
-                data={secondMerchant ? secondMerchantChart : {}}
+                amount={`${currency} ${numberWithCommas(
+                  (trxReports && trxReports.topMerchants.secondTopMerchant.value
+                    ? trxReports.topMerchants.secondTopMerchant.value
+                    : 0
+                  ).toFixed(2)
+                )}`}
+                data={secondTopMerchant}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <ProfitCard
                 mainTitle="#3 Top Merchant"
                 paragraph={`3% of revenue by ${
-                  thirdMerchant ? thirdMerchant.merchant : 'N/A'
+                  trxReports && trxReports.topMerchants.thirdTopMerchant.name
+                    ? trxReports.topMerchants.thirdTopMerchant.name
+                    : 'N/A'
                 }`}
-                amount={`$${
-                  thirdMerchant
-                    ? numberWithCommas((thirdMerchant.amount * 0.03).toFixed(2))
-                    : '0.00'
-                }`}
-                data={thirdMerchant ? thirdMerchantChart : {}}
+                amount={`${currency} ${numberWithCommas(
+                  (trxReports && trxReports.topMerchants.thirdTopMerchant.value
+                    ? trxReports.topMerchants.thirdTopMerchant.value
+                    : 0
+                  ).toFixed(2)
+                )}`}
+                data={thirdTopMerchant}
               />
             </Col>
           </Row>

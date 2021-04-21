@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Row, Col, Form, Input, Button, Alert } from 'antd';
-import { Merchant, Page } from '../../interfaces';
+import { Merchant, Page, Fee } from '../../interfaces';
 import { PayCircleOutlined, LoadingOutlined } from '@ant-design/icons';
 import { isEmpty } from '../../helpers/isEmpty';
 
@@ -9,6 +9,8 @@ interface PaymentFormProps {
   onSubmit(values: Merchant): void;
   isSubmit: boolean;
   error: any;
+  fee: Fee | undefined;
+  onCalculateFee(e: React.FormEvent<EventTarget>): void;
 }
 
 export const PaymentForm: React.FC<PaymentFormProps> = ({
@@ -16,6 +18,8 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
   onSubmit,
   error,
   isSubmit,
+  fee,
+  onCalculateFee,
 }) => {
   const [values] = useState<Merchant>({
     amount: page.amount !== '' ? page.amount : '',
@@ -126,27 +130,78 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
             </Col>
           </Row>
           <Row gutter={10}>
-            <Col span={8}>
+            <Col span={4}>
               <Form.Item name="currency" label="Amount">
                 <Input readOnly disabled />
               </Form.Item>
             </Col>
             {page.amount !== '' ? (
-              <Col span={16}>
-                <Form.Item name="amount" label="Amount" className="hide-label">
-                  <Input readOnly disabled />
-                </Form.Item>
+              <Col span={20}>
+                <Row gutter={5}>
+                  <Col span={12}>
+                    <Form.Item
+                      name="amount"
+                      label="Amount"
+                      className="hide-label"
+                    >
+                      <Input readOnly disabled />
+                    </Form.Item>
+                  </Col>
+                  <Col span={6}>
+                    <Form.Item label="Fee">
+                      <Input
+                        readOnly
+                        disabled
+                        value={fee !== undefined ? fee.fee.toFixed(2) : ''}
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col span={6}>
+                    <Form.Item label="VAT">
+                      <Input
+                        readOnly
+                        disabled
+                        value={fee !== undefined ? fee.vat.toFixed(2) : ''}
+                      />
+                    </Form.Item>
+                  </Col>
+                </Row>
               </Col>
             ) : (
-              <Col span={16}>
-                <Form.Item
-                  name="amount"
-                  label="Amount"
-                  className="hide-label"
-                  rules={[{ required: true, message: 'Enter the amount' }]}
-                >
-                  <Input placeholder="Enter amount.." />
-                </Form.Item>
+              <Col span={20}>
+                <Row gutter={5}>
+                  <Col span={12}>
+                    <Form.Item
+                      name="amount"
+                      label="Amount"
+                      className="hide-label"
+                      rules={[{ required: true, message: 'Enter the amount' }]}
+                    >
+                      <Input
+                        placeholder="Amount"
+                        onBlur={(e) => onCalculateFee(e)}
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col span={6}>
+                    <Form.Item label="Fee">
+                      <Input
+                        readOnly
+                        disabled
+                        value={fee !== undefined ? fee.fee.toFixed(2) : ''}
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col span={6}>
+                    <Form.Item label="VAT">
+                      <Input
+                        readOnly
+                        disabled
+                        value={fee !== undefined ? fee.vat.toFixed(2) : ''}
+                      />
+                    </Form.Item>
+                  </Col>
+                </Row>
               </Col>
             )}
           </Row>

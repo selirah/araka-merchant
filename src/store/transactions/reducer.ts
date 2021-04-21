@@ -19,6 +19,7 @@ export const initialState: TransactionState = {
   downloadRecieptSuccess: false,
   isRequestingDownload: false,
   downloadError: undefined,
+  trxReports: null,
 };
 
 const reducer: Reducer<TransactionState> = (state = initialState, action) => {
@@ -32,7 +33,7 @@ const reducer: Reducer<TransactionState> = (state = initialState, action) => {
     case TransactionTypes.GET_TRANSACTIONS_SUCCESS:
       return {
         ...state,
-        transactions: action.payload,
+        trxReports: action.payload,
         loading: false,
       };
     case TransactionTypes.GET_TRANSACTIONS_FAILURE:
@@ -62,6 +63,7 @@ const reducer: Reducer<TransactionState> = (state = initialState, action) => {
       return {
         ...state,
         transactions: [],
+        trxReports: null,
       };
     case TransactionTypes.EXPORT_TRANSACTIONS_REQUEST:
       return {

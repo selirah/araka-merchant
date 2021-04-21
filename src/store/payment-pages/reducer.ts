@@ -11,6 +11,9 @@ export const initialState: PaymentPagesState = {
   isSubmitting: false,
   singlePage: undefined,
   pageTransactions: [],
+  fee: undefined,
+  feeError: undefined,
+  feeLoading: false,
 };
 
 const reducer: Reducer<PaymentPagesState> = (state = initialState, action) => {
@@ -171,6 +174,31 @@ const reducer: Reducer<PaymentPagesState> = (state = initialState, action) => {
       return {
         ...state,
         pages: [],
+      };
+    case PaymentPagesTypes.REQUEST_FEE_REQUEST:
+      return {
+        ...state,
+        feeError: initialState.feeError,
+        feeLoading: true,
+      };
+
+    case PaymentPagesTypes.REQUEST_FEE_SUCCESS:
+      return {
+        ...state,
+        fee: action.payload,
+        feeLoading: false,
+      };
+
+    case PaymentPagesTypes.REQUEST_FEE_FAILURE:
+      return {
+        ...state,
+        feeError: action.payload,
+        feeLoading: false,
+      };
+    case PaymentPagesTypes.CLEAR_FEE:
+      return {
+        ...state,
+        fee: undefined,
       };
     default:
       return state;

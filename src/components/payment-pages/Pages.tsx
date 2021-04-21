@@ -37,7 +37,7 @@ const Pages: React.FC<PagesProps> = ({
 }) => {
   const columns: any[] = [
     {
-      title: 'Status',
+      title: <span style={{ fontSize: '2rem', color: '#868686' }}>&bull;</span>,
       dataIndex: 'status',
       key: 'status',
       align: 'center',

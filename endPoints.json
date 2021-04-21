@@ -1,0 +1,504 @@
+{
+  "pces-reporting": {
+    "endpoint": "payments/getpcesreports",
+    "json-response": {
+      "transactions": {
+        "value": "",
+        "graph": {
+          "values": [],
+          "labels": []
+        }
+      },
+      "totalAmount": {
+        "value": "",
+        "graph": {
+          "values": [],
+          "labels": []
+        }
+      },
+      "arakaAnnualFees": {
+        "value": "",
+        "graph": {
+          "values": [],
+          "labels": []
+        }
+      },
+      "totalArakaFees": {
+        "value": "",
+        "graph": {
+          "values": [],
+          "labels": []
+        }
+      },
+      "totalArakaIncome": {
+        "value": "",
+        "graph": {
+          "values": [],
+          "labels": []
+        }
+      },
+      "pcesshare": {
+        "value": "",
+        "graph": {
+          "values": [],
+          "labels": []
+        }
+      },
+      "data": [
+        {
+          "merchant": "",
+          "totalTransactions": "",
+          "totalAmount": "",
+          "annualFees": "",
+          "arakaFees": "",
+          "totalArakaIncome": "",
+          "otherFees": "",
+          "currency": ""
+        }
+      ]
+    }
+  },
+  "proxy-pay-reporting": {
+    "endpoint": "payments/getproxypayreports",
+    "parameters": ["periodFrom", "periodTo", "type"],
+    "currency": "USD or CDF",
+    "type": [
+      "transactions",
+      "volumes",
+      "subscribers",
+      "revenues",
+      "opex",
+      "ebitda"
+    ],
+    "json-response": {
+      "subscribers": {
+        "total": {
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
+          }
+        },
+        "active": {
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
+          }
+        },
+        "new": {
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
+          }
+        },
+        "external": {
+          "total": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          },
+          "active": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          },
+          "inactive": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          }
+        },
+        "data": [
+          {
+            "subscriberName": "",
+            "status": "active or inactive",
+            "emailAddress": "",
+            "phoneNumber": "",
+            "createdAt": "",
+            "lastTransactionDate": ""
+          }
+        ]
+      },
+      "transactions": {
+        "overview": {
+          "total": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          },
+          "successful": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          },
+          "failed": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          }
+        },
+        "card": {
+          "total": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          },
+          "successful": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          },
+          "failed": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          }
+        },
+        "mobileMoney": {
+          "total": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          },
+          "successful": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          },
+          "failed": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          }
+        }
+      },
+      "volumes": {
+        "currency": "USD or CDF",
+        "data": {
+          "moneyTransfers": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          },
+          "otherPayments": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          },
+          "airtimeRecharge": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          },
+          "airtimeRechargeSplits": {
+            "airtel": {
+              "value": "",
+              "graph": {
+                "labels": [],
+                "values": []
+              }
+            },
+            "vodacom": {
+              "value": "",
+              "graph": {
+                "labels": [],
+                "values": []
+              }
+            },
+            "orange": {
+              "value": "",
+              "graph": {
+                "labels": [],
+                "values": []
+              }
+            },
+            "africell": {
+              "value": "",
+              "graph": {
+                "labels": [],
+                "values": []
+              }
+            }
+          }
+        }
+      },
+      "revenues": {
+        "channel": {
+          "cards": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          },
+          "mpesa": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          },
+          "airtel": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          }
+        },
+        "service": {
+          "cards": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          },
+          "mpesa": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          },
+          "airtel": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          }
+        }
+      },
+      "opex": {
+        "bankGatewayProvider": {
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
+          }
+        },
+        "airtelMoney": {
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
+          }
+        },
+        "orangeMoney": {
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
+          }
+        },
+        "mpesa": {
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
+          }
+        }
+      },
+      "ebitda": {
+        "proxyPayRevenue": {
+          "total": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          },
+          "cards": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          },
+          "mobileMoney": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
+            }
+          }
+        }
+      }
+    }
+  },
+  "payout-reporting": {
+    "endpoint": "payments/getproxypayouts",
+    "parameters": ["periodFrom", "periodTo", "currency"],
+    "json-response": {
+      "processedTransactions": {
+        "value": "",
+        "graph": {
+          "labels": [],
+          "values": []
+        }
+      },
+      "totalPaidOut": {
+        "value": "",
+        "graph": {
+          "labels": [],
+          "values": []
+        }
+      },
+      "feesPaid": {
+        "value": "",
+        "graph": {
+          "labels": [],
+          "values": []
+        }
+      },
+      "outstanding(fee Included)": {
+        "value": "",
+        "graph": {
+          "labels": [],
+          "values": []
+        }
+      },
+      "data": [
+        {
+          "amount": "",
+          "feesPaid": "",
+          "transactionId": "",
+          "paidOn": "",
+          "merchant (only for super merchant)": ""
+        }
+      ]
+    },
+    "post-endpoint (only, for super merchant)": "payments/newrecordpayout",
+    "payload": {
+      "merchant": "",
+      "amount": "",
+      "comments": "",
+      "currency": ""
+    }
+  },
+  "transactions": {
+    "parameters": [
+      "periodFrom",
+      "periodTo",
+      "fixedPeriod",
+      "merchant",
+      "status",
+      "channel",
+      "currrency",
+      "searchValue"
+    ],
+    "fixedPeriod": ["overall", "daily", "monthly", "weekly"],
+    "json-response": {
+      "total": {
+        "value": "",
+        "graph": {
+          "labels": [],
+          "values": []
+        }
+      },
+      "totalAmountApproved": {
+        "value": "",
+        "graph": {
+          "labels": [],
+          "values": []
+        }
+      },
+      "totalAmountDeclined": {
+        "value": "",
+        "graph": {
+          "labels": [],
+          "values": []
+        }
+      },
+      "totalApproved": {
+        "value": "",
+        "graph": {
+          "labels": [],
+          "values": []
+        }
+      },
+      "totalDeclined": {
+        "value": "",
+        "graph": {
+          "labels": [],
+          "values": []
+        }
+      },
+      "topMerchants": {
+        "firstTopMerchant": {
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
+          }
+        },
+        "secondTopMerchant": {
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
+          }
+        },
+        "thirdTopMerchant": {
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
+          }
+        }
+      },
+      "data": [
+        {
+          "transactionId": "",
+          "createdAt": "",
+          "currency": "",
+          "amountPaid": "",
+          "transactionDescription": "",
+          "charge": "",
+          "vat": "",
+          "customer": "",
+          "channel": "",
+          "status": "",
+          "statusMessage": "",
+          "merchant": "",
+          "transactionDetails": {
+            "data": ""
+          }
+        }
+      ]
+    }
+  }
+}

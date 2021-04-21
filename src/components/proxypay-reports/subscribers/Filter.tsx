@@ -1,18 +1,18 @@
 import React from 'react';
-import { Row, Col, DatePicker, Input, Button, Collapse, Form } from 'antd';
-import { Clock } from '../../utils/clock';
+import { Row, Col, Button, Collapse, Select, Form, DatePicker } from 'antd';
+import { Clock } from '../../../utils/clock';
 
-interface FiltersProps {
+interface FilterProps {
   onSearch(values: any): void;
   onReset(form: any): void;
 }
 
 const { Panel } = Collapse;
+const { Option } = Select;
 
-const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
+const Filter: React.FC<FilterProps> = ({ onReset, onSearch }) => {
   const { time } = Clock();
   const [form] = Form.useForm();
-
   return (
     <Collapse style={{ marginTop: '5px' }}>
       <Panel
@@ -32,37 +32,48 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
           className="filter-form"
         >
           <Row gutter={10}>
-            <Col span={6}>
+            <Col span={5}>
               <Form.Item name="periodFrom">
                 <DatePicker
                   style={{ width: '100%' }}
                   format="MMMM D, YYYY"
                   allowClear
-                  placeholder="Payout Date: From"
+                  placeholder="Created At: From"
                 />
               </Form.Item>
             </Col>
-            <Col span={6}>
+            <Col span={5}>
               <Form.Item name="periodTo">
                 <DatePicker
                   style={{ width: '100%' }}
                   format="MMMM D, YYYY"
                   allowClear
-                  placeholder="Payout Date: To"
+                  placeholder="Created At: To"
                 />
               </Form.Item>
             </Col>
-            <Col span={12}>
-              <Form.Item name="query">
-                <Input
-                  placeholder="Balance before/Balance after/Amount/Fee"
+            <Col span={5}>
+              <Form.Item name="status">
+                <Select
+                  placeholder="Status: Default=All"
                   style={{ width: '100%' }}
+                >
+                  <Option value="ACTIVE">ACTIVE</Option>
+                  <Option value="INACTIVE">INACTIVE</Option>
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={5}>
+              <Form.Item name="transactionDate">
+                <DatePicker
+                  style={{ width: '100%' }}
+                  format="MMMM D, YYYY"
+                  allowClear
+                  placeholder="Last transaction date"
                 />
               </Form.Item>
             </Col>
-          </Row>
-          <Row style={{ marginTop: '10px' }} gutter={10}>
-            <Col span={6}>
+            <Col span={4}>
               <Row gutter={5}>
                 <Form.Item>
                   <Col span={6}>
@@ -93,4 +104,4 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
   );
 };
 
-export default Filters;
+export default Filter;

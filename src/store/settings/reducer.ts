@@ -12,6 +12,11 @@ export const initialState: SettingsState = {
   error: undefined,
   isChangingPassword: false,
   loading: false,
+  createMerchantFailure: false,
+  createMerchantSuccess: false,
+  merchants: [],
+  singleError: '',
+  merchantError: undefined,
 };
 
 const reducer: Reducer<SettingsState> = (state = initialState, action) => {
@@ -85,6 +90,41 @@ const reducer: Reducer<SettingsState> = (state = initialState, action) => {
         changePasswordFailure: true,
       };
 
+    case SettingsTypes.REGISTER_MERCHANT_REQUEST:
+      return {
+        ...state,
+        isSubmitting: true,
+        merchantError: undefined,
+        singleError: '',
+      };
+
+    case SettingsTypes.REGISTER_MERCHANT_SUCCESS:
+      return {
+        ...state,
+        isSubmitting: false,
+        createMerchantSuccess: true,
+        createMerchantFailure: false,
+        merchants: [action.payload, ...state.merchants],
+      };
+
+    case SettingsTypes.REGISTER_MERCHANT_FAILURE:
+      return {
+        ...state,
+        isSubmitting: false,
+        merchantError: action.payload,
+        createMerchantFailure: true,
+        createMerchantSuccess: false,
+      };
+
+    case SettingsTypes.LOG_SINGLE_ERROR: {
+      return {
+        ...state,
+        isSubmitting: false,
+        singleError: action.payload,
+        createMerchantSuccess: false,
+      };
+    }
+
     case SettingsTypes.CLEAR_SOME_BOOLEANS:
       return {
         ...state,
@@ -92,6 +132,11 @@ const reducer: Reducer<SettingsState> = (state = initialState, action) => {
         changePasswordSuccess: false,
         editFailure: false,
         editSuccess: false,
+        createMerchantFailure: false,
+        createMerchantSuccess: false,
+        error: undefined,
+        merchantError: undefined,
+        singleError: '',
       };
 
     case AuthActionTypes.DESTROY_STATES:

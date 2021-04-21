@@ -1,5 +1,5 @@
 export const menu = {
-  DASHBOARD_YEARLY: 'Dashboard Main',
+  DASHBOARD_YEARLY: 'Dashboard Yearly',
   DASHBOARD_DAILY: 'Dashboard Daily',
   DASHBOARD_WEEKLY: 'Dashboard Weekly',
   DASHBOARD_MONTHLY: 'Dashboard Monthly',
@@ -11,6 +11,12 @@ export const menu = {
   SETTINGS: 'Settings',
   MY_PAYOUTS: 'My Payouts',
   MERCHANT_OVERVIEW: 'Merchant Overview',
+  PROXYPAY_REPORTS: 'ProxyPay Reports',
+  PROXYPAY_SUBSCRIBERS: 'Subscribers',
+  PROXYPAY_TRANSACTIONS: 'Transaction',
+  PROXYPAY_VOLUMES: 'Volumes',
+  PROXYPAY_OVERVIEW: 'Overview',
+  PAYOUTS: 'Payouts',
 };
 
 export const menuHeadings = {
@@ -19,4 +25,5 @@ export const menuHeadings = {
   COMMERCE: 'Commerce',
   REPORTS: 'Reports',
   CONFIGURATION: 'Configuration',
+  PAYOUTS: 'Payouts',
 };

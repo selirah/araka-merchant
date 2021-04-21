@@ -16,7 +16,6 @@ const Login = lazy(() => import('../pages/_login'));
 const Pay = lazy(() => import('../pages/_[pay]'));
 const GenericPay = lazy(() => import('../pages/_[genericPay]'));
 const ExamplePay = lazy(() => import('../pages/_examplePay'));
-const MyPayouts = lazy(() => import('../pages/_myPayouts'));
 const MerchantsOverview = lazy(() => import('../pages/_merchantsOverview'));
 const MerchantsPayouts = lazy(() => import('../pages/_merchantsPayouts'));
 const VASProcessed = lazy(() => import('../pages/_vasProcessed'));
@@ -46,8 +45,7 @@ const Routes: React.FC = () => {
           }
         >
           <Route exact path={path.login} component={Login} />
-          <PrivateRoute exact path={path.home} component={Dashboard} />
-          <PrivateRoute exact path={path.dashboardMain} component={Dashboard} />
+          <PrivateRoute exact path={path.home} component={DashboardDaily} />
           <PrivateRoute
             exact
             path={path.dashboardDaily}
@@ -63,6 +61,7 @@ const Routes: React.FC = () => {
             path={path.dashboardMonthly}
             component={DashboardMonthly}
           />
+          <PrivateRoute exact path={path.dashboardMain} component={Dashboard} />
           <PrivateRoute
             exact
             path={path.tranasctions}
@@ -74,7 +73,6 @@ const Routes: React.FC = () => {
             component={PaymentPages}
           />
           <PrivateRoute exact path={`${path.page}/:pageId`} component={Page} />
-          <PrivateRoute exact path={path.myPayouts} component={MyPayouts} />
           <PrivateRoute
             exact
             path={path.merchantsOverview}

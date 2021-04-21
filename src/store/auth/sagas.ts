@@ -6,7 +6,7 @@ import { Login } from '../../interfaces';
 import { authorization } from '../../utils/authorization';
 import { secure } from '../../utils/secure';
 
-function* login({ payload }: { type: string; payload: Login }) {
+function* login({ payload }: { type: string; payload: Login }): any {
   try {
     const res = yield call(callApiPost, 'login', payload);
     secure.set('user', res.data);

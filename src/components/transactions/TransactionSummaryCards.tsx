@@ -1,28 +1,43 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import CardView from '../cards/CardView';
-import { TransactionHistory } from '../../interfaces';
-import { GetAreaAndBarPoints } from '../../helpers/functions';
-import { GetTransactionsAnalytics } from '../../helpers/transaction_functions';
+import { TransactionReport } from '../../interfaces';
+import { getAreaOptions } from '../../helpers/functions';
 
 interface TransactionSummaryCardsProps {
-  transactions: TransactionHistory[];
+  trxReports: TransactionReport | null;
+  currency: string;
 }
 
 const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
-  transactions,
+  trxReports,
+  currency,
 }) => {
-  const {
-    totalTransactions,
-    totalAmountProcessed,
-    totalAmountDeclined,
-  } = GetTransactionsAnalytics(transactions);
+  const totalTrx = trxReports
+    ? getAreaOptions(
+        trxReports.total.graph.labels,
+        trxReports.total.graph.values,
+        '#1976D2',
+        '#BBDEFB'
+      )
+    : {};
 
-  const {
-    trxAreaChart,
-    approvedAreaChart,
-    declinedAreaChart,
-  } = GetAreaAndBarPoints(transactions, 'yearly');
+  const totalAmountApproved = trxReports
+    ? getAreaOptions(
+        trxReports.totalAmountApproved.graph.labels,
+        trxReports.totalAmountApproved.graph.values,
+        '#1976D2',
+        '#BBDEFB'
+      )
+    : {};
+  const totalAmountDeclined = trxReports
+    ? getAreaOptions(
+        trxReports.totalAmountDeclined.graph.labels,
+        trxReports.totalAmountDeclined.graph.values,
+        '#1976D2',
+        '#BBDEFB'
+      )
+    : {};
 
   return (
     <div className="margin-top-small">
@@ -35,26 +50,24 @@ const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Transactions"
-                title={totalTransactions}
-                data={trxAreaChart}
+                title={trxReports ? trxReports.total.value : 0}
+                data={totalTrx}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Approved"
-                // title={`$${numberWithCommas(totalAmountProcessed.toFixed(2))}`}
-                title={totalAmountProcessed}
-                data={approvedAreaChart}
-                currency="$"
+                title={trxReports ? trxReports.totalAmountApproved.value : 0}
+                data={totalAmountApproved}
+                currency={currency}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Declined"
-                // title={`$${numberWithCommas(totalAmountDeclined.toFixed(2))}`}
-                title={totalAmountDeclined}
-                data={declinedAreaChart}
-                currency="$"
+                title={trxReports ? trxReports.totalAmountDeclined.value : 0}
+                data={totalAmountDeclined}
+                currency={currency}
               />
             </Col>
           </Row>

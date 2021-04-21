@@ -4,13 +4,20 @@ import { Empty, Card } from 'antd';
 interface EmptyBoxProps {
   header: string;
   description: string;
+  image: string;
 }
 
-const EmptyBox: React.FC<EmptyBoxProps> = ({ header, description }) => {
+const EmptyBox: React.FC<EmptyBoxProps> = ({
+  header,
+  description,
+  image,
+  children,
+}) => {
   return (
     <Card className="margin-top-big">
       <Empty
         className="no-data-field"
+        image={image}
         imageStyle={{
           height: 100,
         }}
@@ -30,7 +37,9 @@ const EmptyBox: React.FC<EmptyBoxProps> = ({ header, description }) => {
             {description}
           </React.Fragment>
         }
-      />
+      >
+        {children}
+      </Empty>
     </Card>
   );
 };

@@ -13,7 +13,7 @@ interface DetailsProps {
 const Details: React.FC<DetailsProps> = ({ payouts }) => {
   const columns: any = [
     {
-      title: 'Status',
+      title: <span style={{ fontSize: '2rem', color: '#868686' }}>&bull;</span>,
       dataIndex: 'status',
       key: 'status',
       align: 'center',

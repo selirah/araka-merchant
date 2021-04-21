@@ -33,7 +33,7 @@ html::-moz-scrollbar-thumb {
 }
 
 body {
-  font-family: 'Mukta', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 a {
@@ -343,6 +343,14 @@ a {
   width: 100%;
   height: auto;
   padding: 15px;
+}
+
+.comment-section .ant-input {
+  border: 1px dashed #d9d9d9;
+}
+
+.comment-section .ant-input:hover {
+  border: 1px dashed #d9d9d9;
 }
 
 /* iframe {
@@ -1064,7 +1072,7 @@ thead[class*='ant-table-thead'] th {
 
 .upper-header {
   position: relative;
-  margin-top: 30px;
+  margin-top: 5px;
 }
 
 .upper-header h4 {
@@ -1129,25 +1137,81 @@ thead[class*='ant-table-thead'] th {
 }
 
 .ecard .card-chunk h1 {
-  font-size: 2rem;
-  font-family: 'Mukta', sans-serif !important;
-  font-weight: 300;
+  font-size: 1.5rem;
+  font-weight: 400;
   margin-bottom: 4px;
   color: #141322 !important;
 }
 
 .ecard .card-chunk p {
   color: rgba(0, 0, 0, 0.3);
-  font-size: 0.9rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.ecard .card-chunk-raw {
+  width: 100%;
+  flex: 0 0 100%;
+}
+
+.ecard .card-chunk-raw h1 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 4px;
+  color: #141322 !important;
+}
+
+.ecard .card-chunk-raw .value {
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 0.7rem;
   font-family: 'Mukta', sans-serif;
   text-transform: uppercase;
   font-weight: 700;
 }
 
+.ecard .card-chunk-raw .padding {
+  padding-bottom: 10px;
+}
+
+.ecard .card-chunk-raw .desc {
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-top: -10px;
+}
+
 .transaction-chart-text {
   text-transform: uppercase;
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 700;
+}
+
+.currency .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  position: relative;
+  background-color: #fff;
+  border: none !important;
+  border-radius: 2px;
+  -webkit-transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  margin-top: -5px;
+}
+
+.currency .ant-select-focused .ant-select-selector,
+.currency .ant-select-selector:focus,
+.currency .ant-select-selector:active,
+.currency .ant-select-open .ant-select-selector {
+  border-color: 0 !important;
+  box-shadow: none !important;
+}
+
+.currency .ant-select-single.ant-select-show-arrow .ant-select-selection-item,
+.currency
+  .ant-select-single.ant-select-show-arrow
+  .ant-select-selection-placeholder {
+  padding-right: 18px;
+  margin-top: 3px;
 }
 
 .chart-padding {
@@ -1275,6 +1339,28 @@ thead[class*='ant-table-thead'] th {
   border-radius: 20px;
 }
 
+.export-buttons-excel {
+  margin-left: 20px;
+  background-color: #35b9e6;
+  border: 1px solid #35b9e6;
+  text-transform: uppercase;
+  border-radius: 20px;
+}
+
+.new-payout .ant-btn-primary[disabled],
+.new-payout .ant-btn-primary[disabled]:hover,
+.new-payout .ant-btn-primary[disabled]:focus,
+.new-payout .ant-btn-primary[disabled]:active {
+  color: rgba(0, 0, 0, 0.25);
+  background-color: #81cce6;
+  border: 1px solid #81cce6;
+  text-shadow: none;
+  color: #fff;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  opacity: 0.5;
+}
+
 .new-page-btn {
   background-color: #f55c29;
   border: 1px solid #f55c29;
@@ -1357,6 +1443,105 @@ thead[class*='ant-table-thead'] th {
   border: 1px solid #d9dee9;
   border-radius: 20px;
   text-transform: uppercase;
+  font-weight: 300;
+}
+
+.new-record-box {
+  position: relative;
+  border: 1px solid #eef0f5;
+  padding: 5px 15px 5px 15px;
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.new-record-box .amount-details {
+  padding: 5px;
+}
+
+.new-record-box .amount-details h4 {
+  font-size: 13px;
+  color: #999bbf;
+}
+
+.new-record-box .amount-details h2 {
+  font-size: 30px;
+  color: #63669d;
+  font-weight: 300;
+}
+
+.new-record-box .payout-button-box {
+  position: absolute;
+  right: 15px;
+  top: 40px;
+}
+
+.new-record-box .payout-button-box button {
+  padding-right: 40px;
+  padding-left: 40px;
+  border-radius: 20px;
+  background-color: #35b9e6;
+  border: 1px solid #35b9e6;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+.new-record-box .payout-button-box button:hover {
+  background-color: #35b9e6;
+  border: 1px solid #35b9e6;
+}
+
+.merchant-box {
+  margin-top: 10px;
+  border: 1px solid #35b9e6;
+  padding: 5px;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.09) !important;
+  border-radius: 5px;
+  position: relative;
+}
+
+.merchant-box .avatar {
+  padding: 10px;
+}
+
+.merchant-box .ant-avatar {
+  width: 50px !important;
+  height: 50px !important;
+  border: 1px solid #8489b7;
+}
+
+.merchant-box .ant-avatar .ant-avatar-string {
+  top: 15%;
+  font-size: 14px !important;
+}
+
+.merchant-box .merchant-amount {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.merchant-box .merchant-amount h2 {
+  font-size: 30px;
+  font-weight: 300;
+}
+
+.merchant-box .footer-box {
+  position: relative;
+  padding: 7px;
+}
+
+.merchant-box .footer-box .footer {
+  position: absolute;
+  right: 10px;
+  bottom: -1px;
+}
+
+.merchant-box .footer-box .footer h4 {
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #ababc8;
   font-weight: 300;
 }
 
@@ -1481,20 +1666,42 @@ thead[class*='ant-table-thead'] th {
 
 .settings-page {
   background: #f9f9f9;
-  height: 80vh;
+  height: 100vh;
+  padding: 20px;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #f55c29;
+  font-weight: 500;
+}
+
+.ant-tabs-ink-bar {
+  position: absolute;
+  background: #f55c29;
+  pointer-events: none;
+}
+
+.ant-tabs-tab .anticon {
+  margin-right: 0px;
+}
+
+.ant-tabs > .ant-tabs-nav,
+.ant-tabs > div > .ant-tabs-nav {
+  background: #fff;
+  padding: 20px;
 }
 
 .profile-box {
   background: #fff;
-  margin-top: 30px;
+  margin-top: 10px;
   padding: 10px 50px 10px 50px;
   text-align: center;
   border: 1px solid #fafafa;
 }
 
 .profile-box h3 {
-  font-weight: 700;
-  font-size: 1rem;
+  font-weight: 300;
+  font-size: 1.2rem;
   margin-top: 1.2rem;
   margin-bottom: 2rem;
 }
@@ -1573,21 +1780,20 @@ thead[class*='ant-table-thead'] th {
 .tranaction-table .ant-table tfoot > tr > th,
 .tranaction-table .ant-table tfoot > tr > td {
   position: relative;
-  padding: 2px 16px;
+  padding: 8px 16px;
   overflow-wrap: break-word;
 }
 
 .pces-share .ecard .card-chunk h1 {
-  font-size: 2.2rem;
-  font-family: 'Mukta', sans-serif !important;
-  font-weight: 500;
+  font-size: 1.5rem;
+  font-weight: 400;
   margin-bottom: 4px;
   color: #f55c29 !important;
 }
 
 .pces-share .ecard .card-chunk p {
   color: #f55c29;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   font-family: 'Mukta', sans-serif;
   text-transform: uppercase;
   font-weight: 700;
@@ -1615,6 +1821,60 @@ thead[class*='ant-table-thead'] th {
   font-feature-settings: 'tnum', 'tnum';
   margin-bottom: 0;
   vertical-align: top;
+}
+
+.form-container {
+  max-width: 600px;
+  width: 100%;
+  margin: 0px 0 20px;
+}
+
+.form-container .ant-form-item {
+  margin-bottom: 10px;
+}
+
+.form-container
+  .ant-form-item
+  .ant-form-item-control
+  .ant-form-item-control-input
+  .ant-form-item-control-input-content
+  .ant-input,
+.ant-select-selector {
+  /* height: 50px; */
+  padding-left: 15px;
+  padding-right: 15px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.form-container
+  .ant-form-item
+  .ant-form-item-control
+  .ant-form-item-control-input
+  .ant-form-item-control-input-content
+  .ant-input::placeholder {
+  color: #8c90b5;
+}
+
+.form-container
+  .ant-form-item
+  .ant-form-item-control
+  .ant-form-item-control-input
+  .ant-form-item-control-input-content
+  .ant-input,
+.ant-select-selector .ant-select-selection-placeholder {
+  line-height: 50px;
+}
+
+.form-container button {
+  border-radius: 6px;
+  height: 54px;
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: capitalize;
+  width: 100%;
+  margin-top: 15px;
+  background-color: #0090fe;
 }
 
 /** END CONTENT **/

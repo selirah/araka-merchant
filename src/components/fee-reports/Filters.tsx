@@ -1,25 +1,19 @@
 import React from 'react';
-import {
-  Row,
-  Col,
-  Input,
-  Button,
-  Collapse,
-  Select,
-  Form,
-  DatePicker,
-} from 'antd';
+import { Row, Col, Button, Collapse, Select, Form, DatePicker } from 'antd';
+import { MerchantData } from '../../interfaces';
 import { Clock } from '../../utils/clock';
+import { isEmpty } from '../../helpers/isEmpty';
 
 interface FiltersProps {
   onSearch(values: any): void;
   onReset(form: any): void;
+  merchants: MerchantData[];
 }
 
 const { Panel } = Collapse;
 const { Option } = Select;
 
-const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
+const Filters: React.FC<FiltersProps> = ({ onReset, onSearch, merchants }) => {
   const { time } = Clock();
   const [form] = Form.useForm();
 
@@ -43,43 +37,12 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
         >
           <Row gutter={10}>
             <Col span={6}>
-              <Form.Item name="period">
-                <Select
-                  placeholder="Period: Default=All time"
-                  style={{ width: '100%' }}
-                >
-                  <Option value="January">January</Option>
-                  <Option value="February">February</Option>
-                  <Option value="March">March</Option>
-                  <Option value="April">April</Option>
-                  <Option value="May">May</Option>
-                  <Option value="June">June</Option>
-                  <Option value="July">July</Option>
-                  <Option value="August">August</Option>
-                  <Option value="September">September</Option>
-                  <Option value="October">October</Option>
-                  <Option value="November">November</Option>
-                  <Option value="December">December</Option>
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={10}>
-              <Form.Item name="query">
-                <Input
-                  placeholder="Search by Merchant/Fee/Discount/Income"
-                  style={{ width: '100%' }}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row style={{ marginTop: '10px' }} gutter={10}>
-            <Col span={6}>
               <Form.Item name="periodFrom">
                 <DatePicker
                   style={{ width: '100%' }}
                   format="MMMM D, YYYY"
                   allowClear
-                  placeholder="Custom Period: From"
+                  placeholder="Date Period: From"
                 />
               </Form.Item>
             </Col>
@@ -89,8 +52,31 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
                   style={{ width: '100%' }}
                   format="MMMM D, YYYY"
                   allowClear
-                  placeholder="Custom Period: To"
+                  placeholder="Date Period: To"
                 />
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              <Form.Item name="merchant">
+                <Select
+                  placeholder="Merchant: Default=All"
+                  style={{ width: '100%' }}
+                  allowClear
+                  showSearch
+                  optionFilterProp="children"
+                  filterOption={(input: any, option: any) =>
+                    option.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
+                  }
+                >
+                  {!isEmpty(merchants) &&
+                    merchants.map((m) => (
+                      <Option value={m.merchantId} key={m.merchantId}>
+                        {m.name}
+                      </Option>
+                    ))}
+                </Select>
               </Form.Item>
             </Col>
             <Col span={6}>

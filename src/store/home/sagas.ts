@@ -9,7 +9,7 @@ function* processOrderRequest({
 }: {
   type: string;
   payload: Merchant;
-}) {
+}): any {
   try {
     const res = yield call(callApiPost, 'payments/getpaymentpage', payload);
     yield put(paymentSuccess(res.data));

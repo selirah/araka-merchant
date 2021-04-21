@@ -1,15 +1,16 @@
 import { action } from 'typesafe-actions';
 import { TransactionTypes } from './types';
 import {
-  TransactionHistory,
   Currency,
   Search,
   DataStream,
+  TransactionReport,
 } from '../../interfaces';
 
-export const getTransactions = () => action(TransactionTypes.GET_TRANSACTIONS);
+export const getTransactions = (payload: any) =>
+  action(TransactionTypes.GET_TRANSACTIONS, payload);
 
-export const getTransactionsSuccess = (data: TransactionHistory[]) =>
+export const getTransactionsSuccess = (data: TransactionReport) =>
   action(TransactionTypes.GET_TRANSACTIONS_SUCCESS, data);
 
 export const getTransactionsFailure = (error: any) =>

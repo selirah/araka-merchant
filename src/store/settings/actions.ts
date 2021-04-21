@@ -1,6 +1,6 @@
 import { action } from 'typesafe-actions';
 import { SettingsTypes } from './types';
-import { Client } from '../../interfaces';
+import { Client, Register, User, Error } from '../../interfaces';
 
 export const getCurrentUser = (userId: number) =>
   action(SettingsTypes.GET_CURRENT_USER, userId);
@@ -31,3 +31,15 @@ export const changePasswordSuccess = () =>
 
 export const changePasswordFailure = (error: any) =>
   action(SettingsTypes.CHANGE_PASSWORD_FAILURE, error);
+
+export const createMerchantRequest = (payload: Register) =>
+  action(SettingsTypes.REGISTER_MERCHANT_REQUEST, payload);
+
+export const createMerchantSuccess = (user: User) =>
+  action(SettingsTypes.REGISTER_MERCHANT_SUCCESS, user);
+
+export const createMerchantFailure = (error: Error) =>
+  action(SettingsTypes.REGISTER_MERCHANT_FAILURE, error);
+
+export const logError = (error: string) =>
+  action(SettingsTypes.LOG_SINGLE_ERROR, error);

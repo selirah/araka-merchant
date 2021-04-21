@@ -99,7 +99,7 @@ export const PageDetails: React.FC<PageDetailsProps> = () => {
           <h4>Page Name</h4>
           <h4>
             {pageDetails !== undefined
-              ? pageDetails.pageName.toLocaleUpperCase()
+              ? pageDetails.pageName.toUpperCase()
               : ''}
           </h4>
         </div>

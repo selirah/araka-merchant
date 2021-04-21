@@ -1,82 +1,95 @@
 import React from 'react';
-import { Row, Col, /*Card,*/ Table } from 'antd';
+import { Row, Col, Table } from 'antd';
+import { PCESTableData } from '../../interfaces';
 import { numberWithCommas } from '../../helpers/helperFunctions';
 
 interface DetailsProps {
-  reports: any[];
+  pces: PCESTableData[];
 }
 
-const Details: React.FC<DetailsProps> = ({ reports }) => {
+const Details: React.FC<DetailsProps> = ({ pces }) => {
   const columns: any = [
     {
       title: 'Merchant',
       dataIndex: 'merchant',
       key: 'merchant',
-      align: 'left',
+      align: 'center',
       className: 'column-text',
       render: (merchant: string) => {
         return <span style={{ color: '#35b9e6' }}>{merchant}</span>;
       },
     },
     {
+      title: 'Total Transactions',
+      dataIndex: 'totalTransactions',
+      key: 'totalTransactions',
+      align: 'center',
+      className: 'column-text',
+    },
+    {
       title: 'Total Amount',
       dataIndex: 'totalAmount',
       key: 'totalAmount',
-      align: 'left',
+      align: 'center',
+      className: 'column-text',
+    },
+    {
+      title: 'Annual Fees',
+      dataIndex: 'annualFees',
+      key: 'annualFees',
+      align: 'center',
       className: 'column-text',
     },
     {
       title: 'Araka Fees',
       dataIndex: 'arakaFees',
       key: 'arakaFees',
-      align: 'left',
+      align: 'center',
       className: 'column-text',
     },
     {
       title: 'Other Fees',
       dataIndex: 'otherFees',
       key: 'otherFees',
-      align: 'left',
-      className: 'column-text',
-    },
-    {
-      title: 'Annual Fee',
-      dataIndex: 'annualFees',
-      key: 'annualFees',
-      align: 'left',
+      align: 'center',
       className: 'column-text',
     },
     {
       title: 'Total Araka Income',
       dataIndex: 'totalArakaIncome',
       key: 'totalArakaIncome',
-      align: 'left',
+      align: 'center',
       className: 'column-text',
     },
   ];
 
   let dataSource = [];
-  for (let v of reports) {
+  for (let v of pces) {
     dataSource.push({
       key: Math.random(),
+      totalTransactions: v.totalTransactions,
       merchant: v.merchant,
-      totalAmount: `${v.currency} ${numberWithCommas(v.totalAmount)}`,
-      arakaFees: `${v.currency} ${numberWithCommas(v.arakaFees)}`,
-      otherFees: `${v.currency} ${numberWithCommas(v.otherFees)}`,
-      annualFees: `${v.currency} ${numberWithCommas(v.annualFees)}`,
-      totalArakaIncome: `${v.currency} ${numberWithCommas(v.totalArakaIncome)}`,
+      totalAmount: `${v.currency} ${numberWithCommas(
+        v.totalAmount.toFixed(2)
+      )}`,
+      arakaFees: `${v.currency} ${numberWithCommas(v.arakaFees.toFixed(2))}`,
+      otherFees: `${v.currency} ${numberWithCommas(v.otherFees.toFixed(2))}`,
+      annualFees: `${v.currency} ${numberWithCommas(v.annualFees.toFixed(2))}`,
+      totalArakaIncome: `${v.currency} ${numberWithCommas(
+        v.totalArakaIncome.toFixed(2)
+      )}`,
     });
   }
 
   return (
     <Row gutter={20}>
       <Col span={24}>
-        {/* <Card> */}
         <div className="table-padding">
           <Table
             dataSource={dataSource}
             columns={columns}
             bordered
+            className="tranaction-table"
             pagination={{
               hideOnSinglePage: true,
               total: dataSource.length,
@@ -86,7 +99,6 @@ const Details: React.FC<DetailsProps> = ({ reports }) => {
             }}
           />
         </div>
-        {/* </Card> */}
       </Col>
     </Row>
   );
