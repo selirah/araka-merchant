@@ -10,59 +10,101 @@ import {
   exportVASRequest,
 } from '../store/vas-processed';
 import { isEmpty } from '../helpers/isEmpty';
-import { Search } from '../interfaces';
-import { GetVASFilteredResult } from '../helpers/report_functions';
-
-const { Content } = Layout;
+import { VASProcessed as VP } from '../interfaces';
+import moment from 'moment';
 
 const Filters = lazy(() => import('../components/vas-processed/Filters'));
 const Cards = lazy(() => import('../components/vas-processed/Cards'));
 const Details = lazy(() => import('../components/vas-processed/Details'));
 const EmptyBox = lazy(() => import('../components/vas-processed/EmptyBox'));
+const CurrencyFilter = lazy(
+  () => import('../components/dashboard/CurrencyFilter')
+);
+
+const { Content } = Layout;
 
 const VASProcessed = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { vas, loading, isExporting } = appSelector((state) => state.vas);
+  const vasStore = appSelector((state) => state.vas);
+  const [vasData, setVasData] = useState<VP[]>([]);
   const [exportType, setExportType] = useState('');
-  const [channelSearch /*, setChannelSearch*/] = useState('');
-  const [searchValue /*, setSearchValue*/] = useState('');
-  const [statusSearch /*, setStatusSearch*/] = useState('');
-  const [fromDate /*, setFromDate*/] = useState('');
-  const [toDate /*, setToDate*/] = useState('');
-  const [vasData, setVasData] = useState(vas);
+  const [searchValue, setSearchValue] = useState('');
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
+  const [currency, setCurrency] = useState('USD');
+  const [loading, setLoading] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
+  const [month, setMonth] = useState('');
+
+  const params = {
+    currrency: currency,
+    periodFrom: fromDate,
+    periodTo: toDate,
+    searchValue: searchValue,
+    exportType: exportType,
+    month: month,
+  };
 
   useEffect(() => {
+    const { vas, loading } = vasStore;
     if (isEmpty(vas) && !loading) {
-      dispatch(getVasRequest());
+      dispatch(getVasRequest(params));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
+    const { loading, vas, isExporting } = vasStore;
+    setLoading(loading);
     setVasData(vas);
-  }, [vas]);
+    setIsExporting(isExporting);
+  }, [vasStore]);
 
   const reloadVas = () => {
     dispatch(clearVAS());
-    dispatch(getVasRequest());
+    dispatch(getVasRequest(params));
   };
 
   const onExportClick = (type: string) => {
     setExportType(type);
-    const payload: Search = {
-      ChannelSearch: channelSearch,
-      DateSearch: {
-        from: fromDate,
-        to: toDate,
-      },
-      ExportType: type,
-      SearchValue: searchValue,
-      StatusSearch:
-        statusSearch.charAt(0).toUpperCase() +
-        statusSearch.slice(1).toLowerCase(),
-    };
-    // console.log(payload);
-    dispatch(exportVASRequest(payload));
+    params.exportType = type;
+    dispatch(exportVASRequest(params));
+  };
+
+  const onSelectCurrency = (value: string) => {
+    setCurrency(value);
+    params.currrency = value;
+    dispatch(getVasRequest(params));
+  };
+
+  const onReset = (form: any) => {
+    form.resetFields();
+    params.periodFrom = '';
+    params.periodTo = '';
+    params.month = '';
+    params.searchValue = '';
+    dispatch(clearVAS());
+    dispatch(getVasRequest(params));
+  };
+
+  const onSearch = (values: any) => {
+    const { periodFrom, periodTo, query, month } = values;
+    let pFrom: string = '',
+      pTo: string = '';
+    setSearchValue(query !== undefined ? query : '');
+    setMonth(query !== undefined ? month : '');
+    if (periodFrom !== undefined && periodTo !== undefined) {
+      pFrom = moment(periodFrom).format('MM/DD/YYYY');
+      pTo = moment(periodTo).format('MM/DD/YYYY');
+      setFromDate(pFrom);
+      setToDate(pTo);
+    }
+    params.periodFrom = pFrom;
+    params.periodTo = pTo;
+    params.searchValue = query;
+    params.month = month;
+    dispatch(clearVAS());
+    dispatch(getVasRequest(params));
   };
 
   let render: React.ReactNode;
@@ -73,7 +115,7 @@ const VASProcessed = () => {
       </div>
     );
   }
-  if (!loading && isEmpty(vas)) {
+  if (!loading && isEmpty(vasStore.vas)) {
     render = (
       <EmptyBox
         header="No VAS Processed Data"
@@ -82,19 +124,9 @@ const VASProcessed = () => {
     );
   }
 
-  if (!loading && !isEmpty(vas)) {
-    render = <Details vas={vasData} />;
+  if (!loading && !isEmpty(vasStore.vas)) {
+    render = <Details vas={vasData} currency={currency} />;
   }
-
-  const onReset = (form: any) => {
-    form.resetFields();
-    setVasData(vas);
-  };
-
-  const onSearch = (values: any) => {
-    const { bucket } = GetVASFilteredResult(vas, values);
-    setVasData(bucket);
-  };
 
   return (
     <div className="padding-box">
@@ -109,8 +141,11 @@ const VASProcessed = () => {
           }
         >
           <Filters onReset={onReset} onSearch={onSearch} />
-          {!isEmpty(vasData) ? <Cards vas={vasData} /> : null}
+          {!isEmpty(vasData) ? (
+            <Cards vas={vasData} currency={currency} />
+          ) : null}
           <div className="margin-top">
+            <CurrencyFilter onSelectCurrency={onSelectCurrency} />
             <Row style={{ position: 'relative' }}>
               <h4 className="transaction-chart-text">VAS Processed Table</h4>
               <div className="utility-buttons">
@@ -143,6 +178,7 @@ const VASProcessed = () => {
                 </Button>
               </div>
             </Row>
+
             {render}
           </div>
         </Suspense>

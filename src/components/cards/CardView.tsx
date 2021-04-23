@@ -27,7 +27,6 @@ const CardView: React.FC<CardViewProps> = ({
               decimals={currency !== undefined ? 2 : 0}
               separator=","
             />
-            {/* {title} */}
           </h1>
           <p>{value}</p>
         </div>

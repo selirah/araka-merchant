@@ -20,7 +20,7 @@ const Filter: React.FC<FilterProps> = ({ onReset, onSearch }) => {
         style={{ fontWeight: 400, fontSize: '1rem' }}
         key="1"
         extra={
-          <h6 style={{ fontWeight: 500, fontSize: '1rem', color: '#0090fe' }}>
+          <h6 style={{ fontWeight: 300, fontSize: '1rem', color: '#0090fe' }}>
             {time}
           </h6>
         }

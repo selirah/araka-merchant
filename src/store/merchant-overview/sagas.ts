@@ -6,13 +6,16 @@ import {
   exportOverviewSuccess,
   exportOverviewFailure,
 } from './actions';
-import { callApiGet, callApiPost } from '../../utils/api';
-import { DataStream, Search } from '../../interfaces';
+import { callApiPost } from '../../utils/api';
+import { DataStream } from '../../interfaces';
 
-function* getOverview(): any {
+function* getOverview({ payload }: { type: string; payload: any }): any {
   try {
-    const res = yield call(callApiGet, 'payments/getmerchantsoverview');
-    console.log(res.data);
+    const res = yield call(
+      callApiPost,
+      'payments/getmerchantsoverview',
+      payload
+    );
     if (res.status === 200) {
       yield put(getMerchantsOverviewSuccess(res.data));
     } else {
@@ -27,12 +30,7 @@ function* getOverview(): any {
   }
 }
 
-function* getExportOverview({
-  payload,
-}: {
-  type: string;
-  payload: Search;
-}): any {
+function* getExportOverview({ payload }: { type: string; payload: any }): any {
   try {
     const res = yield call(
       callApiPost,

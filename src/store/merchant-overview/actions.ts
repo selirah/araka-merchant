@@ -1,9 +1,9 @@
 import { action } from 'typesafe-actions';
 import { MerchantsOverviewTypes } from './types';
-import { MerchantOverview, Search, DataStream } from '../../interfaces';
+import { MerchantOverview, DataStream } from '../../interfaces';
 
-export const getMerchantsOverview = () =>
-  action(MerchantsOverviewTypes.GET_MERCHANTS_OVERVIEW);
+export const getMerchantsOverview = (payload: any) =>
+  action(MerchantsOverviewTypes.GET_MERCHANTS_OVERVIEW, payload);
 
 export const getMerchantsOverviewSuccess = (data: MerchantOverview[]) =>
   action(MerchantsOverviewTypes.GET_MERCHANTS_OVERVIEW_SUCCESS, data);
@@ -11,7 +11,7 @@ export const getMerchantsOverviewSuccess = (data: MerchantOverview[]) =>
 export const getMerchantsOverviewFailure = (error: any) =>
   action(MerchantsOverviewTypes.GET_MERCHANTS_OVERVIEW_FAILURE, error);
 
-export const exportOverviewRequest = (payload: Search) =>
+export const exportOverviewRequest = (payload: any) =>
   action(MerchantsOverviewTypes.EXPORT_OVERVIEW_REQUEST, payload);
 
 export const exportOverviewSuccess = (data: DataStream) =>

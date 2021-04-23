@@ -110,7 +110,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       <Row className="login-row-third">
         <Col>
           <h4>
-            {t('login.no-account')} <Link to="">{t('login.sign-up')}</Link>
+            {t('login.no-account')}{' '}
+            <a
+              href="https://www.arakapay.com/auth/register"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {t('login.sign-up')}
+            </a>
           </h4>
         </Col>
       </Row>

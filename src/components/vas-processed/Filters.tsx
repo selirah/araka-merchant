@@ -1,5 +1,14 @@
 import React from 'react';
-import { Row, Col, Input, Button, Collapse, Select, Form } from 'antd';
+import {
+  Row,
+  Col,
+  Input,
+  Button,
+  Collapse,
+  Select,
+  Form,
+  DatePicker,
+} from 'antd';
 import { Clock } from '../../utils/clock';
 
 interface FiltersProps {
@@ -21,7 +30,7 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
         style={{ fontWeight: 400, fontSize: '1rem' }}
         key="1"
         extra={
-          <h6 style={{ fontWeight: 500, fontSize: '1rem', color: '#0090fe' }}>
+          <h6 style={{ fontWeight: 300, fontSize: '1rem', color: '#0090fe' }}>
             {time}
           </h6>
         }
@@ -33,6 +42,26 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
           className="filter-form"
         >
           <Row gutter={10}>
+            <Col span={6}>
+              <Form.Item name="periodFrom">
+                <DatePicker
+                  style={{ width: '100%' }}
+                  format="MMMM D, YYYY"
+                  allowClear
+                  placeholder="Date Period: From"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              <Form.Item name="periodTo">
+                <DatePicker
+                  style={{ width: '100%' }}
+                  format="MMMM D, YYYY"
+                  allowClear
+                  placeholder="Date Period: To"
+                />
+              </Form.Item>
+            </Col>
             <Col span={6}>
               <Form.Item name="month">
                 <Select
@@ -55,7 +84,7 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
                 </Select>
               </Form.Item>
             </Col>
-            <Col span={10}>
+            <Col span={6}>
               <Form.Item name="query">
                 <Input
                   placeholder="Amount/Fee/Discount/Income"

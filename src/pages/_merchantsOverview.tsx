@@ -10,10 +10,9 @@ import {
   exportOverviewRequest,
 } from '../store/merchant-overview';
 import { isEmpty } from '../helpers/isEmpty';
-import { Search } from '../interfaces';
-import { GetOverviewsFilteredResult } from '../helpers/report_functions';
-
-const { Content } = Layout;
+import { MerchantOverview, MerchantData } from '../interfaces';
+import { getMerchantsRequest } from '../store/reports';
+import moment from 'moment';
 
 const Filters = lazy(() => import('../components/merchants-overview/Filters'));
 const Cards = lazy(() => import('../components/merchants-overview/Cards'));
@@ -21,52 +20,106 @@ const Details = lazy(() => import('../components/merchants-overview/Details'));
 const EmptyBox = lazy(
   () => import('../components/merchants-overview/EmptyBox')
 );
+const CurrencyFilter = lazy(
+  () => import('../components/dashboard/CurrencyFilter')
+);
+
+const { Content } = Layout;
 
 const MerchantsOverview = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { overviews, loading, isExporting } = appSelector(
-    (state) => state.overviews
-  );
+  const overviewsStore = appSelector((state) => state.overviews);
+  const reports = appSelector((state) => state.reports);
+  const [merchants, setMerchants] = useState<MerchantData[]>(reports.merchants);
   const [exportType, setExportType] = useState('');
-  const [channelSearch /*, setChannelSearch*/] = useState('');
-  const [searchValue /*, setSearchValue*/] = useState('');
-  const [statusSearch /*, setStatusSearch*/] = useState('');
-  const [fromDate /*, setFromDate*/] = useState('');
-  const [toDate /*, setToDate*/] = useState('');
-  const [overviewdata, setOverviewdata] = useState(overviews);
+  const [searchValue, setSearchValue] = useState('');
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
+  const [overviewdata, setOverviewdata] = useState<MerchantOverview[]>([]);
+  const [merchant, setMerchant] = useState<MerchantData | null>(null);
+  const [currency, setCurrency] = useState('USD');
+  const [loading, setLoading] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
+
+  const params = {
+    currrency: currency,
+    periodFrom: fromDate,
+    periodTo: toDate,
+    merchant: merchant ? merchant.name : '',
+    searchValue: searchValue,
+    exportType: exportType,
+  };
 
   useEffect(() => {
+    const { overviews, loading } = overviewsStore;
     if (isEmpty(overviews) && !loading) {
-      dispatch(getMerchantsOverview());
+      dispatch(getMerchantsOverview(params));
+    }
+    const { merchants } = reports;
+    if (isEmpty(merchants)) {
+      dispatch(getMerchantsRequest());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
+    const { loading, overviews, isExporting } = overviewsStore;
+    const { merchants } = reports;
+    setLoading(loading);
     setOverviewdata(overviews);
-  }, [overviews]);
+    setMerchants(merchants);
+    setIsExporting(isExporting);
+  }, [overviewsStore, reports]);
 
   const reloadOverviews = () => {
     dispatch(clearOverview());
-    dispatch(getMerchantsOverview());
+    dispatch(getMerchantsOverview(params));
   };
 
   const onExportClick = (type: string) => {
     setExportType(type);
-    const payload: Search = {
-      ChannelSearch: channelSearch,
-      DateSearch: {
-        from: fromDate,
-        to: toDate,
-      },
-      ExportType: type,
-      SearchValue: searchValue,
-      StatusSearch:
-        statusSearch.charAt(0).toUpperCase() +
-        statusSearch.slice(1).toLowerCase(),
-    };
-    // console.log(payload);
-    dispatch(exportOverviewRequest(payload));
+    params.exportType = type;
+    dispatch(exportOverviewRequest(params));
+  };
+
+  const onReset = (form: any) => {
+    form.resetFields();
+    params.periodFrom = '';
+    params.periodTo = '';
+    params.merchant = '';
+    params.searchValue = '';
+    dispatch(clearOverview());
+    dispatch(getMerchantsOverview(params));
+  };
+
+  const onSelectCurrency = (value: string) => {
+    setCurrency(value);
+    params.currrency = value;
+    dispatch(getMerchantsOverview(params));
+  };
+
+  const onSearch = (values: any) => {
+    const { periodFrom, periodTo, query, merchant } = values;
+    let m: MerchantData | undefined = undefined;
+    let pFrom: string = '',
+      pTo: string = '';
+    setSearchValue(query !== undefined ? query : '');
+    if (periodFrom !== undefined && periodTo !== undefined) {
+      pFrom = moment(periodFrom).format('MM/DD/YYYY');
+      pTo = moment(periodTo).format('MM/DD/YYYY');
+      setFromDate(pFrom);
+      setToDate(pTo);
+    }
+    if (merchant !== undefined) {
+      m = merchants.find((m) => m.merchantId === merchant);
+      setMerchant(m !== undefined ? m : null);
+    }
+    params.periodFrom = pFrom;
+    params.periodTo = pTo;
+    params.merchant = m !== undefined ? m.name : '';
+    params.searchValue = query;
+    dispatch(clearOverview());
+    dispatch(getMerchantsOverview(params));
   };
 
   let render: React.ReactNode;
@@ -77,7 +130,7 @@ const MerchantsOverview = () => {
       </div>
     );
   }
-  if (!loading && isEmpty(overviews)) {
+  if (!loading && isEmpty(overviewsStore.overviews)) {
     render = (
       <EmptyBox
         header="No Merchants Overview Data"
@@ -86,27 +139,9 @@ const MerchantsOverview = () => {
     );
   }
 
-  let merchants: string[] = [];
-  if (!loading && !isEmpty(overviews)) {
-    overviews.map((t) => {
-      const merchant = merchants.find((m) => m === t.merchant);
-      if (merchant === undefined) {
-        merchants.push(t.merchant);
-      }
-      return merchants;
-    });
-    render = <Details overviews={overviewdata} />;
+  if (!loading && !isEmpty(overviewsStore.overviews)) {
+    render = <Details overviews={overviewdata} currency={currency} />;
   }
-
-  const onReset = (form: any) => {
-    form.resetFields();
-    setOverviewdata(overviews);
-  };
-
-  const onSearch = (values: any) => {
-    const { bucket } = GetOverviewsFilteredResult(overviews, values);
-    setOverviewdata(bucket);
-  };
 
   return (
     <div className="padding-box">
@@ -125,7 +160,9 @@ const MerchantsOverview = () => {
             onSearch={onSearch}
             merchants={merchants}
           />
-          {!isEmpty(overviews) ? <Cards overviews={overviewdata} /> : null}
+          {!isEmpty(overviewsStore.overviews) ? (
+            <Cards overviews={overviewdata} currency={currency} />
+          ) : null}
           <div className="margin-top">
             <Row style={{ position: 'relative' }}>
               <h4 className="transaction-chart-text">Merchants Table</h4>
@@ -159,6 +196,7 @@ const MerchantsOverview = () => {
                 </Button>
               </div>
             </Row>
+            <CurrencyFilter onSelectCurrency={onSelectCurrency} />
             {render}
           </div>
         </Suspense>

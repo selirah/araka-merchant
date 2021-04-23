@@ -6,9 +6,10 @@ import { GetOverviewAnalytics } from '../../helpers/overview_functions';
 
 interface CardsProps {
   overviews: MerchantOverview[];
+  currency: string;
 }
 
-const Cards: React.FC<CardsProps> = ({ overviews }) => {
+const Cards: React.FC<CardsProps> = ({ overviews, currency }) => {
   const {
     totalAmountProcessed,
     totalMerchants,
@@ -39,7 +40,7 @@ const Cards: React.FC<CardsProps> = ({ overviews }) => {
                 value="Amount Processed"
                 title={totalAmountProcessed}
                 data={amtAreaChart}
-                currency="$"
+                currency={currency}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>

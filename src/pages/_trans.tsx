@@ -31,7 +31,7 @@ const TransactionDetail = lazy(
   () => import('../components/transactions/TransactionDetail')
 );
 const CurrencyFilter = lazy(
-  () => import('../components/dashboard/CurrencyFilter')
+  () => import('../components/transactions/CurrencyFilter')
 );
 
 const EmptyBox = lazy(() => import('../components/transactions/EmptyBox'));
@@ -70,10 +70,12 @@ const Transactions = () => {
     status: statusSearch,
     channel: channelSearch,
     searchValue: searchValue,
+    exportType: exportType,
   };
 
   useEffect(() => {
     // fetch transaction history
+    dispatch(clearTransactions());
     dispatch(getTransactionsRequest(params));
     const { merchants } = reports;
     if (isEmpty(merchants)) {
@@ -140,6 +142,7 @@ const Transactions = () => {
 
   const onExportClick = (type: string) => {
     setExportType(type);
+    params.exportType = type;
     dispatch(exportTranxRequest(params));
   };
 
@@ -203,7 +206,11 @@ const Transactions = () => {
 
   if (!loading && !isEmpty(trans)) {
     render = (
-      <TransactionTable transactionHistory={trans} onClickRow={onClickRow} />
+      <TransactionTable
+        transactionHistory={trans}
+        onClickRow={onClickRow}
+        currency={currency}
+      />
     );
   }
 
@@ -238,20 +245,16 @@ const Transactions = () => {
                   currency={currency}
                 />
               ) : null}
+              <CurrencyFilter
+                onSelectCurrency={onSelectCurrency}
+                onLoadMore={onLoadMore}
+              />
               <div className="margin-top">
                 <Row style={{ position: 'relative' }}>
                   <h4 className="transaction-chart-text">Transactions Chart</h4>
                   <div className="utility-buttons">
                     {!isEmpty(trans) ? (
                       <>
-                        <Button
-                          type="primary"
-                          className="export-buttons"
-                          onClick={() => onLoadMore()}
-                          loading={loading}
-                        >
-                          Load More
-                        </Button>
                         <Button
                           type="primary"
                           className="export-buttons"
@@ -279,7 +282,7 @@ const Transactions = () => {
                     </Button>
                   </div>
                 </Row>
-                <CurrencyFilter onSelectCurrency={onSelectCurrency} />
+
                 {render}
               </div>
             </>

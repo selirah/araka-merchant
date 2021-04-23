@@ -1,9 +1,20 @@
 import React from 'react';
-import { Row, Col, Input, Button, Collapse, Select, Form } from 'antd';
+import {
+  Row,
+  Col,
+  Input,
+  Button,
+  Collapse,
+  Select,
+  Form,
+  DatePicker,
+} from 'antd';
 import { Clock } from '../../utils/clock';
+import { MerchantData } from '../../interfaces';
+import { isEmpty } from '../../helpers/isEmpty';
 
 interface FiltersProps {
-  merchants: string[];
+  merchants: MerchantData[];
   onSearch(values: any): void;
   onReset(form: any): void;
 }
@@ -22,7 +33,7 @@ const Filters: React.FC<FiltersProps> = ({ merchants, onReset, onSearch }) => {
         style={{ fontWeight: 400, fontSize: '1rem' }}
         key="1"
         extra={
-          <h6 style={{ fontWeight: 500, fontSize: '1rem', color: '#0090fe' }}>
+          <h6 style={{ fontWeight: 300, fontSize: '1rem', color: '#0090fe' }}>
             {time}
           </h6>
         }
@@ -35,16 +46,45 @@ const Filters: React.FC<FiltersProps> = ({ merchants, onReset, onSearch }) => {
         >
           <Row gutter={10}>
             <Col span={6}>
+              <Form.Item name="periodFrom">
+                <DatePicker
+                  style={{ width: '100%' }}
+                  format="MMMM D, YYYY"
+                  allowClear
+                  placeholder="Date Period: From"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              <Form.Item name="periodTo">
+                <DatePicker
+                  style={{ width: '100%' }}
+                  format="MMMM D, YYYY"
+                  allowClear
+                  placeholder="Date Period: To"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={6}>
               <Form.Item name="merchant">
                 <Select
                   placeholder="Merchant: Default=All"
                   style={{ width: '100%' }}
+                  allowClear
+                  showSearch
+                  optionFilterProp="children"
+                  filterOption={(input: any, option: any) =>
+                    option.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
+                  }
                 >
-                  {merchants.map((m) => (
-                    <Option value={m} key={Math.random()}>
-                      {m}
-                    </Option>
-                  ))}
+                  {!isEmpty(merchants) &&
+                    merchants.map((m) => (
+                      <Option value={m.merchantId} key={m.merchantId}>
+                        {m.name}
+                      </Option>
+                    ))}
                 </Select>
               </Form.Item>
             </Col>

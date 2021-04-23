@@ -56,6 +56,13 @@ const WeeklyOverView: React.FC<WeeklyOverViewProps> = ({
         trxReports.totalValues.declinedValues
       )
     : {};
+  // const barChartData = trxReports
+  //   ? getBarOptions(
+  //       trxReports.totalDeclined.graph.labels,
+  //       trxReports.totalApproved.graph.values,
+  //       trxReports.totalDeclined.graph.values
+  //     )
+  //   : {};
 
   const firstTopMerchant = trxReports
     ? getAreaOptions(

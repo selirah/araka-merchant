@@ -11,11 +11,13 @@ import { numberWithCommas } from '../../helpers/helperFunctions';
 interface TransactionTableProps {
   transactionHistory: TransactionHistory[];
   onClickRow(transactionID: number): void;
+  currency: string;
 }
 
 const TransactionTable: React.FC<TransactionTableProps> = ({
   transactionHistory,
   onClickRow,
+  currency,
 }) => {
   const { t } = useTranslation();
 
@@ -84,7 +86,8 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
       className: 'column-text',
       responsive: ['lg'],
       render: (date: string) => {
-        const d = moment(date, 'MM/DD/YYYY HH:mm:ss')
+        // const d = moment(date, 'MM/DD/YYYY HH:mm:ss')
+        const d = moment(date)
           .tz(timeZones.kinshasa)
           .format(`MMMM D, YYYY (h:mm a)`);
         return <span>{d}</span>;
@@ -133,7 +136,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
   for (let transaction of transactionHistory) {
     dataSource.push({
       key: transaction.transactionId,
-      amount: `${transaction.currency} ${numberWithCommas(
+      amount: `${currency} ${numberWithCommas(
         transaction.amountPaid.toFixed(2)
       )}`,
       customer: transaction.customer,

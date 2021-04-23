@@ -74,11 +74,19 @@ const Overview: React.FC<OverviewProps> = ({
 
   const barChartData = trxReports
     ? getBarOptions(
-        trxReports.totalValues.labels,
-        trxReports.totalValues.approvedValues,
-        trxReports.totalValues.declinedValues
+        trxReports.totalValues.labels.reverse(),
+        trxReports.totalValues.approvedValues.reverse(),
+        trxReports.totalValues.declinedValues.reverse()
       )
     : {};
+
+  // const barChartData = trxReports
+  //   ? getBarOptions(
+  //       trxReports.totalDeclined.graph.labels,
+  //       trxReports.totalApproved.graph.values,
+  //       trxReports.totalDeclined.graph.values
+  //     )
+  //   : {};
 
   const firstTopMerchant = trxReports
     ? getAreaOptions(

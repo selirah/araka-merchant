@@ -57,6 +57,14 @@ const MonthlyOverview: React.FC<MonthlyOverviewProps> = ({
       )
     : {};
 
+  // const barChartData = trxReports
+  //   ? getBarOptions(
+  //       trxReports.totalDeclined.graph.labels,
+  //       trxReports.totalApproved.graph.values,
+  //       trxReports.totalDeclined.graph.values
+  //     )
+  //   : {};
+
   const firstTopMerchant = trxReports
     ? getAreaOptions(
         trxReports.topMerchants.firstTopMerchant.graph.labels,

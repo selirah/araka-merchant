@@ -1,15 +1,14 @@
 import React from 'react';
-import { Row, Col, /*Card,*/ Table } from 'antd';
-// import moment from 'moment-timezone';
+import { Row, Col, Table } from 'antd';
 import { VASProcessed } from '../../interfaces';
 import { numberWithCommas } from '../../helpers/helperFunctions';
-// import { isEmpty } from '../../helpers/isEmpty';
 
 interface DetailsProps {
   vas: VASProcessed[];
+  currency: string;
 }
 
-const Details: React.FC<DetailsProps> = ({ vas }) => {
+const Details: React.FC<DetailsProps> = ({ vas, currency }) => {
   const columns: any = [
     {
       title: 'Month',
@@ -65,30 +64,30 @@ const Details: React.FC<DetailsProps> = ({ vas }) => {
     dataSource.push({
       key: Math.random(),
       month: v.month,
-      totalAmountProcessed: `${v.currency} ${numberWithCommas(
+      totalAmountProcessed: `${currency} ${numberWithCommas(
         v.totalAmountProcessed.toFixed(2)
       )}`,
-      totalFeesCharged: `${v.currency} ${numberWithCommas(
+      totalFeesCharged: `${currency} ${numberWithCommas(
         v.totalFeesCharged.toFixed(2)
       )}`,
-      totalArakaFees: `${v.currency} ${numberWithCommas(
+      totalArakaFees: `${currency} ${numberWithCommas(
         v.totalArakaFees.toFixed(2)
       )}`,
-      totalArakaDiscount: `${v.currency} ${numberWithCommas(
+      totalArakaDiscount: `${currency} ${numberWithCommas(
         v.totalArakaDiscount.toFixed(2)
       )}`,
-      totalArakaIncome: `${v.currency} ${numberWithCommas(
+      totalArakaIncome: `${currency} ${numberWithCommas(
         v.totalArakaIncome.toFixed(2)
       )}`,
-      // annualFees: `${v.currency} ${v.annualFees}`,
-      annualFees: `${v.currency} 0.00`,
+      annualFees: `${currency} ${
+        v.annualFees !== undefined ? v.annualFees.toFixed(2) : '0.00'
+      }`,
     });
   }
 
   return (
     <Row gutter={20}>
       <Col span={24}>
-        {/* <Card> */}
         <div className="table-padding">
           <Table
             dataSource={dataSource}
@@ -99,12 +98,11 @@ const Details: React.FC<DetailsProps> = ({ vas }) => {
               hideOnSinglePage: true,
               total: dataSource.length,
               showTotal: (total, range) => {
-                return `Showing ${range[0]} - ${range[1]} of ${dataSource.length} results`;
+                return `Showing ${range[0]} - ${range[1]} of ${total} results`;
               },
             }}
           />
         </div>
-        {/* </Card> */}
       </Col>
     </Row>
   );

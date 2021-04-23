@@ -5,9 +5,10 @@ import { numberWithCommas } from '../../helpers/helperFunctions';
 
 interface DetailsProps {
   overviews: MerchantOverview[];
+  currency: string;
 }
 
-const Details: React.FC<DetailsProps> = ({ overviews }) => {
+const Details: React.FC<DetailsProps> = ({ overviews, currency }) => {
   const sortOverview = (a: MerchantOverview, b: MerchantOverview) => {
     return b.totalAmountProcessed - a.totalAmountProcessed; // descending
   };
@@ -63,11 +64,11 @@ const Details: React.FC<DetailsProps> = ({ overviews }) => {
     dataSource.push({
       key: overview.id,
       merchant: overview.merchant,
-      amountProcessed: `${overview.currency} ${numberWithCommas(
+      amountProcessed: `${currency} ${numberWithCommas(
         overview.totalAmountProcessed.toFixed(2)
       )}`,
       totalTransactions: `${overview.totalTransactions}`,
-      totalFees: `${overview.currency} ${numberWithCommas(
+      totalFees: `${currency} ${numberWithCommas(
         overview.totalArakaFees.toFixed(2)
       )}`,
     });

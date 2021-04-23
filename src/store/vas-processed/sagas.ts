@@ -6,12 +6,12 @@ import {
   exportVASSuccess,
   exportVASFailure,
 } from './actions';
-import { callApiGet, callApiPost } from '../../utils/api';
-import { DataStream, Search } from '../../interfaces';
+import { callApiPost } from '../../utils/api';
+import { DataStream } from '../../interfaces';
 
-function* getVas(): any {
+function* getVas({ payload }: { type: string; payload: any }): any {
   try {
-    const res = yield call(callApiGet, 'payments/getvasoverview');
+    const res = yield call(callApiPost, 'payments/getvasoverview', payload);
     if (res.status === 200) {
       yield put(getVasSuccess(res.data));
     } else {
@@ -26,7 +26,7 @@ function* getVas(): any {
   }
 }
 
-function* getExportVas({ payload }: { type: string; payload: Search }): any {
+function* getExportVas({ payload }: { type: string; payload: any }): any {
   try {
     const res = yield call(callApiPost, `payments/exportvasoverview`, payload);
     if (res.status === 200) {
