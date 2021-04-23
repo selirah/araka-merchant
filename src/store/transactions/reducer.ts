@@ -70,7 +70,6 @@ const reducer: Reducer<TransactionState> = (state = initialState, action) => {
     case TransactionTypes.CLEAR_TRANSACTIONS:
       return {
         ...state,
-        // transactions: null,
         trans: [],
       };
     case TransactionTypes.EXPORT_TRANSACTIONS_REQUEST:

@@ -115,18 +115,11 @@ const ProxyPayTransactions = () => {
           }
         >
           <Filter onReset={onReset} onSearch={onSearch} />
-          {loading ? (
-            <div className="spinner">
-              <Spin />
-            </div>
-          ) : (
-            <>
-              <TrxCard proxyPayReport={proxyPayReport} />
-              <CardTrx proxyPayReport={proxyPayReport} />
-              <MomoTrx proxyPayReport={proxyPayReport} />
-              <MidCard proxyPayReport={proxyPayReport} />
-            </>
-          )}
+          <TrxCard proxyPayReport={proxyPayReport} loading={loading} />
+          <CardTrx proxyPayReport={proxyPayReport} loading={loading} />
+          <MomoTrx proxyPayReport={proxyPayReport} loading={loading} />
+          <MidCard proxyPayReport={proxyPayReport} />
+
           <div className="margin-top">
             {loading ? null : (
               <>

@@ -6,9 +6,10 @@ import { getAreaOptions } from '../../../helpers/functions';
 
 interface TrxCardProps {
   proxyPayReport: ProxyPayReport | null;
+  loading: boolean;
 }
 
-const TrxCard: React.FC<TrxCardProps> = ({ proxyPayReport }) => {
+const TrxCard: React.FC<TrxCardProps> = ({ proxyPayReport, loading }) => {
   const total = proxyPayReport
     ? getAreaOptions(
         proxyPayReport.transactions.overview.total.graph.labels,
@@ -51,6 +52,7 @@ const TrxCard: React.FC<TrxCardProps> = ({ proxyPayReport }) => {
                 : 0
             }
             data={proxyPayReport ? total : {}}
+            loading={loading}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
@@ -62,6 +64,7 @@ const TrxCard: React.FC<TrxCardProps> = ({ proxyPayReport }) => {
                 : 0
             }
             data={proxyPayReport ? successful : {}}
+            loading={loading}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
@@ -73,6 +76,7 @@ const TrxCard: React.FC<TrxCardProps> = ({ proxyPayReport }) => {
                 : 0
             }
             data={proxyPayReport ? failed : {}}
+            loading={loading}
           />
         </Col>
       </Row>

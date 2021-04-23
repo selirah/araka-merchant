@@ -17,9 +17,6 @@ import moment from 'moment';
 const Filters = lazy(() => import('../components/merchants-overview/Filters'));
 const Cards = lazy(() => import('../components/merchants-overview/Cards'));
 const Details = lazy(() => import('../components/merchants-overview/Details'));
-const EmptyBox = lazy(
-  () => import('../components/merchants-overview/EmptyBox')
-);
 const CurrencyFilter = lazy(
   () => import('../components/dashboard/CurrencyFilter')
 );
@@ -51,10 +48,7 @@ const MerchantsOverview = () => {
   };
 
   useEffect(() => {
-    const { overviews, loading } = overviewsStore;
-    if (isEmpty(overviews) && !loading) {
-      dispatch(getMerchantsOverview(params));
-    }
+    dispatch(getMerchantsOverview(params));
     const { merchants } = reports;
     if (isEmpty(merchants)) {
       dispatch(getMerchantsRequest());
@@ -122,27 +116,6 @@ const MerchantsOverview = () => {
     dispatch(getMerchantsOverview(params));
   };
 
-  let render: React.ReactNode;
-  if (loading) {
-    render = (
-      <div className="spinner">
-        <Spin />
-      </div>
-    );
-  }
-  if (!loading && isEmpty(overviewsStore.overviews)) {
-    render = (
-      <EmptyBox
-        header="No Merchants Overview Data"
-        description="There are currently no merchants overview data collected"
-      />
-    );
-  }
-
-  if (!loading && !isEmpty(overviewsStore.overviews)) {
-    render = <Details overviews={overviewdata} currency={currency} />;
-  }
-
   return (
     <div className="padding-box">
       <Content className="site-layout-background site-box">
@@ -160,33 +133,35 @@ const MerchantsOverview = () => {
             onSearch={onSearch}
             merchants={merchants}
           />
-          {!isEmpty(overviewsStore.overviews) ? (
-            <Cards overviews={overviewdata} currency={currency} />
-          ) : null}
+          <Cards
+            overviews={overviewdata}
+            currency={currency}
+            loading={loading}
+          />
           <div className="margin-top">
             <Row style={{ position: 'relative' }}>
               <h4 className="transaction-chart-text">Merchants Table</h4>
               <div className="utility-buttons">
-                {!isEmpty(overviewdata) ? (
-                  <>
-                    <Button
-                      type="primary"
-                      className="export-buttons"
-                      onClick={() => onExportClick('EXCEL')}
-                      loading={isExporting && exportType === 'EXCEL'}
-                    >
-                      Export to Excel
-                    </Button>
-                    <Button
-                      type="primary"
-                      className="export-buttons"
-                      onClick={() => onExportClick('PDF')}
-                      loading={isExporting && exportType === 'PDF'}
-                    >
-                      Export to PDF
-                    </Button>
-                  </>
-                ) : null}
+                <>
+                  <Button
+                    type="primary"
+                    className="export-buttons"
+                    onClick={() => onExportClick('EXCEL')}
+                    loading={isExporting && exportType === 'EXCEL'}
+                    disabled={isEmpty(overviewdata)}
+                  >
+                    Export to Excel
+                  </Button>
+                  <Button
+                    type="primary"
+                    className="export-buttons"
+                    onClick={() => onExportClick('PDF')}
+                    loading={isExporting && exportType === 'PDF'}
+                    disabled={isEmpty(overviewdata)}
+                  >
+                    Export to PDF
+                  </Button>
+                </>
                 <Button
                   type="primary"
                   className="export-buttons reload"
@@ -197,7 +172,11 @@ const MerchantsOverview = () => {
               </div>
             </Row>
             <CurrencyFilter onSelectCurrency={onSelectCurrency} />
-            {render}
+            <Details
+              overviews={overviewdata}
+              currency={currency}
+              loading={loading}
+            />
           </div>
         </Suspense>
       </Content>

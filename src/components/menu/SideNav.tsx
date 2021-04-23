@@ -73,53 +73,6 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
           >
             <NavLink to={path.dashboard}>Dashboard</NavLink>
           </Menu.Item>
-          {/* <Menu.SubMenu
-            key="sub1"
-            icon={
-              <FeatherIcons.Home
-                className="ant-menu-item-icon anticon"
-                size={14}
-              />
-            }
-            title="Dashboard Main"
-          >
-            <Menu.Item
-              key={menu.DASHBOARD_DAILY}
-              onClick={() =>
-                switchMenu(menu.DASHBOARD_DAILY, menuHeadings.DASHBOARD)
-              }
-            >
-              <NavLink to={path.dashboardDaily}>{menu.DASHBOARD_DAILY}</NavLink>
-            </Menu.Item>
-            <Menu.Item
-              key={menu.DASHBOARD_WEEKLY}
-              onClick={() =>
-                switchMenu(menu.DASHBOARD_WEEKLY, menuHeadings.DASHBOARD)
-              }
-            >
-              <NavLink to={path.dashboardWeekly}>
-                {menu.DASHBOARD_WEEKLY}
-              </NavLink>
-            </Menu.Item>
-            <Menu.Item
-              key={menu.DASHBOARD_MONTHLY}
-              onClick={() =>
-                switchMenu(menu.DASHBOARD_MONTHLY, menuHeadings.DASHBOARD)
-              }
-            >
-              <NavLink to={path.dashboardMonthly}>
-                {menu.DASHBOARD_MONTHLY}
-              </NavLink>
-            </Menu.Item>
-            <Menu.Item
-              key={menu.DASHBOARD_YEARLY}
-              onClick={() =>
-                switchMenu(menu.DASHBOARD_YEARLY, menuHeadings.DASHBOARD)
-              }
-            >
-              <NavLink to={path.dashboardMain}>{menu.DASHBOARD_YEARLY}</NavLink>
-            </Menu.Item>
-          </Menu.SubMenu> */}
         </Menu.ItemGroup>
         <Menu.ItemGroup key="g2" title={t('sideBar.payments').toUpperCase()}>
           <Menu.Item

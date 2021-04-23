@@ -5,11 +5,7 @@ import { path } from '../helpers/path';
 import { roles } from '../helpers/constants';
 import { appSelector } from '../helpers/appSelector';
 
-// import Dashboard from '../pages/_dashboardYearly';
 import Dashboard from '../pages/_dashboard';
-// import DashboardDaily from '../pages/_dashboardDaily';
-// import DashboardWeekly from '../pages/_dashboardWeekly';
-// import DashboardMonthly from '../pages/_dashboardMonthly';
 import Transactions from '../pages/_trans';
 import PaymentPages from '../pages/_paymentPages';
 import Page from '../pages/_[pageId]';
@@ -44,22 +40,6 @@ const Routes: React.FC = () => {
         <Route exact path={path.login} component={Login} />
         <PrivateRoute exact path={path.home} component={Dashboard} />
         <PrivateRoute exact path={path.dashboard} component={Dashboard} />
-        {/* <PrivateRoute
-          exact
-          path={path.dashboardDaily}
-          component={DashboardDaily}
-        />
-        <PrivateRoute
-          exact
-          path={path.dashboardWeekly}
-          component={DashboardWeekly}
-        />
-        <PrivateRoute
-          exact
-          path={path.dashboardMonthly}
-          component={DashboardMonthly}
-        />
-        <PrivateRoute exact path={path.dashboardMain} component={Dashboard} /> */}
         <PrivateRoute exact path={path.tranasctions} component={Transactions} />
         <PrivateRoute exact path={path.paymentPages} component={PaymentPages} />
         <PrivateRoute exact path={`${path.page}/:pageId`} component={Page} />

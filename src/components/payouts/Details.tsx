@@ -9,9 +9,15 @@ interface DetailsProps {
   payouts: PayoutTableData[];
   currency: string;
   onClickRow(record: any): void;
+  loading: boolean;
 }
 
-const Details: React.FC<DetailsProps> = ({ payouts, currency, onClickRow }) => {
+const Details: React.FC<DetailsProps> = ({
+  payouts,
+  currency,
+  onClickRow,
+  loading,
+}) => {
   const columns: any = [
     {
       title: <span style={{ fontSize: '2rem', color: '#868686' }}>&bull;</span>,
@@ -111,6 +117,7 @@ const Details: React.FC<DetailsProps> = ({ payouts, currency, onClickRow }) => {
             onRow={(record: any) => ({
               onClick: () => onClickRow(record),
             })}
+            loading={loading}
           />
         </div>
       </Col>

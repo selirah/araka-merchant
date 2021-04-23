@@ -18,7 +18,6 @@ import { path } from '../helpers/path';
 import { useTranslation } from 'react-i18next';
 import { GetPagesFilteredResult } from '../helpers/page_functions';
 
-const EmptyBox = lazy(() => import('../components/payment-pages/EmptyBox'));
 const PaymentTypeModal = lazy(
   () => import('../components/payment-pages/PaymentTypeModal')
 );
@@ -58,9 +57,7 @@ const PaymentPages = () => {
 
   useEffect(() => {
     dispatch(clearStates());
-    if (isEmpty(pages) && !loading) {
-      dispatch(getPaymentPagesRequest());
-    }
+    dispatch(getPaymentPagesRequest());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -173,46 +170,6 @@ const PaymentPages = () => {
     window.open(path, '_blank');
   };
 
-  let render: React.ReactNode;
-  if (loading) {
-    render = (
-      <div className="spinner">
-        <Spin />
-      </div>
-    );
-  }
-  if (!loading && isEmpty(pages)) {
-    render = (
-      <EmptyBox
-        header={t('paymentPages.paymentPage')}
-        description={t('paymentPages.description')}
-        image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-      >
-        <Button
-          type="primary"
-          onClick={() => onTogglePaymentTypeModal()}
-          icon={<PlusOutlined />}
-          className="empty-box-button"
-        >
-          {t('paymentPages.newPageText')}
-        </Button>
-      </EmptyBox>
-    );
-  }
-
-  if (!loading && !isEmpty(pages)) {
-    render = (
-      <Pages
-        pages={pageData}
-        copyLink={copyLink}
-        isCopied={isCopied}
-        processId={processId}
-        onClickRow={onClickRow}
-        onPreviewClick={onPreviewClick}
-      />
-    );
-  }
-
   const onReset = (form: any) => {
     form.resetFields();
     setPageData(pages);
@@ -242,28 +199,32 @@ const PaymentPages = () => {
             <Row style={{ position: 'relative' }}>
               <h4 className="transaction-chart-text">Payment Pages</h4>
               <div className="utility-buttons">
-                {!isEmpty(pageData) ? (
-                  <>
-                    <Button
-                      type="primary"
-                      className="export-buttons"
-                      onClick={() => onTogglePaymentTypeModal()}
-                    >
-                      {t('paymentPages.newPageText')}
-                    </Button>
-                    <Button
-                      type="primary"
-                      className="export-buttons reload"
-                      onClick={() => reloadPages()}
-                    >
-                      {t('paymentPages.refresh')}
-                    </Button>
-                  </>
-                ) : null}
+                <Button
+                  type="primary"
+                  className="export-buttons"
+                  onClick={() => onTogglePaymentTypeModal()}
+                >
+                  {t('paymentPages.newPageText')}
+                </Button>
+                <Button
+                  type="primary"
+                  className="export-buttons reload"
+                  onClick={() => reloadPages()}
+                >
+                  {t('paymentPages.refresh')}
+                </Button>
               </div>
             </Row>
           </div>
-          {render}
+          <Pages
+            pages={pageData}
+            copyLink={copyLink}
+            isCopied={isCopied}
+            processId={processId}
+            onClickRow={onClickRow}
+            onPreviewClick={onPreviewClick}
+            loading={loading}
+          />
           <PaymentTypeModal
             choosePaymentPage={choosePaymentPage}
             onTogglePaymentTypeModal={onTogglePaymentTypeModal}

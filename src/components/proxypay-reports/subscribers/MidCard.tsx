@@ -5,9 +5,10 @@ import { PieChartView } from './PieChartView';
 
 interface MidCardProps {
   areadata: any;
+  loading: boolean;
 }
 
-const MidCard: React.FC<MidCardProps> = ({ areadata }) => {
+const MidCard: React.FC<MidCardProps> = ({ areadata, loading }) => {
   const info = {
     data: {
       labels: ['Active', 'Inactive'],
@@ -32,15 +33,20 @@ const MidCard: React.FC<MidCardProps> = ({ areadata }) => {
         <Col span={12} sm={24} md={12} xs={24}>
           <Row>
             <Col span={24} sm={24} md={24} xs={24}>
-              <CardView value="Total" title={0} data={{}} />
+              <CardView value="Total" title={0} data={{}} loading={loading} />
             </Col>
           </Row>
           <Row gutter={20}>
             <Col span={12} sm={24} md={12} xs={24}>
-              <CardView value="Active" title={0} data={{}} />
+              <CardView value="Active" title={0} data={{}} loading={loading} />
             </Col>
             <Col span={12} sm={24} md={12} xs={24}>
-              <CardView value="Inactive" title={0} data={{}} />
+              <CardView
+                value="Inactive"
+                title={0}
+                data={{}}
+                loading={loading}
+              />
             </Col>
           </Row>
         </Col>

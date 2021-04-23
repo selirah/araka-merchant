@@ -1,6 +1,7 @@
 import { Reducer } from 'redux';
 import { ReportsState, ReportsActionTypes } from './types';
 import { AuthActionTypes } from '../auth';
+import { PCESTableData } from '../../interfaces';
 
 export const initialState: ReportsState = {
   error: undefined,
@@ -25,6 +26,7 @@ export const initialState: ReportsState = {
   downloadRecieptError: false,
   downloadRecieptSuccess: false,
   isRequestingDownload: false,
+  pcesdata: [],
 };
 
 const reducer: Reducer<ReportsState> = (state = initialState, action) => {
@@ -37,10 +39,17 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
         loading: true,
       };
     case ReportsActionTypes.GET_PCES_SUCCESS:
+      let pces: PCESTableData[] = state.pcesdata;
+      action.payload.data.map((p: PCESTableData) => {
+        pces.push(p);
+        return pces;
+      });
+
       return {
         ...state,
         loading: false,
         pces: action.payload,
+        pcesdata: pces,
       };
     case ReportsActionTypes.GET_PCES_FAILURE:
       return {
@@ -210,6 +219,12 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
         downloadRecieptError: true,
         downloadRecieptSuccess: false,
         downloadError: action.payload,
+      };
+
+    case ReportsActionTypes.CLEAR_DATA:
+      return {
+        ...state,
+        pcesdata: [],
       };
     default:
       return state;

@@ -6,9 +6,10 @@ import { numberWithCommas } from '../../helpers/helperFunctions';
 interface DetailsProps {
   vas: VASProcessed[];
   currency: string;
+  loading: boolean;
 }
 
-const Details: React.FC<DetailsProps> = ({ vas, currency }) => {
+const Details: React.FC<DetailsProps> = ({ vas, currency, loading }) => {
   const columns: any = [
     {
       title: 'Month',
@@ -101,6 +102,7 @@ const Details: React.FC<DetailsProps> = ({ vas, currency }) => {
                 return `Showing ${range[0]} - ${range[1]} of ${total} results`;
               },
             }}
+            loading={loading}
           />
         </div>
       </Col>

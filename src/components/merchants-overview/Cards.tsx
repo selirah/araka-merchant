@@ -7,9 +7,10 @@ import { GetOverviewAnalytics } from '../../helpers/overview_functions';
 interface CardsProps {
   overviews: MerchantOverview[];
   currency: string;
+  loading: boolean;
 }
 
-const Cards: React.FC<CardsProps> = ({ overviews, currency }) => {
+const Cards: React.FC<CardsProps> = ({ overviews, currency, loading }) => {
   const {
     totalAmountProcessed,
     totalMerchants,
@@ -33,6 +34,7 @@ const Cards: React.FC<CardsProps> = ({ overviews, currency }) => {
                 value="Merchants"
                 title={totalMerchants}
                 data={trxAreaChart}
+                loading={loading}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
@@ -41,6 +43,7 @@ const Cards: React.FC<CardsProps> = ({ overviews, currency }) => {
                 title={totalAmountProcessed}
                 data={amtAreaChart}
                 currency={currency}
+                loading={loading}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
@@ -48,6 +51,7 @@ const Cards: React.FC<CardsProps> = ({ overviews, currency }) => {
                 value="Total Transactions"
                 title={totalTransactions}
                 data={trxAreaChart}
+                loading={loading}
               />
             </Col>
           </Row>

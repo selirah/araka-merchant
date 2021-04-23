@@ -12,12 +12,16 @@ interface TransactionTableProps {
   transactionHistory: TransactionHistory[];
   onClickRow(transactionID: number): void;
   currency: string;
+  loading: boolean;
+  onLoadMore(): void;
 }
 
 const TransactionTable: React.FC<TransactionTableProps> = ({
   transactionHistory,
   onClickRow,
   currency,
+  loading,
+  onLoadMore,
 }) => {
   const { t } = useTranslation();
 
@@ -163,13 +167,16 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
             })}
             className="tranaction-table"
             bordered
-            pagination={{
-              hideOnSinglePage: true,
-              total: dataSource.length,
-              showTotal: (total, range) => {
-                return `Showing ${range[0]} - ${range[1]} of ${total} results`;
-              },
-            }}
+            pagination={false}
+            // pagination={{
+            //   hideOnSinglePage: true,
+            //   total: dataSource.length,
+            //   showTotal: (total, range) => {
+            //     return `Showing ${range[0]} - ${range[1]} of ${total} results`;
+            //   },
+            // }}
+            scroll={{ y: 500, scrollToFirstRowOnChange: true }}
+            loading={loading}
           />
         </div>
       </Col>

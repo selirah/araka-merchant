@@ -4,9 +4,10 @@ import CardView from '../../cards/CardView';
 
 interface CardProps {
   areadata: any;
+  loading: boolean;
 }
 
-const Card: React.FC<CardProps> = ({ areadata }) => {
+const Card: React.FC<CardProps> = ({ areadata, loading }) => {
   return (
     <div className="margin-top-small">
       <Row>
@@ -14,13 +15,28 @@ const Card: React.FC<CardProps> = ({ areadata }) => {
       </Row>
       <Row gutter={20}>
         <Col span={8} sm={24} md={8} xs={24}>
-          <CardView value="Total Subscribers" title={0} data={{}} />
+          <CardView
+            value="Total Subscribers"
+            title={0}
+            data={{}}
+            loading={loading}
+          />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
-          <CardView value="Active Subscribers" title={0} data={{}} />
+          <CardView
+            value="Active Subscribers"
+            title={0}
+            data={{}}
+            loading={loading}
+          />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
-          <CardView value="New Subscribers" title={0} data={{}} />
+          <CardView
+            value="New Subscribers"
+            title={0}
+            data={{}}
+            loading={loading}
+          />
         </Col>
       </Row>
     </div>

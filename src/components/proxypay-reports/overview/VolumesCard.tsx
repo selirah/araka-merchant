@@ -15,6 +15,7 @@ interface VolumesCardProps {
   exportPage: string;
   currency: string;
   onSelectCurrency(value: string): void;
+  loading: boolean;
 }
 
 const { Option } = Select;
@@ -28,6 +29,7 @@ const VolumesCard: React.FC<VolumesCardProps> = ({
   // onExportClick,
   currency,
   onSelectCurrency,
+  loading,
 }) => {
   const moneyTransfers = proxyPayReport
     ? getAreaOptions(
@@ -118,6 +120,7 @@ const VolumesCard: React.FC<VolumesCardProps> = ({
             }
             data={proxyPayReport ? moneyTransfers : {}}
             currency={currency}
+            loading={loading}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
@@ -128,6 +131,7 @@ const VolumesCard: React.FC<VolumesCardProps> = ({
             }
             data={proxyPayReport ? otherPayments : {}}
             currency={currency}
+            loading={loading}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
@@ -138,6 +142,7 @@ const VolumesCard: React.FC<VolumesCardProps> = ({
             }
             data={proxyPayReport ? airtimeRecharge : {}}
             currency={currency}
+            loading={loading}
           />
         </Col>
       </Row>

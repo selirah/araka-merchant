@@ -73,6 +73,7 @@
       "pageSize",
       "skip"
     ],
+    "totalData": "",
     "total": {
       "value": "",
       "graph": {

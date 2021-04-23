@@ -5,9 +5,11 @@ import { numberWithCommas } from '../../helpers/helperFunctions';
 
 interface DetailsProps {
   pces: PCESTableData[];
+  currency: string;
+  loading: boolean;
 }
 
-const Details: React.FC<DetailsProps> = ({ pces }) => {
+const Details: React.FC<DetailsProps> = ({ pces, currency, loading }) => {
   const columns: any = [
     {
       title: 'Merchant',
@@ -69,13 +71,11 @@ const Details: React.FC<DetailsProps> = ({ pces }) => {
       key: Math.random(),
       totalTransactions: v.totalTransactions,
       merchant: v.merchant,
-      totalAmount: `${v.currency} ${numberWithCommas(
-        v.totalAmount.toFixed(2)
-      )}`,
-      arakaFees: `${v.currency} ${numberWithCommas(v.arakaFees.toFixed(2))}`,
-      otherFees: `${v.currency} ${numberWithCommas(v.otherFees.toFixed(2))}`,
-      annualFees: `${v.currency} ${numberWithCommas(v.annualFees.toFixed(2))}`,
-      totalArakaIncome: `${v.currency} ${numberWithCommas(
+      totalAmount: `${currency} ${numberWithCommas(v.totalAmount.toFixed(2))}`,
+      arakaFees: `${currency} ${numberWithCommas(v.arakaFees.toFixed(2))}`,
+      otherFees: `${currency} ${numberWithCommas(v.otherFees.toFixed(2))}`,
+      annualFees: `${currency} ${numberWithCommas(v.annualFees.toFixed(2))}`,
+      totalArakaIncome: `${currency} ${numberWithCommas(
         v.totalArakaIncome.toFixed(2)
       )}`,
     });
@@ -90,13 +90,16 @@ const Details: React.FC<DetailsProps> = ({ pces }) => {
             columns={columns}
             bordered
             className="tranaction-table"
-            pagination={{
-              hideOnSinglePage: true,
-              total: dataSource.length,
-              showTotal: (total, range) => {
-                return `Showing ${range[0]} - ${range[1]} of ${total} results`;
-              },
-            }}
+            // pagination={{
+            //   hideOnSinglePage: true,
+            //   total: dataSource.length,
+            //   showTotal: (total, range) => {
+            //     return `Showing ${range[0]} - ${range[1]} of ${total} results`;
+            //   },
+            // }}
+            pagination={false}
+            loading={loading}
+            scroll={{ y: 500, scrollToFirstRowOnChange: true }}
           />
         </div>
       </Col>

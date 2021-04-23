@@ -87,6 +87,7 @@ const Dashboard = () => {
         userRoles={user!.roles}
         currency={currency}
         fixedPeriod={fixedPeriod}
+        loading={loading}
       />
     );
   }

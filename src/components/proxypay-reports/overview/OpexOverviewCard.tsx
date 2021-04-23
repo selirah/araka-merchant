@@ -12,6 +12,7 @@ interface OpexOverviewProps {
   exportPage: string;
   currency: string;
   onSelectCurrency(value: string): void;
+  loading: boolean;
 }
 
 const { Option } = Select;
@@ -24,6 +25,7 @@ const OpexOverviewCard: React.FC<OpexOverviewProps> = ({
   // onExportClick,
   currency,
   onSelectCurrency,
+  loading,
 }) => {
   return (
     <div className="margin-top-small">
@@ -73,6 +75,7 @@ const OpexOverviewCard: React.FC<OpexOverviewProps> = ({
             }
             currency={currency}
             desc="2% of Transaction Value"
+            loading={loading}
           />
         </Col>
         <Col span={6} sm={24} md={6} xs={24}>
@@ -85,6 +88,7 @@ const OpexOverviewCard: React.FC<OpexOverviewProps> = ({
             }
             currency={currency}
             desc="2.5% Fee"
+            loading={loading}
           />
         </Col>
         <Col span={6} sm={24} md={6} xs={24}>
@@ -97,6 +101,7 @@ const OpexOverviewCard: React.FC<OpexOverviewProps> = ({
             }
             currency={currency}
             desc="1.5% Fee"
+            loading={loading}
           />
         </Col>
         <Col span={6} sm={24} md={6} xs={24}>
@@ -109,6 +114,7 @@ const OpexOverviewCard: React.FC<OpexOverviewProps> = ({
             }
             currency={currency}
             desc="1.5% Fee"
+            loading={loading}
           />
         </Col>
       </Row>

@@ -5,6 +5,7 @@ import {
   MerchantData,
   Fee,
   DataStream,
+  PCESTableData,
 } from '../../interfaces';
 
 export enum ReportsActionTypes {
@@ -21,6 +22,7 @@ export enum ReportsActionTypes {
   POST_RECORD_SUCCESS = '@@reports/POST_RECORD_SUCCESS',
   POST_RECORD_FAILURE = '@@reports/POST_RECORD_FAILURE',
   CLEAR_BOOLEANS = '@@reports/CLEAR_BOOLEANS',
+  CLEAR_DATA = '@@reports/CLEAR_DATA',
   GET_MERCHANTS_REQUEST = '@@reports/GET_MERCHANTS_REQUEST',
   GET_MERCHANTS_SUCCESS = '@@reports/GET_MERCHANTS_SUCCESS',
   GET_MERCHANTS_FAILURE = '@@reports/GET_MERCHANTS_FAILURE',
@@ -59,4 +61,5 @@ export type ReportsState = {
   readonly downloadRecieptError: boolean;
   readonly downloadReceiptStream: DataStream | undefined;
   readonly downloadError: any;
+  readonly pcesdata: PCESTableData[];
 };

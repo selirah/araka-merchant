@@ -2,6 +2,7 @@
   "pces-reporting": {
     "endpoint": "payments/getpcesreports",
     "json-response": {
+      "totalData": "",
       "transactions": {
         "value": "",
         "graph": {

@@ -8,56 +8,69 @@ import { getAreaOptions } from '../../helpers/functions';
 interface CardsProps {
   pces: PCESTableData[];
   pcesReport: PCESReport | null;
+  currency: string;
+  loading: boolean;
 }
 
-const Cards: React.FC<CardsProps> = ({ pces, pcesReport }) => {
-  let totalTransactions: any = {},
-    totalAmount: any = {},
-    annualFees: any = {},
-    totalArakaFees: any = {},
-    totalArakaIncome: any = {},
-    pcesShare: any = {};
-  if (pcesReport) {
-    totalTransactions = getAreaOptions(
-      pcesReport.transactions.graph.labels,
-      pcesReport.transactions.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
-    totalAmount = getAreaOptions(
-      pcesReport.totalAmount.graph.labels,
-      pcesReport.totalAmount.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
-    annualFees = getAreaOptions(
-      pcesReport.arakaAnnualFees.graph.labels,
-      pcesReport.arakaAnnualFees.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
+const Cards: React.FC<CardsProps> = ({
+  pces,
+  pcesReport,
+  currency,
+  loading,
+}) => {
+  const totalTransactions = pcesReport
+    ? getAreaOptions(
+        pcesReport.transactions.graph.labels,
+        pcesReport.transactions.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
 
-    totalArakaFees = getAreaOptions(
-      pcesReport.totalArakaFees.graph.labels,
-      pcesReport.totalArakaFees.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
+  const totalAmount = pcesReport
+    ? getAreaOptions(
+        pcesReport.totalAmount.graph.labels,
+        pcesReport.totalAmount.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
 
-    totalArakaIncome = getAreaOptions(
-      pcesReport.totalArakaIncome.graph.labels,
-      pcesReport.totalArakaIncome.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
+  const annualFees = pcesReport
+    ? getAreaOptions(
+        pcesReport.arakaAnnualFees.graph.labels,
+        pcesReport.arakaAnnualFees.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
 
-    pcesShare = getAreaOptions(
-      pcesReport.pcesshare.graph.labels,
-      pcesReport.pcesshare.graph.values,
-      '#FFA000',
-      '#FFE082'
-    );
-  }
+  const totalArakaFees = pcesReport
+    ? getAreaOptions(
+        pcesReport.totalArakaFees.graph.labels,
+        pcesReport.totalArakaFees.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
+
+  const totalArakaIncome = pcesReport
+    ? getAreaOptions(
+        pcesReport.totalArakaIncome.graph.labels,
+        pcesReport.totalArakaIncome.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
+
+  const pcesShare = pcesReport
+    ? getAreaOptions(
+        pcesReport.pcesshare.graph.labels,
+        pcesReport.pcesshare.graph.values,
+        '#FFA000',
+        '#FFE082'
+      )
+    : {};
 
   return (
     <div className="margin-top-small">
@@ -76,6 +89,7 @@ const Cards: React.FC<CardsProps> = ({ pces, pcesReport }) => {
                     value="Transactions"
                     title={pcesReport.transactions.value}
                     data={totalTransactions}
+                    loading={loading}
                   />
                 </Col>
                 <Col span={8} sm={24} md={8} xs={24}>
@@ -83,7 +97,8 @@ const Cards: React.FC<CardsProps> = ({ pces, pcesReport }) => {
                     value="Total Amount"
                     title={pcesReport.totalAmount.value}
                     data={totalAmount}
-                    currency="$"
+                    currency={currency}
+                    loading={loading}
                   />
                 </Col>
                 <Col span={8} sm={24} md={8} xs={24}>
@@ -91,7 +106,8 @@ const Cards: React.FC<CardsProps> = ({ pces, pcesReport }) => {
                     value="Araka Annual Fees"
                     title={pcesReport.arakaAnnualFees.value}
                     data={annualFees}
-                    currency="$"
+                    currency={currency}
+                    loading={loading}
                   />
                 </Col>
               </Row>
@@ -105,7 +121,8 @@ const Cards: React.FC<CardsProps> = ({ pces, pcesReport }) => {
                     value="Total Araka Fees"
                     title={pcesReport.totalArakaFees.value}
                     data={totalArakaFees}
-                    currency="$"
+                    currency={currency}
+                    loading={loading}
                   />
                 </Col>
                 <Col span={8} sm={24} md={8} xs={24}>
@@ -113,7 +130,8 @@ const Cards: React.FC<CardsProps> = ({ pces, pcesReport }) => {
                     value="Total Araka Income"
                     title={pcesReport.totalArakaIncome.value}
                     data={totalArakaIncome}
-                    currency="$"
+                    currency={currency}
+                    loading={loading}
                   />
                 </Col>
                 <Col span={8} sm={24} md={8} xs={24} className="pces-share">
@@ -121,7 +139,8 @@ const Cards: React.FC<CardsProps> = ({ pces, pcesReport }) => {
                     value="PCES Share (50%)"
                     title={pcesReport.pcesshare.value}
                     data={pcesShare}
-                    currency="$"
+                    currency={currency}
+                    loading={loading}
                   />
                 </Col>
               </Row>

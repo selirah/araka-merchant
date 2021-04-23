@@ -12,6 +12,7 @@ interface RevenueChannelCardProps {
   exportPage: string;
   currency: string;
   onSelectCurrency(value: string): void;
+  loading: boolean;
 }
 
 const { Option } = Select;
@@ -24,6 +25,7 @@ const RevenueChannelCard: React.FC<RevenueChannelCardProps> = ({
   // onExportClick,
   currency,
   onSelectCurrency,
+  loading,
 }) => {
   const cards = proxyPayReport
     ? getAreaOptions(
@@ -103,6 +105,7 @@ const RevenueChannelCard: React.FC<RevenueChannelCardProps> = ({
             }
             data={proxyPayReport ? cards : {}}
             currency={currency}
+            loading={loading}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
@@ -113,6 +116,7 @@ const RevenueChannelCard: React.FC<RevenueChannelCardProps> = ({
             }
             data={proxyPayReport ? mpesa : {}}
             currency={currency}
+            loading={loading}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
@@ -123,6 +127,7 @@ const RevenueChannelCard: React.FC<RevenueChannelCardProps> = ({
             }
             data={proxyPayReport ? airtel : {}}
             currency={currency}
+            loading={loading}
           />
         </Col>
       </Row>

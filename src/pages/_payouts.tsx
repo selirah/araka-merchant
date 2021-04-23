@@ -34,7 +34,6 @@ const Details = lazy(() => import('../components/payouts/Details'));
 const NewRecordPayout = lazy(
   () => import('../components/payouts/NewRecordPayout')
 );
-const EmptyBox = lazy(() => import('../components/payouts/EmptyBox'));
 const PayoutDetail = lazy(() => import('../components/payouts/PayoutDetail'));
 
 const { Content } = Layout;
@@ -298,32 +297,6 @@ const Payouts: React.FC = () => {
     }
   };
 
-  let render: React.ReactNode;
-
-  if (loading) {
-    render = (
-      <div className="spinner">
-        <Spin />
-      </div>
-    );
-  }
-
-  if (!loading && !reports.payouts) {
-    render = (
-      <EmptyBox
-        header="Merchant Payouts"
-        description="Merchant payouts returned empty results"
-        image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-      />
-    );
-  }
-
-  if (!loading && reports.payouts) {
-    render = (
-      <Details payouts={payouts} currency={currency} onClickRow={onClickRow} />
-    );
-  }
-
   return (
     <div className="padding-box">
       <Content className="site-layout-background site-box">
@@ -353,6 +326,7 @@ const Payouts: React.FC = () => {
                 payoutReport={payoutReport ? payoutReport : null}
                 currency={currency}
                 role={role}
+                loading={loading}
               />
               <div className="margin-top">
                 <Row style={{ position: 'relative' }}>
@@ -387,7 +361,12 @@ const Payouts: React.FC = () => {
                     </Button>
                   </div>
                 </Row>
-                {render}
+                <Details
+                  payouts={payouts}
+                  currency={currency}
+                  onClickRow={onClickRow}
+                  loading={loading}
+                />
               </div>
             </>
           ) : switchView ? (

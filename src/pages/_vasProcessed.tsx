@@ -16,7 +16,6 @@ import moment from 'moment';
 const Filters = lazy(() => import('../components/vas-processed/Filters'));
 const Cards = lazy(() => import('../components/vas-processed/Cards'));
 const Details = lazy(() => import('../components/vas-processed/Details'));
-const EmptyBox = lazy(() => import('../components/vas-processed/EmptyBox'));
 const CurrencyFilter = lazy(
   () => import('../components/dashboard/CurrencyFilter')
 );
@@ -46,10 +45,7 @@ const VASProcessed = () => {
   };
 
   useEffect(() => {
-    const { vas, loading } = vasStore;
-    if (isEmpty(vas) && !loading) {
-      dispatch(getVasRequest(params));
-    }
+    dispatch(getVasRequest(params));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -107,27 +103,6 @@ const VASProcessed = () => {
     dispatch(getVasRequest(params));
   };
 
-  let render: React.ReactNode;
-  if (loading) {
-    render = (
-      <div className="spinner">
-        <Spin />
-      </div>
-    );
-  }
-  if (!loading && isEmpty(vasStore.vas)) {
-    render = (
-      <EmptyBox
-        header="No VAS Processed Data"
-        description="There are currently no VAS processed data collected"
-      />
-    );
-  }
-
-  if (!loading && !isEmpty(vasStore.vas)) {
-    render = <Details vas={vasData} currency={currency} />;
-  }
-
   return (
     <div className="padding-box">
       <Content className="site-layout-background site-box">
@@ -141,34 +116,32 @@ const VASProcessed = () => {
           }
         >
           <Filters onReset={onReset} onSearch={onSearch} />
-          {!isEmpty(vasData) ? (
-            <Cards vas={vasData} currency={currency} />
-          ) : null}
+          <Cards vas={vasData} currency={currency} loading={loading} />
           <div className="margin-top">
             <CurrencyFilter onSelectCurrency={onSelectCurrency} />
             <Row style={{ position: 'relative' }}>
               <h4 className="transaction-chart-text">VAS Processed Table</h4>
               <div className="utility-buttons">
-                {!isEmpty(vasData) ? (
-                  <>
-                    <Button
-                      type="primary"
-                      className="export-buttons"
-                      onClick={() => onExportClick('EXCEL')}
-                      loading={isExporting && exportType === 'EXCEL'}
-                    >
-                      Export to Excel
-                    </Button>
-                    <Button
-                      type="primary"
-                      className="export-buttons"
-                      onClick={() => onExportClick('PDF')}
-                      loading={isExporting && exportType === 'PDF'}
-                    >
-                      Export to PDF
-                    </Button>
-                  </>
-                ) : null}
+                <>
+                  <Button
+                    type="primary"
+                    className="export-buttons"
+                    onClick={() => onExportClick('EXCEL')}
+                    loading={isExporting && exportType === 'EXCEL'}
+                    disabled={isEmpty(vasData)}
+                  >
+                    Export to Excel
+                  </Button>
+                  <Button
+                    type="primary"
+                    className="export-buttons"
+                    onClick={() => onExportClick('PDF')}
+                    loading={isExporting && exportType === 'PDF'}
+                    disabled={isEmpty(vasData)}
+                  >
+                    Export to PDF
+                  </Button>
+                </>
                 <Button
                   type="primary"
                   className="export-buttons reload"
@@ -178,8 +151,7 @@ const VASProcessed = () => {
                 </Button>
               </div>
             </Row>
-
-            {render}
+            <Details vas={vasData} currency={currency} loading={loading} />
           </div>
         </Suspense>
       </Content>

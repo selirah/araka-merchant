@@ -11,6 +11,7 @@ interface PagesProps {
   processId: string;
   onClickRow(pageId: number): void;
   onPreviewClick(processId: string): void;
+  loading: boolean;
 }
 
 interface TableData {
@@ -34,6 +35,7 @@ const Pages: React.FC<PagesProps> = ({
   processId,
   onClickRow,
   onPreviewClick,
+  loading,
 }) => {
   const columns: any[] = [
     {
@@ -121,7 +123,8 @@ const Pages: React.FC<PagesProps> = ({
       emailAddress: page.emailAddress,
       currency: page.currency,
       processId: page.processId,
-      createdWhen: moment(page.createdWhen, 'MM/DD/YYYY HH:mm:ss')
+      // createdWhen: moment(page.createdWhen, 'MM/DD/YYYY HH:mm:ss')
+      createdWhen: moment(page.createdWhen)
         .tz(timeZones.kinshasa)
         .format(`MMMM D, YYYY (h:mm a)`),
     });
@@ -143,6 +146,7 @@ const Pages: React.FC<PagesProps> = ({
                 return `Showing ${range[0]} - ${range[1]} of ${total} results`;
               },
             }}
+            loading={loading}
           />
         </div>
         {/* </Card> */}

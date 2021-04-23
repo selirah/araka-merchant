@@ -6,9 +6,10 @@ import { getAreaOptions } from '../../../helpers/functions';
 
 interface MomoTrxProps {
   proxyPayReport: ProxyPayReport | null;
+  loading: boolean;
 }
 
-const MomoTrx: React.FC<MomoTrxProps> = ({ proxyPayReport }) => {
+const MomoTrx: React.FC<MomoTrxProps> = ({ proxyPayReport, loading }) => {
   const total = proxyPayReport
     ? getAreaOptions(
         proxyPayReport.transactions.mobilemoney.total.graph.labels,
@@ -51,6 +52,7 @@ const MomoTrx: React.FC<MomoTrxProps> = ({ proxyPayReport }) => {
                 : 0
             }
             data={proxyPayReport ? total : {}}
+            loading={loading}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
@@ -62,6 +64,7 @@ const MomoTrx: React.FC<MomoTrxProps> = ({ proxyPayReport }) => {
                 : 0
             }
             data={proxyPayReport ? successful : {}}
+            loading={loading}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
@@ -73,6 +76,7 @@ const MomoTrx: React.FC<MomoTrxProps> = ({ proxyPayReport }) => {
                 : 0
             }
             data={proxyPayReport ? failed : {}}
+            loading={loading}
           />
         </Col>
       </Row>

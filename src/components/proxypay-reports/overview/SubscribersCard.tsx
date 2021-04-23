@@ -14,12 +14,14 @@ interface SubscribersCardProps {
   exportType: string;
   exportPage: string;
   onReloadPage(): void;
+  loading: boolean;
 }
 
 const SubscribersCard: React.FC<SubscribersCardProps> = ({
   onSeeDetailsClick,
   proxyPayReport,
   onReloadPage,
+  loading,
   // exportPage,
   // exportType,
   // isExporting,
@@ -103,6 +105,7 @@ const SubscribersCard: React.FC<SubscribersCardProps> = ({
             value="Total Subscribers"
             title={proxyPayReport ? proxyPayReport.subscribers.total.value : 0}
             data={totalSubscribers}
+            loading={loading}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
@@ -110,6 +113,7 @@ const SubscribersCard: React.FC<SubscribersCardProps> = ({
             value="Active Subscribers"
             title={proxyPayReport ? proxyPayReport.subscribers.active.value : 0}
             data={activeSubscribers}
+            loading={loading}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
@@ -121,6 +125,7 @@ const SubscribersCard: React.FC<SubscribersCardProps> = ({
                 : 0
             }
             data={newSubscribers}
+            loading={loading}
           />
         </Col>
       </Row>

@@ -26,6 +26,7 @@ const { Content } = Layout;
 
 const ProxyPaySubscribers = () => {
   const [subscriberData /*, setSubscriberData*/] = useState([]);
+  const [loading /*, setLoading*/] = useState(false);
   const onReset = (form: any) => {
     form.resetFields();
   };
@@ -45,8 +46,8 @@ const ProxyPaySubscribers = () => {
           }
         >
           <Filter onReset={onReset} onSearch={onSearch} />
-          <Card areadata={MonthlyArea} />
-          <MidCard areadata={MonthlyArea} />
+          <Card areadata={MonthlyArea} loading={loading} />
+          <MidCard areadata={MonthlyArea} loading={loading} />
           <div className="margin-top">
             <Row style={{ position: 'relative' }}>
               <h4 className="transaction-chart-text">Subscribers Table</h4>

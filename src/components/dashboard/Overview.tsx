@@ -14,6 +14,7 @@ interface OverviewProps {
   userRoles: string[];
   currency: string;
   fixedPeriod: string;
+  loading: boolean;
 }
 
 const Overview: React.FC<OverviewProps> = ({
@@ -21,6 +22,7 @@ const Overview: React.FC<OverviewProps> = ({
   fixedPeriod,
   trxReports,
   userRoles,
+  loading,
 }) => {
   const role = userRoles.find((r) => r === roles.SuperMerchant);
   const { time } = Clock();
@@ -48,8 +50,8 @@ const Overview: React.FC<OverviewProps> = ({
 
   const totalTrx = trxReports
     ? getAreaOptions(
-        trxReports.total.graph.labels,
-        trxReports.total.graph.values,
+        trxReports.total.graph.labels.reverse(),
+        trxReports.total.graph.values.reverse(),
         borderColor,
         bgColor
       )
@@ -57,16 +59,16 @@ const Overview: React.FC<OverviewProps> = ({
 
   const totalAmountApproved = trxReports
     ? getAreaOptions(
-        trxReports.totalAmountApproved.graph.labels,
-        trxReports.totalAmountApproved.graph.values,
+        trxReports.totalAmountApproved.graph.labels.reverse(),
+        trxReports.totalAmountApproved.graph.values.reverse(),
         borderColor,
         bgColor
       )
     : {};
   const totalAmountDeclined = trxReports
     ? getAreaOptions(
-        trxReports.totalAmountDeclined.graph.labels,
-        trxReports.totalAmountDeclined.graph.values,
+        trxReports.totalAmountDeclined.graph.labels.reverse(),
+        trxReports.totalAmountDeclined.graph.values.reverse(),
         borderColor,
         bgColor
       )
@@ -79,14 +81,6 @@ const Overview: React.FC<OverviewProps> = ({
         trxReports.totalValues.declinedValues.reverse()
       )
     : {};
-
-  // const barChartData = trxReports
-  //   ? getBarOptions(
-  //       trxReports.totalDeclined.graph.labels,
-  //       trxReports.totalApproved.graph.values,
-  //       trxReports.totalDeclined.graph.values
-  //     )
-  //   : {};
 
   const firstTopMerchant = trxReports
     ? getAreaOptions(
@@ -135,6 +129,7 @@ const Overview: React.FC<OverviewProps> = ({
                   value="Transactions"
                   title={trxReports ? trxReports.total.value : 0}
                   data={totalTrx}
+                  loading={loading}
                 />
               </Col>
               <Col span={8} sm={24} md={8} xs={24}>
@@ -143,6 +138,7 @@ const Overview: React.FC<OverviewProps> = ({
                   title={trxReports ? trxReports.totalAmountApproved.value : 0}
                   data={totalAmountApproved}
                   currency={currency}
+                  loading={loading}
                 />
               </Col>
               <Col span={8} sm={24} md={8} xs={24}>
@@ -151,6 +147,7 @@ const Overview: React.FC<OverviewProps> = ({
                   title={trxReports ? trxReports.totalAmountDeclined.value : 0}
                   data={totalAmountDeclined}
                   currency={currency}
+                  loading={loading}
                 />
               </Col>
             </Row>
@@ -165,7 +162,7 @@ const Overview: React.FC<OverviewProps> = ({
           <Col span={24} sm={24} md={24} xs={24}>
             <Card>
               <div className="chart-padding">
-                <BarChart info={barChartData} />
+                <BarChart info={barChartData} loading={loading} />
               </div>
             </Card>
           </Col>

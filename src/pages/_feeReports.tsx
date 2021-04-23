@@ -7,20 +7,21 @@ import { AppDispatch } from '../helpers/appDispatch';
 import { MerchantData, PCESReport, PCESTableData } from '../interfaces';
 import {
   getMerchantsRequest,
-  clearBooleans,
   exportRequest,
   getPCESRequest,
+  clearData,
 } from '../store/reports';
 import moment from 'moment';
 import { isEmpty } from '../helpers/isEmpty';
 
 const { Content } = Layout;
 
-// const EmptyBox = lazy(() => import('../components/vas-processed/EmptyBox'));
 const Filters = lazy(() => import('../components/fee-reports/Filters'));
 const Cards = lazy(() => import('../components/fee-reports/Cards'));
 const Details = lazy(() => import('../components/fee-reports/Details'));
-const EmptyBox = lazy(() => import('../components/fee-reports/EmptyBox'));
+const CurrencyFilter = lazy(
+  () => import('../components/transactions/CurrencyFilter')
+);
 
 const FeeReports = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -34,19 +35,25 @@ const FeeReports = () => {
   const [periodTo, setPeriodTo] = useState('');
   const [exportType, setExportType] = useState('');
   const [isExporting, setIsExporting] = useState(false);
+  const [pageSize, setPageSize] = useState(10);
+  const [skip, setSkip] = useState(0);
+  const [currency, setCurrency] = useState('USD');
+
+  const params = {
+    currency: currency,
+    pageSize: 10,
+    skip: skip,
+    periodFrom: periodFrom,
+    periodTo: periodTo,
+    merchant: merchant ? merchant.name : '',
+    exportType: exportType,
+    status: 'APPROVED',
+  };
 
   useEffect(() => {
-    const { merchants, loading, pces } = reports;
-    if (!loading && !pces) {
-      const payload = {
-        periodFrom: '',
-        periodTo: '',
-        merchant: merchant ? merchant.name : '',
-        currency: 'USD',
-      };
-      dispatch(getPCESRequest(payload));
-    }
-    dispatch(clearBooleans());
+    const { merchants } = reports;
+    dispatch(clearData());
+    dispatch(getPCESRequest(params));
     if (isEmpty(merchants)) {
       dispatch(getMerchantsRequest());
     }
@@ -54,13 +61,33 @@ const FeeReports = () => {
   }, []);
 
   useEffect(() => {
-    const { merchants, loading, pces, isExporting } = reports;
+    const { merchants, loading, pces, isExporting, pcesdata } = reports;
     setLoading(loading);
-    setPces(pces ? pces.data : []);
+    setPces(pcesdata);
     setMerchants(merchants);
     setPcesReport(pces);
     setIsExporting(isExporting);
   }, [reports]);
+
+  const reloadReport = () => {
+    dispatch(clearData());
+    dispatch(getPCESRequest(params));
+  };
+
+  const onSelectCurrency = (value: string) => {
+    setCurrency(value);
+    params.skip = skip;
+    params.currency = value;
+    dispatch(clearData());
+    dispatch(getPCESRequest(params));
+  };
+
+  const onLoadMore = () => {
+    setPageSize(pageSize + 10);
+    setSkip(pageSize + 1);
+    params.skip = pageSize + 1;
+    dispatch(getPCESRequest(params));
+  };
 
   const onSearch = (values: any) => {
     const { merchant, periodFrom, periodTo } = values;
@@ -80,71 +107,25 @@ const FeeReports = () => {
         setMerchant(m);
       }
     }
-    const payload = {
-      periodFrom: pFrom,
-      periodTo: pTo,
-      currency: 'USD',
-      merchant: m !== undefined ? m.name : '',
-    };
-    dispatch(getPCESRequest(payload));
+    params.periodFrom = pFrom;
+    params.periodTo = pTo;
+    params.merchant = m !== undefined ? m.name : '';
+    dispatch(getPCESRequest(params));
   };
 
   const onReset = (form: any) => {
     form.resetFields();
-    const payload = {
-      periodFrom: '',
-      periodTo: '',
-      merchant: '',
-      currency: 'USD',
-    };
-    dispatch(getPCESRequest(payload));
-  };
-
-  const reloadReport = () => {
-    const payload = {
-      periodFrom: periodFrom,
-      periodTo: periodTo,
-      merchant: merchant ? merchant.name : '',
-      currency: 'USD',
-    };
-    dispatch(getPCESRequest(payload));
+    params.periodFrom = '';
+    params.periodTo = '';
+    params.merchant = '';
+    dispatch(getPCESRequest(params));
   };
 
   const onExportClick = (type: string) => {
     setExportType(type);
-    const payload = {
-      periodFrom: periodFrom,
-      periodTo: periodTo,
-      exportType: type,
-      merchant: merchant ? merchant.name : '',
-      currency: 'USD',
-    };
-    dispatch(exportRequest(payload));
+    params.exportType = type;
+    dispatch(exportRequest(params));
   };
-
-  let render: React.ReactNode;
-
-  if (loading) {
-    render = (
-      <div className="spinner">
-        <Spin />
-      </div>
-    );
-  }
-
-  if (!loading && isEmpty(pces)) {
-    render = (
-      <EmptyBox
-        header="PCES Reports"
-        description="PCES reports returned empty results"
-        image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-      />
-    );
-  }
-
-  if (!loading && !isEmpty(pces)) {
-    render = <Details pces={pces} />;
-  }
 
   return (
     <div className="padding-box">
@@ -163,7 +144,16 @@ const FeeReports = () => {
             onSearch={onSearch}
             merchants={merchants}
           />
-          <Cards pces={pces} pcesReport={pcesReport} />
+          <Cards
+            pces={pces}
+            pcesReport={pcesReport}
+            currency={currency}
+            loading={loading}
+          />
+          <CurrencyFilter
+            onSelectCurrency={onSelectCurrency}
+            onLoadMore={onLoadMore}
+          />
           <div className="margin-top">
             <Row style={{ position: 'relative' }}>
               <h4 className="transaction-chart-text">PCES Reports Table</h4>
@@ -174,6 +164,7 @@ const FeeReports = () => {
                     className="export-buttons"
                     onClick={() => onExportClick('EXCEL')}
                     loading={isExporting && exportType === 'EXCEL'}
+                    disabled={isEmpty(pces)}
                   >
                     Export to Excel
                   </Button>
@@ -182,6 +173,7 @@ const FeeReports = () => {
                     className="export-buttons"
                     onClick={() => onExportClick('PDF')}
                     loading={isExporting && exportType === 'PDF'}
+                    disabled={isEmpty(pces)}
                   >
                     Export to PDF
                   </Button>
@@ -195,7 +187,7 @@ const FeeReports = () => {
                 </Button>
               </div>
             </Row>
-            {render}
+            <Details pces={pces} currency={currency} loading={loading} />
           </div>
         </Suspense>
       </Content>

@@ -14,11 +14,13 @@ interface TransactionsCardProps {
   exportType: string;
   exportPage: string;
   currency: string;
+  loading: boolean;
 }
 
 const TransactionsCard: React.FC<TransactionsCardProps> = ({
   onSeeDetailsClick,
   proxyPayReport,
+  loading,
   // exportPage,
   // exportType,
   // isExporting,
@@ -99,6 +101,7 @@ const TransactionsCard: React.FC<TransactionsCardProps> = ({
                 : 0
             }
             data={proxyPayReport ? total : {}}
+            loading={loading}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
@@ -110,6 +113,7 @@ const TransactionsCard: React.FC<TransactionsCardProps> = ({
                 : 0
             }
             data={proxyPayReport ? successful : {}}
+            loading={loading}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
@@ -121,6 +125,7 @@ const TransactionsCard: React.FC<TransactionsCardProps> = ({
                 : 0
             }
             data={proxyPayReport ? failed : {}}
+            loading={loading}
           />
         </Col>
       </Row>

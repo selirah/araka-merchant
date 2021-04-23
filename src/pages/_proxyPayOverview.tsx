@@ -58,13 +58,15 @@ const ProxyPayOverview: React.FC = () => {
   const [exportPage, setExportPage] = useState('');
   const [isExporting, setIsExporting] = useState(false);
 
+  const params = {
+    periodFrom: periodFrom,
+    periodTo: periodTo,
+    currency: currency,
+    exportType: exportType,
+  };
+
   useEffect(() => {
-    const payload = {
-      periodFrom: '',
-      periodTo: '',
-      currency: currency,
-    };
-    dispatch(getProxyPayRequest(payload));
+    dispatch(getProxyPayRequest(params));
     dispatch(clearBooleans());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -78,12 +80,9 @@ const ProxyPayOverview: React.FC = () => {
 
   const onReset = (form: any) => {
     form.resetFields();
-    const payload = {
-      periodFrom: '',
-      periodTo: '',
-      currency: currency,
-    };
-    dispatch(getProxyPayRequest(payload));
+    params.periodFrom = '';
+    params.periodTo = '';
+    dispatch(getProxyPayRequest(params));
   };
 
   const onSearch = (values: any) => {
@@ -97,13 +96,9 @@ const ProxyPayOverview: React.FC = () => {
       setPeriodFrom(pFrom);
       setPeriodTo(pTo);
     }
-
-    const payload = {
-      periodFrom: pFrom,
-      periodTo: pTo,
-      currency: currency,
-    };
-    dispatch(getProxyPayRequest(payload));
+    params.periodFrom = pFrom;
+    params.periodTo = pTo;
+    dispatch(getProxyPayRequest(params));
   };
 
   const onSeeDetailsClick = (path: string, menu: string, header: string) => {
@@ -114,33 +109,21 @@ const ProxyPayOverview: React.FC = () => {
 
   const onSelectCurrency = (value: string) => {
     setCurrency(value);
-    const payload = {
-      periodFrom: periodFrom,
-      periodTo: periodTo,
-      currency: value,
-    };
-    dispatch(getProxyPayRequest(payload));
+    params.currency = value;
+    dispatch(getProxyPayRequest(params));
   };
 
   const onExportClick = (type: string, page: string) => {
     setExportType(type);
     setExportPage(page);
-    const payload = {
-      periodFrom: periodFrom,
-      periodTo: periodTo,
-      currency: currency,
-      exportType: type,
-    };
-    dispatch(exportRequest(payload));
+    params.exportType = type;
+    dispatch(exportRequest(params));
   };
 
   const onReloadPage = () => {
-    const payload = {
-      periodFrom: '',
-      periodTo: '',
-      currency: currency,
-    };
-    dispatch(getProxyPayRequest(payload));
+    params.periodFrom = '';
+    params.periodTo = '';
+    dispatch(getProxyPayRequest(params));
   };
 
   return (
@@ -156,78 +139,77 @@ const ProxyPayOverview: React.FC = () => {
           }
         >
           <Filter onReset={onReset} onSearch={onSearch} />
-          {loading ? (
-            <div className="spinner">
-              <Spin />
-            </div>
-          ) : (
-            <>
-              <SubscribersCard
-                onSeeDetailsClick={onSeeDetailsClick}
-                proxyPayReport={proxyPayReport}
-                exportPage={exportPage}
-                exportType={exportType}
-                isExporting={isExporting}
-                onExportClick={onExportClick}
-                onReloadPage={onReloadPage}
-              />
-              <TransactionsCard
-                onSeeDetailsClick={onSeeDetailsClick}
-                exportPage={exportPage}
-                exportType={exportType}
-                isExporting={isExporting}
-                onExportClick={onExportClick}
-                proxyPayReport={proxyPayReport}
-                currency={currency}
-              />
-              <VolumesCard
-                onSeeDetailsClick={onSeeDetailsClick}
-                currency={currency}
-                exportPage={exportPage}
-                exportType={exportType}
-                isExporting={isExporting}
-                onExportClick={onExportClick}
-                proxyPayReport={proxyPayReport}
-                onSelectCurrency={onSelectCurrency}
-              />
-              <RevenueChannelCard
-                currency={currency}
-                exportPage={exportPage}
-                exportType={exportType}
-                isExporting={isExporting}
-                onExportClick={onExportClick}
-                onSelectCurrency={onSelectCurrency}
-                proxyPayReport={proxyPayReport}
-              />
-              <RevenueServiceCard
-                currency={currency}
-                exportPage={exportPage}
-                exportType={exportType}
-                isExporting={isExporting}
-                onExportClick={onExportClick}
-                onSelectCurrency={onSelectCurrency}
-                proxyPayReport={proxyPayReport}
-              />
-              <OpexOverviewCard
-                currency={currency}
-                exportPage={exportPage}
-                exportType={exportType}
-                isExporting={isExporting}
-                onExportClick={onExportClick}
-                onSelectCurrency={onSelectCurrency}
-                proxyPayReport={proxyPayReport}
-              />
-              <EbitdaOverviewCard
-                currency={currency}
-                exportPage={exportPage}
-                exportType={exportType}
-                isExporting={isExporting}
-                onExportClick={onExportClick}
-                onSelectCurrency={onSelectCurrency}
-                proxyPayReport={proxyPayReport}
-              />
-            </>
-          )}
+          <SubscribersCard
+            onSeeDetailsClick={onSeeDetailsClick}
+            proxyPayReport={proxyPayReport}
+            exportPage={exportPage}
+            exportType={exportType}
+            isExporting={isExporting}
+            onExportClick={onExportClick}
+            onReloadPage={onReloadPage}
+            loading={loading}
+          />
+          <TransactionsCard
+            onSeeDetailsClick={onSeeDetailsClick}
+            exportPage={exportPage}
+            exportType={exportType}
+            isExporting={isExporting}
+            onExportClick={onExportClick}
+            proxyPayReport={proxyPayReport}
+            currency={currency}
+            loading={loading}
+          />
+          <VolumesCard
+            onSeeDetailsClick={onSeeDetailsClick}
+            currency={currency}
+            exportPage={exportPage}
+            exportType={exportType}
+            isExporting={isExporting}
+            onExportClick={onExportClick}
+            proxyPayReport={proxyPayReport}
+            onSelectCurrency={onSelectCurrency}
+            loading={loading}
+          />
+          <RevenueChannelCard
+            currency={currency}
+            exportPage={exportPage}
+            exportType={exportType}
+            isExporting={isExporting}
+            onExportClick={onExportClick}
+            onSelectCurrency={onSelectCurrency}
+            proxyPayReport={proxyPayReport}
+            loading={loading}
+          />
+          <RevenueServiceCard
+            currency={currency}
+            exportPage={exportPage}
+            exportType={exportType}
+            isExporting={isExporting}
+            onExportClick={onExportClick}
+            onSelectCurrency={onSelectCurrency}
+            proxyPayReport={proxyPayReport}
+            loading={loading}
+          />
+          <OpexOverviewCard
+            currency={currency}
+            exportPage={exportPage}
+            exportType={exportType}
+            isExporting={isExporting}
+            onExportClick={onExportClick}
+            onSelectCurrency={onSelectCurrency}
+            proxyPayReport={proxyPayReport}
+            loading={loading}
+          />
+          <EbitdaOverviewCard
+            currency={currency}
+            exportPage={exportPage}
+            exportType={exportType}
+            isExporting={isExporting}
+            onExportClick={onExportClick}
+            onSelectCurrency={onSelectCurrency}
+            proxyPayReport={proxyPayReport}
+            loading={loading}
+          />
         </Suspense>
       </Content>
     </div>

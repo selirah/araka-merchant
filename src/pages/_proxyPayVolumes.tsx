@@ -120,25 +120,19 @@ const ProxyPayVolumes: React.FC = () => {
           }
         >
           <Filter onReset={onReset} onSearch={onSearch} />
-          {loading ? (
-            <div className="spinner">
-              <Spin />
-            </div>
-          ) : (
-            <>
-              <VolumesCard
-                proxyPayReport={proxyPayReport}
-                onReloadPage={onReloadPage}
-                currency={currency}
-                onSelectCurrency={onSelectCurrency}
-              />
-              <AirtimeRechargeSplitCard
-                currency={currency}
-                onSelectCurrency={onSelectCurrency}
-                proxyPayReport={proxyPayReport}
-              />
-            </>
-          )}
+          <VolumesCard
+            proxyPayReport={proxyPayReport}
+            onReloadPage={onReloadPage}
+            currency={currency}
+            onSelectCurrency={onSelectCurrency}
+            loading={loading}
+          />
+          <AirtimeRechargeSplitCard
+            currency={currency}
+            onSelectCurrency={onSelectCurrency}
+            proxyPayReport={proxyPayReport}
+            loading={loading}
+          />
         </Suspense>
       </Content>
     </div>

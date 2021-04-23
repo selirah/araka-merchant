@@ -7,11 +7,13 @@ import { getAreaOptions } from '../../helpers/functions';
 interface TransactionSummaryCardsProps {
   trxReports: Transaction | null;
   currency: string;
+  loading: boolean;
 }
 
 const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
   trxReports,
   currency,
+  loading,
 }) => {
   const totalTrx = trxReports
     ? getAreaOptions(
@@ -52,6 +54,7 @@ const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
                 value="Transactions"
                 title={trxReports ? trxReports.total.value : 0}
                 data={totalTrx}
+                loading={loading}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
@@ -59,6 +62,7 @@ const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
                 value="Approved"
                 title={trxReports ? trxReports.totalAmountApproved.value : 0}
                 data={totalAmountApproved}
+                loading={loading}
                 currency={currency}
               />
             </Col>
@@ -67,6 +71,7 @@ const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
                 value="Declined"
                 title={trxReports ? trxReports.totalAmountDeclined.value : 0}
                 data={totalAmountDeclined}
+                loading={loading}
                 currency={currency}
               />
             </Col>

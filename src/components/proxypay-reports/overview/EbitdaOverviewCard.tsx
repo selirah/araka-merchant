@@ -12,6 +12,7 @@ interface EbitdaOverviewCardProps {
   exportPage: string;
   currency: string;
   onSelectCurrency(value: string): void;
+  loading: boolean;
 }
 
 const { Option } = Select;
@@ -24,6 +25,7 @@ const EbitdaOverviewCard: React.FC<EbitdaOverviewCardProps> = ({
   // onExportClick,
   currency,
   onSelectCurrency,
+  loading,
 }) => {
   const total = proxyPayReport
     ? getAreaOptions(
@@ -98,6 +100,7 @@ const EbitdaOverviewCard: React.FC<EbitdaOverviewCardProps> = ({
             }
             data={proxyPayReport ? total : {}}
             currency={currency}
+            loading={loading}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
@@ -106,6 +109,7 @@ const EbitdaOverviewCard: React.FC<EbitdaOverviewCardProps> = ({
             title={proxyPayReport ? proxyPayReport.ebitda.cards.value : 0}
             data={proxyPayReport ? cards : {}}
             currency={currency}
+            loading={loading}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
@@ -114,6 +118,7 @@ const EbitdaOverviewCard: React.FC<EbitdaOverviewCardProps> = ({
             title={proxyPayReport ? proxyPayReport.ebitda.mobileMoney.value : 0}
             data={proxyPayReport ? momo : {}}
             currency={currency}
+            loading={loading}
           />
         </Col>
       </Row>

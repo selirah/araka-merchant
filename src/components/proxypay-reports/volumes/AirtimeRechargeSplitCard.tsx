@@ -8,6 +8,7 @@ interface AirtimeRechargeSplitCardProps {
   proxyPayReport: ProxyPayReport | null;
   currency: string;
   onSelectCurrency(value: string): void;
+  loading: boolean;
 }
 
 const { Option } = Select;
@@ -16,6 +17,7 @@ const AirtimeRechargeSplitCard: React.FC<AirtimeRechargeSplitCardProps> = ({
   currency,
   onSelectCurrency,
   proxyPayReport,
+  loading,
 }) => {
   const airtel = proxyPayReport
     ? getAreaOptions(
@@ -87,6 +89,7 @@ const AirtimeRechargeSplitCard: React.FC<AirtimeRechargeSplitCardProps> = ({
             }
             data={proxyPayReport ? airtel : {}}
             currency={currency}
+            loading={loading}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
@@ -99,6 +102,7 @@ const AirtimeRechargeSplitCard: React.FC<AirtimeRechargeSplitCardProps> = ({
             }
             data={proxyPayReport ? vodacom : {}}
             currency={currency}
+            loading={loading}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
@@ -111,6 +115,7 @@ const AirtimeRechargeSplitCard: React.FC<AirtimeRechargeSplitCardProps> = ({
             }
             data={proxyPayReport ? orange : {}}
             currency={currency}
+            loading={loading}
           />
         </Col>
         <Col span={8} sm={24} md={8} xs={24}>
@@ -123,6 +128,7 @@ const AirtimeRechargeSplitCard: React.FC<AirtimeRechargeSplitCardProps> = ({
             }
             data={proxyPayReport ? africell : {}}
             currency={currency}
+            loading={loading}
           />
         </Col>
       </Row>

@@ -34,8 +34,6 @@ const CurrencyFilter = lazy(
   () => import('../components/transactions/CurrencyFilter')
 );
 
-const EmptyBox = lazy(() => import('../components/transactions/EmptyBox'));
-
 const Transactions = () => {
   const dispatch: AppDispatch = useDispatch();
   const transaction = appSelector((state) => state.transaction);
@@ -130,6 +128,7 @@ const Transactions = () => {
     setCurrency(value);
     params.skip = skip;
     params.currency = value;
+    dispatch(clearTransactions());
     dispatch(getTransactionsRequest(params));
   };
 
@@ -187,33 +186,6 @@ const Transactions = () => {
     dispatch(getTransactionsRequest(params));
   };
 
-  let render: React.ReactNode;
-  if (loading) {
-    render = (
-      <div className="spinner">
-        <Spin />
-      </div>
-    );
-  }
-  if (!loading && isEmpty(trans)) {
-    render = (
-      <EmptyBox
-        header={`${t('transactions.noTransactions')}`}
-        description={`${t('transactions.noTransDesc')}`}
-      />
-    );
-  }
-
-  if (!loading && !isEmpty(trans)) {
-    render = (
-      <TransactionTable
-        transactionHistory={trans}
-        onClickRow={onClickRow}
-        currency={currency}
-      />
-    );
-  }
-
   return (
     <div className="padding-box">
       <Content className="site-layout-background site-box">
@@ -239,12 +211,12 @@ const Transactions = () => {
                 onSearch={onSearch}
                 onReset={onReset}
               />
-              {!isEmpty(trans) ? (
-                <TransactionSummaryCards
-                  trxReports={trxReport}
-                  currency={currency}
-                />
-              ) : null}
+              <TransactionSummaryCards
+                trxReports={trxReport}
+                currency={currency}
+                loading={loading}
+              />
+
               <CurrencyFilter
                 onSelectCurrency={onSelectCurrency}
                 onLoadMore={onLoadMore}
@@ -283,7 +255,13 @@ const Transactions = () => {
                   </div>
                 </Row>
 
-                {render}
+                <TransactionTable
+                  transactionHistory={trans}
+                  onClickRow={onClickRow}
+                  currency={currency}
+                  loading={loading}
+                  onLoadMore={onLoadMore}
+                />
               </div>
             </>
           ) : (

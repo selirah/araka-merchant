@@ -85,3 +85,5 @@ export const downloadReceiptSuccess = (data: DataStream) =>
 
 export const downloadReceiptFailure = (error: any) =>
   action(ReportsActionTypes.DOWNLOAD_RECEIPT_FAILURE, error);
+
+export const clearData = () => action(ReportsActionTypes.CLEAR_DATA);

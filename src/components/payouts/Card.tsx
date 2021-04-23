@@ -14,6 +14,7 @@ interface CardProps {
   payoutReport: PayoutReport | null;
   currency: string;
   role: string | undefined;
+  loading: boolean;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -23,6 +24,7 @@ const Card: React.FC<CardProps> = ({
   payoutReport,
   currency,
   role,
+  loading,
 }) => {
   let processedTrx: any = {};
   if (payoutReport) {
@@ -71,6 +73,7 @@ const Card: React.FC<CardProps> = ({
               title={payoutReport.processedTransactions.value}
               data={processedTrx}
               currency={currency}
+              loading={loading}
             />
           </Col>
           <Col span={6} sm={24} md={6} xs={24}>
@@ -78,6 +81,7 @@ const Card: React.FC<CardProps> = ({
               value="Total Paid Out"
               title={payoutReport.totalPaidOut.value}
               currency={currency}
+              loading={loading}
             />
           </Col>
           <Col span={4} sm={24} md={4} xs={24}>
@@ -85,6 +89,7 @@ const Card: React.FC<CardProps> = ({
               value="Fees Paid"
               title={payoutReport.feesPaid.value}
               currency={currency}
+              loading={loading}
             />
           </Col>
           <Col span={6} sm={24} md={6} xs={24}>
@@ -92,6 +97,7 @@ const Card: React.FC<CardProps> = ({
               value="Outstanding. Fee incld."
               title={payoutReport.outstanding.value}
               currency={currency}
+              loading={loading}
             />
           </Col>
         </Row>

@@ -7,9 +7,10 @@ import { GetVASAnalytics } from '../../helpers/vas_functions';
 interface CardsProps {
   vas: VASProcessed[];
   currency: string;
+  loading: boolean;
 }
 
-const Cards: React.FC<CardsProps> = ({ vas, currency }) => {
+const Cards: React.FC<CardsProps> = ({ vas, currency, loading }) => {
   const {
     totalArakaIncome,
     totalFeesCharged,
@@ -34,6 +35,7 @@ const Cards: React.FC<CardsProps> = ({ vas, currency }) => {
                 value="Vas Processed"
                 title={totalProcessed}
                 data={vasAreaChart}
+                loading={loading}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
@@ -42,6 +44,7 @@ const Cards: React.FC<CardsProps> = ({ vas, currency }) => {
                 title={totalArakaIncome}
                 data={incomeAreaChart}
                 currency={currency}
+                loading={loading}
               />
             </Col>
             {/* <Col span={6} sm={24} md={6} xs={24}>
@@ -50,6 +53,7 @@ const Cards: React.FC<CardsProps> = ({ vas, currency }) => {
                 title={totalAnnualFees}
                 data={annualFeesAreaChart}
                 currency={currency}
+                 loading={loading}
               />
             </Col> */}
             <Col span={8} sm={24} md={8} xs={24}>
@@ -58,6 +62,7 @@ const Cards: React.FC<CardsProps> = ({ vas, currency }) => {
                 title={totalFeesCharged}
                 data={feesChargedAreaChart}
                 currency={currency}
+                loading={loading}
               />
             </Col>
           </Row>

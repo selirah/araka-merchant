@@ -6,9 +6,10 @@ import { numberWithCommas } from '../../helpers/helperFunctions';
 interface DetailsProps {
   overviews: MerchantOverview[];
   currency: string;
+  loading: boolean;
 }
 
-const Details: React.FC<DetailsProps> = ({ overviews, currency }) => {
+const Details: React.FC<DetailsProps> = ({ overviews, currency, loading }) => {
   const sortOverview = (a: MerchantOverview, b: MerchantOverview) => {
     return b.totalAmountProcessed - a.totalAmountProcessed; // descending
   };
@@ -90,6 +91,7 @@ const Details: React.FC<DetailsProps> = ({ overviews, currency }) => {
                 return `Showing ${range[0]} - ${range[1]} of ${total} results`;
               },
             }}
+            loading={loading}
           />
         </div>
       </Col>
