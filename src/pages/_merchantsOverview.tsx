@@ -42,7 +42,7 @@ const MerchantsOverview = () => {
   const [isExporting, setIsExporting] = useState(false);
 
   const params = {
-    currrency: currency,
+    currency: currency,
     periodFrom: fromDate,
     periodTo: toDate,
     merchant: merchant ? merchant.name : '',
@@ -94,7 +94,7 @@ const MerchantsOverview = () => {
 
   const onSelectCurrency = (value: string) => {
     setCurrency(value);
-    params.currrency = value;
+    params.currency = value;
     dispatch(getMerchantsOverview(params));
   };
 

@@ -37,7 +37,7 @@ const VASProcessed = () => {
   const [month, setMonth] = useState('');
 
   const params = {
-    currrency: currency,
+    currency: currency,
     periodFrom: fromDate,
     periodTo: toDate,
     searchValue: searchValue,
@@ -73,7 +73,7 @@ const VASProcessed = () => {
 
   const onSelectCurrency = (value: string) => {
     setCurrency(value);
-    params.currrency = value;
+    params.currency = value;
     dispatch(getVasRequest(params));
   };
 

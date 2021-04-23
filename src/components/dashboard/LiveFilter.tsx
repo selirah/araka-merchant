@@ -27,7 +27,7 @@ const LiveFilter: React.FC<LiveFilterProps> = ({
         <Select
           defaultValue={fixedPeriod}
           onChange={onSelectPeriod}
-          style={{ width: 100 }}
+          style={{ width: 150 }}
         >
           <Option key="daily" value="daily">
             DAILY

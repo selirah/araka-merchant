@@ -25,7 +25,7 @@ const Dashboard = () => {
   const [fixedPeriod, setFixedPeriod] = useState('daily');
   const [trxReports, setTrxReports] = useState<TransactionReport | null>(null);
   const params = {
-    currrency: currency,
+    currency: currency,
     fixedPeriod: fixedPeriod,
   };
 
@@ -53,7 +53,7 @@ const Dashboard = () => {
   const onSelectCurrency = (value: string) => {
     setCurrency(value);
     const params = {
-      currrency: value,
+      currency: value,
       fixedPeriod: fixedPeriod,
     };
     dispatch(getOverviewRequest(params));

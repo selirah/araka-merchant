@@ -61,7 +61,7 @@ const Transactions = () => {
   const [skip, setSkip] = useState(0);
 
   const params = {
-    currrency: currency,
+    currency: currency,
     pageSize: 10,
     skip: skip,
     periodFrom: fromDate,
@@ -129,7 +129,7 @@ const Transactions = () => {
   const onSelectCurrency = (value: string) => {
     setCurrency(value);
     params.skip = skip;
-    params.currrency = value;
+    params.currency = value;
     dispatch(getTransactionsRequest(params));
   };
 
