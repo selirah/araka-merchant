@@ -171,7 +171,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
               <NavLink to={path.feeReports}>PCES Reports</NavLink>
             </Menu.Item>
 
-            <Menu.SubMenu
+            {/* <Menu.SubMenu
               key="sub2"
               icon={
                 <FeatherIcons.BarChart
@@ -221,7 +221,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                   {menu.PROXYPAY_VOLUMES}
                 </NavLink>
               </Menu.Item>
-            </Menu.SubMenu>
+            </Menu.SubMenu> */}
           </Menu.ItemGroup>
         ) : null}
         <Menu.ItemGroup
