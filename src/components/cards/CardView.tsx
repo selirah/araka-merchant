@@ -1,8 +1,7 @@
 import React from 'react';
-import { Card, Image } from 'antd';
+import { Card, Spin } from 'antd';
 import AreaChart from '../chart/AreaChart';
 import CountUp from 'react-countup';
-import spinner from '../../images/spinner.svg';
 
 interface CardViewProps {
   value: any;
@@ -24,10 +23,7 @@ const CardView: React.FC<CardViewProps> = ({
       <div className="ecard">
         {loading ? (
           <div className="card-spinner">
-            <Image src={spinner} width={40} />
-            <div>
-              <small>loading..</small>
-            </div>
+            <Spin size="small" />
           </div>
         ) : (
           <>

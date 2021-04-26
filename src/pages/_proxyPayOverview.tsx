@@ -8,9 +8,15 @@ import { isEmpty } from '../helpers/isEmpty';
 import { changeMenu, changeMenuHeader } from '../store/utils';
 import { ProxyPayReport } from '../interfaces';
 import {
-  getProxyPayRequest,
+  getProxyPaySubscribersRequest,
+  getProxyPayTransactionsRequest,
+  getProxyPayVolumesRequest,
+  getProxyPayRevenuesRequest,
+  getProxyPayOpexRequest,
+  getProxyPayEbitdaRequest,
   clearBooleans,
   exportRequest,
+  clearData,
 } from '../store/reports';
 import moment from 'moment';
 
@@ -47,11 +53,21 @@ const ProxyPayOverview: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const history = useHistory();
   const reports = appSelector((state) => state.reports);
-  const [proxyPayReport, setProxyPayReport] = useState<ProxyPayReport | null>(
+  const [proxyPaySub, setProxyPaySub] = useState<ProxyPayReport | null>(null);
+  const [proxyPayTrx, setProxyPayTrx] = useState<ProxyPayReport | null>(null);
+  const [proxyPayVol, setProxyPayVol] = useState<ProxyPayReport | null>(null);
+  const [proxyPayRev, setProxyPayRev] = useState<ProxyPayReport | null>(null);
+  const [proxyPayOpex, setProxyPayOpex] = useState<ProxyPayReport | null>(null);
+  const [proxyPayEbitda, setProxyPayEbitda] = useState<ProxyPayReport | null>(
     null
   );
   const [currency, setCurrency] = useState('USD');
-  const [loading, setLoading] = useState(false);
+  const [loadingSub, setLoadingSub] = useState(false);
+  const [loadingTrx, setLoadingTrx] = useState(false);
+  const [loadingVol, setLoadingVol] = useState(false);
+  const [loadingRev, setLoadingRev] = useState(false);
+  const [loadingOpex, setLoadingOpex] = useState(false);
+  const [loadingEbitda, setLoadingEbitda] = useState(false);
   const [periodFrom, setPeriodFrom] = useState('');
   const [periodTo, setPeriodTo] = useState('');
   const [exportType, setExportType] = useState('');
@@ -66,15 +82,65 @@ const ProxyPayOverview: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(getProxyPayRequest(params));
+    const {
+      proxypaySubscribers,
+      proxypayEbitda,
+      proxypayOpex,
+      proxypayRevenues,
+      proxypayTransactions,
+      proxypayVolumes,
+    } = reports;
+    // dispatch(clearData());
+    if (isEmpty(proxypaySubscribers)) {
+      dispatch(getProxyPaySubscribersRequest(params));
+    }
+    if (isEmpty(proxypayTransactions)) {
+      dispatch(getProxyPayTransactionsRequest(params));
+    }
+    if (isEmpty(proxypayVolumes)) {
+      dispatch(getProxyPayVolumesRequest(params));
+    }
+    if (isEmpty(proxypayRevenues)) {
+      dispatch(getProxyPayRevenuesRequest(params));
+    }
+    if (isEmpty(proxypayOpex)) {
+      dispatch(getProxyPayOpexRequest(params));
+    }
+    if (isEmpty(proxypayEbitda)) {
+      dispatch(getProxyPayEbitdaRequest(params));
+    }
     dispatch(clearBooleans());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    const { loading, proxypay, isExporting } = reports;
-    setLoading(loading);
-    setProxyPayReport(proxypay);
+    const {
+      loadingSub,
+      loadingTrx,
+      loadingRev,
+      loadingVol,
+      loadingOpex,
+      loadingEbitda,
+      proxypaySubscribers,
+      proxypayTransactions,
+      proxypayEbitda,
+      proxypayOpex,
+      proxypayRevenues,
+      proxypayVolumes,
+      isExporting,
+    } = reports;
+    setLoadingSub(loadingSub);
+    setLoadingTrx(loadingTrx);
+    setLoadingVol(loadingVol);
+    setLoadingRev(loadingRev);
+    setLoadingOpex(loadingOpex);
+    setLoadingEbitda(loadingEbitda);
+    setProxyPaySub(proxypaySubscribers);
+    setProxyPayTrx(proxypayTransactions);
+    setProxyPayRev(proxypayRevenues);
+    setProxyPayVol(proxypayVolumes);
+    setProxyPayOpex(proxypayOpex);
+    setProxyPayEbitda(proxypayEbitda);
     setIsExporting(isExporting);
   }, [reports]);
 
@@ -82,7 +148,12 @@ const ProxyPayOverview: React.FC = () => {
     form.resetFields();
     params.periodFrom = '';
     params.periodTo = '';
-    dispatch(getProxyPayRequest(params));
+    dispatch(getProxyPaySubscribersRequest(params));
+    dispatch(getProxyPayTransactionsRequest(params));
+    dispatch(getProxyPayVolumesRequest(params));
+    dispatch(getProxyPayRevenuesRequest(params));
+    dispatch(getProxyPayOpexRequest(params));
+    dispatch(getProxyPayEbitdaRequest(params));
   };
 
   const onSearch = (values: any) => {
@@ -98,7 +169,13 @@ const ProxyPayOverview: React.FC = () => {
     }
     params.periodFrom = pFrom;
     params.periodTo = pTo;
-    dispatch(getProxyPayRequest(params));
+    dispatch(clearData());
+    dispatch(getProxyPaySubscribersRequest(params));
+    dispatch(getProxyPayTransactionsRequest(params));
+    dispatch(getProxyPayVolumesRequest(params));
+    dispatch(getProxyPayRevenuesRequest(params));
+    dispatch(getProxyPayOpexRequest(params));
+    dispatch(getProxyPayEbitdaRequest(params));
   };
 
   const onSeeDetailsClick = (path: string, menu: string, header: string) => {
@@ -110,7 +187,10 @@ const ProxyPayOverview: React.FC = () => {
   const onSelectCurrency = (value: string) => {
     setCurrency(value);
     params.currency = value;
-    dispatch(getProxyPayRequest(params));
+    dispatch(getProxyPayVolumesRequest(params));
+    dispatch(getProxyPayRevenuesRequest(params));
+    dispatch(getProxyPayOpexRequest(params));
+    dispatch(getProxyPayEbitdaRequest(params));
   };
 
   const onExportClick = (type: string, page: string) => {
@@ -123,7 +203,12 @@ const ProxyPayOverview: React.FC = () => {
   const onReloadPage = () => {
     params.periodFrom = '';
     params.periodTo = '';
-    dispatch(getProxyPayRequest(params));
+    dispatch(getProxyPaySubscribersRequest(params));
+    dispatch(getProxyPayTransactionsRequest(params));
+    dispatch(getProxyPayVolumesRequest(params));
+    dispatch(getProxyPayRevenuesRequest(params));
+    dispatch(getProxyPayOpexRequest(params));
+    dispatch(getProxyPayEbitdaRequest(params));
   };
 
   return (
@@ -141,13 +226,13 @@ const ProxyPayOverview: React.FC = () => {
           <Filter onReset={onReset} onSearch={onSearch} />
           <SubscribersCard
             onSeeDetailsClick={onSeeDetailsClick}
-            proxyPayReport={proxyPayReport}
+            proxyPayReport={proxyPaySub}
             exportPage={exportPage}
             exportType={exportType}
             isExporting={isExporting}
             onExportClick={onExportClick}
             onReloadPage={onReloadPage}
-            loading={loading}
+            loading={loadingSub}
           />
           <TransactionsCard
             onSeeDetailsClick={onSeeDetailsClick}
@@ -155,9 +240,9 @@ const ProxyPayOverview: React.FC = () => {
             exportType={exportType}
             isExporting={isExporting}
             onExportClick={onExportClick}
-            proxyPayReport={proxyPayReport}
+            proxyPayReport={proxyPayTrx}
             currency={currency}
-            loading={loading}
+            loading={loadingTrx}
           />
           <VolumesCard
             onSeeDetailsClick={onSeeDetailsClick}
@@ -166,9 +251,9 @@ const ProxyPayOverview: React.FC = () => {
             exportType={exportType}
             isExporting={isExporting}
             onExportClick={onExportClick}
-            proxyPayReport={proxyPayReport}
+            proxyPayReport={proxyPayVol}
             onSelectCurrency={onSelectCurrency}
-            loading={loading}
+            loading={loadingVol}
           />
           <RevenueChannelCard
             currency={currency}
@@ -177,8 +262,8 @@ const ProxyPayOverview: React.FC = () => {
             isExporting={isExporting}
             onExportClick={onExportClick}
             onSelectCurrency={onSelectCurrency}
-            proxyPayReport={proxyPayReport}
-            loading={loading}
+            proxyPayReport={proxyPayRev}
+            loading={loadingRev}
           />
           <RevenueServiceCard
             currency={currency}
@@ -187,8 +272,8 @@ const ProxyPayOverview: React.FC = () => {
             isExporting={isExporting}
             onExportClick={onExportClick}
             onSelectCurrency={onSelectCurrency}
-            proxyPayReport={proxyPayReport}
-            loading={loading}
+            proxyPayReport={proxyPayRev}
+            loading={loadingRev}
           />
           <OpexOverviewCard
             currency={currency}
@@ -197,8 +282,8 @@ const ProxyPayOverview: React.FC = () => {
             isExporting={isExporting}
             onExportClick={onExportClick}
             onSelectCurrency={onSelectCurrency}
-            proxyPayReport={proxyPayReport}
-            loading={loading}
+            proxyPayReport={proxyPayOpex}
+            loading={loadingOpex}
           />
           <EbitdaOverviewCard
             currency={currency}
@@ -207,8 +292,8 @@ const ProxyPayOverview: React.FC = () => {
             isExporting={isExporting}
             onExportClick={onExportClick}
             onSelectCurrency={onSelectCurrency}
-            proxyPayReport={proxyPayReport}
-            loading={loading}
+            proxyPayReport={proxyPayEbitda}
+            loading={loadingEbitda}
           />
         </Suspense>
       </Content>

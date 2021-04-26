@@ -197,60 +197,67 @@
               "values": []
             }
           }
-        }
+        },
+        "data": [
+          {
+            "merchant": "",
+            "total": "",
+            "successful": "",
+            "failed": "",
+            "type": "card or momo"
+          }
+        ]
       },
       "volumes": {
         "currency": "USD or CDF",
-        "data": {
-          "moneyTransfers": {
+        "moneyTransfers": {
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
+          }
+        },
+        "otherPayments": {
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
+          }
+        },
+        "airtimeRecharge": {
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
+          }
+        },
+        "airtimeRechargeSplits": {
+          "airtel": {
             "value": "",
             "graph": {
               "labels": [],
               "values": []
             }
           },
-          "otherPayments": {
+          "vodacom": {
             "value": "",
             "graph": {
               "labels": [],
               "values": []
             }
           },
-          "airtimeRecharge": {
+          "orange": {
             "value": "",
             "graph": {
               "labels": [],
               "values": []
             }
           },
-          "airtimeRechargeSplits": {
-            "airtel": {
-              "value": "",
-              "graph": {
-                "labels": [],
-                "values": []
-              }
-            },
-            "vodacom": {
-              "value": "",
-              "graph": {
-                "labels": [],
-                "values": []
-              }
-            },
-            "orange": {
-              "value": "",
-              "graph": {
-                "labels": [],
-                "values": []
-              }
-            },
-            "africell": {
-              "value": "",
-              "graph": {
-                "labels": [],
-                "values": []
-              }
+          "africell": {
+            "value": "",
+            "graph": {
+              "labels": [],
+              "values": []
             }
           }
         }

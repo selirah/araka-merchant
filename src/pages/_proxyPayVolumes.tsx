@@ -6,7 +6,7 @@ import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
 import { isEmpty } from '../helpers/isEmpty';
 import { ProxyPayReport } from '../interfaces';
-import { getProxyPayRequest, clearBooleans } from '../store/reports';
+import { getProxyPayVolumesRequest, clearBooleans } from '../store/reports';
 import moment from 'moment';
 
 const Filter = lazy(
@@ -16,7 +16,6 @@ const Filter = lazy(
 const VolumesCard = lazy(
   () => import('../components/proxypay-reports/volumes/VolumesCard')
 );
-
 const AirtimeRechargeSplitCard = lazy(
   () =>
     import('../components/proxypay-reports/volumes/AirtimeRechargeSplitCard')
@@ -34,39 +33,29 @@ const ProxyPayVolumes: React.FC = () => {
   const [periodFrom, setPeriodFrom] = useState('');
   const [periodTo, setPeriodTo] = useState('');
   const [currency, setCurrency] = useState('USD');
-  // const [exportType, setExportType] = useState('');
-  // const [exportPage, setExportPage] = useState('');
-  // const [isExporting, setIsExporting] = useState(false);
+  const params = {
+    periodFrom: periodFrom,
+    periodTo: periodTo,
+    currency: currency,
+  };
 
   useEffect(() => {
-    // const { loading, proxypay } = reports;
-    // if (!loading && !proxypay) {
-    const payload = {
-      periodFrom: '',
-      periodTo: '',
-      currency: currency,
-    };
-    dispatch(getProxyPayRequest(payload));
-    // }
+    dispatch(getProxyPayVolumesRequest(params));
     dispatch(clearBooleans());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    const { loading, proxypay } = reports;
-    setLoading(loading);
-    setProxyPayReport(proxypay);
-    // setIsExporting(isExporting);
+    const { loadingVol, proxypayVolumes } = reports;
+    setLoading(loadingVol);
+    setProxyPayReport(proxypayVolumes);
   }, [reports]);
 
   const onReset = (form: any) => {
     form.resetFields();
-    const payload = {
-      periodFrom: '',
-      periodTo: '',
-      currency: currency,
-    };
-    dispatch(getProxyPayRequest(payload));
+    params.periodFrom = '';
+    params.periodTo = '';
+    dispatch(getProxyPayVolumesRequest(params));
   };
 
   const onSearch = (values: any) => {
@@ -81,30 +70,21 @@ const ProxyPayVolumes: React.FC = () => {
       setPeriodTo(pTo);
     }
 
-    const payload = {
-      periodFrom: pFrom,
-      periodTo: pTo,
-      currency: currency,
-    };
-    dispatch(getProxyPayRequest(payload));
+    params.periodFrom = pFrom;
+    params.periodTo = pTo;
+    dispatch(getProxyPayVolumesRequest(params));
   };
 
   const onReloadPage = () => {
-    const payload = {
-      periodFrom: periodFrom,
-      periodTo: periodTo,
-    };
-    dispatch(getProxyPayRequest(payload));
+    params.periodFrom = '';
+    params.periodTo = '';
+    dispatch(getProxyPayVolumesRequest(params));
   };
 
   const onSelectCurrency = (value: string) => {
     setCurrency(value);
-    const payload = {
-      periodFrom: periodFrom,
-      periodTo: periodTo,
-      currency: value,
-    };
-    dispatch(getProxyPayRequest(payload));
+    params.currency = value;
+    dispatch(getProxyPayVolumesRequest(params));
   };
 
   return (

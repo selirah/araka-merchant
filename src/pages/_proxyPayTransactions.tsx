@@ -6,7 +6,10 @@ import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
 import { isEmpty } from '../helpers/isEmpty';
 import { ProxyPayReport, ProxyPayTrxTableData } from '../interfaces';
-import { getProxyPayRequest, clearBooleans } from '../store/reports';
+import {
+  getProxyPayTransactionsRequest,
+  clearBooleans,
+} from '../store/reports';
 import moment from 'moment';
 
 const Filter = lazy(
@@ -34,45 +37,36 @@ const { Content } = Layout;
 const ProxyPayTransactions = () => {
   const dispatch: AppDispatch = useDispatch();
   const reports = appSelector((state) => state.reports);
-  const [proxyPayReport, setProxyPayReport] = useState<ProxyPayReport | null>(
-    null
-  );
+  const [proxyPayTrx, setProxyPayTrx] = useState<ProxyPayReport | null>(null);
   const [transactions, setTransactions] = useState<ProxyPayTrxTableData[]>([]);
   const [loading, setLoading] = useState(false);
   const [periodFrom, setPeriodFrom] = useState('');
   const [periodTo, setPeriodTo] = useState('');
-  // const [exportType, setExportType] = useState('');
-  // const [exportPage, setExportPage] = useState('');
-  // const [isExporting, setIsExporting] = useState(false);
+  const params = {
+    periodFrom: periodFrom,
+    periodTo: periodTo,
+  };
 
   useEffect(() => {
-    // const { loading, proxypay } = reports;
-    // if (!loading && !proxypay) {
-    const payload = {
-      periodFrom: '',
-      periodTo: '',
-    };
-    dispatch(getProxyPayRequest(payload));
-    // }
+    dispatch(getProxyPayTransactionsRequest(params));
     dispatch(clearBooleans());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    const { loading, proxypay } = reports;
-    setLoading(loading);
-    setProxyPayReport(proxypay);
-    // setIsExporting(isExporting);
-    setTransactions(proxypay ? proxypay.transactions.data : []);
+    const { loadingTrx, proxypayTransactions } = reports;
+    setLoading(loadingTrx);
+    setProxyPayTrx(proxypayTransactions);
+    setTransactions(
+      proxypayTransactions ? proxypayTransactions.transactions.data : []
+    );
   }, [reports]);
 
   const onReset = (form: any) => {
     form.resetFields();
-    const payload = {
-      periodFrom: '',
-      periodTo: '',
-    };
-    dispatch(getProxyPayRequest(payload));
+    params.periodFrom = '';
+    params.periodTo = '';
+    dispatch(getProxyPayTransactionsRequest(params));
   };
 
   const onSearch = (values: any) => {
@@ -86,20 +80,15 @@ const ProxyPayTransactions = () => {
       setPeriodFrom(pFrom);
       setPeriodTo(pTo);
     }
-
-    const payload = {
-      periodFrom: pFrom,
-      periodTo: pTo,
-    };
-    dispatch(getProxyPayRequest(payload));
+    params.periodFrom = pFrom;
+    params.periodTo = pTo;
+    dispatch(getProxyPayTransactionsRequest(params));
   };
 
   const onReloadPage = () => {
-    const payload = {
-      periodFrom: periodFrom,
-      periodTo: periodTo,
-    };
-    dispatch(getProxyPayRequest(payload));
+    params.periodFrom = '';
+    params.periodTo = '';
+    dispatch(getProxyPayTransactionsRequest(params));
   };
 
   return (
@@ -115,29 +104,25 @@ const ProxyPayTransactions = () => {
           }
         >
           <Filter onReset={onReset} onSearch={onSearch} />
-          <TrxCard proxyPayReport={proxyPayReport} loading={loading} />
-          <CardTrx proxyPayReport={proxyPayReport} loading={loading} />
-          <MomoTrx proxyPayReport={proxyPayReport} loading={loading} />
-          <MidCard proxyPayReport={proxyPayReport} />
+          <TrxCard proxyPayReport={proxyPayTrx} loading={loading} />
+          <CardTrx proxyPayReport={proxyPayTrx} loading={loading} />
+          <MomoTrx proxyPayReport={proxyPayTrx} loading={loading} />
+          <MidCard proxyPayReport={proxyPayTrx} />
 
           <div className="margin-top">
-            {loading ? null : (
-              <>
-                <Row style={{ position: 'relative' }}>
-                  <h4 className="transaction-chart-text">Transactions Table</h4>
-                  <div className="utility-buttons">
-                    <Button
-                      type="primary"
-                      className="export-buttons reload"
-                      onClick={() => onReloadPage()}
-                    >
-                      Refresh
-                    </Button>
-                  </div>
-                </Row>
-                <Details transactions={transactions} />{' '}
-              </>
-            )}
+            <Row style={{ position: 'relative' }}>
+              <h4 className="transaction-chart-text">Transactions Table</h4>
+              <div className="utility-buttons">
+                <Button
+                  type="primary"
+                  className="export-buttons reload"
+                  onClick={() => onReloadPage()}
+                >
+                  Refresh
+                </Button>
+              </div>
+            </Row>
+            <Details transactions={transactions} loading={loading} />{' '}
           </div>
         </Suspense>
       </Content>

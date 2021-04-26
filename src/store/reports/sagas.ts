@@ -7,8 +7,18 @@ import {
   getPCESSuccess,
   getPayoutFailure,
   getPayoutSuccess,
-  getProxyPayFailure,
-  getProxyPaySuccess,
+  getProxyPaySubscribersSuccess,
+  getProxyPayTransactionsSuccess,
+  getProxyPayVolumesSuccess,
+  getProxyPayRevenuesSuccess,
+  getProxyPayOpexSuccess,
+  getProxyPayEbitdaSuccess,
+  getProxyPaySubscribersFailure,
+  getProxyPayTransactionsFailure,
+  getProxyPayVolumesFailure,
+  getProxyPayRevenuesFailure,
+  getProxyPayOpexFailure,
+  getProxyPayEbitdaFailure,
   postPayoutFailure,
   postPayoutSuccess,
   getMerchantsFailure,
@@ -35,15 +45,116 @@ function* getPCESReport({ payload }: { type: string; payload: any }): any {
   }
 }
 
-function* getProxyPayReport({ payload }: { type: string; payload: any }): any {
+function* getProxyPaySubReport({
+  payload,
+}: {
+  type: string;
+  payload: any;
+}): any {
   try {
+    payload.reportType = 'subscribers';
     const res = yield call(callApiPost, 'payments/getproxypayreports', payload);
-    yield put(getProxyPaySuccess(res.data));
+    yield put(getProxyPaySubscribersSuccess(res.data));
   } catch (err) {
     if (err && err.response) {
-      yield put(getProxyPayFailure(err.response.data));
+      yield put(getProxyPaySubscribersFailure(err.response.data));
     } else {
-      yield put(getProxyPayFailure('An unknwon error occurred'));
+      yield put(getProxyPaySubscribersFailure('An unknwon error occurred'));
+    }
+  }
+}
+
+function* getProxyPayTrxReport({
+  payload,
+}: {
+  type: string;
+  payload: any;
+}): any {
+  try {
+    payload.reportType = 'transactions';
+    const res = yield call(callApiPost, 'payments/getproxypayreports', payload);
+    yield put(getProxyPayTransactionsSuccess(res.data));
+  } catch (err) {
+    if (err && err.response) {
+      yield put(getProxyPayTransactionsFailure(err.response.data));
+    } else {
+      yield put(getProxyPayTransactionsFailure('An unknwon error occurred'));
+    }
+  }
+}
+
+function* getProxyPayVolReport({
+  payload,
+}: {
+  type: string;
+  payload: any;
+}): any {
+  try {
+    payload.reportType = 'volumes';
+    const res = yield call(callApiPost, 'payments/getproxypayreports', payload);
+    yield put(getProxyPayVolumesSuccess(res.data));
+  } catch (err) {
+    if (err && err.response) {
+      yield put(getProxyPayVolumesFailure(err.response.data));
+    } else {
+      yield put(getProxyPayVolumesFailure('An unknwon error occurred'));
+    }
+  }
+}
+
+function* getProxyPayRevReport({
+  payload,
+}: {
+  type: string;
+  payload: any;
+}): any {
+  try {
+    payload.reportType = 'revenues';
+    const res = yield call(callApiPost, 'payments/getproxypayreports', payload);
+    yield put(getProxyPayRevenuesSuccess(res.data));
+  } catch (err) {
+    if (err && err.response) {
+      yield put(getProxyPayRevenuesFailure(err.response.data));
+    } else {
+      yield put(getProxyPayRevenuesFailure('An unknwon error occurred'));
+    }
+  }
+}
+
+function* getProxyPayOpexReport({
+  payload,
+}: {
+  type: string;
+  payload: any;
+}): any {
+  try {
+    payload.reportType = 'opex';
+    const res = yield call(callApiPost, 'payments/getproxypayreports', payload);
+    yield put(getProxyPayOpexSuccess(res.data));
+  } catch (err) {
+    if (err && err.response) {
+      yield put(getProxyPayOpexFailure(err.response.data));
+    } else {
+      yield put(getProxyPayOpexFailure('An unknwon error occurred'));
+    }
+  }
+}
+
+function* getProxyPayEbitdaReport({
+  payload,
+}: {
+  type: string;
+  payload: any;
+}): any {
+  try {
+    payload.reportType = 'ebitda';
+    const res = yield call(callApiPost, 'payments/getproxypayreports', payload);
+    yield put(getProxyPayEbitdaSuccess(res.data));
+  } catch (err) {
+    if (err && err.response) {
+      yield put(getProxyPayEbitdaFailure(err.response.data));
+    } else {
+      yield put(getProxyPayEbitdaFailure('An unknwon error occurred'));
     }
   }
 }
@@ -161,8 +272,46 @@ function* watchGetPCESReport() {
   yield takeEvery(ReportsActionTypes.GET_PCES_REQUEST, getPCESReport);
 }
 
-function* watchGetProxyPayReport() {
-  yield takeEvery(ReportsActionTypes.GET_PROXYPAY_REQUEST, getProxyPayReport);
+function* watchGetProxyPaySubReport() {
+  yield takeEvery(
+    ReportsActionTypes.GET_PROXYPAY_SUBSCRIBERS_REQUEST,
+    getProxyPaySubReport
+  );
+}
+
+function* watchGetProxyPayTrxReport() {
+  yield takeEvery(
+    ReportsActionTypes.GET_PROXYPAY_TRANSACTIONS_REQUEST,
+    getProxyPayTrxReport
+  );
+}
+
+function* watchGetProxyPayVolReport() {
+  yield takeEvery(
+    ReportsActionTypes.GET_PROXYPAY_VOLUMES_REQUEST,
+    getProxyPayVolReport
+  );
+}
+
+function* watchGetProxyPayRevReport() {
+  yield takeEvery(
+    ReportsActionTypes.GET_PROXYPAY_REVENUES_REQUEST,
+    getProxyPayRevReport
+  );
+}
+
+function* watchGetProxyPayOpexReport() {
+  yield takeEvery(
+    ReportsActionTypes.GET_PROXYPAY_OPEX_REQUEST,
+    getProxyPayOpexReport
+  );
+}
+
+function* watchGetProxyPayEbitdaReport() {
+  yield takeEvery(
+    ReportsActionTypes.GET_PROXYPAY_EBITDA_REQUEST,
+    getProxyPayEbitdaReport
+  );
 }
 
 function* watchGetPayoutReport() {
@@ -195,7 +344,12 @@ function* watchFetchGetDownloadReceiptStream() {
 function* reportsSaga(): Generator {
   yield all([
     fork(watchGetPCESReport),
-    fork(watchGetProxyPayReport),
+    fork(watchGetProxyPaySubReport),
+    fork(watchGetProxyPayTrxReport),
+    fork(watchGetProxyPayVolReport),
+    fork(watchGetProxyPayRevReport),
+    fork(watchGetProxyPayOpexReport),
+    fork(watchGetProxyPayEbitdaReport),
     fork(watchGetPayoutReport),
     fork(watchPostNewRecord),
     fork(watchGetMerchants),

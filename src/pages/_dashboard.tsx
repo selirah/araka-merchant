@@ -52,19 +52,13 @@ const Dashboard = () => {
 
   const onSelectCurrency = (value: string) => {
     setCurrency(value);
-    const params = {
-      currency: value,
-      fixedPeriod: fixedPeriod,
-    };
+    params.currency = value;
     dispatch(getOverviewRequest(params));
   };
 
   const onSelectPeriod = (value: string) => {
     setFixedPeriod(value);
-    const params = {
-      currrency: currency,
-      fixedPeriod: value,
-    };
+    params.fixedPeriod = value;
     dispatch(getOverviewRequest(params));
   };
 

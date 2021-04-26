@@ -31,7 +31,7 @@ export interface ProxyPayTrxTableData {
   total: number;
   successful: number;
   failed: number;
-  type: string;
+  channel: string;
 }
 
 export interface PayoutTableData {

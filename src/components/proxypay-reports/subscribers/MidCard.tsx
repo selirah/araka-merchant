@@ -2,13 +2,14 @@ import React from 'react';
 import { Row, Col } from 'antd';
 import CardView from '../../cards/CardView';
 import { PieChartView } from './PieChartView';
+import { ProxyPayReport } from '../../../interfaces';
 
 interface MidCardProps {
-  areadata: any;
+  proxyPayReport: ProxyPayReport | null;
   loading: boolean;
 }
 
-const MidCard: React.FC<MidCardProps> = ({ areadata, loading }) => {
+const MidCard: React.FC<MidCardProps> = ({ proxyPayReport, loading }) => {
   const info = {
     data: {
       labels: ['Active', 'Inactive'],

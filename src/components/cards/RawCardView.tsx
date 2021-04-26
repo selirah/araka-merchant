@@ -1,7 +1,6 @@
 import React from 'react';
-import { Card, Image } from 'antd';
+import { Card, Spin } from 'antd';
 import CountUp from 'react-countup';
-import spinner from '../../images/spinner.svg';
 
 interface RawCardViewProps {
   value: any;
@@ -23,10 +22,7 @@ const RawCardView: React.FC<RawCardViewProps> = ({
       <div className="ecard">
         {loading ? (
           <div className="card-spinner">
-            <Image src={spinner} width={40} />
-            <div>
-              <small>loading..</small>
-            </div>
+            <Spin size="small" />
           </div>
         ) : (
           <>

@@ -4,12 +4,23 @@ import { AuthActionTypes } from '../auth';
 import { PCESTableData } from '../../interfaces';
 
 export const initialState: ReportsState = {
+  loading: false,
   error: undefined,
   failure: false,
-  loading: false,
+  loadingSub: false,
+  loadingTrx: false,
+  loadingVol: false,
+  loadingRev: false,
+  loadingOpex: false,
+  loadingEbitda: false,
   payouts: null,
   pces: null,
-  proxypay: null,
+  proxypaySubscribers: null,
+  proxypayTransactions: null,
+  proxypayVolumes: null,
+  proxypayRevenues: null,
+  proxypayOpex: null,
+  proxypayEbitda: null,
   success: false,
   isSubmitting: false,
   merchants: [],
@@ -27,6 +38,12 @@ export const initialState: ReportsState = {
   downloadRecieptSuccess: false,
   isRequestingDownload: false,
   pcesdata: [],
+  errorEbitda: undefined,
+  errorOpex: undefined,
+  errorRev: undefined,
+  errorSub: undefined,
+  errorTrx: undefined,
+  errorVol: undefined,
 };
 
 const reducer: Reducer<ReportsState> = (state = initialState, action) => {
@@ -57,23 +74,112 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       };
-    case ReportsActionTypes.GET_PROXYPAY_REQUEST:
+    case ReportsActionTypes.GET_PROXYPAY_SUBSCRIBERS_REQUEST:
       return {
         ...state,
-        loading: true,
+        loadingSub: true,
       };
-    case ReportsActionTypes.GET_PROXYPAY_SUCCESS:
+    case ReportsActionTypes.GET_PROXYPAY_SUBSCRIBERS_SUCCESS:
       return {
         ...state,
-        loading: false,
-        proxypay: action.payload,
+        loadingSub: false,
+        proxypaySubscribers: action.payload,
       };
-    case ReportsActionTypes.GET_PROXYPAY_FAILURE:
+    case ReportsActionTypes.GET_PROXYPAY_SUBSCRIBERS_FAILURE:
       return {
         ...state,
-        loading: false,
+        loadingSub: false,
         error: action.payload,
       };
+
+    case ReportsActionTypes.GET_PROXYPAY_TRANSACTIONS_REQUEST:
+      return {
+        ...state,
+        loadingTrx: true,
+      };
+    case ReportsActionTypes.GET_PROXYPAY_TRANSACTIONS_SUCCESS:
+      return {
+        ...state,
+        loadingTrx: false,
+        proxypayTransactions: action.payload,
+      };
+    case ReportsActionTypes.GET_PROXYPAY_TRANSACTIONS_FAILURE:
+      return {
+        ...state,
+        loadingTrx: false,
+        error: action.payload,
+      };
+
+    case ReportsActionTypes.GET_PROXYPAY_VOLUMES_REQUEST:
+      return {
+        ...state,
+        loadingVol: true,
+      };
+    case ReportsActionTypes.GET_PROXYPAY_VOLUMES_SUCCESS:
+      return {
+        ...state,
+        loadingVol: false,
+        proxypayVolumes: action.payload,
+      };
+    case ReportsActionTypes.GET_PROXYPAY_VOLUMES_FAILURE:
+      return {
+        ...state,
+        loadingVol: false,
+        error: action.payload,
+      };
+    case ReportsActionTypes.GET_PROXYPAY_REVENUES_REQUEST:
+      return {
+        ...state,
+        loadingRev: true,
+      };
+    case ReportsActionTypes.GET_PROXYPAY_REVENUES_SUCCESS:
+      return {
+        ...state,
+        loadingRev: false,
+        proxypayRevenues: action.payload,
+      };
+    case ReportsActionTypes.GET_PROXYPAY_REVENUES_FAILURE:
+      return {
+        ...state,
+        loadingRev: false,
+        error: action.payload,
+      };
+    case ReportsActionTypes.GET_PROXYPAY_OPEX_REQUEST:
+      return {
+        ...state,
+        loadingOpex: true,
+      };
+    case ReportsActionTypes.GET_PROXYPAY_OPEX_SUCCESS:
+      return {
+        ...state,
+        loadingOpex: false,
+        proxypayOpex: action.payload,
+      };
+    case ReportsActionTypes.GET_PROXYPAY_OPEX_FAILURE:
+      return {
+        ...state,
+        loadingOpex: false,
+        error: action.payload,
+      };
+
+    case ReportsActionTypes.GET_PROXYPAY_EBITDA_REQUEST:
+      return {
+        ...state,
+        loadingEbitda: true,
+      };
+    case ReportsActionTypes.GET_PROXYPAY_EBITDA_SUCCESS:
+      return {
+        ...state,
+        loadingEbitda: false,
+        proxypayEbitda: action.payload,
+      };
+    case ReportsActionTypes.GET_PROXYPAY_EBITDA_FAILURE:
+      return {
+        ...state,
+        loadingEbitda: false,
+        error: action.payload,
+      };
+
     case ReportsActionTypes.GET_PAYOUT_REQUEST:
       return {
         ...state,
@@ -225,6 +331,19 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
       return {
         ...state,
         pcesdata: [],
+        proxypayEbitda: null,
+        proxypayOpex: null,
+        proxypayRevenues: null,
+        proxypaySubscribers: null,
+        proxypayTransactions: null,
+        proxypayVolumes: null,
+        errorEbitda: undefined,
+        errorOpex: undefined,
+        error: undefined,
+        errorRev: undefined,
+        errorSub: undefined,
+        errorTrx: undefined,
+        errorVol: undefined,
       };
     default:
       return state;

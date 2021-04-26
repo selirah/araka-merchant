@@ -19,14 +19,59 @@ export const getPCESSuccess = (response: PCESReport) =>
 export const getPCESFailure = (error: any) =>
   action(ReportsActionTypes.GET_PCES_FAILURE, error);
 
-export const getProxyPayRequest = (payload: any) =>
-  action(ReportsActionTypes.GET_PROXYPAY_REQUEST, payload);
+export const getProxyPaySubscribersRequest = (payload: any) =>
+  action(ReportsActionTypes.GET_PROXYPAY_SUBSCRIBERS_REQUEST, payload);
 
-export const getProxyPaySuccess = (response: ProxyPayReport) =>
-  action(ReportsActionTypes.GET_PROXYPAY_SUCCESS, response);
+export const getProxyPaySubscribersSuccess = (response: ProxyPayReport) =>
+  action(ReportsActionTypes.GET_PROXYPAY_SUBSCRIBERS_SUCCESS, response);
 
-export const getProxyPayFailure = (error: any) =>
-  action(ReportsActionTypes.GET_PROXYPAY_FAILURE, error);
+export const getProxyPaySubscribersFailure = (error: any) =>
+  action(ReportsActionTypes.GET_PROXYPAY_SUBSCRIBERS_FAILURE, error);
+
+export const getProxyPayTransactionsRequest = (payload: any) =>
+  action(ReportsActionTypes.GET_PROXYPAY_TRANSACTIONS_REQUEST, payload);
+
+export const getProxyPayTransactionsSuccess = (response: ProxyPayReport) =>
+  action(ReportsActionTypes.GET_PROXYPAY_TRANSACTIONS_SUCCESS, response);
+
+export const getProxyPayTransactionsFailure = (error: any) =>
+  action(ReportsActionTypes.GET_PROXYPAY_TRANSACTIONS_FAILURE, error);
+
+export const getProxyPayVolumesRequest = (payload: any) =>
+  action(ReportsActionTypes.GET_PROXYPAY_VOLUMES_REQUEST, payload);
+
+export const getProxyPayVolumesSuccess = (response: ProxyPayReport) =>
+  action(ReportsActionTypes.GET_PROXYPAY_VOLUMES_SUCCESS, response);
+
+export const getProxyPayVolumesFailure = (error: any) =>
+  action(ReportsActionTypes.GET_PROXYPAY_VOLUMES_FAILURE, error);
+
+export const getProxyPayRevenuesRequest = (payload: any) =>
+  action(ReportsActionTypes.GET_PROXYPAY_REVENUES_REQUEST, payload);
+
+export const getProxyPayRevenuesSuccess = (response: ProxyPayReport) =>
+  action(ReportsActionTypes.GET_PROXYPAY_REVENUES_SUCCESS, response);
+
+export const getProxyPayRevenuesFailure = (error: any) =>
+  action(ReportsActionTypes.GET_PROXYPAY_REVENUES_FAILURE, error);
+
+export const getProxyPayOpexRequest = (payload: any) =>
+  action(ReportsActionTypes.GET_PROXYPAY_OPEX_REQUEST, payload);
+
+export const getProxyPayOpexSuccess = (response: ProxyPayReport) =>
+  action(ReportsActionTypes.GET_PROXYPAY_OPEX_SUCCESS, response);
+
+export const getProxyPayOpexFailure = (error: any) =>
+  action(ReportsActionTypes.GET_PROXYPAY_OPEX_FAILURE, error);
+
+export const getProxyPayEbitdaRequest = (payload: any) =>
+  action(ReportsActionTypes.GET_PROXYPAY_EBITDA_REQUEST, payload);
+
+export const getProxyPayEbitdaSuccess = (response: ProxyPayReport) =>
+  action(ReportsActionTypes.GET_PROXYPAY_EBITDA_SUCCESS, response);
+
+export const getProxyPayEbitdaFailure = (error: any) =>
+  action(ReportsActionTypes.GET_PROXYPAY_EBITDA_FAILURE, error);
 
 export const getPayoutRequest = (payload: any) =>
   action(ReportsActionTypes.GET_PAYOUT_REQUEST, payload);

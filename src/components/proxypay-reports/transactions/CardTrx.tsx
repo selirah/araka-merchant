@@ -49,7 +49,7 @@ const CardTrx: React.FC<CardTrxProps> = ({ proxyPayReport, loading }) => {
             title={
               proxyPayReport ? proxyPayReport.transactions.card.total.value : 0
             }
-            data={proxyPayReport ? total : {}}
+            data={total}
             loading={loading}
           />
         </Col>
@@ -61,7 +61,7 @@ const CardTrx: React.FC<CardTrxProps> = ({ proxyPayReport, loading }) => {
                 ? proxyPayReport.transactions.card.successful.value
                 : 0
             }
-            data={proxyPayReport ? successful : {}}
+            data={successful}
             loading={loading}
           />
         </Col>
@@ -71,7 +71,7 @@ const CardTrx: React.FC<CardTrxProps> = ({ proxyPayReport, loading }) => {
             title={
               proxyPayReport ? proxyPayReport.transactions.card.failed.value : 0
             }
-            data={proxyPayReport ? failed : {}}
+            data={failed}
             loading={loading}
           />
         </Col>

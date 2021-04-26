@@ -1,12 +1,13 @@
 import React from 'react';
 import { Row, Col, Table } from 'antd';
-import { Subscriber } from '../../../interfaces';
+import { ProxyPayTableData } from '../../../interfaces';
 
 interface DetailsProps {
-  subscribers: Subscriber[];
+  subscribers: ProxyPayTableData[];
+  loading: boolean;
 }
 
-const Details: React.FC<DetailsProps> = ({ subscribers }) => {
+const Details: React.FC<DetailsProps> = ({ subscribers, loading }) => {
   const columns: any = [
     {
       title: 'Subscriber',
@@ -55,10 +56,10 @@ const Details: React.FC<DetailsProps> = ({ subscribers }) => {
   for (let s of subscribers) {
     dataSource.push({
       key: Math.random(),
-      subscriber: s.subscriber.toUpperCase(),
+      subscriber: s.subscriberName.toUpperCase(),
       status: s.status,
-      email: s.email.toUpperCase(),
-      phone: s.phone,
+      email: s.emailAddress.toUpperCase(),
+      phone: s.phoneNumber,
       createdAt: s.createdAt,
       lastTransactionDate: s.lastTransactionDate,
     });
@@ -79,6 +80,7 @@ const Details: React.FC<DetailsProps> = ({ subscribers }) => {
                 return `Showing ${range[0]} - ${range[1]} of ${total} results`;
               },
             }}
+            loading={loading}
           />
         </div>
       </Col>

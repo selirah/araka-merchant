@@ -5,9 +5,10 @@ import { isEmpty } from '../../../helpers/isEmpty';
 
 interface DetailsProps {
   transactions: ProxyPayTrxTableData[];
+  loading: boolean;
 }
 
-const Details: React.FC<DetailsProps> = ({ transactions }) => {
+const Details: React.FC<DetailsProps> = ({ transactions, loading }) => {
   const columns: any = [
     {
       title: 'Merchant',
@@ -54,7 +55,7 @@ const Details: React.FC<DetailsProps> = ({ transactions }) => {
         total: trx.total,
         successful: trx.successful,
         failed: trx.failed,
-        type: trx.type.toUpperCase(),
+        type: trx.channel.toUpperCase(),
       });
     }
   }
@@ -75,6 +76,7 @@ const Details: React.FC<DetailsProps> = ({ transactions }) => {
                 return `Showing ${range[0]} - ${range[1]} of ${total} results`;
               },
             }}
+            loading={loading}
           />
         </div>
       </Col>
