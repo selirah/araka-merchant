@@ -1,11 +1,12 @@
 import React from 'react';
 import { Row, Col, /*Button,*/ Select } from 'antd';
 import CardView from '../../cards/CardView';
-import { ProxyPayReport } from '../../../interfaces';
+import { ProxyPayReportRev } from '../../../interfaces';
 import { getAreaOptions } from '../../../helpers/functions';
+import { isEmpty } from '../../../helpers/isEmpty';
 
 interface RevenueChannelCardProps {
-  proxyPayReport: ProxyPayReport | null;
+  proxyPayReport: ProxyPayReportRev | null;
   onExportClick(type: string, page: string): void;
   isExporting: boolean;
   exportType: string;
@@ -29,8 +30,8 @@ const RevenueChannelCard: React.FC<RevenueChannelCardProps> = ({
 }) => {
   const cards = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.revenues.channel.card.graph.labels,
-        proxyPayReport.revenues.channel.card.graph.values,
+        proxyPayReport.channel.card.graph.labels,
+        proxyPayReport.channel.card.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -38,8 +39,8 @@ const RevenueChannelCard: React.FC<RevenueChannelCardProps> = ({
 
   const mpesa = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.revenues.channel.mpesa.graph.labels,
-        proxyPayReport.revenues.channel.mpesa.graph.values,
+        proxyPayReport.channel.mpesa.graph.labels,
+        proxyPayReport.channel.mpesa.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -47,8 +48,8 @@ const RevenueChannelCard: React.FC<RevenueChannelCardProps> = ({
 
   const airtel = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.revenues.channel.airtel.graph.labels,
-        proxyPayReport.revenues.channel.airtel.graph.values,
+        proxyPayReport.channel.airtel.graph.labels,
+        proxyPayReport.channel.airtel.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -101,7 +102,9 @@ const RevenueChannelCard: React.FC<RevenueChannelCardProps> = ({
           <CardView
             value="From Cards - Successful"
             title={
-              proxyPayReport ? proxyPayReport.revenues.channel.card.value : 0
+              proxyPayReport && !isEmpty(proxyPayReport.channel.card.value)
+                ? proxyPayReport.channel.card.value
+                : 0
             }
             data={proxyPayReport ? cards : {}}
             currency={currency}
@@ -112,7 +115,9 @@ const RevenueChannelCard: React.FC<RevenueChannelCardProps> = ({
           <CardView
             value="From mPESA - Successful"
             title={
-              proxyPayReport ? proxyPayReport.revenues.channel.mpesa.value : 0
+              proxyPayReport && !isEmpty(proxyPayReport.channel.mpesa.value)
+                ? proxyPayReport.channel.mpesa.value
+                : 0
             }
             data={proxyPayReport ? mpesa : {}}
             currency={currency}
@@ -123,7 +128,9 @@ const RevenueChannelCard: React.FC<RevenueChannelCardProps> = ({
           <CardView
             value="From Airtel - Successful"
             title={
-              proxyPayReport ? proxyPayReport.revenues.channel.airtel.value : 0
+              proxyPayReport && !isEmpty(proxyPayReport.channel.airtel.value)
+                ? proxyPayReport.channel.airtel.value
+                : 0
             }
             data={proxyPayReport ? airtel : {}}
             currency={currency}

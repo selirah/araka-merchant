@@ -2,10 +2,10 @@ import React from 'react';
 import { Row, Col } from 'antd';
 import CardView from '../../cards/CardView';
 import { PieChartView } from './PieChartView';
-import { ProxyPayReport } from '../../../interfaces';
+import { ProxyPayReportSub } from '../../../interfaces';
 
 interface MidCardProps {
-  proxyPayReport: ProxyPayReport | null;
+  proxyPayReport: ProxyPayReportSub | null;
   loading: boolean;
 }
 

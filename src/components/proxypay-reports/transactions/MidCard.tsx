@@ -1,22 +1,18 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import { PieChartView } from './PieChartView';
-import { ProxyPayReport } from '../../../interfaces';
+import { ProxyPayReportTrx } from '../../../interfaces';
 
 interface MidCardProps {
-  proxyPayReport: ProxyPayReport | null;
+  proxyPayReport: ProxyPayReportTrx | null;
 }
 
 const MidCard: React.FC<MidCardProps> = ({ proxyPayReport }) => {
-  const total = proxyPayReport
-    ? proxyPayReport.transactions.overview.total.value
-    : 0;
+  const total = proxyPayReport ? proxyPayReport.overview.total.value : 0;
   const successful = proxyPayReport
-    ? proxyPayReport.transactions.overview.successful.value
+    ? proxyPayReport.overview.successful.value
     : 0;
-  const failed = proxyPayReport
-    ? proxyPayReport.transactions.overview.failed.value
-    : 0;
+  const failed = proxyPayReport ? proxyPayReport.overview.failed.value : 0;
 
   const info = {
     data: {

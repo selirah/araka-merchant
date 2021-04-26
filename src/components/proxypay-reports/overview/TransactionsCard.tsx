@@ -3,12 +3,13 @@ import { Row, Col, Button } from 'antd';
 import CardView from '../../cards/CardView';
 import { path } from '../../../helpers/path';
 import { menu, menuHeadings } from '../../../helpers/menu';
-import { ProxyPayReport } from '../../../interfaces';
+import { ProxyPayReportTrx } from '../../../interfaces';
 import { getAreaOptions } from '../../../helpers/functions';
+import { isEmpty } from '../../../helpers/isEmpty';
 
 interface TransactionsCardProps {
   onSeeDetailsClick(path: string, menu: string, header: string): void;
-  proxyPayReport: ProxyPayReport | null;
+  proxyPayReport: ProxyPayReportTrx | null;
   onExportClick(type: string, page: string): void;
   isExporting: boolean;
   exportType: string;
@@ -29,8 +30,8 @@ const TransactionsCard: React.FC<TransactionsCardProps> = ({
 }) => {
   const total = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.transactions.overview.total.graph.labels,
-        proxyPayReport.transactions.overview.total.graph.values,
+        proxyPayReport.overview.total.graph.labels,
+        proxyPayReport.overview.total.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -38,8 +39,8 @@ const TransactionsCard: React.FC<TransactionsCardProps> = ({
 
   const successful = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.transactions.overview.successful.graph.labels,
-        proxyPayReport.transactions.overview.successful.graph.values,
+        proxyPayReport.overview.successful.graph.labels,
+        proxyPayReport.overview.successful.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -47,8 +48,8 @@ const TransactionsCard: React.FC<TransactionsCardProps> = ({
 
   const failed = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.transactions.overview.failed.graph.labels,
-        proxyPayReport.transactions.overview.failed.graph.values,
+        proxyPayReport.overview.failed.graph.labels,
+        proxyPayReport.overview.failed.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -96,8 +97,8 @@ const TransactionsCard: React.FC<TransactionsCardProps> = ({
           <CardView
             value="Total Transactions"
             title={
-              proxyPayReport
-                ? proxyPayReport.transactions.overview.total.value
+              proxyPayReport && !isEmpty(proxyPayReport.overview.total.value)
+                ? proxyPayReport.overview.total.value
                 : 0
             }
             data={proxyPayReport ? total : {}}
@@ -108,8 +109,9 @@ const TransactionsCard: React.FC<TransactionsCardProps> = ({
           <CardView
             value="Successful Transactions"
             title={
-              proxyPayReport
-                ? proxyPayReport.transactions.overview.successful.value
+              proxyPayReport &&
+              !isEmpty(proxyPayReport.overview.successful.value)
+                ? proxyPayReport.overview.successful.value
                 : 0
             }
             data={proxyPayReport ? successful : {}}
@@ -120,8 +122,8 @@ const TransactionsCard: React.FC<TransactionsCardProps> = ({
           <CardView
             value="Failed Transactions"
             title={
-              proxyPayReport
-                ? proxyPayReport.transactions.overview.failed.value
+              proxyPayReport && !isEmpty(proxyPayReport.overview.failed.value)
+                ? proxyPayReport.overview.failed.value
                 : 0
             }
             data={proxyPayReport ? failed : {}}

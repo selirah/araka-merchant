@@ -1,11 +1,11 @@
 import React from 'react';
 import { Row, Col, /*Button,*/ Select } from 'antd';
 import CardView from '../../cards/CardView';
-import { ProxyPayReport } from '../../../interfaces';
+import { ProxyPayReportEbitda } from '../../../interfaces';
 import { getAreaOptions } from '../../../helpers/functions';
 
 interface EbitdaOverviewCardProps {
-  proxyPayReport: ProxyPayReport | null;
+  proxyPayReport: ProxyPayReportEbitda | null;
   onExportClick(type: string, page: string): void;
   isExporting: boolean;
   exportType: string;
@@ -29,8 +29,8 @@ const EbitdaOverviewCard: React.FC<EbitdaOverviewCardProps> = ({
 }) => {
   const total = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.ebitda.proxyPayRevenue.graph.labels,
-        proxyPayReport.ebitda.proxyPayRevenue.graph.values,
+        proxyPayReport.total.graph.labels,
+        proxyPayReport.total.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -38,8 +38,8 @@ const EbitdaOverviewCard: React.FC<EbitdaOverviewCardProps> = ({
 
   const cards = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.ebitda.cards.graph.labels,
-        proxyPayReport.ebitda.cards.graph.values,
+        proxyPayReport.cards.graph.labels,
+        proxyPayReport.cards.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -47,8 +47,8 @@ const EbitdaOverviewCard: React.FC<EbitdaOverviewCardProps> = ({
 
   const momo = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.ebitda.mobileMoney.graph.labels,
-        proxyPayReport.ebitda.mobileMoney.graph.values,
+        proxyPayReport.mobileMoney.graph.labels,
+        proxyPayReport.mobileMoney.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -95,9 +95,7 @@ const EbitdaOverviewCard: React.FC<EbitdaOverviewCardProps> = ({
         <Col span={8} sm={24} md={8} xs={24}>
           <CardView
             value="ProxyPay Revenue - Total"
-            title={
-              proxyPayReport ? proxyPayReport.ebitda.proxyPayRevenue.value : 0
-            }
+            title={proxyPayReport ? proxyPayReport.total.value : 0}
             data={proxyPayReport ? total : {}}
             currency={currency}
             loading={loading}
@@ -106,7 +104,7 @@ const EbitdaOverviewCard: React.FC<EbitdaOverviewCardProps> = ({
         <Col span={8} sm={24} md={8} xs={24}>
           <CardView
             value="ProxyPay Revenue - Cards"
-            title={proxyPayReport ? proxyPayReport.ebitda.cards.value : 0}
+            title={proxyPayReport ? proxyPayReport.cards.value : 0}
             data={proxyPayReport ? cards : {}}
             currency={currency}
             loading={loading}
@@ -115,7 +113,7 @@ const EbitdaOverviewCard: React.FC<EbitdaOverviewCardProps> = ({
         <Col span={8} sm={24} md={8} xs={24}>
           <CardView
             value="ProxyPay Revenue - Momo"
-            title={proxyPayReport ? proxyPayReport.ebitda.mobileMoney.value : 0}
+            title={proxyPayReport ? proxyPayReport.mobileMoney.value : 0}
             data={proxyPayReport ? momo : {}}
             currency={currency}
             loading={loading}

@@ -93,7 +93,7 @@ const Transactions = () => {
     const { merchants } = reports;
     setLoading(loading);
     setMerchants(merchants);
-    setTrans(trans);
+    setTrans(transactions && !isEmpty(transactions.data) ? trans : []);
     setTrxReport(transactions);
     setIsExporting(isExporting);
     setIsDownloading(isRequestingDownload);

@@ -1,11 +1,12 @@
 import React from 'react';
 import { Row, Col, Select } from 'antd';
 import CardView from '../../cards/CardView';
-import { ProxyPayReport } from '../../../interfaces';
+import { ProxyPayReportVol } from '../../../interfaces';
 import { getAreaOptions } from '../../../helpers/functions';
+import { isEmpty } from '../../../helpers/isEmpty';
 
 interface AirtimeRechargeSplitCardProps {
-  proxyPayReport: ProxyPayReport | null;
+  proxyPayReport: ProxyPayReportVol | null;
   currency: string;
   onSelectCurrency(value: string): void;
   loading: boolean;
@@ -21,8 +22,8 @@ const AirtimeRechargeSplitCard: React.FC<AirtimeRechargeSplitCardProps> = ({
 }) => {
   const airtel = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.volumes.airtimeRechargeSplits.airtel.graph.labels,
-        proxyPayReport.volumes.airtimeRechargeSplits.airtel.graph.values,
+        proxyPayReport.airtimeRechargeSplits.airtel.graph.labels,
+        proxyPayReport.airtimeRechargeSplits.airtel.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -30,8 +31,8 @@ const AirtimeRechargeSplitCard: React.FC<AirtimeRechargeSplitCardProps> = ({
 
   const vodacom = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.volumes.airtimeRechargeSplits.vodacom.graph.labels,
-        proxyPayReport.volumes.airtimeRechargeSplits.vodacom.graph.values,
+        proxyPayReport.airtimeRechargeSplits.vodacom.graph.labels,
+        proxyPayReport.airtimeRechargeSplits.vodacom.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -39,8 +40,8 @@ const AirtimeRechargeSplitCard: React.FC<AirtimeRechargeSplitCardProps> = ({
 
   const orange = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.volumes.airtimeRechargeSplits.orange.graph.labels,
-        proxyPayReport.volumes.airtimeRechargeSplits.orange.graph.values,
+        proxyPayReport.airtimeRechargeSplits.orange.graph.labels,
+        proxyPayReport.airtimeRechargeSplits.orange.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -48,8 +49,8 @@ const AirtimeRechargeSplitCard: React.FC<AirtimeRechargeSplitCardProps> = ({
 
   const africell = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.volumes.airtimeRechargeSplits.africell.graph.labels,
-        proxyPayReport.volumes.airtimeRechargeSplits.africell.graph.values,
+        proxyPayReport.airtimeRechargeSplits.africell.graph.labels,
+        proxyPayReport.airtimeRechargeSplits.africell.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -83,8 +84,9 @@ const AirtimeRechargeSplitCard: React.FC<AirtimeRechargeSplitCardProps> = ({
           <CardView
             value="Airtel - Successful"
             title={
-              proxyPayReport
-                ? proxyPayReport.volumes.airtimeRechargeSplits.airtel.value
+              proxyPayReport &&
+              !isEmpty(proxyPayReport.airtimeRechargeSplits.airtel.value)
+                ? proxyPayReport.airtimeRechargeSplits.airtel.value
                 : 0
             }
             data={proxyPayReport ? airtel : {}}
@@ -96,8 +98,9 @@ const AirtimeRechargeSplitCard: React.FC<AirtimeRechargeSplitCardProps> = ({
           <CardView
             value="Vodacom - Successful"
             title={
-              proxyPayReport
-                ? proxyPayReport.volumes.airtimeRechargeSplits.vodacom.value
+              proxyPayReport &&
+              !isEmpty(proxyPayReport.airtimeRechargeSplits.vodacom.value)
+                ? proxyPayReport.airtimeRechargeSplits.vodacom.value
                 : 0
             }
             data={proxyPayReport ? vodacom : {}}
@@ -109,8 +112,9 @@ const AirtimeRechargeSplitCard: React.FC<AirtimeRechargeSplitCardProps> = ({
           <CardView
             value="Orange - Successful"
             title={
-              proxyPayReport
-                ? proxyPayReport.volumes.airtimeRechargeSplits.orange.value
+              proxyPayReport &&
+              !isEmpty(proxyPayReport.airtimeRechargeSplits.orange.value)
+                ? proxyPayReport.airtimeRechargeSplits.orange.value
                 : 0
             }
             data={proxyPayReport ? orange : {}}
@@ -122,8 +126,9 @@ const AirtimeRechargeSplitCard: React.FC<AirtimeRechargeSplitCardProps> = ({
           <CardView
             value="Africell - Successful"
             title={
-              proxyPayReport
-                ? proxyPayReport.volumes.airtimeRechargeSplits.africell.value
+              proxyPayReport &&
+              !isEmpty(proxyPayReport.airtimeRechargeSplits.africell.value)
+                ? proxyPayReport.airtimeRechargeSplits.africell.value
                 : 0
             }
             data={proxyPayReport ? africell : {}}

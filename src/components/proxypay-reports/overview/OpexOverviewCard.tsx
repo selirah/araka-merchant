@@ -1,11 +1,11 @@
 import React from 'react';
 import { Row, Col, /*Button,*/ Select } from 'antd';
 import RawCardView from '../../cards/RawCardView';
-import { ProxyPayReport } from '../../../interfaces';
+import { ProxyPayReportOpex } from '../../../interfaces';
 import { isEmpty } from '../../../helpers/isEmpty';
 
 interface OpexOverviewProps {
-  proxyPayReport: ProxyPayReport | null;
+  proxyPayReport: ProxyPayReportOpex | null;
   onExportClick(type: string, page: string): void;
   isExporting: boolean;
   exportType: string;
@@ -69,8 +69,8 @@ const OpexOverviewCard: React.FC<OpexOverviewProps> = ({
           <RawCardView
             value="Bank - Gateway Provider"
             title={
-              proxyPayReport && !isEmpty(proxyPayReport.opex)
-                ? proxyPayReport.opex.bankGatewayProvider
+              proxyPayReport && !isEmpty(proxyPayReport.bankGatewayProvider)
+                ? proxyPayReport.bankGatewayProvider
                 : 0
             }
             currency={currency}
@@ -82,8 +82,8 @@ const OpexOverviewCard: React.FC<OpexOverviewProps> = ({
           <RawCardView
             value="Airtel Money"
             title={
-              proxyPayReport && !isEmpty(proxyPayReport.opex)
-                ? proxyPayReport.opex.airtelMoney
+              proxyPayReport && !isEmpty(proxyPayReport.airtelMoney)
+                ? proxyPayReport.airtelMoney
                 : 0
             }
             currency={currency}
@@ -95,8 +95,8 @@ const OpexOverviewCard: React.FC<OpexOverviewProps> = ({
           <RawCardView
             value="Orange Money"
             title={
-              proxyPayReport && !isEmpty(proxyPayReport.opex)
-                ? proxyPayReport.opex.orangeMoney
+              proxyPayReport && !isEmpty(proxyPayReport.orangeMoney)
+                ? proxyPayReport.orangeMoney
                 : 0
             }
             currency={currency}
@@ -108,8 +108,8 @@ const OpexOverviewCard: React.FC<OpexOverviewProps> = ({
           <RawCardView
             value="mPESA"
             title={
-              proxyPayReport && !isEmpty(proxyPayReport.opex)
-                ? proxyPayReport.opex.mpesa
+              proxyPayReport && !isEmpty(proxyPayReport.mpesa)
+                ? proxyPayReport.mpesa
                 : 0
             }
             currency={currency}

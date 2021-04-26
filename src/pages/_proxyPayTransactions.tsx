@@ -5,7 +5,7 @@ import { Layout, Spin, Row, Button } from 'antd';
 import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
 import { isEmpty } from '../helpers/isEmpty';
-import { ProxyPayReport, ProxyPayTrxTableData } from '../interfaces';
+import { ProxyPayReportTrx, ProxyPayTrxTableData } from '../interfaces';
 import {
   getProxyPayTransactionsRequest,
   clearBooleans,
@@ -37,7 +37,9 @@ const { Content } = Layout;
 const ProxyPayTransactions = () => {
   const dispatch: AppDispatch = useDispatch();
   const reports = appSelector((state) => state.reports);
-  const [proxyPayTrx, setProxyPayTrx] = useState<ProxyPayReport | null>(null);
+  const [proxyPayTrx, setProxyPayTrx] = useState<ProxyPayReportTrx | null>(
+    null
+  );
   const [transactions, setTransactions] = useState<ProxyPayTrxTableData[]>([]);
   const [loading, setLoading] = useState(false);
   const [periodFrom, setPeriodFrom] = useState('');
@@ -57,9 +59,7 @@ const ProxyPayTransactions = () => {
     const { loadingTrx, proxypayTransactions } = reports;
     setLoading(loadingTrx);
     setProxyPayTrx(proxypayTransactions);
-    setTransactions(
-      proxypayTransactions ? proxypayTransactions.transactions.data : []
-    );
+    setTransactions(proxypayTransactions ? proxypayTransactions.data : []);
   }, [reports]);
 
   const onReset = (form: any) => {

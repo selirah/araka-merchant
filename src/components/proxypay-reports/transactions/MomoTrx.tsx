@@ -1,19 +1,20 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import CardView from '../../cards/CardView';
-import { ProxyPayReport } from '../../../interfaces';
+import { ProxyPayReportTrx } from '../../../interfaces';
 import { getAreaOptions } from '../../../helpers/functions';
+import { isEmpty } from '../../../helpers/isEmpty';
 
 interface MomoTrxProps {
-  proxyPayReport: ProxyPayReport | null;
+  proxyPayReport: ProxyPayReportTrx | null;
   loading: boolean;
 }
 
 const MomoTrx: React.FC<MomoTrxProps> = ({ proxyPayReport, loading }) => {
   const total = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.transactions.mobilemoney.total.graph.labels,
-        proxyPayReport.transactions.mobilemoney.total.graph.values,
+        proxyPayReport.mobilemoney.total.graph.labels,
+        proxyPayReport.mobilemoney.total.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -21,8 +22,8 @@ const MomoTrx: React.FC<MomoTrxProps> = ({ proxyPayReport, loading }) => {
 
   const successful = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.transactions.mobilemoney.successful.graph.labels,
-        proxyPayReport.transactions.mobilemoney.successful.graph.values,
+        proxyPayReport.mobilemoney.successful.graph.labels,
+        proxyPayReport.mobilemoney.successful.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -30,8 +31,8 @@ const MomoTrx: React.FC<MomoTrxProps> = ({ proxyPayReport, loading }) => {
 
   const failed = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.transactions.mobilemoney.failed.graph.labels,
-        proxyPayReport.transactions.mobilemoney.failed.graph.values,
+        proxyPayReport.mobilemoney.failed.graph.labels,
+        proxyPayReport.mobilemoney.failed.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -47,8 +48,8 @@ const MomoTrx: React.FC<MomoTrxProps> = ({ proxyPayReport, loading }) => {
           <CardView
             value="Total Transactions"
             title={
-              proxyPayReport
-                ? proxyPayReport.transactions.mobilemoney.total.value
+              proxyPayReport && !isEmpty(proxyPayReport.mobilemoney.total.value)
+                ? proxyPayReport.mobilemoney.total.value
                 : 0
             }
             data={proxyPayReport ? total : {}}
@@ -59,8 +60,9 @@ const MomoTrx: React.FC<MomoTrxProps> = ({ proxyPayReport, loading }) => {
           <CardView
             value="Successful Transactions"
             title={
-              proxyPayReport
-                ? proxyPayReport.transactions.mobilemoney.successful.value
+              proxyPayReport &&
+              !isEmpty(proxyPayReport.mobilemoney.successful.value)
+                ? proxyPayReport.mobilemoney.successful.value
                 : 0
             }
             data={proxyPayReport ? successful : {}}
@@ -71,8 +73,9 @@ const MomoTrx: React.FC<MomoTrxProps> = ({ proxyPayReport, loading }) => {
           <CardView
             value="Failed Transactions"
             title={
-              proxyPayReport
-                ? proxyPayReport.transactions.mobilemoney.failed.value
+              proxyPayReport &&
+              !isEmpty(proxyPayReport.mobilemoney.failed.value)
+                ? proxyPayReport.mobilemoney.failed.value
                 : 0
             }
             data={proxyPayReport ? failed : {}}

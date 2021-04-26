@@ -62,11 +62,11 @@ const FeeReports = () => {
 
   useEffect(() => {
     const { merchants, loading, pces, isExporting, pcesdata } = reports;
-    setLoading(loading);
     setPces(pcesdata);
     setMerchants(merchants);
     setPcesReport(pces);
     setIsExporting(isExporting);
+    setLoading(loading);
   }, [reports]);
 
   const reloadReport = () => {

@@ -1143,6 +1143,13 @@ thead[class*='ant-table-thead'] th {
   padding: 25px;
 }
 
+.profit-card-spinner {
+  width: 100%;
+  flex: 0 0 100%;
+  text-align: center;
+  padding: 25px;
+}
+
 .ecard .card-chunk h1 {
   font-size: 1.5rem;
   font-weight: 400;

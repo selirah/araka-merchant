@@ -3,12 +3,13 @@ import { Row, Col, Button } from 'antd';
 import CardView from '../../cards/CardView';
 import { path } from '../../../helpers/path';
 import { menu, menuHeadings } from '../../../helpers/menu';
-import { ProxyPayReport } from '../../../interfaces';
+import { ProxyPayReportSub } from '../../../interfaces';
 import { getAreaOptions } from '../../../helpers/functions';
+import { isEmpty } from '../../../helpers/isEmpty';
 
 interface SubscribersCardProps {
   onSeeDetailsClick(path: string, menu: string, header: string): void;
-  proxyPayReport: ProxyPayReport | null;
+  proxyPayReport: ProxyPayReportSub | null;
   onExportClick(type: string, page: string): void;
   isExporting: boolean;
   exportType: string;
@@ -29,16 +30,16 @@ const SubscribersCard: React.FC<SubscribersCardProps> = ({
 }) => {
   const totalSubscribers = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.subscribers.total.graph.labels,
-        proxyPayReport.subscribers.total.graph.values,
+        proxyPayReport.total.graph.labels,
+        proxyPayReport.total.graph.values,
         '#FFA000',
         '#FFE082'
       )
     : {};
   const activeSubscribers = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.subscribers.active.graph.labels,
-        proxyPayReport.subscribers.active.graph.values,
+        proxyPayReport.active.graph.labels,
+        proxyPayReport.active.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -46,8 +47,8 @@ const SubscribersCard: React.FC<SubscribersCardProps> = ({
 
   const newSubscribers = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.subscribers.newsubscribers.graph.labels,
-        proxyPayReport.subscribers.newsubscribers.graph.values,
+        proxyPayReport.newsubscribers.graph.labels,
+        proxyPayReport.newsubscribers.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -103,7 +104,11 @@ const SubscribersCard: React.FC<SubscribersCardProps> = ({
         <Col span={8} sm={24} md={8} xs={24}>
           <CardView
             value="Total Subscribers"
-            title={proxyPayReport ? proxyPayReport.subscribers.total.value : 0}
+            title={
+              proxyPayReport && !isEmpty(proxyPayReport.total.value)
+                ? proxyPayReport.total.value
+                : 0
+            }
             data={totalSubscribers}
             loading={loading}
           />
@@ -111,7 +116,11 @@ const SubscribersCard: React.FC<SubscribersCardProps> = ({
         <Col span={8} sm={24} md={8} xs={24}>
           <CardView
             value="Active Subscribers"
-            title={proxyPayReport ? proxyPayReport.subscribers.active.value : 0}
+            title={
+              proxyPayReport && !isEmpty(proxyPayReport.active.value)
+                ? proxyPayReport.active.value
+                : 0
+            }
             data={activeSubscribers}
             loading={loading}
           />
@@ -120,8 +129,8 @@ const SubscribersCard: React.FC<SubscribersCardProps> = ({
           <CardView
             value="New Subscribers"
             title={
-              proxyPayReport
-                ? proxyPayReport.subscribers.newsubscribers.value
+              proxyPayReport && !isEmpty(proxyPayReport.newsubscribers.value)
+                ? proxyPayReport.newsubscribers.value
                 : 0
             }
             data={newSubscribers}

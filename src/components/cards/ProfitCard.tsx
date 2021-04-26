@@ -1,12 +1,14 @@
-import React from 'react';
-import { Card } from 'antd';
-import AreaChart from '../chart/AreaChart';
+import React, { lazy, Suspense } from 'react';
+import { Card, Spin } from 'antd';
+
+const AreaChart = lazy(() => import('../chart/AreaChart'));
 
 interface ProfitCardProps {
   mainTitle: string;
   paragraph: string;
   amount: string;
   data: any;
+  loading: boolean;
 }
 
 const ProfitCard: React.FC<ProfitCardProps> = ({
@@ -14,18 +16,35 @@ const ProfitCard: React.FC<ProfitCardProps> = ({
   paragraph,
   amount,
   data,
+  loading,
 }) => {
   return (
     <Card>
       <React.Fragment>
-        <div className="profit-card">
-          <h4>{mainTitle}</h4>
-          <p>{paragraph}</p>
-          <h1>{amount}</h1>
-        </div>
-        <div>
-          <AreaChart info={data} />
-        </div>
+        {loading ? (
+          <div className="profit-card-spinner">
+            <Spin size="small" />
+          </div>
+        ) : (
+          <>
+            <div className="profit-card">
+              <h4>{mainTitle}</h4>
+              <p>{paragraph}</p>
+              <h1>{amount}</h1>
+            </div>
+            <div>
+              <Suspense
+                fallback={
+                  <div className="profit-card-spinner">
+                    <Spin size="small" />
+                  </div>
+                }
+              >
+                <AreaChart info={data} />
+              </Suspense>
+            </div>
+          </>
+        )}
       </React.Fragment>
     </Card>
   );

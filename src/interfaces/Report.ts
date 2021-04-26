@@ -53,70 +53,73 @@ export interface PCESReport {
   data: PCESTableData[];
 }
 
-export interface ProxyPayReport {
-  subscribers: {
+export interface ProxyPayReportSub {
+  total: GraphData;
+  active: GraphData;
+  newsubscribers: GraphData;
+  external: {
     total: GraphData;
     active: GraphData;
-    newsubscribers: GraphData;
-    external: {
-      total: GraphData;
-      active: GraphData;
-      inactive: GraphData;
-    };
-    data: ProxyPayTableData[];
+    inactive: GraphData;
   };
-  transactions: {
-    overview: {
-      total: GraphData;
-      successful: GraphData;
-      failed: GraphData;
-    };
-    card: {
-      total: GraphData;
-      successful: GraphData;
-      failed: GraphData;
-    };
-    mobilemoney: {
-      total: GraphData;
-      successful: GraphData;
-      failed: GraphData;
-    };
-    data: ProxyPayTrxTableData[];
+  data: ProxyPayTableData[];
+}
+
+export interface ProxyPayReportTrx {
+  overview: {
+    total: GraphData;
+    successful: GraphData;
+    failed: GraphData;
   };
-  volumes: {
+  card: {
+    total: GraphData;
+    successful: GraphData;
+    failed: GraphData;
+  };
+  mobilemoney: {
+    total: GraphData;
+    successful: GraphData;
+    failed: GraphData;
+  };
+  data: ProxyPayTrxTableData[];
+}
+
+export interface ProxyPayReportVol {
+  moneyTransfers: GraphData;
+  otherPayments: GraphData;
+  airtimeRecharge: GraphData;
+  airtimeRechargeSplits: {
+    airtel: GraphData;
+    vodacom: GraphData;
+    orange: GraphData;
+    africell: GraphData;
+  };
+}
+
+export interface ProxyPayReportRev {
+  channel: {
+    card: GraphData;
+    mpesa: GraphData;
+    airtel: GraphData;
+  };
+  service: {
     moneyTransfers: GraphData;
     otherPayments: GraphData;
     airtimeRecharge: GraphData;
-    airtimeRechargeSplits: {
-      airtel: GraphData;
-      vodacom: GraphData;
-      orange: GraphData;
-      africell: GraphData;
-    };
   };
-  revenues: {
-    channel: {
-      card: GraphData;
-      mpesa: GraphData;
-      airtel: GraphData;
-    };
-    service: {
-      moneyTransfers: GraphData;
-      otherPayments: GraphData;
-      airtimeRecharge: GraphData;
-    };
-  };
-  opex: {
-    bankGatewayProvider: number;
-    airtelMoney: number;
-    orangeMoney: number;
-    mpesa: number;
-  };
-  ebitda: {
-    proxyPayRevenue: GraphData;
-    cards: GraphData;
-    mobileMoney: GraphData;
-  };
+}
+
+export interface ProxyPayReportOpex {
+  bankGatewayProvider: number;
+  airtelMoney: number;
+  orangeMoney: number;
+  mpesa: number;
+}
+
+export interface ProxyPayReportEbitda {
+  total: GraphData;
+  cards: GraphData;
+  mobileMoney: GraphData;
 }
 
 export interface PayoutReport {

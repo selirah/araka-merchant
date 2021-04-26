@@ -1,11 +1,12 @@
 import React from 'react';
 import { Row, Col, Select, Button } from 'antd';
 import CardView from '../../cards/CardView';
-import { ProxyPayReport } from '../../../interfaces';
+import { ProxyPayReportVol } from '../../../interfaces';
 import { getAreaOptions } from '../../../helpers/functions';
+import { isEmpty } from '../../../helpers/isEmpty';
 
 interface VolumesCardProps {
-  proxyPayReport: ProxyPayReport | null;
+  proxyPayReport: ProxyPayReportVol | null;
   onReloadPage(): void;
   currency: string;
   onSelectCurrency(value: string): void;
@@ -23,8 +24,8 @@ const VolumesCard: React.FC<VolumesCardProps> = ({
 }) => {
   const moneyTransfers = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.volumes.moneyTransfers.graph.labels,
-        proxyPayReport.volumes.moneyTransfers.graph.values,
+        proxyPayReport.moneyTransfers.graph.labels,
+        proxyPayReport.moneyTransfers.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -32,8 +33,8 @@ const VolumesCard: React.FC<VolumesCardProps> = ({
 
   const otherPayments = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.volumes.otherPayments.graph.labels,
-        proxyPayReport.volumes.otherPayments.graph.values,
+        proxyPayReport.otherPayments.graph.labels,
+        proxyPayReport.otherPayments.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -41,8 +42,8 @@ const VolumesCard: React.FC<VolumesCardProps> = ({
 
   const airtimeRecharge = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.volumes.airtimeRecharge.graph.labels,
-        proxyPayReport.volumes.airtimeRecharge.graph.values,
+        proxyPayReport.airtimeRecharge.graph.labels,
+        proxyPayReport.airtimeRecharge.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -95,7 +96,9 @@ const VolumesCard: React.FC<VolumesCardProps> = ({
           <CardView
             value="Money Transfers - Successful"
             title={
-              proxyPayReport ? proxyPayReport.volumes.moneyTransfers.value : 0
+              proxyPayReport && !isEmpty(proxyPayReport.moneyTransfers.value)
+                ? proxyPayReport.moneyTransfers.value
+                : 0
             }
             data={proxyPayReport ? moneyTransfers : {}}
             currency={currency}
@@ -106,7 +109,9 @@ const VolumesCard: React.FC<VolumesCardProps> = ({
           <CardView
             value="Other Payments - Successful"
             title={
-              proxyPayReport ? proxyPayReport.volumes.otherPayments.value : 0
+              proxyPayReport && !isEmpty(proxyPayReport.otherPayments.value)
+                ? proxyPayReport.otherPayments.value
+                : 0
             }
             data={proxyPayReport ? otherPayments : {}}
             currency={currency}
@@ -117,7 +122,9 @@ const VolumesCard: React.FC<VolumesCardProps> = ({
           <CardView
             value="Airtime Recharge - Successful"
             title={
-              proxyPayReport ? proxyPayReport.volumes.airtimeRecharge.value : 0
+              proxyPayReport && !isEmpty(proxyPayReport.airtimeRecharge.value)
+                ? proxyPayReport.airtimeRecharge.value
+                : 0
             }
             data={proxyPayReport ? airtimeRecharge : {}}
             currency={currency}

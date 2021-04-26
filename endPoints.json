@@ -341,27 +341,25 @@
         }
       },
       "ebitda": {
-        "proxyPayRevenue": {
-          "total": {
-            "value": "",
-            "graph": {
-              "labels": [],
-              "values": []
-            }
-          },
-          "cards": {
-            "value": "",
-            "graph": {
-              "labels": [],
-              "values": []
-            }
-          },
-          "mobileMoney": {
-            "value": "",
-            "graph": {
-              "labels": [],
-              "values": []
-            }
+        "total": {
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
+          }
+        },
+        "cards": {
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
+          }
+        },
+        "mobileMoney": {
+          "value": "",
+          "graph": {
+            "labels": [],
+            "values": []
           }
         }
       }

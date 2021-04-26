@@ -189,6 +189,7 @@ const Overview: React.FC<OverviewProps> = ({
                   ).toFixed(2)
                 )}`}
                 data={firstTopMerchant}
+                loading={loading}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
@@ -206,6 +207,7 @@ const Overview: React.FC<OverviewProps> = ({
                   ).toFixed(2)
                 )}`}
                 data={secondTopMerchant}
+                loading={loading}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
@@ -223,6 +225,7 @@ const Overview: React.FC<OverviewProps> = ({
                   ).toFixed(2)
                 )}`}
                 data={thirdTopMerchant}
+                loading={loading}
               />
             </Col>
           </Row>

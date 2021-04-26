@@ -1,19 +1,20 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import CardView from '../../cards/CardView';
-import { ProxyPayReport } from '../../../interfaces';
+import { ProxyPayReportTrx } from '../../../interfaces';
 import { getAreaOptions } from '../../../helpers/functions';
+import { isEmpty } from '../../../helpers/isEmpty';
 
 interface CardTrxProps {
-  proxyPayReport: ProxyPayReport | null;
+  proxyPayReport: ProxyPayReportTrx | null;
   loading: boolean;
 }
 
 const CardTrx: React.FC<CardTrxProps> = ({ proxyPayReport, loading }) => {
   const total = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.transactions.card.total.graph.labels,
-        proxyPayReport.transactions.card.total.graph.values,
+        proxyPayReport.card.total.graph.labels,
+        proxyPayReport.card.total.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -21,8 +22,8 @@ const CardTrx: React.FC<CardTrxProps> = ({ proxyPayReport, loading }) => {
 
   const successful = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.transactions.card.successful.graph.labels,
-        proxyPayReport.transactions.card.successful.graph.values,
+        proxyPayReport.card.successful.graph.labels,
+        proxyPayReport.card.successful.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -30,8 +31,8 @@ const CardTrx: React.FC<CardTrxProps> = ({ proxyPayReport, loading }) => {
 
   const failed = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.transactions.card.failed.graph.labels,
-        proxyPayReport.transactions.card.failed.graph.values,
+        proxyPayReport.card.failed.graph.labels,
+        proxyPayReport.card.failed.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -47,7 +48,9 @@ const CardTrx: React.FC<CardTrxProps> = ({ proxyPayReport, loading }) => {
           <CardView
             value="Total Transactions"
             title={
-              proxyPayReport ? proxyPayReport.transactions.card.total.value : 0
+              proxyPayReport && !isEmpty(proxyPayReport.card.total.value)
+                ? proxyPayReport.card.total.value
+                : 0
             }
             data={total}
             loading={loading}
@@ -57,8 +60,8 @@ const CardTrx: React.FC<CardTrxProps> = ({ proxyPayReport, loading }) => {
           <CardView
             value="Successful Transactions"
             title={
-              proxyPayReport
-                ? proxyPayReport.transactions.card.successful.value
+              proxyPayReport && !isEmpty(proxyPayReport.card.successful.value)
+                ? proxyPayReport.card.successful.value
                 : 0
             }
             data={successful}
@@ -69,7 +72,9 @@ const CardTrx: React.FC<CardTrxProps> = ({ proxyPayReport, loading }) => {
           <CardView
             value="Failed Transactions"
             title={
-              proxyPayReport ? proxyPayReport.transactions.card.failed.value : 0
+              proxyPayReport && !isEmpty(proxyPayReport.card.failed.value)
+                ? proxyPayReport.card.failed.value
+                : 0
             }
             data={failed}
             loading={loading}

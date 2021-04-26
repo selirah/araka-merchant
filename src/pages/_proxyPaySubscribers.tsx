@@ -5,7 +5,7 @@ import { Layout, Spin, Row, Button } from 'antd';
 import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
 import { isEmpty } from '../helpers/isEmpty';
-import { ProxyPayReport, ProxyPayTableData } from '../interfaces';
+import { ProxyPayReportSub, ProxyPayTableData } from '../interfaces';
 import { getProxyPaySubscribersRequest, clearBooleans } from '../store/reports';
 import moment from 'moment';
 
@@ -28,9 +28,10 @@ const { Content } = Layout;
 const ProxyPaySubscribers = () => {
   const dispatch: AppDispatch = useDispatch();
   const reports = appSelector((state) => state.reports);
-  const [proxyPayReport, setProxyPayReport] = useState<ProxyPayReport | null>(
-    null
-  );
+  const [
+    proxyPayReport,
+    setProxyPayReport,
+  ] = useState<ProxyPayReportSub | null>(null);
   const [subscribers, setSubscribers] = useState<ProxyPayTableData[]>([]);
   const [loading, setLoading] = useState(false);
   const [periodFrom, setPeriodFrom] = useState('');
@@ -51,10 +52,8 @@ const ProxyPaySubscribers = () => {
     setLoading(loadingSub);
     setProxyPayReport(proxypaySubscribers);
     setSubscribers(
-      proxypaySubscribers &&
-        proxypaySubscribers.subscribers &&
-        proxypaySubscribers.subscribers.data
-        ? proxypaySubscribers.subscribers.data
+      proxypaySubscribers && proxypaySubscribers && proxypaySubscribers.data
+        ? proxypaySubscribers.data
         : []
     );
   }, [reports]);

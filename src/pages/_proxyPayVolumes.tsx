@@ -5,7 +5,7 @@ import { Layout, Spin, Row } from 'antd';
 import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
 import { isEmpty } from '../helpers/isEmpty';
-import { ProxyPayReport } from '../interfaces';
+import { ProxyPayReportVol } from '../interfaces';
 import { getProxyPayVolumesRequest, clearBooleans } from '../store/reports';
 import moment from 'moment';
 
@@ -26,9 +26,10 @@ const { Content } = Layout;
 const ProxyPayVolumes: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const reports = appSelector((state) => state.reports);
-  const [proxyPayReport, setProxyPayReport] = useState<ProxyPayReport | null>(
-    null
-  );
+  const [
+    proxyPayReport,
+    setProxyPayReport,
+  ] = useState<ProxyPayReportVol | null>(null);
   const [loading, setLoading] = useState(false);
   const [periodFrom, setPeriodFrom] = useState('');
   const [periodTo, setPeriodTo] = useState('');

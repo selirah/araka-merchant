@@ -1,11 +1,12 @@
 import React from 'react';
 import { Row, Col, /*Button,*/ Select } from 'antd';
 import CardView from '../../cards/CardView';
-import { ProxyPayReport } from '../../../interfaces';
+import { ProxyPayReportRev } from '../../../interfaces';
 import { getAreaOptions } from '../../../helpers/functions';
+import { isEmpty } from '../../../helpers/isEmpty';
 
 interface RevenueServiceCardProps {
-  proxyPayReport: ProxyPayReport | null;
+  proxyPayReport: ProxyPayReportRev | null;
   onExportClick(type: string, page: string): void;
   isExporting: boolean;
   exportType: string;
@@ -29,8 +30,8 @@ const RevenueServiceCard: React.FC<RevenueServiceCardProps> = ({
 }) => {
   const cards = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.revenues.service.moneyTransfers.graph.labels,
-        proxyPayReport.revenues.service.moneyTransfers.graph.values,
+        proxyPayReport.service.moneyTransfers.graph.labels,
+        proxyPayReport.service.moneyTransfers.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -38,8 +39,8 @@ const RevenueServiceCard: React.FC<RevenueServiceCardProps> = ({
 
   const mpesa = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.revenues.service.otherPayments.graph.labels,
-        proxyPayReport.revenues.service.otherPayments.graph.values,
+        proxyPayReport.service.otherPayments.graph.labels,
+        proxyPayReport.service.otherPayments.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -47,8 +48,8 @@ const RevenueServiceCard: React.FC<RevenueServiceCardProps> = ({
 
   const airtel = proxyPayReport
     ? getAreaOptions(
-        proxyPayReport.revenues.service.airtimeRecharge.graph.labels,
-        proxyPayReport.revenues.service.airtimeRecharge.graph.values,
+        proxyPayReport.service.airtimeRecharge.graph.labels,
+        proxyPayReport.service.airtimeRecharge.graph.values,
         '#FFA000',
         '#FFE082'
       )
@@ -101,8 +102,9 @@ const RevenueServiceCard: React.FC<RevenueServiceCardProps> = ({
           <CardView
             value="Money Transfers-Successful"
             title={
-              proxyPayReport
-                ? proxyPayReport.revenues.service.moneyTransfers.value
+              proxyPayReport &&
+              !isEmpty(proxyPayReport.service.moneyTransfers.value)
+                ? proxyPayReport.service.moneyTransfers.value
                 : 0
             }
             data={proxyPayReport ? cards : {}}
@@ -114,8 +116,9 @@ const RevenueServiceCard: React.FC<RevenueServiceCardProps> = ({
           <CardView
             value="Other Payments - Successful"
             title={
-              proxyPayReport
-                ? proxyPayReport.revenues.service.otherPayments.value
+              proxyPayReport &&
+              !isEmpty(proxyPayReport.service.otherPayments.value)
+                ? proxyPayReport.service.otherPayments.value
                 : 0
             }
             data={proxyPayReport ? mpesa : {}}
@@ -127,8 +130,9 @@ const RevenueServiceCard: React.FC<RevenueServiceCardProps> = ({
           <CardView
             value="Airtime Recharge - Successful"
             title={
-              proxyPayReport
-                ? proxyPayReport.revenues.service.airtimeRecharge.value
+              proxyPayReport &&
+              !isEmpty(proxyPayReport.service.airtimeRecharge.value)
+                ? proxyPayReport.service.airtimeRecharge.value
                 : 0
             }
             data={proxyPayReport ? airtel : {}}

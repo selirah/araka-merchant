@@ -1,6 +1,11 @@
 import {
   PCESReport,
-  ProxyPayReport,
+  ProxyPayReportSub,
+  ProxyPayReportTrx,
+  ProxyPayReportVol,
+  ProxyPayReportRev,
+  ProxyPayReportOpex,
+  ProxyPayReportEbitda,
   PayoutReport,
   MerchantData,
   Fee,
@@ -70,12 +75,12 @@ export type ReportsState = {
   readonly failure: boolean;
   readonly error: any;
   readonly pces: PCESReport | null;
-  readonly proxypaySubscribers: ProxyPayReport | null;
-  readonly proxypayTransactions: ProxyPayReport | null;
-  readonly proxypayVolumes: ProxyPayReport | null;
-  readonly proxypayRevenues: ProxyPayReport | null;
-  readonly proxypayOpex: ProxyPayReport | null;
-  readonly proxypayEbitda: ProxyPayReport | null;
+  readonly proxypaySubscribers: ProxyPayReportSub | null;
+  readonly proxypayTransactions: ProxyPayReportTrx | null;
+  readonly proxypayVolumes: ProxyPayReportVol | null;
+  readonly proxypayRevenues: ProxyPayReportRev | null;
+  readonly proxypayOpex: ProxyPayReportOpex | null;
+  readonly proxypayEbitda: ProxyPayReportEbitda | null;
   readonly payouts: PayoutReport | null;
   readonly merchants: MerchantData[];
   readonly fee: Fee | undefined;

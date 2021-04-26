@@ -6,7 +6,14 @@ import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
 import { isEmpty } from '../helpers/isEmpty';
 import { changeMenu, changeMenuHeader } from '../store/utils';
-import { ProxyPayReport } from '../interfaces';
+import {
+  ProxyPayReportSub,
+  ProxyPayReportTrx,
+  ProxyPayReportVol,
+  ProxyPayReportRev,
+  ProxyPayReportOpex,
+  ProxyPayReportEbitda,
+} from '../interfaces';
 import {
   getProxyPaySubscribersRequest,
   getProxyPayTransactionsRequest,
@@ -16,7 +23,6 @@ import {
   getProxyPayEbitdaRequest,
   clearBooleans,
   exportRequest,
-  // clearData,
 } from '../store/reports';
 import moment from 'moment';
 
@@ -53,14 +59,25 @@ const ProxyPayOverview: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const history = useHistory();
   const reports = appSelector((state) => state.reports);
-  const [proxyPaySub, setProxyPaySub] = useState<ProxyPayReport | null>(null);
-  const [proxyPayTrx, setProxyPayTrx] = useState<ProxyPayReport | null>(null);
-  const [proxyPayVol, setProxyPayVol] = useState<ProxyPayReport | null>(null);
-  const [proxyPayRev, setProxyPayRev] = useState<ProxyPayReport | null>(null);
-  const [proxyPayOpex, setProxyPayOpex] = useState<ProxyPayReport | null>(null);
-  const [proxyPayEbitda, setProxyPayEbitda] = useState<ProxyPayReport | null>(
+  const [proxyPaySub, setProxyPaySub] = useState<ProxyPayReportSub | null>(
     null
   );
+  const [proxyPayTrx, setProxyPayTrx] = useState<ProxyPayReportTrx | null>(
+    null
+  );
+  const [proxyPayVol, setProxyPayVol] = useState<ProxyPayReportVol | null>(
+    null
+  );
+  const [proxyPayRev, setProxyPayRev] = useState<ProxyPayReportRev | null>(
+    null
+  );
+  const [proxyPayOpex, setProxyPayOpex] = useState<ProxyPayReportOpex | null>(
+    null
+  );
+  const [
+    proxyPayEbitda,
+    setProxyPayEbitda,
+  ] = useState<ProxyPayReportEbitda | null>(null);
   const [currency, setCurrency] = useState('USD');
   const [loadingSub, setLoadingSub] = useState(false);
   const [loadingTrx, setLoadingTrx] = useState(false);
@@ -89,24 +106,29 @@ const ProxyPayOverview: React.FC = () => {
       proxypayRevenues,
       proxypayTransactions,
       proxypayVolumes,
+      loadingSub,
+      loadingTrx,
+      loadingVol,
+      loadingRev,
+      loadingOpex,
+      loadingEbitda,
     } = reports;
-    // dispatch(clearData());
-    if (isEmpty(proxypaySubscribers)) {
+    if (isEmpty(proxypaySubscribers) && !loadingSub) {
       dispatch(getProxyPaySubscribersRequest(params));
     }
-    if (isEmpty(proxypayTransactions)) {
+    if (isEmpty(proxypayTransactions) && !loadingTrx) {
       dispatch(getProxyPayTransactionsRequest(params));
     }
-    if (isEmpty(proxypayVolumes)) {
+    if (isEmpty(proxypayVolumes) && !loadingVol) {
       dispatch(getProxyPayVolumesRequest(params));
     }
-    if (isEmpty(proxypayRevenues)) {
+    if (isEmpty(proxypayRevenues) && !loadingRev) {
       dispatch(getProxyPayRevenuesRequest(params));
     }
-    if (isEmpty(proxypayOpex)) {
+    if (isEmpty(proxypayOpex) && !loadingOpex) {
       dispatch(getProxyPayOpexRequest(params));
     }
-    if (isEmpty(proxypayEbitda)) {
+    if (isEmpty(proxypayEbitda) && !loadingEbitda) {
       dispatch(getProxyPayEbitdaRequest(params));
     }
     dispatch(clearBooleans());
@@ -169,7 +191,6 @@ const ProxyPayOverview: React.FC = () => {
     }
     params.periodFrom = pFrom;
     params.periodTo = pTo;
-    // dispatch(clearData());
     dispatch(getProxyPaySubscribersRequest(params));
     dispatch(getProxyPayTransactionsRequest(params));
     dispatch(getProxyPayVolumesRequest(params));

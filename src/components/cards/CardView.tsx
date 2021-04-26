@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Card, Spin } from 'antd';
-import AreaChart from '../chart/AreaChart';
+// import AreaChart from '../chart/AreaChart';
 import CountUp from 'react-countup';
+
+const AreaChart = lazy(() => import('../chart/AreaChart'));
 
 interface CardViewProps {
   value: any;
@@ -39,7 +41,15 @@ const CardView: React.FC<CardViewProps> = ({
               <p>{value}</p>
             </div>
             <div className="card-chunk">
-              <AreaChart info={data} />
+              <Suspense
+                fallback={
+                  <div className="card-spinner">
+                    <Spin size="small" />
+                  </div>
+                }
+              >
+                <AreaChart info={data} />
+              </Suspense>
             </div>
           </>
         )}
