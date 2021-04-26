@@ -50,7 +50,10 @@ const ProxyPayTransactions = () => {
   };
 
   useEffect(() => {
-    dispatch(getProxyPayTransactionsRequest(params));
+    const { proxypayTransactions } = reports;
+    if (isEmpty(proxypayTransactions)) {
+      dispatch(getProxyPayTransactionsRequest(params));
+    }
     dispatch(clearBooleans());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

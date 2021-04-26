@@ -69,6 +69,14 @@ const Payouts: React.FC = () => {
   const [payout, setPayout] = useState<any>({});
   const [isDownlaoding, setIsDownloading] = useState(false);
 
+  const params = {
+    periodFrom: periodFrom,
+    periodTo: periodTo,
+    currency: currency,
+    merchant: merchant ? merchant.name : '',
+    exportType: exportType,
+  };
+
   let role;
   if (user) {
     role = user.roles.find((r) => r === roles.SuperMerchant);
@@ -78,13 +86,7 @@ const Payouts: React.FC = () => {
 
   useEffect(() => {
     const { merchants } = reports;
-    const payload = {
-      periodFrom: '',
-      periodTo: '',
-      currency: currency,
-      merchant: merchant ? merchant.name : '',
-    };
-    dispatch(getPayoutRequest(payload));
+    dispatch(getPayoutRequest(params));
     if (isEmpty(merchants)) {
       dispatch(getMerchantsRequest());
     }
@@ -145,13 +147,10 @@ const Payouts: React.FC = () => {
   const onReset = (form: any) => {
     form.resetFields();
     setIsNewPayout(false);
-    const payload = {
-      periodFrom: '',
-      periodTo: '',
-      currency: currency,
-      merchant: '',
-    };
-    dispatch(getPayoutRequest(payload));
+    params.periodFrom = '';
+    params.periodTo = '';
+    params.merchant = '';
+    dispatch(getPayoutRequest(params));
     setHasSelectMerchant(false);
   };
 
@@ -174,13 +173,10 @@ const Payouts: React.FC = () => {
         setMerchant(m);
       }
     }
-    const payload = {
-      periodFrom: pFrom,
-      periodTo: pTo,
-      currency: currency,
-      merchant: m !== undefined ? m.name : '',
-    };
-    dispatch(getPayoutRequest(payload));
+    params.periodFrom = pFrom;
+    params.periodTo = pTo;
+    params.merchant = m !== undefined ? m.name : '';
+    dispatch(getPayoutRequest(params));
   };
 
   const onChangeMerchant = (value: number) => {
@@ -202,25 +198,17 @@ const Payouts: React.FC = () => {
     setSwitchView(false);
     setIsNewPayout(false);
     setSwitchDetailView(false);
-    const payload = {
-      periodFrom: '',
-      periodTo: '',
-      currency: currency,
-      merchant: '',
-    };
-    dispatch(getPayoutRequest(payload));
+    params.periodFrom = '';
+    params.periodTo = '';
+    params.merchant = '';
+    dispatch(getPayoutRequest(params));
     setHasSelectMerchant(false);
   };
 
   const onSelectCurrency = (value: string) => {
     setCurrency(value);
-    const payload = {
-      periodFrom: periodFrom,
-      periodTo: periodTo,
-      currency: value,
-      merchant: merchant ? merchant.name : '',
-    };
-    dispatch(getPayoutRequest(payload));
+    params.currency = value;
+    dispatch(getPayoutRequest(params));
   };
 
   const onPayoutSubmit = (values: PayoutNewRecord) => {
@@ -242,25 +230,16 @@ const Payouts: React.FC = () => {
   const reloadPayouts = () => {
     setIsNewPayout(false);
     setHasSelectMerchant(false);
-    const payload = {
-      periodFrom: periodFrom,
-      periodTo: periodTo,
-      currency: currency,
-      merchant: merchant ? merchant.name : '',
-    };
-    dispatch(getPayoutRequest(payload));
+    params.periodFrom = '';
+    params.periodTo = '';
+    params.merchant = '';
+    dispatch(getPayoutRequest(params));
   };
 
   const onExportClick = (type: string) => {
     setExportType(type);
-    const payload = {
-      periodFrom: periodFrom,
-      periodTo: periodTo,
-      currency: currency,
-      exportType: type,
-      merchant: merchant ? merchant.name : '',
-    };
-    dispatch(exportRequest(payload));
+    params.exportType = type;
+    dispatch(exportRequest(params));
   };
 
   const onClickRow = (record: any) => {
@@ -272,13 +251,10 @@ const Payouts: React.FC = () => {
   const onCloseScreen = () => {
     setSwitchDetailView(false);
     setSwitchView(false);
-    const payload = {
-      periodFrom: '',
-      periodTo: '',
-      currency: currency,
-      merchant: '',
-    };
-    dispatch(getPayoutRequest(payload));
+    params.periodFrom = '';
+    params.periodTo = '';
+    params.merchant = '';
+    dispatch(getPayoutRequest(params));
     setHasSelectMerchant(false);
   };
 

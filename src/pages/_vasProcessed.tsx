@@ -45,7 +45,10 @@ const VASProcessed = () => {
   };
 
   useEffect(() => {
-    dispatch(getVasRequest(params));
+    const { vas } = vasStore;
+    if (isEmpty(vas)) {
+      dispatch(getVasRequest(params));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

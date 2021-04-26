@@ -2,6 +2,7 @@ import { Reducer } from 'redux';
 import { ReportsState, ReportsActionTypes } from './types';
 import { AuthActionTypes } from '../auth';
 import { PCESTableData } from '../../interfaces';
+import { proxyPayDataTypes } from '../../helpers/constants';
 
 export const initialState: ReportsState = {
   loading: false,
@@ -44,6 +45,8 @@ export const initialState: ReportsState = {
   errorSub: undefined,
   errorTrx: undefined,
   errorVol: undefined,
+  dataType: proxyPayDataTypes.subscribers,
+  isLoaded: false,
 };
 
 const reducer: Reducer<ReportsState> = (state = initialState, action) => {
@@ -56,7 +59,7 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
         loading: true,
       };
     case ReportsActionTypes.GET_PCES_SUCCESS:
-      let pces: PCESTableData[] = state.pcesdata;
+      let pces: PCESTableData[] = state.pcesdata.slice();
       action.payload.data.map((p: PCESTableData) => {
         pces.push(p);
         return pces;
@@ -64,9 +67,9 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
 
       return {
         ...state,
-        loading: false,
         pces: action.payload,
         pcesdata: pces,
+        loading: false,
       };
     case ReportsActionTypes.GET_PCES_FAILURE:
       return {
@@ -78,12 +81,15 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
       return {
         ...state,
         loadingSub: true,
+        isLoaded: false,
       };
     case ReportsActionTypes.GET_PROXYPAY_SUBSCRIBERS_SUCCESS:
       return {
         ...state,
         loadingSub: false,
         proxypaySubscribers: action.payload,
+        isLoaded: true,
+        dataType: proxyPayDataTypes.subscribers,
       };
     case ReportsActionTypes.GET_PROXYPAY_SUBSCRIBERS_FAILURE:
       return {
@@ -96,12 +102,15 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
       return {
         ...state,
         loadingTrx: true,
+        isLoaded: false,
       };
     case ReportsActionTypes.GET_PROXYPAY_TRANSACTIONS_SUCCESS:
       return {
         ...state,
         loadingTrx: false,
         proxypayTransactions: action.payload,
+        isLoaded: true,
+        dataType: proxyPayDataTypes.transactions,
       };
     case ReportsActionTypes.GET_PROXYPAY_TRANSACTIONS_FAILURE:
       return {
@@ -114,12 +123,15 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
       return {
         ...state,
         loadingVol: true,
+        isLoaded: false,
       };
     case ReportsActionTypes.GET_PROXYPAY_VOLUMES_SUCCESS:
       return {
         ...state,
         loadingVol: false,
         proxypayVolumes: action.payload,
+        isLoaded: true,
+        dataType: proxyPayDataTypes.volumes,
       };
     case ReportsActionTypes.GET_PROXYPAY_VOLUMES_FAILURE:
       return {
@@ -131,12 +143,15 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
       return {
         ...state,
         loadingRev: true,
+        isLoaded: false,
       };
     case ReportsActionTypes.GET_PROXYPAY_REVENUES_SUCCESS:
       return {
         ...state,
         loadingRev: false,
         proxypayRevenues: action.payload,
+        isLoaded: true,
+        dataType: proxyPayDataTypes.revenues,
       };
     case ReportsActionTypes.GET_PROXYPAY_REVENUES_FAILURE:
       return {
@@ -148,12 +163,15 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
       return {
         ...state,
         loadingOpex: true,
+        isLoaded: false,
       };
     case ReportsActionTypes.GET_PROXYPAY_OPEX_SUCCESS:
       return {
         ...state,
         loadingOpex: false,
         proxypayOpex: action.payload,
+        isLoaded: true,
+        dataType: proxyPayDataTypes.opex,
       };
     case ReportsActionTypes.GET_PROXYPAY_OPEX_FAILURE:
       return {
@@ -166,12 +184,15 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
       return {
         ...state,
         loadingEbitda: true,
+        isLoaded: false,
       };
     case ReportsActionTypes.GET_PROXYPAY_EBITDA_SUCCESS:
       return {
         ...state,
         loadingEbitda: false,
         proxypayEbitda: action.payload,
+        isLoaded: true,
+        dataType: proxyPayDataTypes.ebitda,
       };
     case ReportsActionTypes.GET_PROXYPAY_EBITDA_FAILURE:
       return {
@@ -233,6 +254,8 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
         isExportSuccess: false,
         downloadRecieptError: false,
         downloadRecieptSuccess: false,
+        isLoaded: false,
+        dataType: proxyPayDataTypes.subscribers,
       };
     case ReportsActionTypes.GET_MERCHANTS_REQUEST:
       return {

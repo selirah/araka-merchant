@@ -42,7 +42,10 @@ const ProxyPaySubscribers = () => {
   };
 
   useEffect(() => {
-    dispatch(getProxyPaySubscribersRequest(params));
+    const { proxypaySubscribers } = reports;
+    if (isEmpty(proxypaySubscribers)) {
+      dispatch(getProxyPaySubscribersRequest(params));
+    }
     dispatch(clearBooleans());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

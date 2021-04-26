@@ -12,3 +12,12 @@ export const timeZones = {
 export const roles = {
   SuperMerchant: 'SuperMerchant',
 };
+
+export const proxyPayDataTypes = {
+  subscribers: 'subscribers',
+  transactions: 'transactions',
+  volumes: 'volumes',
+  revenues: 'revenues',
+  opex: 'opex',
+  ebitda: 'ebitda',
+};

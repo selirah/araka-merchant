@@ -48,7 +48,10 @@ const MerchantsOverview = () => {
   };
 
   useEffect(() => {
-    dispatch(getMerchantsOverview(params));
+    const { overviews } = overviewsStore;
+    if (isEmpty(overviews)) {
+      dispatch(getMerchantsOverview(params));
+    }
     const { merchants } = reports;
     if (isEmpty(merchants)) {
       dispatch(getMerchantsRequest());

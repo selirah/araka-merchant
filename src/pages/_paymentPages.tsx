@@ -10,7 +10,6 @@ import {
   getPaymentPagesRequest,
   addPaymentPageRequest,
   clearStates,
-  clearPaymentPages,
   clearFee,
 } from '../store/payment-pages';
 import { isEmpty } from '../helpers/isEmpty';
@@ -56,8 +55,10 @@ const PaymentPages = () => {
   const history = useHistory();
 
   useEffect(() => {
+    if (isEmpty(pages)) {
+      dispatch(getPaymentPagesRequest());
+    }
     dispatch(clearStates());
-    dispatch(getPaymentPagesRequest());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -72,7 +73,6 @@ const PaymentPages = () => {
   }, [success, error, failure, t, pages]);
 
   const reloadPages = () => {
-    dispatch(clearPaymentPages());
     dispatch(getPaymentPagesRequest());
   };
 

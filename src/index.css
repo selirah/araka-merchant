@@ -1199,7 +1199,7 @@ thead[class*='ant-table-thead'] th {
 .transaction-chart-text {
   text-transform: uppercase;
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .currency .ant-select:not(.ant-select-customize-input) .ant-select-selector {

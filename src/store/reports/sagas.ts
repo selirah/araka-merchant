@@ -31,6 +31,7 @@ import {
   downloadReceiptFailure,
 } from './actions';
 import { isEmpty } from '../../helpers/isEmpty';
+import { proxyPayDataTypes } from '../../helpers/constants';
 
 function* getPCESReport({ payload }: { type: string; payload: any }): any {
   try {
@@ -52,7 +53,7 @@ function* getProxyPaySubReport({
   payload: any;
 }): any {
   try {
-    payload.reportType = 'subscribers';
+    payload.reportType = proxyPayDataTypes.subscribers;
     const res = yield call(callApiPost, 'payments/getproxypayreports', payload);
     yield put(getProxyPaySubscribersSuccess(res.data));
   } catch (err) {
@@ -71,7 +72,7 @@ function* getProxyPayTrxReport({
   payload: any;
 }): any {
   try {
-    payload.reportType = 'transactions';
+    payload.reportType = proxyPayDataTypes.transactions;
     const res = yield call(callApiPost, 'payments/getproxypayreports', payload);
     yield put(getProxyPayTransactionsSuccess(res.data));
   } catch (err) {
@@ -90,7 +91,7 @@ function* getProxyPayVolReport({
   payload: any;
 }): any {
   try {
-    payload.reportType = 'volumes';
+    payload.reportType = proxyPayDataTypes.volumes;
     const res = yield call(callApiPost, 'payments/getproxypayreports', payload);
     yield put(getProxyPayVolumesSuccess(res.data));
   } catch (err) {
@@ -109,7 +110,7 @@ function* getProxyPayRevReport({
   payload: any;
 }): any {
   try {
-    payload.reportType = 'revenues';
+    payload.reportType = proxyPayDataTypes.revenues;
     const res = yield call(callApiPost, 'payments/getproxypayreports', payload);
     yield put(getProxyPayRevenuesSuccess(res.data));
   } catch (err) {
@@ -128,7 +129,7 @@ function* getProxyPayOpexReport({
   payload: any;
 }): any {
   try {
-    payload.reportType = 'opex';
+    payload.reportType = proxyPayDataTypes.opex;
     const res = yield call(callApiPost, 'payments/getproxypayreports', payload);
     yield put(getProxyPayOpexSuccess(res.data));
   } catch (err) {
@@ -147,7 +148,7 @@ function* getProxyPayEbitdaReport({
   payload: any;
 }): any {
   try {
-    payload.reportType = 'ebitda';
+    payload.reportType = proxyPayDataTypes.ebitda;
     const res = yield call(callApiPost, 'payments/getproxypayreports', payload);
     yield put(getProxyPayEbitdaSuccess(res.data));
   } catch (err) {

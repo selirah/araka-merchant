@@ -6,7 +6,7 @@ import { Store } from 'redux';
 import { History } from 'history';
 import Routes from './routes/Routes';
 import { ApplicationState } from './store';
-import { message } from 'antd';
+// import { message } from 'antd';
 import { logout } from './store/auth';
 
 interface AppProps {
@@ -23,17 +23,17 @@ const App: React.FC<AppProps> = ({ store, history, persistor }) => {
   const { isAuthenticated } = store.getState().auth;
 
   const warn = () => {
-    message.info(
-      'You will be logged out of this session in a 1 minute time',
-      5
-    );
+    // message.info(
+    //   'You will be logged out of this session in a 1 minute time',
+    //   5
+    // );
   };
 
   const logoutSession = () => {
     store.dispatch(logout());
-    message.info(
-      'You have been logged out for your own safety. You can login once again to continue'
-    );
+    // message.info(
+    //   'You have been logged out for your own safety. You can login once again to continue'
+    // );
   };
 
   const setTimeOuts = () => {

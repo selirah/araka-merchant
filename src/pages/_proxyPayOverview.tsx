@@ -23,8 +23,10 @@ import {
   getProxyPayEbitdaRequest,
   clearBooleans,
   exportRequest,
+  clearData,
 } from '../store/reports';
 import moment from 'moment';
+import { proxyPayDataTypes } from '../helpers/constants';
 
 const Filter = lazy(
   () => import('../components/proxypay-reports/overview/Filter')
@@ -91,6 +93,7 @@ const ProxyPayOverview: React.FC = () => {
   const [exportPage, setExportPage] = useState('');
   const [isExporting, setIsExporting] = useState(false);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const params = {
     periodFrom: periodFrom,
     periodTo: periodTo,
@@ -99,37 +102,9 @@ const ProxyPayOverview: React.FC = () => {
   };
 
   useEffect(() => {
-    const {
-      proxypaySubscribers,
-      proxypayEbitda,
-      proxypayOpex,
-      proxypayRevenues,
-      proxypayTransactions,
-      proxypayVolumes,
-      loadingSub,
-      loadingTrx,
-      loadingVol,
-      loadingRev,
-      loadingOpex,
-      loadingEbitda,
-    } = reports;
-    if (isEmpty(proxypaySubscribers) && !loadingSub) {
+    const { proxypaySubscribers } = reports;
+    if (isEmpty(proxypaySubscribers)) {
       dispatch(getProxyPaySubscribersRequest(params));
-    }
-    if (isEmpty(proxypayTransactions) && !loadingTrx) {
-      dispatch(getProxyPayTransactionsRequest(params));
-    }
-    if (isEmpty(proxypayVolumes) && !loadingVol) {
-      dispatch(getProxyPayVolumesRequest(params));
-    }
-    if (isEmpty(proxypayRevenues) && !loadingRev) {
-      dispatch(getProxyPayRevenuesRequest(params));
-    }
-    if (isEmpty(proxypayOpex) && !loadingOpex) {
-      dispatch(getProxyPayOpexRequest(params));
-    }
-    if (isEmpty(proxypayEbitda) && !loadingEbitda) {
-      dispatch(getProxyPayEbitdaRequest(params));
     }
     dispatch(clearBooleans());
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -150,7 +125,47 @@ const ProxyPayOverview: React.FC = () => {
       proxypayRevenues,
       proxypayVolumes,
       isExporting,
+      isLoaded,
+      dataType,
     } = reports;
+
+    // trying to load the data one after the other
+    if (
+      isLoaded &&
+      dataType === proxyPayDataTypes.subscribers &&
+      isEmpty(proxypayTransactions)
+    ) {
+      dispatch(getProxyPayTransactionsRequest(params));
+    }
+    if (
+      isLoaded &&
+      dataType === proxyPayDataTypes.transactions &&
+      isEmpty(proxypayVolumes)
+    ) {
+      dispatch(getProxyPayVolumesRequest(params));
+    }
+    if (
+      isLoaded &&
+      dataType === proxyPayDataTypes.volumes &&
+      isEmpty(proxypayRevenues)
+    ) {
+      dispatch(getProxyPayRevenuesRequest(params));
+    }
+    if (
+      isLoaded &&
+      dataType === proxyPayDataTypes.revenues &&
+      isEmpty(proxypayOpex)
+    ) {
+      dispatch(getProxyPayOpexRequest(params));
+    }
+    if (
+      isLoaded &&
+      dataType === proxyPayDataTypes.opex &&
+      isEmpty(proxypayEbitda)
+    ) {
+      dispatch(getProxyPayEbitdaRequest(params));
+    }
+
     setLoadingSub(loadingSub);
     setLoadingTrx(loadingTrx);
     setLoadingVol(loadingVol);
@@ -164,18 +179,15 @@ const ProxyPayOverview: React.FC = () => {
     setProxyPayOpex(proxypayOpex);
     setProxyPayEbitda(proxypayEbitda);
     setIsExporting(isExporting);
-  }, [reports]);
+  }, [reports, dispatch, params]);
 
   const onReset = (form: any) => {
     form.resetFields();
     params.periodFrom = '';
     params.periodTo = '';
+    dispatch(clearBooleans());
+    dispatch(clearData());
     dispatch(getProxyPaySubscribersRequest(params));
-    dispatch(getProxyPayTransactionsRequest(params));
-    dispatch(getProxyPayVolumesRequest(params));
-    dispatch(getProxyPayRevenuesRequest(params));
-    dispatch(getProxyPayOpexRequest(params));
-    dispatch(getProxyPayEbitdaRequest(params));
   };
 
   const onSearch = (values: any) => {
@@ -191,12 +203,9 @@ const ProxyPayOverview: React.FC = () => {
     }
     params.periodFrom = pFrom;
     params.periodTo = pTo;
+    dispatch(clearBooleans());
+    dispatch(clearData());
     dispatch(getProxyPaySubscribersRequest(params));
-    dispatch(getProxyPayTransactionsRequest(params));
-    dispatch(getProxyPayVolumesRequest(params));
-    dispatch(getProxyPayRevenuesRequest(params));
-    dispatch(getProxyPayOpexRequest(params));
-    dispatch(getProxyPayEbitdaRequest(params));
   };
 
   const onSeeDetailsClick = (path: string, menu: string, header: string) => {
@@ -209,9 +218,6 @@ const ProxyPayOverview: React.FC = () => {
     setCurrency(value);
     params.currency = value;
     dispatch(getProxyPayVolumesRequest(params));
-    dispatch(getProxyPayRevenuesRequest(params));
-    dispatch(getProxyPayOpexRequest(params));
-    dispatch(getProxyPayEbitdaRequest(params));
   };
 
   const onExportClick = (type: string, page: string) => {
@@ -224,12 +230,9 @@ const ProxyPayOverview: React.FC = () => {
   const onReloadPage = () => {
     params.periodFrom = '';
     params.periodTo = '';
+    dispatch(clearBooleans());
+    dispatch(clearData());
     dispatch(getProxyPaySubscribersRequest(params));
-    dispatch(getProxyPayTransactionsRequest(params));
-    dispatch(getProxyPayVolumesRequest(params));
-    dispatch(getProxyPayRevenuesRequest(params));
-    dispatch(getProxyPayOpexRequest(params));
-    dispatch(getProxyPayEbitdaRequest(params));
   };
 
   return (

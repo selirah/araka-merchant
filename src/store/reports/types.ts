@@ -103,4 +103,6 @@ export type ReportsState = {
   readonly errorRev: any;
   readonly errorOpex: any;
   readonly errorEbitda: any;
+  readonly isLoaded: boolean;
+  readonly dataType: string;
 };

@@ -41,7 +41,10 @@ const ProxyPayVolumes: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(getProxyPayVolumesRequest(params));
+    const { proxypayVolumes } = reports;
+    if (isEmpty(proxypayVolumes)) {
+      dispatch(getProxyPayVolumesRequest(params));
+    }
     dispatch(clearBooleans());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
