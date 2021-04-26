@@ -59,7 +59,7 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
         loading: true,
       };
     case ReportsActionTypes.GET_PCES_SUCCESS:
-      let pces: PCESTableData[] = state.pcesdata.slice();
+      let pces: PCESTableData[] = state.pcesdata;
       action.payload.data.map((p: PCESTableData) => {
         pces.push(p);
         return pces;
@@ -67,9 +67,9 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
 
       return {
         ...state,
+        loading: false,
         pces: action.payload,
         pcesdata: pces,
-        loading: false,
       };
     case ReportsActionTypes.GET_PCES_FAILURE:
       return {
@@ -260,18 +260,15 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
     case ReportsActionTypes.GET_MERCHANTS_REQUEST:
       return {
         ...state,
-        loading: true,
       };
     case ReportsActionTypes.GET_MERCHANTS_SUCCESS:
       return {
         ...state,
-        loading: false,
         merchants: action.payload,
       };
     case ReportsActionTypes.GET_MERCHANTS_FAILURE:
       return {
         ...state,
-        loading: false,
         error: action.payload,
       };
     case ReportsActionTypes.POST_PAYOUT_FEE_REQUEST:
