@@ -16,7 +16,7 @@ import {
   getProxyPayEbitdaRequest,
   clearBooleans,
   exportRequest,
-  clearData,
+  // clearData,
 } from '../store/reports';
 import moment from 'moment';
 
@@ -169,7 +169,7 @@ const ProxyPayOverview: React.FC = () => {
     }
     params.periodFrom = pFrom;
     params.periodTo = pTo;
-    dispatch(clearData());
+    // dispatch(clearData());
     dispatch(getProxyPaySubscribersRequest(params));
     dispatch(getProxyPayTransactionsRequest(params));
     dispatch(getProxyPayVolumesRequest(params));
