@@ -170,6 +170,7 @@ const Transactions = () => {
     params.status = status;
     params.channel = channel;
     params.searchValue = query;
+    dispatch(clearTransactions());
     dispatch(getTransactionsRequest(params));
   };
 

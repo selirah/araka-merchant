@@ -110,6 +110,7 @@ const FeeReports = () => {
     params.periodFrom = pFrom;
     params.periodTo = pTo;
     params.merchant = m !== undefined ? m.name : '';
+    dispatch(clearData());
     dispatch(getPCESRequest(params));
   };
 
