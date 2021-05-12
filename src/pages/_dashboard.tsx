@@ -62,6 +62,10 @@ const Dashboard = () => {
     dispatch(getOverviewRequest(params));
   };
 
+  const onRefreshPage = () => {
+    dispatch(getOverviewRequest(params));
+  };
+
   let container: React.ReactNode;
   if (loading) {
     container = (
@@ -103,6 +107,7 @@ const Dashboard = () => {
             currency={currency}
             fixedPeriod={fixedPeriod}
             onSelectPeriod={onSelectPeriod}
+            onRefreshPage={onRefreshPage}
           />
           {container}
         </Suspense>

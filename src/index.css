@@ -1353,6 +1353,21 @@ thead[class*='ant-table-thead'] th {
   border-radius: 20px;
 }
 
+.refresh-btn {
+  background-color: #35b9e6;
+  border: 1px solid #35b9e6;
+  text-transform: uppercase;
+  border-radius: 20px;
+  color: #fff;
+}
+
+.refresh-btn:hover,
+.refresh-btn:active,
+.refresh-btn:focus {
+  background-color: #35b9e6;
+  border: 1px solid #35b9e6;
+}
+
 .export-buttons-excel {
   margin-left: 20px;
   background-color: #35b9e6;

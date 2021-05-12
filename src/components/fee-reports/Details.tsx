@@ -90,16 +90,14 @@ const Details: React.FC<DetailsProps> = ({ pces, currency, loading }) => {
             columns={columns}
             bordered
             className="tranaction-table"
-            // pagination={{
-            //   hideOnSinglePage: true,
-            //   total: dataSource.length,
-            //   showTotal: (total, range) => {
-            //     return `Showing ${range[0]} - ${range[1]} of ${total} results`;
-            //   },
-            // }}
-            pagination={false}
+            pagination={{
+              hideOnSinglePage: true,
+              total: dataSource.length,
+              showTotal: (total, range) => {
+                return `Showing ${range[0]} - ${range[1]} of ${total} results`;
+              },
+            }}
             loading={loading}
-            scroll={{ y: 500, scrollToFirstRowOnChange: true }}
           />
         </div>
       </Col>

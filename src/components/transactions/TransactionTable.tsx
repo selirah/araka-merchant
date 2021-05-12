@@ -167,15 +167,15 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
             })}
             className="tranaction-table"
             bordered
-            pagination={false}
-            // pagination={{
-            //   hideOnSinglePage: true,
-            //   total: dataSource.length,
-            //   showTotal: (total, range) => {
-            //     return `Showing ${range[0]} - ${range[1]} of ${total} results`;
-            //   },
-            // }}
-            scroll={{ y: 500, scrollToFirstRowOnChange: true }}
+            // pagination={false}
+            pagination={{
+              hideOnSinglePage: true,
+              total: dataSource.length,
+              showTotal: (total, range) => {
+                return `Showing ${range[0]} - ${range[1]} of ${total} results`;
+              },
+            }}
+            // scroll={{ y: 500, scrollToFirstRowOnChange: true }}
             loading={loading}
           />
         </div>

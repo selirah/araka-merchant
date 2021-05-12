@@ -60,7 +60,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
         )}
       </div>
       <Menu theme="light" mode="inline" defaultSelectedKeys={[activeMenu]}>
-        <Menu.ItemGroup key="g1" title={t('sideBar.dashboards').toUpperCase()}>
+        <Menu.ItemGroup key="g1" title={t('general.dashboard').toUpperCase()}>
           <Menu.Item
             key={menu.DASHBOARD}
             icon={
@@ -74,7 +74,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             <NavLink to={path.dashboard}>Dashboard</NavLink>
           </Menu.Item>
         </Menu.ItemGroup>
-        <Menu.ItemGroup key="g2" title={t('sideBar.payments').toUpperCase()}>
+        <Menu.ItemGroup key="g2" title={t('general.payments').toUpperCase()}>
           <Menu.Item
             key={menu.TRANSACTIONS}
             icon={
@@ -86,11 +86,11 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             onClick={() => switchMenu(menu.TRANSACTIONS, menuHeadings.PAYMENTS)}
           >
             <NavLink to={path.tranasctions}>
-              {t('sideBar.transactions')}
+              {t('general.transactions')}
             </NavLink>
           </Menu.Item>
         </Menu.ItemGroup>
-        <Menu.ItemGroup key="g3" title={t('sideBar.commerce').toUpperCase()}>
+        <Menu.ItemGroup key="g3" title={t('general.commerce').toUpperCase()}>
           <Menu.Item
             key={menu.PAYMENT_PAGES}
             icon={
@@ -104,11 +104,11 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             }
           >
             <NavLink to={path.paymentPages}>
-              {t('sideBar.paymentPages')}
+              {t('general.paymentPages')}
             </NavLink>
           </Menu.Item>
         </Menu.ItemGroup>
-        <Menu.ItemGroup key="g4" title={t('sideBar.payouts').toUpperCase()}>
+        <Menu.ItemGroup key="g4" title={t('general.payouts').toUpperCase()}>
           <Menu.Item
             key={menu.PAYOUTS}
             icon={
@@ -119,11 +119,11 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             }
             onClick={() => switchMenu(menu.PAYOUTS, menuHeadings.PAYOUTS)}
           >
-            <NavLink to={path.payouts}>{t('sideBar.payouts')}</NavLink>
+            <NavLink to={path.payouts}>{t('general.payouts')}</NavLink>
           </Menu.Item>
         </Menu.ItemGroup>
         {role !== undefined && role === roles.SuperMerchant ? (
-          <Menu.ItemGroup key="g5" title={t('sideBar.reports').toUpperCase()}>
+          <Menu.ItemGroup key="g5" title={t('general.reports').toUpperCase()}>
             <Menu.Item
               key={menu.MERCHANT_OVERVIEW}
               icon={
@@ -137,7 +137,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
               }
             >
               <NavLink to={path.merchantsOverview}>
-                {t('sideBar.merchantOverview')}
+                {t('general.merchantOverview')}
               </NavLink>
             </Menu.Item>
 
@@ -154,7 +154,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
               }
             >
               <NavLink to={path.vasProcessed}>
-                {t('sideBar.VASProcessed')}
+                {t('general.VASProcessed')}
               </NavLink>
             </Menu.Item>
 
@@ -226,7 +226,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
         ) : null}
         <Menu.ItemGroup
           key="g6"
-          title={t('sideBar.configurations').toUpperCase()}
+          title={t('general.configurations').toUpperCase()}
         >
           <Menu.Item
             key={menu.SETTINGS}
@@ -240,16 +240,16 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
               switchMenu(menu.SETTINGS, menuHeadings.CONFIGURATION)
             }
           >
-            <NavLink to={path.settings}>{t('sideBar.settings')}</NavLink>
+            <NavLink to={path.settings}>{t('general.settings')}</NavLink>
           </Menu.Item>
         </Menu.ItemGroup>
       </Menu>
       {!collapsed ? (
         <div className="menu-info">
-          <p>{t('sideBar.menuInfo')}</p>
+          <p>{t('general.menuInfo')}</p>
           <a href="mailto://info@proxypay.africa">
             <Button type="primary" className="menu-info-btn">
-              {t('sideBar.apiAssistance')}
+              {t('general.apiAssistance')}
             </Button>
           </a>
         </div>
