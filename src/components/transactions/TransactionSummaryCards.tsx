@@ -8,12 +8,14 @@ interface TransactionSummaryCardsProps {
   trxReports: Transaction | null;
   currency: string;
   loading: boolean;
+  translate: any;
 }
 
 const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
   trxReports,
   currency,
   loading,
+  translate,
 }) => {
   const totalTrx = trxReports
     ? getAreaOptions(
@@ -44,14 +46,16 @@ const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
   return (
     <div className="margin-top-small">
       <Row>
-        <h4 className="transaction-chart-text">Transactions Overview</h4>
+        <h4 className="transaction-chart-text">
+          {translate('general.transactionsOverview')}
+        </h4>
       </Row>
       <Row gutter={20}>
         <Col span={24}>
           <Row gutter={20}>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
-                value="Transactions"
+                value={translate('general.transactions')}
                 title={trxReports ? trxReports.total.value : 0}
                 data={totalTrx}
                 loading={loading}
@@ -59,7 +63,7 @@ const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
-                value="Approved"
+                value={translate('general.approved')}
                 title={trxReports ? trxReports.totalAmountApproved.value : 0}
                 data={totalAmountApproved}
                 loading={loading}
@@ -68,7 +72,7 @@ const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
-                value="Declined"
+                value={translate('general.declined')}
                 title={trxReports ? trxReports.totalAmountDeclined.value : 0}
                 data={totalAmountDeclined}
                 loading={loading}

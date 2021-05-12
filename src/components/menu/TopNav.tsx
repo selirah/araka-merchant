@@ -50,7 +50,7 @@ export const TopNav: React.FC<TopNavProps> = ({ collapsed, toggle }) => {
   const settingsMenu = (
     <Menu>
       <Menu.Item key="1" onClick={() => logoutUser()}>
-        {t('topBar.logout')}
+        {t('general.logout')}
       </Menu.Item>
     </Menu>
   );

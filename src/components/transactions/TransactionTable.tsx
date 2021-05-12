@@ -3,7 +3,6 @@ import { Row, Col, Tag, Table } from 'antd';
 import moment from 'moment-timezone';
 import { TransactionHistory } from '../../interfaces/TransactionHistory';
 import { transactionStatus, timeZones } from '../../helpers/constants';
-import { useTranslation } from 'react-i18next';
 import { TransactionTable as TT } from '../../interfaces';
 import { isEmpty } from '../../helpers/isEmpty';
 import { numberWithCommas } from '../../helpers/helperFunctions';
@@ -14,6 +13,7 @@ interface TransactionTableProps {
   currency: string;
   loading: boolean;
   onLoadMore(): void;
+  translate: any;
 }
 
 const TransactionTable: React.FC<TransactionTableProps> = ({
@@ -22,9 +22,8 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
   currency,
   loading,
   onLoadMore,
+  translate,
 }) => {
-  const { t } = useTranslation();
-
   const columns: any = [
     {
       title: <span style={{ fontSize: '2rem', color: '#868686' }}>&bull;</span>,
@@ -52,14 +51,14 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
       },
     },
     {
-      title: `${t('transactions.table.amount')}`,
+      title: `${translate('general.amount')}`,
       dataIndex: 'amount',
       key: 'amount',
       align: 'center',
       className: 'column-text',
     },
     {
-      title: `${t('transactions.table.customer')}`,
+      title: `${translate('general.customer')}`,
       dataIndex: 'customer',
       key: 'customer',
       align: 'left',
@@ -71,7 +70,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
       responsive: ['md'],
     },
     {
-      title: `${t('transactions.table.transactionId')}`,
+      title: `${translate('general.transactionId')}`,
       dataIndex: 'transactionId',
       key: 'trasactionId',
       align: 'center',
@@ -80,7 +79,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
       responsive: ['md'],
     },
     {
-      title: `${t('transactions.table.paidOn')}`,
+      title: `${translate('general.paidOn')}`,
       dataIndex: 'date',
       key: 'date',
       align: 'center',
@@ -98,7 +97,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
       },
     },
     {
-      title: `${t('transactions.table.channel')}`,
+      title: `${translate('general.channel')}`,
       dataIndex: 'channel',
       key: 'channel',
       align: 'center',
@@ -112,7 +111,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
       },
     },
     {
-      title: `${t('transactions.table.reason')}`,
+      title: `${translate('general.reason')}`,
       dataIndex: 'reason',
       key: 'reason',
       align: 'center',
@@ -120,7 +119,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
       responsive: ['lg'],
     },
     {
-      title: `${t('transactions.table.merchant')}`,
+      title: `${translate('general.merchant')}`,
       dataIndex: 'merchant',
       key: 'merchant',
       align: 'center',

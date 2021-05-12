@@ -10,6 +10,7 @@ interface TransactionDetailProps {
   transaction: TransactionHistory;
   onDownloadReceiptClick(transactionId: number): void;
   isDownloading: boolean;
+  translate: any;
 }
 
 const TransactionDetail: React.FC<TransactionDetailProps> = ({
@@ -17,6 +18,7 @@ const TransactionDetail: React.FC<TransactionDetailProps> = ({
   transaction,
   onDownloadReceiptClick,
   isDownloading,
+  translate,
 }) => {
   let classname = '';
 
@@ -39,7 +41,7 @@ const TransactionDetail: React.FC<TransactionDetailProps> = ({
       <Row gutter={10}>
         <Col span={24}>
           <div className="upper-header">
-            <h4>Transaction Details</h4>
+            <h4>{translate('general.transactionDetails')}</h4>
             <h6>
               <XCircle
                 size={30}
@@ -63,7 +65,7 @@ const TransactionDetail: React.FC<TransactionDetailProps> = ({
               loading={isDownloading}
               onClick={() => onDownloadReceiptClick(transaction.transactionId)}
             >
-              Print/Export
+              {translate('general.printExport')}
             </Button>
           </div>
           <div className="trans-detail-info">
@@ -74,27 +76,29 @@ const TransactionDetail: React.FC<TransactionDetailProps> = ({
               )}`}</h2>
             </div>
             <div className="trans-status">
-              <Button className={classname}>{transaction.status}</Button>
+              <Button className={classname}>
+                {translate(`${transaction.status.toLowerCase()}`).toUpperCase()}
+              </Button>
             </div>
           </div>
           <div className="trans-detail">
             <List className="list">
               <List.Item>
-                <h4 className="key">Transaction ID</h4>
+                <h4 className="key"> {translate('general.transactionId')}</h4>
                 <h4 className="value">{transaction.transactionId}</h4>
               </List.Item>
               <List.Item>
-                <h4 className="key">Channel</h4>
+                <h4 className="key">{translate('general.channel')}</h4>
                 <h4 className="value">{transaction.channel}</h4>
               </List.Item>
               <List.Item>
-                <h4 className="key">Fees</h4>
+                <h4 className="key">{translate('general.fees')}</h4>
                 <h4 className="value">{`${
                   transaction.currency
                 } ${transaction.charge.toFixed(2)}`}</h4>
               </List.Item>
               <List.Item>
-                <h4 className="key">Paid At</h4>
+                <h4 className="key">{translate('general.paidOn')}</h4>
                 <h4 className="value">
                   {moment(transaction.createdAt, 'MM/DD/YYYY HH:mm:ss')
                     .tz(timeZones.kinshasa)
@@ -102,7 +106,7 @@ const TransactionDetail: React.FC<TransactionDetailProps> = ({
                 </h4>
               </List.Item>
               <List.Item>
-                <h4 className="key">Description</h4>
+                <h4 className="key">{translate('general.description')}</h4>
                 <h4 className="value">{transaction.transactionDescription}</h4>
               </List.Item>
             </List>

@@ -15,6 +15,7 @@ interface OverviewProps {
   currency: string;
   fixedPeriod: string;
   loading: boolean;
+  translate: any;
 }
 
 const Overview: React.FC<OverviewProps> = ({
@@ -23,6 +24,7 @@ const Overview: React.FC<OverviewProps> = ({
   trxReports,
   userRoles,
   loading,
+  translate,
 }) => {
   const role = userRoles.find((r) => r === roles.SuperMerchant);
   const { time } = Clock();
@@ -114,7 +116,11 @@ const Overview: React.FC<OverviewProps> = ({
       <Row gutter={10}>
         <Col span={24}>
           <div className="upper-header">
-            <h4>{fixedPeriod.toUpperCase()} STATISTICS</h4>
+            <h4>
+              {translate(
+                `general.${fixedPeriod.toLowerCase()}Statistics`
+              ).toUpperCase()}
+            </h4>
             <h6>{time}</h6>
           </div>
         </Col>
@@ -126,7 +132,7 @@ const Overview: React.FC<OverviewProps> = ({
             <Row gutter={20}>
               <Col span={8} sm={24} md={8} xs={24}>
                 <CardView
-                  value="Transactions"
+                  value={translate('general.transactions')}
                   title={trxReports ? trxReports.total.value : 0}
                   data={totalTrx}
                   loading={loading}
@@ -134,7 +140,7 @@ const Overview: React.FC<OverviewProps> = ({
               </Col>
               <Col span={8} sm={24} md={8} xs={24}>
                 <CardView
-                  value="Approved"
+                  value={translate('general.approved')}
                   title={trxReports ? trxReports.totalAmountApproved.value : 0}
                   data={totalAmountApproved}
                   currency={currency}
@@ -143,7 +149,7 @@ const Overview: React.FC<OverviewProps> = ({
               </Col>
               <Col span={8} sm={24} md={8} xs={24}>
                 <CardView
-                  value="Declined"
+                  value={translate('general.declined')}
                   title={trxReports ? trxReports.totalAmountDeclined.value : 0}
                   data={totalAmountDeclined}
                   currency={currency}
@@ -156,7 +162,9 @@ const Overview: React.FC<OverviewProps> = ({
       </div>
       <div className="margin-top mobile-off">
         <Row>
-          <h4 className="transaction-chart-text">Transactions Chart</h4>
+          <h4 className="transaction-chart-text">
+            {translate('general.transactionsOverview')}
+          </h4>
         </Row>
         <Row gutter={20}>
           <Col span={24} sm={24} md={24} xs={24}>
@@ -171,13 +179,15 @@ const Overview: React.FC<OverviewProps> = ({
       {role !== undefined && role === roles.SuperMerchant ? (
         <div className="margin-top">
           <Row>
-            <h4 className="transaction-chart-text">Profits by Merchants</h4>
+            <h4 className="transaction-chart-text">
+              {translate('general.profitMerchant')}
+            </h4>
           </Row>
           <Row gutter={40}>
             <Col span={8} sm={24} md={8} xs={24}>
               <ProfitCard
-                mainTitle="#1 Top Merchant"
-                paragraph={`3% of revenue by ${
+                mainTitle={`#1 ${translate('general.topMerchant')}`}
+                paragraph={`${translate('general.revenue')} ${
                   trxReports && trxReports.topMerchants.firstTopMerchant.name
                     ? trxReports.topMerchants.firstTopMerchant.name
                     : 'N/A'
@@ -194,8 +204,8 @@ const Overview: React.FC<OverviewProps> = ({
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <ProfitCard
-                mainTitle="#2 Top Merchant"
-                paragraph={`3% of revenue by ${
+                mainTitle={`#2 ${translate('general.topMerchant')}`}
+                paragraph={`${translate('general.revenue')} ${
                   trxReports && trxReports.topMerchants.secondTopMerchant.name
                     ? trxReports.topMerchants.secondTopMerchant.name
                     : 'N/A'
@@ -212,8 +222,8 @@ const Overview: React.FC<OverviewProps> = ({
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <ProfitCard
-                mainTitle="#3 Top Merchant"
-                paragraph={`3% of revenue by ${
+                mainTitle={`#3 ${translate('general.topMerchant')}`}
+                paragraph={`${translate('general.revenue')} ${
                   trxReports && trxReports.topMerchants.thirdTopMerchant.name
                     ? trxReports.topMerchants.thirdTopMerchant.name
                     : 'N/A'

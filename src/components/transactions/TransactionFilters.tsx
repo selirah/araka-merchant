@@ -17,6 +17,7 @@ interface TransactionFiltersProps {
   merchants: MerchantData[];
   onSearch(values: any): void;
   onReset(form: any): void;
+  translate: any;
 }
 
 const { Option } = Select;
@@ -26,6 +27,7 @@ const TransactionFilters: React.FC<TransactionFiltersProps> = ({
   merchants,
   onSearch,
   onReset,
+  translate,
 }) => {
   const { time } = Clock();
   const [form] = Form.useForm();
@@ -33,7 +35,7 @@ const TransactionFilters: React.FC<TransactionFiltersProps> = ({
   return (
     <Collapse style={{ marginTop: '5px' }}>
       <Panel
-        header="Filter by:"
+        header={`${translate('general.filterBy')}:`}
         style={{ fontWeight: 400, fontSize: '1rem' }}
         key="1"
         extra={
@@ -52,23 +54,33 @@ const TransactionFilters: React.FC<TransactionFiltersProps> = ({
             <Col span={6}>
               <Form.Item name="status">
                 <Select
-                  placeholder="Status: Default=All"
+                  placeholder={`${translate('general.status')}: ${translate(
+                    'general.default'
+                  )}=${translate('general.all')}`}
                   style={{ width: '100%' }}
                 >
-                  <Option value="APPROVED">Approved</Option>
-                  <Option value="DECLINED">Declined</Option>
-                  <Option value="CANCELED">Canceled</Option>
+                  <Option value="APPROVED">
+                    {translate('general.approved')}
+                  </Option>
+                  <Option value="DECLINED">
+                    {translate('general.declined')}
+                  </Option>
+                  <Option value="CANCELED">
+                    {translate('general.canceled')}
+                  </Option>
                 </Select>
               </Form.Item>
             </Col>
             <Col span={6}>
               <Form.Item name="channel">
                 <Select
-                  placeholder="Channel: Default=All"
+                  placeholder={`${translate('general.channel')}: ${translate(
+                    'general.default'
+                  )}=${translate('general.all')}`}
                   style={{ width: '100%' }}
                 >
-                  <Option value="Card">Card</Option>
-                  <Option value="mPESA">mPESA</Option>
+                  <Option value="Card">{translate('general.card')}</Option>
+                  <Option value="mPESA">{translate('general.mpesa')}</Option>
                 </Select>
               </Form.Item>
             </Col>
@@ -78,7 +90,9 @@ const TransactionFilters: React.FC<TransactionFiltersProps> = ({
                   style={{ width: '100%' }}
                   format="MMMM D, YYYY"
                   allowClear
-                  placeholder="Date Period: From"
+                  placeholder={`${translate('general.datePeriod')}: ${translate(
+                    'general.from'
+                  )}`}
                 />
               </Form.Item>
             </Col>
@@ -88,7 +102,9 @@ const TransactionFilters: React.FC<TransactionFiltersProps> = ({
                   style={{ width: '100%' }}
                   format="MMMM D, YYYY"
                   allowClear
-                  placeholder="Date Period: To"
+                  placeholder={`${translate('general.datePeriod')}: ${translate(
+                    'general.to'
+                  )}`}
                 />
               </Form.Item>
             </Col>
@@ -97,7 +113,7 @@ const TransactionFilters: React.FC<TransactionFiltersProps> = ({
             <Col span={6}>
               <Form.Item name="query">
                 <Input
-                  placeholder="Reference/Transaction ID/Customer"
+                  placeholder={`${translate('general.reference')}`}
                   style={{ width: '100%' }}
                 />
               </Form.Item>
@@ -105,7 +121,9 @@ const TransactionFilters: React.FC<TransactionFiltersProps> = ({
             <Col span={6}>
               <Form.Item name="merchant">
                 <Select
-                  placeholder="Merchant: Default=All"
+                  placeholder={`${translate('general.merchant')}: ${translate(
+                    'general.default'
+                  )}=${translate('general.all')}`}
                   style={{ width: '100%' }}
                   allowClear
                   showSearch
@@ -134,7 +152,7 @@ const TransactionFilters: React.FC<TransactionFiltersProps> = ({
                       className="filterButton"
                       htmlType="submit"
                     >
-                      Filter
+                      {translate('general.filter')}
                     </Button>
                   </Col>
                 </Form.Item>
@@ -144,7 +162,7 @@ const TransactionFilters: React.FC<TransactionFiltersProps> = ({
                     className="resetButton"
                     onClick={() => onReset(form)}
                   >
-                    Reset
+                    {translate('general.reset')}
                   </Button>
                 </Col>
               </Row>

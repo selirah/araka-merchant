@@ -7,6 +7,7 @@ interface LiveFilterProps {
   currency: string;
   fixedPeriod: string;
   onRefreshPage(): void;
+  translate: any;
 }
 
 const { Option } = Select;
@@ -17,6 +18,7 @@ const LiveFilter: React.FC<LiveFilterProps> = ({
   currency,
   fixedPeriod,
   onRefreshPage,
+  translate,
 }) => {
   return (
     <Row
@@ -29,7 +31,7 @@ const LiveFilter: React.FC<LiveFilterProps> = ({
     >
       <div style={{ marginRight: 20 }}>
         <h4 style={{ paddingTop: 2, fontSize: '15px', fontWeight: 400 }}>
-          Period:
+          {translate('general.period')}:
         </h4>
       </div>
       <div>
@@ -39,22 +41,22 @@ const LiveFilter: React.FC<LiveFilterProps> = ({
           style={{ width: 150 }}
         >
           <Option key="daily" value="daily">
-            DAILY
+            {translate('general.daily').toUpperCase()}
           </Option>
           <Option key="weekly" value="weekly">
-            WEEKLY
+            {translate('general.weekly').toUpperCase()}
           </Option>
           <Option key="monthly" value="monthly">
-            MONTHLY
+            {translate('general.monthly').toUpperCase()}
           </Option>
           <Option key="overall" value="overall">
-            OVERALL
+            {translate('general.overall').toUpperCase()}
           </Option>
         </Select>
       </div>
       <div style={{ marginRight: 20, marginLeft: 50 }}>
         <h4 style={{ paddingTop: 2, fontSize: '15px', fontWeight: 400 }}>
-          Currency:
+          {translate('general.currency')}:
         </h4>
       </div>
       <div>
@@ -73,7 +75,7 @@ const LiveFilter: React.FC<LiveFilterProps> = ({
           type="primary"
           onClick={() => onRefreshPage()}
         >
-          Refresh
+          {translate('general.refresh').toUpperCase()}
         </Button>
       </div>
     </Row>

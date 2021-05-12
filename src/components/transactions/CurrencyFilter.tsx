@@ -4,6 +4,7 @@ import { Row, Select, Button } from 'antd';
 interface CurrencyFilterProps {
   onSelectCurrency(value: string): void;
   onLoadMore(): void;
+  translate: any;
 }
 
 const { Option } = Select;
@@ -11,12 +12,13 @@ const { Option } = Select;
 const CurrencyFilter: React.FC<CurrencyFilterProps> = ({
   onSelectCurrency,
   onLoadMore,
+  translate,
 }) => {
   return (
     <Row style={{ marginTop: 30, display: 'flex', marginBottom: 40 }}>
       <div style={{ marginRight: 20 }}>
         <h4 style={{ paddingTop: 2, fontSize: '18px', fontWeight: 400 }}>
-          Currency:
+          {translate('general.currency')}:
         </h4>
       </div>
       <div>
@@ -40,7 +42,7 @@ const CurrencyFilter: React.FC<CurrencyFilterProps> = ({
           }}
           onClick={() => onLoadMore()}
         >
-          Load More Data
+          {translate('general.loadMore')}
         </Button>
       </div>
     </Row>

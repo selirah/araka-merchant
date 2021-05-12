@@ -13,6 +13,7 @@ import {
 } from '../store/reports';
 import moment from 'moment';
 import { isEmpty } from '../helpers/isEmpty';
+import { useTranslation } from 'react-i18next';
 
 const { Content } = Layout;
 
@@ -25,6 +26,7 @@ const CurrencyFilter = lazy(
 
 const FeeReports = () => {
   const dispatch: AppDispatch = useDispatch();
+  const { t } = useTranslation();
   const reports = appSelector((state) => state.reports);
   const [merchants, setMerchants] = useState<MerchantData[]>(reports.merchants);
   const [pces, setPces] = useState<PCESTableData[]>([]);
@@ -154,6 +156,7 @@ const FeeReports = () => {
           <CurrencyFilter
             onSelectCurrency={onSelectCurrency}
             onLoadMore={onLoadMore}
+            translate={t}
           />
           <div className="margin-top">
             <Row style={{ position: 'relative' }}>

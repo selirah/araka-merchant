@@ -13,7 +13,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({ logoutUser }) => {
   return (
     <Menu>
       <Menu.Item key="1" icon={<LogoutOutlined />} onClick={() => logoutUser()}>
-        {t('topBar.logout')}
+        {t('general.logout')}
       </Menu.Item>
     </Menu>
   );
