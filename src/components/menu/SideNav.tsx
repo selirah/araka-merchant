@@ -247,7 +247,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
       {!collapsed ? (
         <div className="menu-info">
           <p>{t('general.menuInfo')}</p>
-          <a href="mailto://info@proxypay.africa">
+          <a href="mailto:info@arakapay.com?subject=Araka API Assistance">
             <Button type="primary" className="menu-info-btn">
               {t('general.apiAssistance')}
             </Button>
