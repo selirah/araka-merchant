@@ -7,9 +7,17 @@ interface DetailsProps {
   overviews: MerchantOverview[];
   currency: string;
   loading: boolean;
+  onLoadMore(page: any, pageSize: any): void;
+  total: number;
 }
 
-const Details: React.FC<DetailsProps> = ({ overviews, currency, loading }) => {
+const Details: React.FC<DetailsProps> = ({
+  overviews,
+  currency,
+  loading,
+  onLoadMore,
+  total,
+}) => {
   const sortOverview = (a: MerchantOverview, b: MerchantOverview) => {
     return b.totalAmountProcessed - a.totalAmountProcessed; // descending
   };
@@ -85,11 +93,14 @@ const Details: React.FC<DetailsProps> = ({ overviews, currency, loading }) => {
             bordered
             className="tranaction-table"
             pagination={{
-              hideOnSinglePage: true,
-              total: dataSource.length,
-              showTotal: (total, range) => {
+              onChange: (page, pageSize) => {
+                onLoadMore(page, pageSize);
+              },
+              total: total,
+              showTotal: (_, range) => {
                 return `Showing ${range[0]} - ${range[1]} of ${total} results`;
               },
+              showSizeChanger: false,
             }}
             loading={loading}
           />

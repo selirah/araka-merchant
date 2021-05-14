@@ -45,32 +45,32 @@ const Cards: React.FC<CardsProps> = ({
       )
     : {};
 
-  const totalArakaFees = pcesReport
-    ? getAreaOptions(
-        pcesReport.totalArakaFees.graph.labels,
-        pcesReport.totalArakaFees.graph.values,
-        '#FFA000',
-        '#FFE082'
-      )
-    : {};
+  // const totalArakaFees = pcesReport
+  //   ? getAreaOptions(
+  //       pcesReport.totalArakaFees.graph.labels,
+  //       pcesReport.totalArakaFees.graph.values,
+  //       '#FFA000',
+  //       '#FFE082'
+  //     )
+  //   : {};
 
-  const totalArakaIncome = pcesReport
-    ? getAreaOptions(
-        pcesReport.totalArakaIncome.graph.labels,
-        pcesReport.totalArakaIncome.graph.values,
-        '#FFA000',
-        '#FFE082'
-      )
-    : {};
+  // const totalArakaIncome = pcesReport
+  //   ? getAreaOptions(
+  //       pcesReport.totalArakaIncome.graph.labels,
+  //       pcesReport.totalArakaIncome.graph.values,
+  //       '#FFA000',
+  //       '#FFE082'
+  //     )
+  //   : {};
 
-  const pcesShare = pcesReport
-    ? getAreaOptions(
-        pcesReport.pcesshare.graph.labels,
-        pcesReport.pcesshare.graph.values,
-        '#FFA000',
-        '#FFE082'
-      )
-    : {};
+  // const pcesShare = pcesReport
+  //   ? getAreaOptions(
+  //       pcesReport.pcesshare.graph.labels,
+  //       pcesReport.pcesshare.graph.values,
+  //       '#FFA000',
+  //       '#FFE082'
+  //     )
+  //   : {};
 
   return (
     <div className="margin-top-small">
@@ -113,7 +113,7 @@ const Cards: React.FC<CardsProps> = ({
               </Row>
             </Col>
           </Row>
-          <Row gutter={20}>
+          {/* <Row gutter={20}>
             <Col span={24}>
               <Row gutter={20}>
                 <Col span={8} sm={24} md={8} xs={24}>
@@ -145,7 +145,7 @@ const Cards: React.FC<CardsProps> = ({
                 </Col>
               </Row>
             </Col>
-          </Row>
+          </Row> */}
         </>
       ) : null}
     </div>

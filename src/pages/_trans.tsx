@@ -6,7 +6,6 @@ import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
 import {
   getTransactionsRequest,
-  clearTransactions,
   exportTranxRequest,
   downloadReceiptRequest,
 } from '../store/transactions';
@@ -60,7 +59,7 @@ const Transactions = () => {
 
   const params = {
     currency: currency,
-    pageSize: 10,
+    pageSize: pageSize,
     skip: skip,
     periodFrom: fromDate,
     periodTo: toDate,
@@ -69,11 +68,11 @@ const Transactions = () => {
     channel: channelSearch,
     searchValue: searchValue,
     exportType: exportType,
+    fixedPeriod: 'overall',
   };
 
   useEffect(() => {
     // fetch transaction history
-    dispatch(clearTransactions());
     dispatch(getTransactionsRequest(params));
     const { merchants } = reports;
     if (isEmpty(merchants)) {
@@ -83,12 +82,14 @@ const Transactions = () => {
   }, []);
 
   useEffect(() => {
-    const { loading, transactions, isExporting, isRequestingDownload, trans } =
+    const { loading, transactions, isExporting, isRequestingDownload } =
       transaction;
     const { merchants } = reports;
     setLoading(loading);
     setMerchants(merchants);
-    setTrans(transactions && !isEmpty(transactions.data) ? trans : []);
+    setTrans(
+      transactions && !isEmpty(transactions.data) ? transactions.data : []
+    );
     setTrxReport(transactions);
     setIsExporting(isExporting);
     setIsDownloading(isRequestingDownload);
@@ -96,8 +97,8 @@ const Transactions = () => {
 
   const onClickRow = (transactionID: number) => {
     setSwitchView(!switchView);
-    if (!isEmpty(transaction.trans)) {
-      const trx = transaction.trans.find(
+    if (transaction.transactions && !isEmpty(transaction.transactions.data)) {
+      const trx = transaction.transactions.data.find(
         (t) => t.transactionId === transactionID
       );
       if (trx !== undefined) {
@@ -111,7 +112,6 @@ const Transactions = () => {
   };
 
   const reloadTransaction = () => {
-    dispatch(clearTransactions());
     dispatch(getTransactionsRequest(params));
   };
 
@@ -123,14 +123,14 @@ const Transactions = () => {
     setCurrency(value);
     params.skip = skip;
     params.currency = value;
-    dispatch(clearTransactions());
     dispatch(getTransactionsRequest(params));
   };
 
-  const onLoadMore = () => {
-    setPageSize(pageSize + 10);
-    setSkip(pageSize + 1);
-    params.skip = pageSize + 1;
+  const onLoadMore = (page: any, size: any) => {
+    setSkip(0);
+    setPageSize(size);
+    params.skip = page - 1;
+    setSkip(params.skip);
     dispatch(getTransactionsRequest(params));
   };
 
@@ -165,7 +165,6 @@ const Transactions = () => {
     params.status = status;
     params.channel = channel;
     params.searchValue = query;
-    dispatch(clearTransactions());
     dispatch(getTransactionsRequest(params));
   };
 
@@ -178,7 +177,6 @@ const Transactions = () => {
     params.status = '';
     params.channel = '';
     params.searchValue = '';
-    dispatch(clearTransactions());
     dispatch(getTransactionsRequest(params));
   };
 
@@ -217,7 +215,6 @@ const Transactions = () => {
 
               <CurrencyFilter
                 onSelectCurrency={onSelectCurrency}
-                onLoadMore={onLoadMore}
                 translate={t}
               />
               <div className="margin-top">
@@ -262,6 +259,7 @@ const Transactions = () => {
                   currency={currency}
                   loading={loading}
                   onLoadMore={onLoadMore}
+                  total={100}
                   translate={t}
                 />
               </div>

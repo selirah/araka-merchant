@@ -9,7 +9,7 @@ export const initialState: MerchantsOverviewState = {
   isExportSuccess: false,
   isExporting: false,
   loading: false,
-  overviews: [],
+  overviews: null,
 };
 
 const reducer: Reducer<MerchantsOverviewState> = (
@@ -39,7 +39,7 @@ const reducer: Reducer<MerchantsOverviewState> = (
     case MerchantsOverviewTypes.CLEAR_OVERVIEW:
       return {
         ...state,
-        overviews: [],
+        overviews: null,
       };
     case MerchantsOverviewTypes.EXPORT_OVERVIEW_REQUEST:
       return {

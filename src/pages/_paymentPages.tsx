@@ -64,7 +64,7 @@ const PaymentPages = () => {
 
   useEffect(() => {
     if (success) {
-      message.success(`${t('paymentPages.pageAddSuccess')}`, 5);
+      message.success(`${t('general.pageAddSuccess')}`, 5);
     }
     if (failure) {
       message.error(error, 5);
@@ -99,12 +99,12 @@ const PaymentPages = () => {
     const isJPGOrPNG = file.type === 'image/jpeg' || file.type === 'image/png';
 
     if (!isJPGOrPNG) {
-      message.error(`${t('paymentPages.fileTypeError')}`);
+      message.error(`${t('general.fileTypeError')}`);
     }
 
     const isLessThan2MB = file.size / 1024 / 1024 < 2;
     if (!isLessThan2MB) {
-      message.error(`${t('paymentPages.fileSizeError')}`);
+      message.error(`${t('general.fileSizeError')}`);
     }
 
     return isJPGOrPNG && isLessThan2MB;
@@ -204,14 +204,14 @@ const PaymentPages = () => {
                   className="export-buttons"
                   onClick={() => onTogglePaymentTypeModal()}
                 >
-                  {t('paymentPages.newPageText')}
+                  {t('general.newPageText')}
                 </Button>
                 <Button
                   type="primary"
                   className="export-buttons reload"
                   onClick={() => reloadPages()}
                 >
-                  {t('paymentPages.refresh')}
+                  {t('general.refresh')}
                 </Button>
               </div>
             </Row>

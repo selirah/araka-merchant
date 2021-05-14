@@ -13,7 +13,7 @@ function* getOverview({ payload }: { type: string; payload: any }): any {
   try {
     const res = yield call(
       callApiPost,
-      'payments/getmerchantsoverview',
+      'reports/getmerchantsoverview',
       payload
     );
     if (res.status === 200) {

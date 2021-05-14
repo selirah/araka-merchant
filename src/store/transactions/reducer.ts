@@ -1,7 +1,6 @@
 import { Reducer } from 'redux';
 import { TransactionState, TransactionTypes } from './types';
 import { AuthActionTypes } from '../auth';
-import { TransactionHistory } from '../../interfaces';
 
 export const initialState: TransactionState = {
   currencies: [],
@@ -20,7 +19,6 @@ export const initialState: TransactionState = {
   downloadRecieptSuccess: false,
   isRequestingDownload: false,
   downloadError: undefined,
-  trans: [],
 };
 
 const reducer: Reducer<TransactionState> = (state = initialState, action) => {
@@ -32,16 +30,9 @@ const reducer: Reducer<TransactionState> = (state = initialState, action) => {
         error: undefined,
       };
     case TransactionTypes.GET_TRANSACTIONS_SUCCESS:
-      let trx: TransactionHistory[] = state.trans;
-      action.payload.data.map((t: TransactionHistory) => {
-        trx.push(t);
-        return trx;
-      });
-
       return {
         ...state,
         transactions: action.payload,
-        trans: trx,
         loading: false,
       };
     case TransactionTypes.GET_TRANSACTIONS_FAILURE:
@@ -66,11 +57,6 @@ const reducer: Reducer<TransactionState> = (state = initialState, action) => {
         ...state,
         currenciesLoading: false,
         currencyError: action.payload,
-      };
-    case TransactionTypes.CLEAR_TRANSACTIONS:
-      return {
-        ...state,
-        trans: [],
       };
     case TransactionTypes.EXPORT_TRANSACTIONS_REQUEST:
       return {

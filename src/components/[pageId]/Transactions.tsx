@@ -63,10 +63,13 @@ export const Transactions: React.FC<TransactionsProps> = ({ transactions }) => {
           case transactionStatus.CANCELED:
             color = 'geekblue';
             break;
+          default:
+            color = 'geekblue';
+            break;
         }
         return (
           <Tag color={color} key={status}>
-            {status.toUpperCase()}
+            {status ? status.toUpperCase() : 'N/A'}
           </Tag>
         );
       },

@@ -17,7 +17,7 @@ function* getTransactions({ payload }: { type: string; payload: any }): any {
   try {
     const res = yield call(
       callApiPost,
-      'payments/getmerchanttransactions',
+      'reports/gettransactionsoverview',
       payload
     );
     if (res.status === 200) {

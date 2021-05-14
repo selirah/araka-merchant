@@ -21,7 +21,7 @@ const Filters = lazy(() => import('../components/fee-reports/Filters'));
 const Cards = lazy(() => import('../components/fee-reports/Cards'));
 const Details = lazy(() => import('../components/fee-reports/Details'));
 const CurrencyFilter = lazy(
-  () => import('../components/transactions/CurrencyFilter')
+  () => import('../components/fee-reports/CurrencyFilter')
 );
 
 const FeeReports = () => {
@@ -43,7 +43,7 @@ const FeeReports = () => {
 
   const params = {
     currency: currency,
-    pageSize: 10,
+    pageSize: pageSize,
     skip: skip,
     periodFrom: periodFrom,
     periodTo: periodTo,
@@ -63,8 +63,8 @@ const FeeReports = () => {
   }, []);
 
   useEffect(() => {
-    const { merchants, loading, pces, isExporting, pcesdata } = reports;
-    setPces(pcesdata);
+    const { merchants, loading, pces, isExporting } = reports;
+    setPces(pces && !isEmpty(pces.data) ? pces.data : []);
     setMerchants(merchants);
     setPcesReport(pces);
     setIsExporting(isExporting);
@@ -84,10 +84,11 @@ const FeeReports = () => {
     dispatch(getPCESRequest(params));
   };
 
-  const onLoadMore = () => {
-    setPageSize(pageSize + 10);
-    setSkip(pageSize + 1);
-    params.skip = pageSize + 1;
+  const onLoadMore = (page: any, size: any) => {
+    setSkip(0);
+    setPageSize(size);
+    params.skip = page - 1;
+    setSkip(params.skip);
     dispatch(getPCESRequest(params));
   };
 
@@ -153,11 +154,7 @@ const FeeReports = () => {
             currency={currency}
             loading={loading}
           />
-          <CurrencyFilter
-            onSelectCurrency={onSelectCurrency}
-            onLoadMore={onLoadMore}
-            translate={t}
-          />
+          <CurrencyFilter onSelectCurrency={onSelectCurrency} translate={t} />
           <div className="margin-top">
             <Row style={{ position: 'relative' }}>
               <h4 className="transaction-chart-text">PCES Reports Table</h4>
@@ -191,7 +188,13 @@ const FeeReports = () => {
                 </Button>
               </div>
             </Row>
-            <Details pces={pces} currency={currency} loading={loading} />
+            <Details
+              pces={pces}
+              currency={currency}
+              loading={loading}
+              onLoadMore={onLoadMore}
+              total={pcesReport ? pcesReport.transactions.value : 0}
+            />
           </div>
         </Suspense>
       </Content>

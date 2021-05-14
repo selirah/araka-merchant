@@ -1,23 +1,42 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import CardView from '../cards/CardView';
-import { MerchantOverview } from '../../interfaces';
-import { GetOverviewAnalytics } from '../../helpers/overview_functions';
+import { MerchantOverviewReport } from '../../interfaces';
+import { getAreaOptions } from '../../helpers/functions';
 
 interface CardsProps {
-  overviews: MerchantOverview[];
+  overviews: MerchantOverviewReport | null;
   currency: string;
   loading: boolean;
 }
 
 const Cards: React.FC<CardsProps> = ({ overviews, currency, loading }) => {
-  const {
-    totalAmountProcessed,
-    totalMerchants,
-    totalTransactions,
-    trxAreaChart,
-    amtAreaChart,
-  } = GetOverviewAnalytics(overviews);
+  const totalMerchants = overviews
+    ? getAreaOptions(
+        overviews.totalMerchants.graph.labels,
+        overviews.totalMerchants.graph.values,
+        '#FBC02D',
+        '#FFF176'
+      )
+    : {};
+
+  const totalAmount = overviews
+    ? getAreaOptions(
+        overviews.totalAmount.graph.labels,
+        overviews.totalAmount.graph.values,
+        '#FBC02D',
+        '#FFF176'
+      )
+    : {};
+
+  const totalTransactions = overviews
+    ? getAreaOptions(
+        overviews.totalTransactions.graph.labels,
+        overviews.totalTransactions.graph.values,
+        '#FBC02D',
+        '#FFF176'
+      )
+    : {};
 
   return (
     <div className="margin-top-small">
@@ -32,16 +51,16 @@ const Cards: React.FC<CardsProps> = ({ overviews, currency, loading }) => {
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Merchants"
-                title={totalMerchants}
-                data={trxAreaChart}
+                title={overviews ? overviews.totalMerchants.value : 0}
+                data={totalMerchants}
                 loading={loading}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Amount Processed"
-                title={totalAmountProcessed}
-                data={amtAreaChart}
+                title={overviews ? overviews.totalAmount.value : 0}
+                data={totalAmount}
                 currency={currency}
                 loading={loading}
               />
@@ -49,8 +68,8 @@ const Cards: React.FC<CardsProps> = ({ overviews, currency, loading }) => {
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
                 value="Total Transactions"
-                title={totalTransactions}
-                data={trxAreaChart}
+                title={overviews ? overviews.totalTransactions.value : 0}
+                data={totalTransactions}
                 loading={loading}
               />
             </Col>

@@ -1,4 +1,4 @@
-import { MerchantOverview, DataStream } from '../../interfaces';
+import { DataStream, MerchantOverviewReport } from '../../interfaces';
 
 export enum MerchantsOverviewTypes {
   GET_MERCHANTS_OVERVIEW = '@@merchant-overview/GET_MERCHANTS_OVERVIEW',
@@ -11,7 +11,7 @@ export enum MerchantsOverviewTypes {
 }
 
 export type MerchantsOverviewState = {
-  readonly overviews: MerchantOverview[];
+  readonly overviews: MerchantOverviewReport | null;
   readonly loading: boolean;
   readonly error: any;
   readonly isExporting: boolean;

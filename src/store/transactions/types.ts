@@ -1,9 +1,4 @@
-import {
-  Transaction,
-  Currency,
-  DataStream,
-  TransactionHistory,
-} from '../../interfaces';
+import { Transaction, Currency, DataStream } from '../../interfaces';
 
 export enum TransactionTypes {
   GET_TRANSACTIONS_REQUEST = '@@transaction/GET_TRANSACTIONS_REQUEST',
@@ -12,7 +7,6 @@ export enum TransactionTypes {
   GET_CURRENCIES = '@@transaction/GET_CURRENCIES',
   GET_CURRENCIES_SUCCESS = '@@transaction/GET_CURRENCIES_SUCCESS',
   GET_CURRENCIES_FAILURE = '@@transaction/GET_CURRENCIES_FAILURE',
-  CLEAR_TRANSACTIONS = '@@transaction/CLEAR_TRANSACTIONS',
   EXPORT_TRANSACTIONS_REQUEST = '@@transaction/EXPORT_TRANSACTIONS_REQUEST',
   EXPORT_TRANSACTIONS_SUCCESS = '@@transaction/EXPORT_TRANSACTIONS_SUCCESS',
   EXPORT_TRANSACTIONS_FAILURE = '@@transaction/EXPORT_TRANSACTIONS_FAILURE',
@@ -23,7 +17,6 @@ export enum TransactionTypes {
 
 export type TransactionState = {
   readonly transactions: Transaction | null;
-  readonly trans: TransactionHistory[];
   readonly loading: boolean;
   readonly error: any;
   readonly currencies: Currency[];

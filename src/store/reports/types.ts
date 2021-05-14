@@ -10,7 +10,6 @@ import {
   MerchantData,
   Fee,
   DataStream,
-  PCESTableData,
 } from '../../interfaces';
 
 export enum ReportsActionTypes {
@@ -96,7 +95,6 @@ export type ReportsState = {
   readonly downloadRecieptError: boolean;
   readonly downloadReceiptStream: DataStream | undefined;
   readonly downloadError: any;
-  readonly pcesdata: PCESTableData[];
   readonly errorSub: any;
   readonly errorTrx: any;
   readonly errorVol: any;

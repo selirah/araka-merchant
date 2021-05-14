@@ -10,7 +10,11 @@ import {
   exportOverviewRequest,
 } from '../store/merchant-overview';
 import { isEmpty } from '../helpers/isEmpty';
-import { MerchantOverview, MerchantData } from '../interfaces';
+import {
+  MerchantOverview,
+  MerchantData,
+  MerchantOverviewReport,
+} from '../interfaces';
 import { getMerchantsRequest } from '../store/reports';
 import moment from 'moment';
 
@@ -27,9 +31,10 @@ const MerchantsOverview = () => {
   const dispatch: AppDispatch = useDispatch();
   const overviewsStore = appSelector((state) => state.overviews);
   const reports = appSelector((state) => state.reports);
+  const [overviewReport, setOverviewReport] =
+    useState<MerchantOverviewReport | null>(null);
   const [merchants, setMerchants] = useState<MerchantData[]>(reports.merchants);
   const [exportType, setExportType] = useState('');
-  const [searchValue, setSearchValue] = useState('');
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
   const [overviewdata, setOverviewdata] = useState<MerchantOverview[]>([]);
@@ -37,21 +42,21 @@ const MerchantsOverview = () => {
   const [currency, setCurrency] = useState('USD');
   const [loading, setLoading] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
+  const [pageSize, setPageSize] = useState(10);
+  const [skip, setSkip] = useState(0);
 
   const params = {
     currency: currency,
     periodFrom: fromDate,
     periodTo: toDate,
     merchant: merchant ? merchant.name : '',
-    searchValue: searchValue,
     exportType: exportType,
+    pageSize: pageSize,
+    skip: skip,
   };
 
   useEffect(() => {
-    const { overviews } = overviewsStore;
-    if (isEmpty(overviews)) {
-      dispatch(getMerchantsOverview(params));
-    }
+    dispatch(getMerchantsOverview(params));
     const { merchants } = reports;
     if (isEmpty(merchants)) {
       dispatch(getMerchantsRequest());
@@ -63,13 +68,15 @@ const MerchantsOverview = () => {
     const { loading, overviews, isExporting } = overviewsStore;
     const { merchants } = reports;
     setLoading(loading);
-    setOverviewdata(overviews);
+    setOverviewdata(
+      overviews && !isEmpty(overviews.data) ? overviews.data : []
+    );
+    setOverviewReport(overviews);
     setMerchants(merchants);
     setIsExporting(isExporting);
   }, [overviewsStore, reports]);
 
   const reloadOverviews = () => {
-    dispatch(clearOverview());
     dispatch(getMerchantsOverview(params));
   };
 
@@ -79,13 +86,19 @@ const MerchantsOverview = () => {
     dispatch(exportOverviewRequest(params));
   };
 
+  const onLoadMore = (page: any, size: any) => {
+    setSkip(0);
+    setPageSize(size);
+    params.skip = page - 1;
+    setSkip(params.skip);
+    dispatch(getMerchantsOverview(params));
+  };
+
   const onReset = (form: any) => {
     form.resetFields();
     params.periodFrom = '';
     params.periodTo = '';
     params.merchant = '';
-    params.searchValue = '';
-    dispatch(clearOverview());
     dispatch(getMerchantsOverview(params));
   };
 
@@ -96,11 +109,10 @@ const MerchantsOverview = () => {
   };
 
   const onSearch = (values: any) => {
-    const { periodFrom, periodTo, query, merchant } = values;
+    const { periodFrom, periodTo, merchant } = values;
     let m: MerchantData | undefined = undefined;
     let pFrom: string = '',
       pTo: string = '';
-    setSearchValue(query !== undefined ? query : '');
     if (periodFrom !== undefined && periodTo !== undefined) {
       pFrom = moment(periodFrom).format('MM/DD/YYYY');
       pTo = moment(periodTo).format('MM/DD/YYYY');
@@ -114,7 +126,6 @@ const MerchantsOverview = () => {
     params.periodFrom = pFrom;
     params.periodTo = pTo;
     params.merchant = m !== undefined ? m.name : '';
-    params.searchValue = query;
     dispatch(clearOverview());
     dispatch(getMerchantsOverview(params));
   };
@@ -137,7 +148,7 @@ const MerchantsOverview = () => {
             merchants={merchants}
           />
           <Cards
-            overviews={overviewdata}
+            overviews={overviewReport}
             currency={currency}
             loading={loading}
           />
@@ -179,6 +190,8 @@ const MerchantsOverview = () => {
               overviews={overviewdata}
               currency={currency}
               loading={loading}
+              onLoadMore={onLoadMore}
+              total={overviewReport ? overviewReport.totalMerchants.value : 0}
             />
           </div>
         </Suspense>

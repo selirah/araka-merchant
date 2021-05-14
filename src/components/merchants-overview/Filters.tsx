@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  Row,
-  Col,
-  Input,
-  Button,
-  Collapse,
-  Select,
-  Form,
-  DatePicker,
-} from 'antd';
+import { Row, Col, Button, Collapse, Select, Form, DatePicker } from 'antd';
 import { Clock } from '../../utils/clock';
 import { MerchantData } from '../../interfaces';
 import { isEmpty } from '../../helpers/isEmpty';
@@ -86,15 +77,6 @@ const Filters: React.FC<FiltersProps> = ({ merchants, onReset, onSearch }) => {
                       </Option>
                     ))}
                 </Select>
-              </Form.Item>
-            </Col>
-
-            <Col span={6}>
-              <Form.Item name="query">
-                <Input
-                  placeholder="Amount Processed/Transactions/Fee"
-                  style={{ width: '100%' }}
-                />
               </Form.Item>
             </Col>
           </Row>
