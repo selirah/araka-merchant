@@ -1,5 +1,6 @@
 import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Layout, Spin, Row } from 'antd';
 import { appSelector } from '../helpers/appSelector';
@@ -17,6 +18,7 @@ const { Content } = Layout;
 
 const Dashboard = () => {
   const dispatch: AppDispatch = useDispatch();
+  const { t } = useTranslation();
   const { user } = appSelector((state) => state.auth);
   const { client } = appSelector((state) => state.settings);
   const home = appSelector((state) => state.home);
@@ -62,6 +64,10 @@ const Dashboard = () => {
     dispatch(getOverviewRequest(params));
   };
 
+  const onRefreshPage = () => {
+    dispatch(getOverviewRequest(params));
+  };
+
   let container: React.ReactNode;
   if (loading) {
     container = (
@@ -72,7 +78,9 @@ const Dashboard = () => {
   }
 
   if (!loading && !trxReports) {
-    container = <EmptyBox onReloadTransaction={onReloadTransaction} />;
+    container = (
+      <EmptyBox onReloadTransaction={onReloadTransaction} translate={t} />
+    );
   }
   if (!loading && trxReports) {
     container = (
@@ -82,6 +90,7 @@ const Dashboard = () => {
         currency={currency}
         fixedPeriod={fixedPeriod}
         loading={loading}
+        translate={t}
       />
     );
   }
@@ -103,6 +112,8 @@ const Dashboard = () => {
             currency={currency}
             fixedPeriod={fixedPeriod}
             onSelectPeriod={onSelectPeriod}
+            onRefreshPage={onRefreshPage}
+            translate={t}
           />
           {container}
         </Suspense>

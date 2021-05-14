@@ -3,9 +3,13 @@ import { Empty, Button, Card } from 'antd';
 
 interface EmptyBoxProps {
   onReloadTransaction(): void;
+  translate: any;
 }
 
-const EmptyBox: React.FC<EmptyBoxProps> = ({ onReloadTransaction }) => {
+const EmptyBox: React.FC<EmptyBoxProps> = ({
+  onReloadTransaction,
+  translate,
+}) => {
   return (
     <Card className="margin-top-big">
       <Empty
@@ -13,7 +17,7 @@ const EmptyBox: React.FC<EmptyBoxProps> = ({ onReloadTransaction }) => {
         imageStyle={{
           height: 60,
         }}
-        description={<span>No transaction has been performed yet</span>}
+        description={<span>{translate('general.noDataDetails')}</span>}
         style={{ marginTop: '200px', marginBottom: '200px' }}
       >
         <Button
@@ -21,7 +25,7 @@ const EmptyBox: React.FC<EmptyBoxProps> = ({ onReloadTransaction }) => {
           className="empty-box-button"
           onClick={() => onReloadTransaction()}
         >
-          Try Again
+          {translate('general.refresh').toUpperCase()}
         </Button>
       </Empty>
     </Card>

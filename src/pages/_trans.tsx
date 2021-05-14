@@ -83,13 +83,8 @@ const Transactions = () => {
   }, []);
 
   useEffect(() => {
-    const {
-      loading,
-      transactions,
-      isExporting,
-      isRequestingDownload,
-      trans,
-    } = transaction;
+    const { loading, transactions, isExporting, isRequestingDownload, trans } =
+      transaction;
     const { merchants } = reports;
     setLoading(loading);
     setMerchants(merchants);
@@ -211,20 +206,25 @@ const Transactions = () => {
                 merchants={merchants}
                 onSearch={onSearch}
                 onReset={onReset}
+                translate={t}
               />
               <TransactionSummaryCards
                 trxReports={trxReport}
                 currency={currency}
                 loading={loading}
+                translate={t}
               />
 
               <CurrencyFilter
                 onSelectCurrency={onSelectCurrency}
                 onLoadMore={onLoadMore}
+                translate={t}
               />
               <div className="margin-top">
                 <Row style={{ position: 'relative' }}>
-                  <h4 className="transaction-chart-text">Transactions Chart</h4>
+                  <h4 className="transaction-chart-text">
+                    {t('general.transactionsChart')}
+                  </h4>
                   <div className="utility-buttons">
                     {!isEmpty(trans) ? (
                       <>
@@ -234,7 +234,7 @@ const Transactions = () => {
                           onClick={() => onExportClick('EXCEL')}
                           loading={isExporting && exportType === 'EXCEL'}
                         >
-                          Export to Excel
+                          {t('general.export-excel')}
                         </Button>
                         <Button
                           type="primary"
@@ -242,7 +242,7 @@ const Transactions = () => {
                           onClick={() => onExportClick('PDF')}
                           loading={isExporting && exportType === 'PDF'}
                         >
-                          Export to PDF
+                          {t('general.export-pdf')}
                         </Button>
                       </>
                     ) : null}
@@ -251,7 +251,7 @@ const Transactions = () => {
                       className="export-buttons reload"
                       onClick={() => reloadTransaction()}
                     >
-                      {t('transactions.refresh')}
+                      {t('general.refresh')}
                     </Button>
                   </div>
                 </Row>
@@ -262,6 +262,7 @@ const Transactions = () => {
                   currency={currency}
                   loading={loading}
                   onLoadMore={onLoadMore}
+                  translate={t}
                 />
               </div>
             </>
@@ -271,6 +272,7 @@ const Transactions = () => {
               transaction={trx!}
               isDownloading={isDownlaoding}
               onDownloadReceiptClick={onDownloadReceiptClick}
+              translate={t}
             />
           )}
         </Suspense>
