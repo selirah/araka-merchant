@@ -50,6 +50,7 @@ const FeeReports = () => {
     merchant: merchant ? merchant.name : '',
     exportType: exportType,
     status: 'APPROVED',
+    fixedPeriod: 'overall',
   };
 
   useEffect(() => {
@@ -169,7 +170,7 @@ const FeeReports = () => {
                   >
                     Export to Excel
                   </Button>
-                  <Button
+                  {/* <Button
                     type="primary"
                     className="export-buttons"
                     onClick={() => onExportClick('PDF')}
@@ -177,7 +178,7 @@ const FeeReports = () => {
                     disabled={isEmpty(pces)}
                   >
                     Export to PDF
-                  </Button>
+                  </Button> */}
                 </>
                 <Button
                   type="primary"
@@ -193,7 +194,8 @@ const FeeReports = () => {
               currency={currency}
               loading={loading}
               onLoadMore={onLoadMore}
-              total={pcesReport ? pcesReport.transactions.value : 0}
+              // total={pcesReport ? pcesReport.transactions.value : 0}
+              total={pces.length}
             />
           </div>
         </Suspense>

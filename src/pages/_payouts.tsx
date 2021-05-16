@@ -68,6 +68,8 @@ const Payouts: React.FC = () => {
   const [switchDetailView, setSwitchDetailView] = useState(false);
   const [payout, setPayout] = useState<any>({});
   const [isDownlaoding, setIsDownloading] = useState(false);
+  const [pageSize, setPageSize] = useState(10);
+  const [skip, setSkip] = useState(0);
 
   const params = {
     periodFrom: periodFrom,
@@ -75,6 +77,9 @@ const Payouts: React.FC = () => {
     currency: currency,
     merchant: merchant ? merchant.name : '',
     exportType: exportType,
+    pageSize: pageSize,
+    skip: skip,
+    fixedPeriod: 'overall',
   };
 
   let role;
@@ -152,6 +157,14 @@ const Payouts: React.FC = () => {
     params.merchant = '';
     dispatch(getPayoutRequest(params));
     setHasSelectMerchant(false);
+  };
+
+  const onLoadMore = (page: any, size: any) => {
+    setSkip(0);
+    setPageSize(size);
+    params.skip = page - 1;
+    setSkip(params.skip);
+    dispatch(getPayoutFeeRequest(params));
   };
 
   const onSearch = (values: any) => {
@@ -318,7 +331,7 @@ const Payouts: React.FC = () => {
                       Export to Excel
                     </Button>
 
-                    <Button
+                    {/* <Button
                       type="primary"
                       className="export-buttons"
                       onClick={() => onExportClick('PDF')}
@@ -326,7 +339,7 @@ const Payouts: React.FC = () => {
                       disabled={isEmpty(payouts)}
                     >
                       Export to PDF
-                    </Button>
+                    </Button> */}
 
                     <Button
                       type="primary"
@@ -342,6 +355,8 @@ const Payouts: React.FC = () => {
                   currency={currency}
                   onClickRow={onClickRow}
                   loading={loading}
+                  onLoadMore={onLoadMore}
+                  total={payoutReport ? payoutReport.data.length : 0}
                 />
               </div>
             </>

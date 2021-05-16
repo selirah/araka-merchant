@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  Row,
-  Col,
-  Input,
-  Button,
-  Collapse,
-  Select,
-  Form,
-  DatePicker,
-} from 'antd';
+import { Row, Col, Button, Collapse, Select, Form, DatePicker } from 'antd';
 import { Clock } from '../../utils/clock';
 
 interface FiltersProps {
@@ -82,14 +73,6 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
                   <Option value="November">November</Option>
                   <Option value="December">December</Option>
                 </Select>
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <Form.Item name="query">
-                <Input
-                  placeholder="Amount/Fee/Discount/Income"
-                  style={{ width: '100%' }}
-                />
               </Form.Item>
             </Col>
           </Row>

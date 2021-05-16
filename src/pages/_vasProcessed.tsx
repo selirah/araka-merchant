@@ -10,7 +10,7 @@ import {
   exportVASRequest,
 } from '../store/vas-processed';
 import { isEmpty } from '../helpers/isEmpty';
-import { VASProcessed as VP } from '../interfaces';
+import { VASProcessed as VP, VASProcessedReport } from '../interfaces';
 import moment from 'moment';
 
 const Filters = lazy(() => import('../components/vas-processed/Filters'));
@@ -25,37 +25,39 @@ const { Content } = Layout;
 const VASProcessed = () => {
   const dispatch: AppDispatch = useDispatch();
   const vasStore = appSelector((state) => state.vas);
+  const [vasReport, setVasReport] = useState<VASProcessedReport | null>(null);
   const [vasData, setVasData] = useState<VP[]>([]);
   const [exportType, setExportType] = useState('');
-  const [searchValue, setSearchValue] = useState('');
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
   const [currency, setCurrency] = useState('USD');
   const [loading, setLoading] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const [month, setMonth] = useState('');
+  const [pageSize, setPageSize] = useState(10);
+  const [skip, setSkip] = useState(0);
 
   const params = {
     currency: currency,
     periodFrom: fromDate,
     periodTo: toDate,
-    searchValue: searchValue,
     exportType: exportType,
     month: month,
+    pageSize: pageSize,
+    skip: skip,
+    fixedPeriod: 'overall',
   };
 
   useEffect(() => {
-    const { vas } = vasStore;
-    if (isEmpty(vas)) {
-      dispatch(getVasRequest(params));
-    }
+    dispatch(getVasRequest(params));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     const { loading, vas, isExporting } = vasStore;
     setLoading(loading);
-    setVasData(vas);
+    setVasData(vas && !isEmpty(vas.data) ? vas.data : []);
+    setVasReport(vas);
     setIsExporting(isExporting);
   }, [vasStore]);
 
@@ -70,6 +72,14 @@ const VASProcessed = () => {
     dispatch(exportVASRequest(params));
   };
 
+  const onLoadMore = (page: any, size: any) => {
+    setSkip(0);
+    setPageSize(size);
+    params.skip = page - 1;
+    setSkip(params.skip);
+    dispatch(getVasRequest(params));
+  };
+
   const onSelectCurrency = (value: string) => {
     setCurrency(value);
     params.currency = value;
@@ -81,17 +91,14 @@ const VASProcessed = () => {
     params.periodFrom = '';
     params.periodTo = '';
     params.month = '';
-    params.searchValue = '';
-    dispatch(clearVAS());
     dispatch(getVasRequest(params));
   };
 
   const onSearch = (values: any) => {
-    const { periodFrom, periodTo, query, month } = values;
+    const { periodFrom, periodTo, month } = values;
     let pFrom: string = '',
       pTo: string = '';
-    setSearchValue(query !== undefined ? query : '');
-    setMonth(query !== undefined ? month : '');
+    setMonth(month);
     if (periodFrom !== undefined && periodTo !== undefined) {
       pFrom = moment(periodFrom).format('MM/DD/YYYY');
       pTo = moment(periodTo).format('MM/DD/YYYY');
@@ -100,9 +107,7 @@ const VASProcessed = () => {
     }
     params.periodFrom = pFrom;
     params.periodTo = pTo;
-    params.searchValue = query;
     params.month = month;
-    dispatch(clearVAS());
     dispatch(getVasRequest(params));
   };
 
@@ -119,7 +124,7 @@ const VASProcessed = () => {
           }
         >
           <Filters onReset={onReset} onSearch={onSearch} />
-          <Cards vas={vasData} currency={currency} loading={loading} />
+          <Cards vas={vasReport} currency={currency} loading={loading} />
           <div className="margin-top">
             <CurrencyFilter onSelectCurrency={onSelectCurrency} />
             <Row style={{ position: 'relative' }}>
@@ -135,7 +140,7 @@ const VASProcessed = () => {
                   >
                     Export to Excel
                   </Button>
-                  <Button
+                  {/* <Button
                     type="primary"
                     className="export-buttons"
                     onClick={() => onExportClick('PDF')}
@@ -143,7 +148,7 @@ const VASProcessed = () => {
                     disabled={isEmpty(vasData)}
                   >
                     Export to PDF
-                  </Button>
+                  </Button> */}
                 </>
                 <Button
                   type="primary"
@@ -154,7 +159,14 @@ const VASProcessed = () => {
                 </Button>
               </div>
             </Row>
-            <Details vas={vasData} currency={currency} loading={loading} />
+            <Details
+              vas={vasData}
+              currency={currency}
+              loading={loading}
+              onLoadMore={onLoadMore}
+              // total={vasReport ? vasReport.vasProcessed.value : 0}
+              total={vasData.length}
+            />
           </div>
         </Suspense>
       </Content>

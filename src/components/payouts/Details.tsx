@@ -10,6 +10,8 @@ interface DetailsProps {
   currency: string;
   onClickRow(record: any): void;
   loading: boolean;
+  onLoadMore(page: any, pageSize: any): void;
+  total: number;
 }
 
 const Details: React.FC<DetailsProps> = ({
@@ -17,6 +19,8 @@ const Details: React.FC<DetailsProps> = ({
   currency,
   onClickRow,
   loading,
+  onLoadMore,
+  total,
 }) => {
   const columns: any = [
     {
@@ -108,11 +112,14 @@ const Details: React.FC<DetailsProps> = ({
             bordered
             className="tranaction-table"
             pagination={{
-              hideOnSinglePage: true,
-              total: dataSource.length,
-              showTotal: (total, range) => {
+              onChange: (page, pageSize) => {
+                onLoadMore(page, pageSize);
+              },
+              total: total,
+              showTotal: (_, range) => {
                 return `Showing ${range[0]} - ${range[1]} of ${total} results`;
               },
+              showSizeChanger: false,
             }}
             onRow={(record: any) => ({
               onClick: () => onClickRow(record),

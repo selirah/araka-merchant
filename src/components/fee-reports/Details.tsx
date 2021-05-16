@@ -100,7 +100,7 @@ const Details: React.FC<DetailsProps> = ({
             className="tranaction-table"
             pagination={{
               onChange: (page, pageSize) => {
-                onLoadMore(page, pageSize);
+                // onLoadMore(page, pageSize);
               },
               total: total,
               showTotal: (_, range) => {

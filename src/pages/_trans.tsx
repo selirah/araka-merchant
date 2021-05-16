@@ -233,14 +233,14 @@ const Transactions = () => {
                         >
                           {t('general.export-excel')}
                         </Button>
-                        <Button
+                        {/* <Button
                           type="primary"
                           className="export-buttons"
                           onClick={() => onExportClick('PDF')}
                           loading={isExporting && exportType === 'PDF'}
                         >
                           {t('general.export-pdf')}
-                        </Button>
+                        </Button> */}
                       </>
                     ) : null}
                     <Button

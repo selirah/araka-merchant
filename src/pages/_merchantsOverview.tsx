@@ -6,7 +6,6 @@ import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
 import {
   getMerchantsOverview,
-  clearOverview,
   exportOverviewRequest,
 } from '../store/merchant-overview';
 import { isEmpty } from '../helpers/isEmpty';
@@ -53,6 +52,7 @@ const MerchantsOverview = () => {
     exportType: exportType,
     pageSize: pageSize,
     skip: skip,
+    fixedPeriod: 'overall',
   };
 
   useEffect(() => {
@@ -126,7 +126,6 @@ const MerchantsOverview = () => {
     params.periodFrom = pFrom;
     params.periodTo = pTo;
     params.merchant = m !== undefined ? m.name : '';
-    dispatch(clearOverview());
     dispatch(getMerchantsOverview(params));
   };
 
@@ -166,7 +165,7 @@ const MerchantsOverview = () => {
                   >
                     Export to Excel
                   </Button>
-                  <Button
+                  {/* <Button
                     type="primary"
                     className="export-buttons"
                     onClick={() => onExportClick('PDF')}
@@ -174,7 +173,7 @@ const MerchantsOverview = () => {
                     disabled={isEmpty(overviewdata)}
                   >
                     Export to PDF
-                  </Button>
+                  </Button> */}
                 </>
                 <Button
                   type="primary"
