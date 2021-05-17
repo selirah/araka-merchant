@@ -14,8 +14,8 @@ interface CardsProps {
 const Cards: React.FC<CardsProps> = ({ vas, currency, loading, translate }) => {
   const vasProcessed = vas
     ? getAreaOptions(
-        vas.vasProcessed.graph.labels,
-        vas.vasProcessed.graph.values,
+        vas.vasProcessed.graph.labels.reverse(),
+        vas.vasProcessed.graph.values.reverse(),
         '#FBC02D',
         '#FFF176'
       )
@@ -23,8 +23,8 @@ const Cards: React.FC<CardsProps> = ({ vas, currency, loading, translate }) => {
 
   const vasFees = vas
     ? getAreaOptions(
-        vas.vasFees.graph.labels,
-        vas.vasFees.graph.values,
+        vas.vasFees.graph.labels.reverse(),
+        vas.vasFees.graph.values.reverse(),
         '#FBC02D',
         '#FFF176'
       )
@@ -32,8 +32,8 @@ const Cards: React.FC<CardsProps> = ({ vas, currency, loading, translate }) => {
 
   const vasIncome = vas
     ? getAreaOptions(
-        vas.vasIncome.graph.labels,
-        vas.vasIncome.graph.values,
+        vas.vasIncome.graph.labels.reverse(),
+        vas.vasIncome.graph.values.reverse(),
         '#FBC02D',
         '#FFF176'
       )

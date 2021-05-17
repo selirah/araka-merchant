@@ -86,8 +86,8 @@ const Overview: React.FC<OverviewProps> = ({
 
   const firstTopMerchant = trxReports
     ? getAreaOptions(
-        trxReports.topMerchants.firstTopMerchant.graph.labels,
-        trxReports.topMerchants.firstTopMerchant.graph.values,
+        trxReports.topMerchants.firstTopMerchant.graph.labels.reverse(),
+        trxReports.topMerchants.firstTopMerchant.graph.values.reverse(),
         borderColor,
         bgColor
       )
@@ -95,8 +95,8 @@ const Overview: React.FC<OverviewProps> = ({
 
   const secondTopMerchant = trxReports
     ? getAreaOptions(
-        trxReports.topMerchants.secondTopMerchant.graph.labels,
-        trxReports.topMerchants.secondTopMerchant.graph.values,
+        trxReports.topMerchants.secondTopMerchant.graph.labels.reverse(),
+        trxReports.topMerchants.secondTopMerchant.graph.values.reverse(),
         borderColor,
         bgColor
       )
@@ -104,8 +104,8 @@ const Overview: React.FC<OverviewProps> = ({
 
   const thirdTopMerchant = trxReports
     ? getAreaOptions(
-        trxReports.topMerchants.thirdTopMerchant.graph.labels,
-        trxReports.topMerchants.thirdTopMerchant.graph.values,
+        trxReports.topMerchants.thirdTopMerchant.graph.labels.reverse(),
+        trxReports.topMerchants.thirdTopMerchant.graph.values.reverse(),
         borderColor,
         bgColor
       )
