@@ -15,6 +15,7 @@ import {
 import { isEmpty } from '../helpers/isEmpty';
 import { Register } from '../interfaces';
 import { roles } from '../helpers/constants';
+import { useTranslation } from 'react-i18next';
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -38,6 +39,7 @@ interface Merchant {
 
 export const Settings = () => {
   const dispatch: AppDispatch = useDispatch();
+  const { t } = useTranslation();
   const { user } = appSelector((state) => state.auth);
   const [form] = Form.useForm();
   const initialValues: Merchant = {
@@ -101,10 +103,10 @@ export const Settings = () => {
       message.error(JSON.stringify(error));
     }
     if (changePasswordSuccess) {
-      message.success('Password changed successfully');
+      message.success(t('general.passwordChanged'));
     }
     if (editSuccess) {
-      message.success('You details have been updated');
+      message.success(t('general.detailsUpdated'));
     }
     if (editFailure) {
       message.error(JSON.stringify(error));
@@ -120,6 +122,7 @@ export const Settings = () => {
     editSuccess,
     createMerchantSuccess,
     form,
+    t,
   ]);
 
   return (
@@ -139,7 +142,7 @@ export const Settings = () => {
               <TabPane
                 tab={
                   <span onClick={() => dispatch(clearSomeBooleans())}>
-                    <SettingOutlined /> Profile
+                    <SettingOutlined /> {t('general.profile')}
                   </span>
                 }
                 key="1"
@@ -150,13 +153,14 @@ export const Settings = () => {
                   isChangingPassword={isChangingPassword}
                   onChangePassword={onChangePassword}
                   user={user}
+                  translate={t}
                 />
               </TabPane>
               {role !== undefined && role === roles.SuperMerchant ? (
                 <TabPane
                   tab={
                     <span onClick={() => dispatch(clearSomeBooleans())}>
-                      <UserAddOutlined /> Create Merchant
+                      <UserAddOutlined /> {t('general.createMerchant')}
                     </span>
                   }
                   key="2"
@@ -169,6 +173,7 @@ export const Settings = () => {
                     onSubmit={createMerchant}
                     success={createMerchantSuccess}
                     values={initialValues}
+                    translate={t}
                   />
                 </TabPane>
               ) : null}

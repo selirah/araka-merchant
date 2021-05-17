@@ -3,7 +3,6 @@ import { Row, Col, Button } from 'antd';
 import CardView from '../cards/CardView';
 import RawCardView from '../cards/RawCardView';
 import { PayoutTableData, PayoutReport } from '../../interfaces';
-import { isEmpty } from '../../helpers/isEmpty';
 import { getAreaOptions } from '../../helpers/functions';
 import { roles } from '../../helpers/constants';
 
@@ -15,6 +14,7 @@ interface CardProps {
   currency: string;
   role: string | undefined;
   loading: boolean;
+  translate: any;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -25,6 +25,7 @@ const Card: React.FC<CardProps> = ({
   currency,
   role,
   loading,
+  translate,
 }) => {
   let processedTrx: any = {};
   if (payoutReport) {
@@ -41,9 +42,9 @@ const Card: React.FC<CardProps> = ({
       <Row>
         <Col span={12}>
           <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-            {!isEmpty(payouts) && payoutReport ? (
-              <h4 className="transaction-chart-text">Payouts Overview</h4>
-            ) : null}
+            <h4 className="transaction-chart-text">
+              {translate('general.payoutsOverview')}
+            </h4>
           </div>
         </Col>
 
@@ -60,7 +61,7 @@ const Card: React.FC<CardProps> = ({
               style={{ marginBottom: 10 }}
               disabled={!isNewPayout}
             >
-              New Payout
+              {translate('general.newPayout')}
             </Button>
           </Col>
         ) : null}
@@ -69,7 +70,7 @@ const Card: React.FC<CardProps> = ({
         <Row gutter={10}>
           <Col span={8} sm={24} md={8} xs={24}>
             <CardView
-              value="Processed Transactions"
+              value={translate('general.processedTransactions')}
               title={payoutReport.processedTransactions.value}
               data={processedTrx}
               currency={currency}
@@ -78,7 +79,7 @@ const Card: React.FC<CardProps> = ({
           </Col>
           <Col span={6} sm={24} md={6} xs={24}>
             <RawCardView
-              value="Total Paid Out"
+              value={translate('general.totalPaidOut')}
               title={payoutReport.totalPaidOut.value}
               currency={currency}
               loading={loading}
@@ -86,7 +87,7 @@ const Card: React.FC<CardProps> = ({
           </Col>
           <Col span={4} sm={24} md={4} xs={24}>
             <RawCardView
-              value="Fees Paid"
+              value={translate('general.feesPaid')}
               title={payoutReport.feesPaid.value}
               currency={currency}
               loading={loading}
@@ -94,7 +95,7 @@ const Card: React.FC<CardProps> = ({
           </Col>
           <Col span={6} sm={24} md={6} xs={24}>
             <RawCardView
-              value="Outstanding. Fee incld."
+              value={translate('general.outstanding')}
               title={payoutReport.outstanding.value}
               currency={currency}
               loading={loading}

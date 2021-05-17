@@ -146,7 +146,7 @@
       "June": "June",
       "July": "July",
       "August": "August",
-      "Septemeber": "September",
+      "September": "September",
       "October": "October",
       "November": "November",
       "December": "December",
@@ -218,7 +218,16 @@
       "comments": "Comments",
       "netAmountReceived": "Net Amount Received by",
       "payout": "Payout",
-      "enterAmount": "enter amount"
+      "enterAmount": "enter amount",
+      "preview": "Preview",
+      "newPayout": "New Payout",
+      "newPayoutFor": "New payout for",
+      "payoutDetails": "Payout Details",
+      "passwordChanged": "Password changed successfully",
+      "detailsUpdated": "Your details have been updated",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "enabled": "Enabled"
     }
   }
 }

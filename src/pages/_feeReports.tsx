@@ -148,17 +148,21 @@ const FeeReports = () => {
             onReset={onReset}
             onSearch={onSearch}
             merchants={merchants}
+            translate={t}
           />
           <Cards
             pces={pces}
             pcesReport={pcesReport}
             currency={currency}
             loading={loading}
+            translate={t}
           />
           <CurrencyFilter onSelectCurrency={onSelectCurrency} translate={t} />
           <div className="margin-top">
             <Row style={{ position: 'relative' }}>
-              <h4 className="transaction-chart-text">PCES Reports Table</h4>
+              <h4 className="transaction-chart-text">
+                {t('general.FEEReports')}
+              </h4>
               <div className="utility-buttons">
                 <>
                   <Button
@@ -168,7 +172,7 @@ const FeeReports = () => {
                     loading={isExporting && exportType === 'EXCEL'}
                     disabled={isEmpty(pces)}
                   >
-                    Export to Excel
+                    {t('general.export-excel')}
                   </Button>
                   {/* <Button
                     type="primary"
@@ -177,7 +181,7 @@ const FeeReports = () => {
                     loading={isExporting && exportType === 'PDF'}
                     disabled={isEmpty(pces)}
                   >
-                    Export to PDF
+                    {t('general.export-pdf')}
                   </Button> */}
                 </>
                 <Button
@@ -185,7 +189,7 @@ const FeeReports = () => {
                   className="export-buttons reload"
                   onClick={() => reloadReport()}
                 >
-                  Refresh
+                  {t('general.refresh')}
                 </Button>
               </div>
             </Row>
@@ -196,6 +200,7 @@ const FeeReports = () => {
               onLoadMore={onLoadMore}
               // total={pcesReport ? pcesReport.transactions.value : 0}
               total={pces.length}
+              translate={t}
             />
           </div>
         </Suspense>

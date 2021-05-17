@@ -168,7 +168,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
               }
               onClick={() => switchMenu(menu.FEE_REPORTS, menuHeadings.REPORTS)}
             >
-              <NavLink to={path.feeReports}>PCES Reports</NavLink>
+              <NavLink to={path.feeReports}> {t('general.FEEReports')}</NavLink>
             </Menu.Item>
 
             {/* <Menu.SubMenu

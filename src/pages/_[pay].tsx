@@ -66,6 +66,7 @@ const Pay: React.FC<PayProps> = () => {
     v.transactionReference =
       values.transactionReference !== null ? values.transactionReference : '';
     v.paymentPageId = singlePage !== undefined ? singlePage.paymentPageId : 0;
+
     dispatch(paymentRequest(v));
   };
 

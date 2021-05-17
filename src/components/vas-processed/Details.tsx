@@ -9,6 +9,7 @@ interface DetailsProps {
   loading: boolean;
   onLoadMore(page: any, pageSize: any): void;
   total: number;
+  translate: any;
 }
 
 const Details: React.FC<DetailsProps> = ({
@@ -17,10 +18,11 @@ const Details: React.FC<DetailsProps> = ({
   loading,
   onLoadMore,
   total,
+  translate,
 }) => {
   const columns: any = [
     {
-      title: 'Month',
+      title: `${translate('general.month')}`,
       dataIndex: 'month',
       key: 'month',
       align: 'center',
@@ -30,21 +32,21 @@ const Details: React.FC<DetailsProps> = ({
       },
     },
     {
-      title: 'Total Amount Sold',
+      title: `${translate('general.totalAmountSold')}`,
       dataIndex: 'totalAmountProcessed',
       key: 'totalAmountProcessed',
       align: 'center',
       className: 'column-text',
     },
     {
-      title: 'Fees Charged',
+      title: `${translate('general.feesCharged')}`,
       dataIndex: 'totalFeesCharged',
       key: 'totalFeesCharged',
       align: 'center',
       className: 'column-text',
     },
     {
-      title: 'Annual Fee',
+      title: `${translate('general.annualFee')}`,
       dataIndex: 'annualFees',
       key: 'annualFees',
       align: 'center',
@@ -52,7 +54,7 @@ const Details: React.FC<DetailsProps> = ({
       responsive: ['md'],
     },
     {
-      title: 'Other Fees',
+      title: `${translate('general.otherFees')}`,
       dataIndex: 'totalArakaDiscount',
       key: 'totalArakaDiscount',
       align: 'center',
@@ -60,7 +62,7 @@ const Details: React.FC<DetailsProps> = ({
       responsive: ['md'],
     },
     {
-      title: 'Total Araka Income',
+      title: `${translate('general.totalArakaIncome')}`,
       dataIndex: 'totalArakaIncome',
       key: 'totalArakaIncome',
       align: 'center',

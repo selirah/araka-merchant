@@ -24,6 +24,7 @@ import {
 import { isEmpty } from '../helpers/isEmpty';
 import moment from 'moment';
 import { roles } from '../helpers/constants';
+import { useTranslation } from 'react-i18next';
 
 const Filter = lazy(() => import('../components/payouts/Filter'));
 const CurrencyFilter = lazy(
@@ -40,6 +41,7 @@ const { Content } = Layout;
 
 const Payouts: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
+  const { t } = useTranslation();
   const reports = appSelector((state) => state.reports);
   const { user } = appSelector((state) => state.auth);
   const [isNewPayout, setIsNewPayout] = useState(false);
@@ -306,8 +308,12 @@ const Payouts: React.FC = () => {
                 merchants={merchants}
                 onChangeMerchant={onChangeMerchant}
                 role={role}
+                translate={t}
               />
-              <CurrencyFilter onSelectCurrency={onSelectCurrency} />
+              <CurrencyFilter
+                onSelectCurrency={onSelectCurrency}
+                translate={t}
+              />
               <Card
                 isNewPayout={isNewPayout}
                 onOpenRecordView={onOpenRecordView}
@@ -316,6 +322,7 @@ const Payouts: React.FC = () => {
                 currency={currency}
                 role={role}
                 loading={loading}
+                translate={t}
               />
               <div className="margin-top">
                 <Row style={{ position: 'relative' }}>
@@ -328,7 +335,7 @@ const Payouts: React.FC = () => {
                       loading={isExporting && exportType === 'EXCEL'}
                       disabled={isEmpty(payouts)}
                     >
-                      Export to Excel
+                      {t('general.export-excel')}
                     </Button>
 
                     {/* <Button
@@ -338,7 +345,7 @@ const Payouts: React.FC = () => {
                       loading={isExporting && exportType === 'PDF'}
                       disabled={isEmpty(payouts)}
                     >
-                      Export to PDF
+                       {t('general.export-pdf')}
                     </Button> */}
 
                     <Button
@@ -346,7 +353,7 @@ const Payouts: React.FC = () => {
                       className="export-buttons reload"
                       onClick={() => reloadPayouts()}
                     >
-                      Refresh
+                      {t('general.refresh')}
                     </Button>
                   </div>
                 </Row>
@@ -357,6 +364,7 @@ const Payouts: React.FC = () => {
                   loading={loading}
                   onLoadMore={onLoadMore}
                   total={payoutReport ? payoutReport.data.length : 0}
+                  translate={t}
                 />
               </div>
             </>
@@ -373,6 +381,7 @@ const Payouts: React.FC = () => {
               onCalculateFee={onCalculateFee}
               fee={fee}
               amount={amount}
+              translate={t}
             />
           ) : (
             <PayoutDetail
@@ -380,6 +389,7 @@ const Payouts: React.FC = () => {
               onCloseScreen={onCloseScreen}
               onDownloadReceiptClick={onDownloadReceiptClick}
               payout={payout}
+              translate={t}
             />
           )}
         </Suspense>

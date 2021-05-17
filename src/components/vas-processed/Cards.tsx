@@ -8,9 +8,10 @@ interface CardsProps {
   vas: VASProcessedReport | null;
   currency: string;
   loading: boolean;
+  translate: any;
 }
 
-const Cards: React.FC<CardsProps> = ({ vas, currency, loading }) => {
+const Cards: React.FC<CardsProps> = ({ vas, currency, loading, translate }) => {
   const vasProcessed = vas
     ? getAreaOptions(
         vas.vasProcessed.graph.labels,
@@ -41,14 +42,16 @@ const Cards: React.FC<CardsProps> = ({ vas, currency, loading }) => {
   return (
     <div className="margin-top-small">
       <Row>
-        <h4 className="transaction-chart-text">VAS Processed Overview</h4>
+        <h4 className="transaction-chart-text">
+          {translate('general.VASProcessed')}
+        </h4>
       </Row>
       <Row gutter={20}>
         <Col span={24}>
           <Row gutter={20}>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
-                value="Vas Processed"
+                value={translate('general.VASProcessed')}
                 title={vas ? vas.vasProcessed.value : 0}
                 data={vasProcessed}
                 loading={loading}
@@ -56,7 +59,7 @@ const Cards: React.FC<CardsProps> = ({ vas, currency, loading }) => {
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
-                value="VAS Income"
+                value={translate('general.vasIncome')}
                 title={vas ? vas.vasIncome.value : 0}
                 data={vasIncome}
                 currency={currency}
@@ -74,7 +77,7 @@ const Cards: React.FC<CardsProps> = ({ vas, currency, loading }) => {
             </Col> */}
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
-                value="Fees Charged"
+                value={translate('general.feesCharged')}
                 title={vas ? vas.vasFees.value : 0}
                 data={vasFees}
                 currency={currency}

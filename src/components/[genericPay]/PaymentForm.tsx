@@ -11,6 +11,7 @@ interface PaymentFormProps {
   error: any;
   fee: Fee | undefined;
   onCalculateFee(e: React.FormEvent<EventTarget>): void;
+  translate: any;
 }
 
 export const PaymentForm: React.FC<PaymentFormProps> = ({
@@ -20,6 +21,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
   isSubmit,
   fee,
   onCalculateFee,
+  translate,
 }) => {
   const [values] = useState<Merchant>({
     amount: page.amount !== '' ? page.amount : '',
@@ -60,16 +62,16 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
               {page.customerName === 'true' ? (
                 <Form.Item
                   name="customerFullName"
-                  label="Full Name"
+                  label={translate('general.fullname')}
                   style={{ marginBottom: '2px' }}
                   rules={[{ required: true, message: 'Enter your full name' }]}
                 >
-                  <Input placeholder="Enter your name.." />
+                  <Input placeholder={translate('general.fullname')} />
                 </Form.Item>
               ) : (
                 <Form.Item
                   name="customerFullName"
-                  label="Full Name"
+                  label={translate('general.fullname')}
                   style={{ marginBottom: '2px' }}
                 >
                   <Input disabled />
@@ -82,22 +84,22 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
               {page.emailAddress === 'true' ? (
                 <Form.Item
                   name="customerEmailAddress"
-                  label="Email Address"
+                  label={translate('general.email-placeholder')}
                   style={{ marginBottom: '2px' }}
                   rules={[
                     {
                       required: true,
-                      message: 'Enter your email address',
+                      message: `${translate('general.email-error')}`,
                       type: 'email',
                     },
                   ]}
                 >
-                  <Input placeholder="Enter email address.." />
+                  <Input />
                 </Form.Item>
               ) : (
                 <Form.Item
                   name="customerEmailAddress"
-                  label="Email Address"
+                  label={translate('general.email-placeholder')}
                   style={{ marginBottom: '2px' }}
                 >
                   <Input disabled />
@@ -116,12 +118,12 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
                     { required: true, message: 'Enter your phone number' },
                   ]}
                 >
-                  <Input placeholder="Enter phone number.." />
+                  <Input />
                 </Form.Item>
               ) : (
                 <Form.Item
                   name="customerPhoneNumber"
-                  label="Phone Number"
+                  label={translate('general.phoneNumber')}
                   style={{ marginBottom: '2px' }}
                 >
                   <Input disabled />
@@ -131,7 +133,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
           </Row>
           <Row gutter={10}>
             <Col span={6}>
-              <Form.Item name="currency" label="Amount">
+              <Form.Item name="currency" label={translate('general.amount')}>
                 <Input readOnly disabled />
               </Form.Item>
             </Col>
@@ -141,7 +143,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
                   <Col span={24}>
                     <Form.Item
                       name="amount"
-                      label="Amount"
+                      label={translate('general.amount')}
                       className="hide-label"
                     >
                       <Input readOnly disabled />
@@ -173,12 +175,12 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
                   <Col span={24}>
                     <Form.Item
                       name="amount"
-                      label="Amount"
+                      label={translate('general.amount')}
                       className="hide-label"
                       rules={[{ required: true, message: 'Enter the amount' }]}
                     >
                       <Input
-                        placeholder="Amount"
+                        placeholder={translate('general.amount')}
                         onBlur={(e) => onCalculateFee(e)}
                       />
                     </Form.Item>

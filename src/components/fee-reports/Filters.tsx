@@ -8,19 +8,25 @@ interface FiltersProps {
   onSearch(values: any): void;
   onReset(form: any): void;
   merchants: MerchantData[];
+  translate: any;
 }
 
 const { Panel } = Collapse;
 const { Option } = Select;
 
-const Filters: React.FC<FiltersProps> = ({ onReset, onSearch, merchants }) => {
+const Filters: React.FC<FiltersProps> = ({
+  onReset,
+  onSearch,
+  merchants,
+  translate,
+}) => {
   const { time } = Clock();
   const [form] = Form.useForm();
 
   return (
     <Collapse style={{ marginTop: '5px' }}>
       <Panel
-        header="Filter by:"
+        header={`${translate('general.filterBy')}:`}
         style={{ fontWeight: 400, fontSize: '1rem' }}
         key="1"
         extra={
@@ -42,7 +48,9 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch, merchants }) => {
                   style={{ width: '100%' }}
                   format="MMMM D, YYYY"
                   allowClear
-                  placeholder="Date Period: From"
+                  placeholder={`${translate('general.datePeriod')}: ${translate(
+                    'general.from'
+                  )}`}
                 />
               </Form.Item>
             </Col>
@@ -52,14 +60,18 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch, merchants }) => {
                   style={{ width: '100%' }}
                   format="MMMM D, YYYY"
                   allowClear
-                  placeholder="Date Period: To"
+                  placeholder={`${translate('general.datePeriod')}: ${translate(
+                    'general.to'
+                  )}`}
                 />
               </Form.Item>
             </Col>
             <Col span={6}>
               <Form.Item name="merchant">
                 <Select
-                  placeholder="Merchant: Default=All"
+                  placeholder={`${translate('general.merchant')}: ${translate(
+                    'general.default'
+                  )}=${translate('general.all')}`}
                   style={{ width: '100%' }}
                   allowClear
                   showSearch
@@ -88,7 +100,7 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch, merchants }) => {
                       className="filterButton"
                       htmlType="submit"
                     >
-                      Filter
+                      {translate('general.filter')}
                     </Button>
                   </Col>
                 </Form.Item>
@@ -98,7 +110,7 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch, merchants }) => {
                     className="resetButton"
                     onClick={() => onReset(form)}
                   >
-                    Reset
+                    {translate('general.reset')}
                   </Button>
                 </Col>
               </Row>

@@ -1,32 +1,27 @@
 import React from 'react';
-import {
-  Row,
-  Col,
-  // Select,
-  DatePicker,
-  Input,
-  Button,
-  Collapse,
-  Form,
-} from 'antd';
+import { Row, Col, DatePicker, Input, Button, Collapse, Form } from 'antd';
 import { Clock } from '../../utils/clock';
 
 interface FilterMenuProps {
   onSearch(values: any): void;
   onReset(form: any): void;
+  translate: any;
 }
 
-// const { Option } = Select;
 const { Panel } = Collapse;
 
-const FilterMenu: React.FC<FilterMenuProps> = ({ onReset, onSearch }) => {
+const FilterMenu: React.FC<FilterMenuProps> = ({
+  onReset,
+  onSearch,
+  translate,
+}) => {
   const { time } = Clock();
   const [form] = Form.useForm();
 
   return (
     <Collapse style={{ marginTop: '5px' }}>
       <Panel
-        header="Filter by:"
+        header={`${translate('general.filterBy')}:`}
         style={{ fontWeight: 400, fontSize: '1rem' }}
         key="1"
         extra={
@@ -42,38 +37,15 @@ const FilterMenu: React.FC<FilterMenuProps> = ({ onReset, onSearch }) => {
           className="filter-form"
         >
           <Row gutter={10}>
-            {/* <Col span={6}>
-              <Form.Item name="status">
-                <Select
-                  placeholder="Status: Default=All"
-                  style={{ width: '100%' }}
-                >
-                  <Option value="">All</Option>
-                  <Option value="Approved">Approved</Option>
-                  <Option value="Declined">Declined</Option>
-                  <Option value="Canceled">Canceled</Option>
-                </Select>
-              </Form.Item>
-            </Col> */}
-            {/* <Col span={6}>
-              <Form.Item name="type">
-                <Select
-                  placeholder="Type: Default=All"
-                  style={{ width: '100%' }}
-                >
-                  <Option value="">All</Option>
-                  <Option value="OT Payment">OT Payment</Option>
-                  <Option value="Subscription">Subscription</Option>
-                </Select>
-              </Form.Item>
-            </Col> */}
             <Col span={6}>
               <Form.Item name="periodFrom">
                 <DatePicker
                   style={{ width: '100%' }}
                   format="MMMM D, YYYY"
                   allowClear
-                  placeholder="Created At: From"
+                  placeholder={`${translate('general.createdAt')}: ${translate(
+                    'general.from'
+                  )}`}
                 />
               </Form.Item>
             </Col>
@@ -83,7 +55,9 @@ const FilterMenu: React.FC<FilterMenuProps> = ({ onReset, onSearch }) => {
                   style={{ width: '100%' }}
                   format="MMMM D, YYYY"
                   allowClear
-                  placeholder="Created At: To"
+                  placeholder={`${translate('general.createdAt')}: ${translate(
+                    'general.to'
+                  )}`}
                 />
               </Form.Item>
             </Col>
@@ -92,7 +66,9 @@ const FilterMenu: React.FC<FilterMenuProps> = ({ onReset, onSearch }) => {
             <Col span={6}>
               <Form.Item name="query">
                 <Input
-                  placeholder="Page name/Amount"
+                  placeholder={`${translate('general.pageName')}/${translate(
+                    'general.amount'
+                  )}`}
                   style={{ width: '100%' }}
                 />
               </Form.Item>
@@ -106,7 +82,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({ onReset, onSearch }) => {
                       className="filterButton"
                       htmlType="submit"
                     >
-                      Filter
+                      {translate('general.filter')}
                     </Button>
                   </Col>
                 </Form.Item>
@@ -116,7 +92,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({ onReset, onSearch }) => {
                     className="resetButton"
                     onClick={() => onReset(form)}
                   >
-                    Reset
+                    {translate('general.reset')}
                   </Button>
                 </Col>
               </Row>

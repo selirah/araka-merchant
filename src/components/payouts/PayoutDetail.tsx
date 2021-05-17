@@ -7,6 +7,7 @@ interface PayoutDetailProps {
   onCloseScreen(): void;
   onDownloadReceiptClick(transactionId: number): void;
   isDownloading: boolean;
+  translate: any;
 }
 
 const PayoutDetail: React.FC<PayoutDetailProps> = ({
@@ -14,13 +15,14 @@ const PayoutDetail: React.FC<PayoutDetailProps> = ({
   onCloseScreen,
   onDownloadReceiptClick,
   payout,
+  translate,
 }) => {
   return (
     <>
       <Row gutter={10}>
         <Col span={24}>
           <div className="upper-header">
-            <h4>Payout Details</h4>
+            <h4>{translate('general.payoutDetails')}</h4>
             <h6>
               <XCircle
                 size={30}
@@ -44,31 +46,31 @@ const PayoutDetail: React.FC<PayoutDetailProps> = ({
               loading={isDownloading}
               onClick={() => onDownloadReceiptClick(payout.transactionId)}
             >
-              Print/Export
+              {translate('general.printExport')}
             </Button>
           </div>
           <div className="trans-detail-info">
             <div className="trans-amount">
-              <h4>Amount</h4>
+              <h4>{translate('general.amount')}</h4>
               <h2>{payout.amount}</h2>
             </div>
           </div>
           <div className="trans-detail">
             <List className="list">
               <List.Item>
-                <h4 className="key">Fees Paid</h4>
+                <h4 className="key">{translate('general.feesPaid')}</h4>
                 <h4 className="value">{payout.feesPaid}</h4>
               </List.Item>
               <List.Item>
-                <h4 className="key">Net Amount</h4>
+                <h4 className="key">{translate('general.netAmount')}</h4>
                 <h4 className="value">{payout.netAmount}</h4>
               </List.Item>
               <List.Item>
-                <h4 className="key">Paid on</h4>
+                <h4 className="key">{translate('general.paidOn')}</h4>
                 <h4 className="value">{payout.paidOn}</h4>
               </List.Item>
               <List.Item>
-                <h4 className="key">Merchant</h4>
+                <h4 className="key">{translate('general.merchant')}</h4>
                 <h4 className="value">{payout.merchant}</h4>
               </List.Item>
             </List>
@@ -85,7 +87,9 @@ const PayoutDetail: React.FC<PayoutDetailProps> = ({
             <Divider />
             <div className="footer-box">
               <div className="footer">
-                <h4>Net amount received by {payout.merchant}</h4>
+                <h4>
+                  {translate('general.netAmountReceived')} {payout.merchant}
+                </h4>
               </div>
             </div>
           </div>

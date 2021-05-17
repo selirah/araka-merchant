@@ -18,6 +18,7 @@ interface NewRecordPayoutProps {
   fee: Fee | undefined;
   onCalculateFee(e: React.FormEvent<EventTarget>): void;
   amount: number;
+  translate: any;
 }
 
 const NewRecordPayout: React.FC<NewRecordPayoutProps> = ({
@@ -32,13 +33,17 @@ const NewRecordPayout: React.FC<NewRecordPayoutProps> = ({
   onCalculateFee,
   fee,
   amount,
+  translate,
 }) => {
   return (
     <>
       <Row gutter={10}>
         <Col span={24}>
           <div className="upper-header">
-            <h4>New Payout for {merchant ? merchant.name : ''}</h4>
+            <h4>
+              {translate('general.newPayoutFor')}{' '}
+              {merchant ? merchant.name : ''}
+            </h4>
             <h6>
               <XCircle
                 size={30}
@@ -64,13 +69,13 @@ const NewRecordPayout: React.FC<NewRecordPayoutProps> = ({
           >
             <div className="new-record-box">
               <div className="amount-details">
-                <h4>Amount*</h4>
+                <h4>{translate('general.amount')}*</h4>
                 <div style={{ display: 'flex' }}>
                   <h2>{currency}</h2>
                   <div style={{ marginLeft: 10, marginTop: 5 }}>
                     <Form.Item name="amount">
                       <Input
-                        placeholder="enter amount.."
+                        placeholder={translate('general.enterAmount')}
                         style={{ fontWeight: 700 }}
                         onBlur={(e) => onCalculateFee(e)}
                       />
@@ -85,14 +90,14 @@ const NewRecordPayout: React.FC<NewRecordPayoutProps> = ({
                   loading={isPayingOut}
                   form="recordForm"
                 >
-                  Payout
+                  {translate('general.payout')}
                 </Button>
               </div>
             </div>
             <div className="trans-detail">
               <List className="list">
                 <List.Item>
-                  <h4 className="key">Fees to be Paid:</h4>
+                  <h4 className="key">{translate('general.feesToBePaid')}:</h4>
                   <h4 className="value">
                     {currency}{' '}
                     {fee !== undefined
@@ -101,13 +106,14 @@ const NewRecordPayout: React.FC<NewRecordPayoutProps> = ({
                   </h4>
                 </List.Item>
                 <List.Item>
-                  <h4 className="key">Description:</h4>
+                  <h4 className="key">{translate('general.description')}:</h4>
                   <h4 className="value">
-                    Payout for {merchant ? merchant.name : ''}
+                    {translate('general.newPayoutFor')}{' '}
+                    {merchant ? merchant.name : ''}
                   </h4>
                 </List.Item>
                 <List.Item style={{ borderBottom: 0 }}>
-                  <h4 className="key">Comments:</h4>
+                  <h4 className="key">{translate('general.comments')}:</h4>
                 </List.Item>
                 <List.Item className="comment-section">
                   <Form.Item name="comments" style={{ width: '100%' }}>
@@ -136,7 +142,8 @@ const NewRecordPayout: React.FC<NewRecordPayoutProps> = ({
               <div className="footer-box">
                 <div className="footer">
                   <h4>
-                    Net amount received by {merchant ? merchant.name : ''}
+                    {translate('general.netAmountReceived')}{' '}
+                    {merchant ? merchant.name : ''}
                   </h4>
                 </div>
               </div>

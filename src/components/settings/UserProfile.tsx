@@ -8,6 +8,7 @@ interface UserProfileProps {
   onChangePassword(values: any): void;
   isChangingPassword: boolean;
   user: any;
+  translate: any;
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({
@@ -16,6 +17,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
   isChangingPassword,
   onChangePassword,
   user,
+  translate,
 }) => {
   const [form] = Form.useForm();
   const [showFormModal, setShowFormModal] = React.useState(false);
@@ -34,7 +36,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
         }}
       >
         <Col span={20} md={20} sm={24} xs={24} className="profile-box">
-          <h3>Your Profile</h3>
+          <h3>{translate('general.yourProfile')}</h3>
           <Row>
             <Col span={24}>
               <Form
@@ -45,7 +47,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
               >
                 <Row gutter={20}>
                   <Col span={6} className="form-label">
-                    <h4>Fullname</h4>
+                    <h4>{translate('general.fullname')}</h4>
                   </Col>
                   <Col span={6} sm={8} xs={8}>
                     <Form.Item
@@ -55,7 +57,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
                       ]}
                     >
                       <Input
-                        placeholder="First name"
+                        placeholder={translate('general.firstName')}
                         value={user ? user.firstName : null}
                       />
                     </Form.Item>
@@ -68,7 +70,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
                       ]}
                     >
                       <Input
-                        placeholder="Last name"
+                        placeholder={translate('general.lastName')}
                         value={user ? user.lastName : null}
                       />
                     </Form.Item>
@@ -76,7 +78,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
                 </Row>
                 <Row gutter={20}>
                   <Col span={6} className="form-label">
-                    <h4>Email</h4>
+                    <h4>{translate('login.email')}</h4>
                   </Col>
                   <Col span={12} sm={16} xs={16}>
                     <Form.Item
@@ -95,7 +97,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
                 </Row>
                 <Row gutter={20}>
                   <Col span={6} className="form-label">
-                    <h4>Phone Number</h4>
+                    <h4>{translate('general.phoneNumber')}</h4>
                   </Col>
                   <Col span={12} sm={16} xs={16}>
                     <Form.Item
@@ -113,17 +115,17 @@ const UserProfile: React.FC<UserProfileProps> = ({
                 </Row>
                 <Row gutter={20}>
                   <Col span={6} className="form-label">
-                    <h4>Technical Skill</h4>
+                    <h4>{translate('general.technicalSkill')}</h4>
                   </Col>
                   <Col span={12} className="tech-skill" sm={16} xs={16}>
                     <Form.Item name="techinicalSkill" valuePropName="checked">
-                      <Checkbox>I am a developer</Checkbox>
+                      <Checkbox>{translate('general.developer')}</Checkbox>
                     </Form.Item>
                   </Col>
                 </Row>
                 <Row gutter={20}>
                   <Col span={6} className="form-label">
-                    <h4>Password</h4>
+                    <h4>{translate('general.password')}</h4>
                   </Col>
                   <Col span={12} className="change-password-btn">
                     <Form.Item>
@@ -131,18 +133,18 @@ const UserProfile: React.FC<UserProfileProps> = ({
                         type="primary"
                         onClick={() => onToggleFormModal()}
                       >
-                        Change Password
+                        {translate('general.password')}
                       </Button>
                     </Form.Item>
                   </Col>
                 </Row>
                 <Row gutter={20}>
                   <Col span={6} className="form-label">
-                    <h4>Two-Factor Auth</h4>
+                    <h4>{translate('general.twoFactor')}</h4>
                   </Col>
                   <Col span={12} className="switch-btn">
                     <Form.Item valuePropName="checked">
-                      <Switch defaultChecked /> Enabled
+                      <Switch defaultChecked /> {translate('general.enabled')}
                     </Form.Item>
                   </Col>
                 </Row>
@@ -156,7 +158,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
                         size="large"
                         loading={isSubmitting}
                       >
-                        {isSubmitting ? 'Saving..' : 'Save'}
+                        {translate('general.save')}
                       </Button>
                     </Form.Item>
                   </Col>
@@ -167,7 +169,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
         </Col>
       </Row>
       <Modal
-        title="Change Password"
+        title={translate('general.password')}
         maskClosable={false}
         centered
         visible={showFormModal}
@@ -179,7 +181,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
             className="change-password-button"
             onClick={() => onToggleFormModal()}
           >
-            Close
+            {translate('general.close')}
           </Button>,
           <Button
             form="change-password"
@@ -189,7 +191,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
             className="change-password-button"
             loading={isChangingPassword}
           >
-            {isChangingPassword ? 'Processing..' : 'Save New Password'}
+            {translate('general.saveNewPassword')}
           </Button>,
         ]}
       >
@@ -202,14 +204,14 @@ const UserProfile: React.FC<UserProfileProps> = ({
             name="OldPassword"
             rules={[{ required: true, message: 'Enter your old password' }]}
           >
-            <Input.Password placeholder="Old Password" />
+            <Input.Password placeholder={translate('general.oldPassword')} />
           </Form.Item>
           <Form.Item
             name="NewPassword"
             rules={[{ required: true, message: 'Enter your new password' }]}
             hasFeedback
           >
-            <Input.Password placeholder="New Password" />
+            <Input.Password placeholder={translate('general.newPassword')} />
           </Form.Item>
           <Form.Item
             dependencies={['NewPassword']}
@@ -229,7 +231,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
               }),
             ]}
           >
-            <Input.Password placeholder="Re-type Password" />
+            <Input.Password placeholder={translate('general.reTypePassword')} />
           </Form.Item>
         </Form>
       </Modal>

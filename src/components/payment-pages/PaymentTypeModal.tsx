@@ -3,12 +3,12 @@ import { Button, Modal, List } from 'antd';
 import {
   CreditCardOutlined /*, ShoppingCartOutlined*/,
 } from '@ant-design/icons';
-import { useTranslation } from 'react-i18next';
 
 interface PaymentTypeModalProps {
   choosePaymentPage(): void;
   showPaymentTypeModal: boolean;
   onTogglePaymentTypeModal(): void;
+  translate: any;
 }
 
 type ModalProps = {
@@ -21,21 +21,20 @@ const PaymentTypeModal: React.FC<PaymentTypeModalProps> = ({
   choosePaymentPage,
   showPaymentTypeModal,
   onTogglePaymentTypeModal,
+  translate,
 }) => {
-  const { t } = useTranslation();
-
   const paymentTypeData: ModalProps[] = [
     {
-      title: `${t('paymentPages.paymentTypeModal.oneTimePayment')}`,
+      title: `${translate('general.oneTimePayment')}`,
       icon: <CreditCardOutlined style={{ fontSize: '30px' }} />,
       description: (
         <div className="option-desc">
-          <span>{t('paymentPages.paymentTypeModal.oneTimePaymentDesc')}</span>
+          <span>{translate('general.oneTimePaymentDesc')}</span>
           <Button
             onClick={() => choosePaymentPage()}
             className="new-cancel-btn"
           >
-            {t('paymentPages.paymentTypeModal.choose')}
+            {translate('general.choose')}
           </Button>
         </div>
       ),
@@ -55,7 +54,7 @@ const PaymentTypeModal: React.FC<PaymentTypeModalProps> = ({
   ];
   return (
     <Modal
-      title={t('paymentPages.paymentTypeModal.title')}
+      title={translate('general.title')}
       maskClosable={false}
       className="option-modal"
       centered

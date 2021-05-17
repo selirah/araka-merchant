@@ -1940,5 +1940,11 @@ thead[class*='ant-table-thead'] th {
   background-color: #0090fe;
 }
 
+.ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
+  top: 7px;
+  left: 75px;
+  font-size: 12px;
+}
+
 /** END CONTENT **/
 /* } */

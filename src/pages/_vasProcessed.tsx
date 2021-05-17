@@ -12,18 +12,20 @@ import {
 import { isEmpty } from '../helpers/isEmpty';
 import { VASProcessed as VP, VASProcessedReport } from '../interfaces';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 
 const Filters = lazy(() => import('../components/vas-processed/Filters'));
 const Cards = lazy(() => import('../components/vas-processed/Cards'));
 const Details = lazy(() => import('../components/vas-processed/Details'));
 const CurrencyFilter = lazy(
-  () => import('../components/dashboard/CurrencyFilter')
+  () => import('../components/vas-processed/CurrencyFilter')
 );
 
 const { Content } = Layout;
 
 const VASProcessed = () => {
   const dispatch: AppDispatch = useDispatch();
+  const { t } = useTranslation();
   const vasStore = appSelector((state) => state.vas);
   const [vasReport, setVasReport] = useState<VASProcessedReport | null>(null);
   const [vasData, setVasData] = useState<VP[]>([]);
@@ -123,12 +125,19 @@ const VASProcessed = () => {
             </Row>
           }
         >
-          <Filters onReset={onReset} onSearch={onSearch} />
-          <Cards vas={vasReport} currency={currency} loading={loading} />
+          <Filters onReset={onReset} onSearch={onSearch} translate={t} />
+          <Cards
+            vas={vasReport}
+            currency={currency}
+            loading={loading}
+            translate={t}
+          />
           <div className="margin-top">
-            <CurrencyFilter onSelectCurrency={onSelectCurrency} />
+            <CurrencyFilter onSelectCurrency={onSelectCurrency} translate={t} />
             <Row style={{ position: 'relative' }}>
-              <h4 className="transaction-chart-text">VAS Processed Table</h4>
+              <h4 className="transaction-chart-text">
+                {t('general.vasTable')}
+              </h4>
               <div className="utility-buttons">
                 <>
                   <Button
@@ -138,7 +147,7 @@ const VASProcessed = () => {
                     loading={isExporting && exportType === 'EXCEL'}
                     disabled={isEmpty(vasData)}
                   >
-                    Export to Excel
+                    {t('general.export-excel')}
                   </Button>
                   {/* <Button
                     type="primary"
@@ -147,7 +156,7 @@ const VASProcessed = () => {
                     loading={isExporting && exportType === 'PDF'}
                     disabled={isEmpty(vasData)}
                   >
-                    Export to PDF
+                    {t('general.export-pdf')}
                   </Button> */}
                 </>
                 <Button
@@ -155,7 +164,7 @@ const VASProcessed = () => {
                   className="export-buttons reload"
                   onClick={() => reloadVas()}
                 >
-                  Refresh
+                  {t('general.refresh')}
                 </Button>
               </div>
             </Row>
@@ -166,6 +175,7 @@ const VASProcessed = () => {
               onLoadMore={onLoadMore}
               // total={vasReport ? vasReport.vasProcessed.value : 0}
               total={vasData.length}
+              translate={t}
             />
           </div>
         </Suspense>
