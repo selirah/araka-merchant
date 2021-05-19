@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Row, Col, Form, Input, Button, Alert } from 'antd';
 import { Merchant, Page, Fee } from '../../interfaces';
-import { PayCircleOutlined, LoadingOutlined } from '@ant-design/icons';
+import { PayCircleOutlined } from '@ant-design/icons';
 import { isEmpty } from '../../helpers/isEmpty';
 
 interface PaymentFormProps {
@@ -264,16 +264,10 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
               justifyContent: 'center',
             }}
           >
-            <Button type="primary" htmlType="submit" disabled={isSubmit}>
-              {!isSubmit ? (
-                <React.Fragment>
-                  <PayCircleOutlined /> Pay Now
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <LoadingOutlined /> Processing...
-                </React.Fragment>
-              )}
+            <Button type="primary" htmlType="submit" loading={isSubmit}>
+              <React.Fragment>
+                <PayCircleOutlined /> {translate('general.payNow')}
+              </React.Fragment>
             </Button>
           </Row>
         </Form>
