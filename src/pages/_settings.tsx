@@ -156,7 +156,7 @@ export const Settings = () => {
                   translate={t}
                 />
               </TabPane>
-              {role !== undefined && role === roles.SuperMerchant ? (
+              {/* {role !== undefined && role === roles.SuperMerchant ? (
                 <TabPane
                   tab={
                     <span onClick={() => dispatch(clearSomeBooleans())}>
@@ -176,7 +176,7 @@ export const Settings = () => {
                     translate={t}
                   />
                 </TabPane>
-              ) : null}
+              ) : null} */}
             </Tabs>
           </div>
         </Suspense>
