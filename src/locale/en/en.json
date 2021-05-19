@@ -227,7 +227,8 @@
       "detailsUpdated": "Your details have been updated",
       "firstName": "First name",
       "lastName": "Last name",
-      "enabled": "Enabled"
+      "enabled": "Enabled",
+      "pagination": "Showing %d of %s results"
     }
   }
 }

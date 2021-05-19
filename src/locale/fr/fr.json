@@ -30,7 +30,7 @@
       "page": "Page",
       "payments": "Paiements",
       "commerce": "Commerce",
-      "dashboard": "Tableau de bord ",
+      "dashboard": "Tableau de bord",
       "reports": "Rapports",
       "merchantPayouts": "Reglements",
       "VASProcessed": "SVA traités ",
@@ -227,7 +227,8 @@
       "detailsUpdated": "Vos détails ont été mis à jour",
       "firstName": "Prénom",
       "lastName": "Nom de famille",
-      "enabled": "Activé"
+      "enabled": "Activé",
+      "pagination": "Affichage de %d sur %s résultats"
     }
   }
 }

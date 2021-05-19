@@ -177,6 +177,8 @@ const Transactions = () => {
     params.status = '';
     params.channel = '';
     params.searchValue = '';
+    params.pageSize = 10;
+
     dispatch(getTransactionsRequest(params));
   };
 
@@ -259,7 +261,7 @@ const Transactions = () => {
                   currency={currency}
                   loading={loading}
                   onLoadMore={onLoadMore}
-                  total={100}
+                  total={trxReport ? trxReport.total.value : 0}
                   translate={t}
                 />
               </div>

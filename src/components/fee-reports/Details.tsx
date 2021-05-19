@@ -106,7 +106,10 @@ const Details: React.FC<DetailsProps> = ({
               },
               total: total,
               showTotal: (_, range) => {
-                return `Showing ${range[0]} - ${range[1]} of ${total} results`;
+                const tran = translate(`general.pagination`);
+                let t = tran.replace(`%d`, `${range[0]} - ${range[1]}`);
+                let s = t.replace(`%s`, total);
+                return s;
               },
               showSizeChanger: false,
             }}

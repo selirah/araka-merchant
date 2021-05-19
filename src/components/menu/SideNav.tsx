@@ -71,7 +71,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             }
             onClick={() => switchMenu(menu.DASHBOARD, menuHeadings.DASHBOARD)}
           >
-            <NavLink to={path.dashboard}>Dashboard</NavLink>
+            <NavLink to={path.dashboard}>{t(`general.dashboard`)}</NavLink>
           </Menu.Item>
         </Menu.ItemGroup>
         <Menu.ItemGroup key="g2" title={t('general.payments').toUpperCase()}>

@@ -22,8 +22,8 @@ const Cards: React.FC<CardsProps> = ({
 }) => {
   const totalTransactions = pcesReport
     ? getAreaOptions(
-        pcesReport.transactions.graph.labels,
-        pcesReport.transactions.graph.values,
+        pcesReport.transactions.graph.labels.reverse(),
+        pcesReport.transactions.graph.values.reverse(),
         '#FFA000',
         '#FFE082'
       )
@@ -31,8 +31,8 @@ const Cards: React.FC<CardsProps> = ({
 
   const totalAmount = pcesReport
     ? getAreaOptions(
-        pcesReport.totalAmount.graph.labels,
-        pcesReport.totalAmount.graph.values,
+        pcesReport.totalAmount.graph.labels.reverse(),
+        pcesReport.totalAmount.graph.values.reverse(),
         '#FFA000',
         '#FFE082'
       )
@@ -40,8 +40,8 @@ const Cards: React.FC<CardsProps> = ({
 
   const annualFees = pcesReport
     ? getAreaOptions(
-        pcesReport.arakaAnnualFees.graph.labels,
-        pcesReport.arakaAnnualFees.graph.values,
+        pcesReport.arakaAnnualFees.graph.labels.reverse(),
+        pcesReport.arakaAnnualFees.graph.values.reverse(),
         '#FFA000',
         '#FFE082'
       )
