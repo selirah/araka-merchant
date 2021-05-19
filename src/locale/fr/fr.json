@@ -228,7 +228,9 @@
       "firstName": "Prénom",
       "lastName": "Nom de famille",
       "enabled": "Activé",
-      "pagination": "Affichage de %d sur %s résultats"
+      "pagination": "Affichage de %d sur %s résultats",
+      "payNow": "Payez maintenant",
+      "referenceInput": "Référence"
     }
   }
 }

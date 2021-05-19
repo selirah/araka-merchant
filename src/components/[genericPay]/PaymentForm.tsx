@@ -84,7 +84,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
               {page.emailAddress === 'true' ? (
                 <Form.Item
                   name="customerEmailAddress"
-                  label={translate('general.email-placeholder')}
+                  label={translate('login.email-placeholder')}
                   style={{ marginBottom: '2px' }}
                   rules={[
                     {
@@ -99,7 +99,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
               ) : (
                 <Form.Item
                   name="customerEmailAddress"
-                  label={translate('general.email-placeholder')}
+                  label={translate('login.email-placeholder')}
                   style={{ marginBottom: '2px' }}
                 >
                   <Input disabled />
@@ -112,7 +112,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
               {page.phoneNumber === 'true' ? (
                 <Form.Item
                   name="customerPhoneNumber"
-                  label="Phone Number"
+                  label={translate('general.phoneNumber')}
                   style={{ marginBottom: '2px' }}
                   rules={[
                     { required: true, message: 'Enter your phone number' },
@@ -245,7 +245,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
             <Col span={24}>
               <Form.Item
                 name="transactionReference"
-                label="Reference"
+                label={translate('general.referenceInput')}
                 rules={[
                   {
                     required: true,
@@ -253,10 +253,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
                   },
                 ]}
               >
-                <Input
-                  type="text"
-                  placeholder="Enter a reference for the payment..."
-                />
+                <Input type="text" />
               </Form.Item>
             </Col>
           </Row>
