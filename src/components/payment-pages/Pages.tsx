@@ -12,6 +12,7 @@ interface PagesProps {
   onClickRow(pageId: number): void;
   onPreviewClick(processId: string): void;
   loading: boolean;
+  translate: any;
 }
 
 interface TableData {
@@ -36,6 +37,7 @@ const Pages: React.FC<PagesProps> = ({
   onClickRow,
   onPreviewClick,
   loading,
+  translate,
 }) => {
   const columns: any[] = [
     {
@@ -66,7 +68,7 @@ const Pages: React.FC<PagesProps> = ({
       },
     },
     {
-      title: 'Page Name',
+      title: `${translate('general.pageName')}`,
       dataIndex: 'pageName',
       key: 'pageName',
       align: 'left',
@@ -80,29 +82,31 @@ const Pages: React.FC<PagesProps> = ({
       ),
     },
     {
-      title: 'Page Description',
+      title: `${translate('general.pageDescription')}`,
       dataIndex: 'description',
       key: 'description',
       align: 'left',
     },
     {
-      title: 'Amount',
+      title: `${translate('general.amount')}`,
       dataIndex: 'amount',
       key: 'amount',
       align: 'center',
     },
     {
-      title: 'Created At',
+      title: `${translate('general.createdAt')}`,
       dataIndex: 'createdWhen',
       key: 'createdWhen',
       align: 'center',
     },
     {
-      title: 'Link',
+      title: `${translate('general.link')}`,
       dataIndex: '',
       key: 'x',
       render: (page: TableData) => (
-        <span onClick={() => onPreviewClick(page.processId)}>Preview</span>
+        <span onClick={() => onPreviewClick(page.processId)}>
+          {translate('general.preview')}
+        </span>
       ),
     },
   ];
@@ -133,7 +137,6 @@ const Pages: React.FC<PagesProps> = ({
   return (
     <Row gutter={20}>
       <Col span={24}>
-        {/* <Card> */}
         <div className="table-padding">
           <Table
             dataSource={data}
@@ -143,13 +146,15 @@ const Pages: React.FC<PagesProps> = ({
               hideOnSinglePage: true,
               total: data.length,
               showTotal: (total, range) => {
-                return `Showing ${range[0]} - ${range[1]} of ${total} results`;
+                const tran = translate(`general.pagination`);
+                let t = tran.replace(`%d`, `${range[0]} - ${range[1]}`);
+                let s = t.replace(`%s`, total);
+                return s;
               },
             }}
             loading={loading}
           />
         </div>
-        {/* </Card> */}
       </Col>
     </Row>
   );

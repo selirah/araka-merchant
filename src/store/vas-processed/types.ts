@@ -1,4 +1,4 @@
-import { VASProcessed, DataStream } from '../../interfaces';
+import { VASProcessedReport, DataStream } from '../../interfaces';
 
 export enum VASProcessedTypes {
   GET_VAS_REQUEST = '@@vas/GET_VAS_REQUEST',
@@ -11,7 +11,7 @@ export enum VASProcessedTypes {
 }
 
 export type VASProcessedState = {
-  readonly vas: VASProcessed[];
+  readonly vas: VASProcessedReport | null;
   readonly loading: boolean;
   readonly error: any;
   readonly isExporting: boolean;

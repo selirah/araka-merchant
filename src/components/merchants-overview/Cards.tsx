@@ -8,9 +8,15 @@ interface CardsProps {
   overviews: MerchantOverviewReport | null;
   currency: string;
   loading: boolean;
+  translate: any;
 }
 
-const Cards: React.FC<CardsProps> = ({ overviews, currency, loading }) => {
+const Cards: React.FC<CardsProps> = ({
+  overviews,
+  currency,
+  loading,
+  translate,
+}) => {
   const totalMerchants = overviews
     ? getAreaOptions(
         overviews.totalMerchants.graph.labels,
@@ -42,7 +48,7 @@ const Cards: React.FC<CardsProps> = ({ overviews, currency, loading }) => {
     <div className="margin-top-small">
       <Row>
         <h4 className="transaction-chart-text">
-          Merchants Overview (ONLY APPROVED)
+          {translate('general.merchantOverview')}
         </h4>
       </Row>
       <Row gutter={20}>
@@ -50,7 +56,7 @@ const Cards: React.FC<CardsProps> = ({ overviews, currency, loading }) => {
           <Row gutter={20}>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
-                value="Merchants"
+                value={`${translate('general.merchant')}s`}
                 title={overviews ? overviews.totalMerchants.value : 0}
                 data={totalMerchants}
                 loading={loading}
@@ -58,7 +64,7 @@ const Cards: React.FC<CardsProps> = ({ overviews, currency, loading }) => {
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
-                value="Amount Processed"
+                value={translate('general.amountProcessed')}
                 title={overviews ? overviews.totalAmount.value : 0}
                 data={totalAmount}
                 currency={currency}
@@ -67,7 +73,7 @@ const Cards: React.FC<CardsProps> = ({ overviews, currency, loading }) => {
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
-                value="Total Transactions"
+                value={translate('general.totalTransactions')}
                 title={overviews ? overviews.totalTransactions.value : 0}
                 data={totalTransactions}
                 loading={loading}

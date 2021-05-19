@@ -1,3 +1,5 @@
+import { GraphData } from './Report';
+
 export interface VASProcessed {
   month: string;
   currency: string;
@@ -8,4 +10,11 @@ export interface VASProcessed {
   totalArakaDiscount: number;
   totalArakaIncome: number;
   annualFees: number;
+}
+
+export interface VASProcessedReport {
+  vasFees: GraphData;
+  vasIncome: GraphData;
+  vasProcessed: GraphData;
+  data: VASProcessed[];
 }

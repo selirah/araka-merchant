@@ -10,6 +10,7 @@ interface CardsProps {
   pcesReport: PCESReport | null;
   currency: string;
   loading: boolean;
+  translate: any;
 }
 
 const Cards: React.FC<CardsProps> = ({
@@ -17,11 +18,12 @@ const Cards: React.FC<CardsProps> = ({
   pcesReport,
   currency,
   loading,
+  translate,
 }) => {
   const totalTransactions = pcesReport
     ? getAreaOptions(
-        pcesReport.transactions.graph.labels,
-        pcesReport.transactions.graph.values,
+        pcesReport.transactions.graph.labels.reverse(),
+        pcesReport.transactions.graph.values.reverse(),
         '#FFA000',
         '#FFE082'
       )
@@ -29,8 +31,8 @@ const Cards: React.FC<CardsProps> = ({
 
   const totalAmount = pcesReport
     ? getAreaOptions(
-        pcesReport.totalAmount.graph.labels,
-        pcesReport.totalAmount.graph.values,
+        pcesReport.totalAmount.graph.labels.reverse(),
+        pcesReport.totalAmount.graph.values.reverse(),
         '#FFA000',
         '#FFE082'
       )
@@ -38,8 +40,8 @@ const Cards: React.FC<CardsProps> = ({
 
   const annualFees = pcesReport
     ? getAreaOptions(
-        pcesReport.arakaAnnualFees.graph.labels,
-        pcesReport.arakaAnnualFees.graph.values,
+        pcesReport.arakaAnnualFees.graph.labels.reverse(),
+        pcesReport.arakaAnnualFees.graph.values.reverse(),
         '#FFA000',
         '#FFE082'
       )
@@ -76,7 +78,10 @@ const Cards: React.FC<CardsProps> = ({
     <div className="margin-top-small">
       <Row>
         {!isEmpty(pces) && pcesReport ? (
-          <h4 className="transaction-chart-text">PCES Reports Overview</h4>
+          <h4 className="transaction-chart-text">
+            {' '}
+            {translate('general.FEEReports')}
+          </h4>
         ) : null}
       </Row>
       {pcesReport ? (
@@ -86,7 +91,7 @@ const Cards: React.FC<CardsProps> = ({
               <Row gutter={20}>
                 <Col span={8} sm={24} md={8} xs={24}>
                   <CardView
-                    value="Transactions"
+                    value={translate('general.transactions')}
                     title={pcesReport.transactions.value}
                     data={totalTransactions}
                     loading={loading}
@@ -94,7 +99,7 @@ const Cards: React.FC<CardsProps> = ({
                 </Col>
                 <Col span={8} sm={24} md={8} xs={24}>
                   <CardView
-                    value="Total Amount"
+                    value={translate('general.totalAmount')}
                     title={pcesReport.totalAmount.value}
                     data={totalAmount}
                     currency={currency}
@@ -103,7 +108,7 @@ const Cards: React.FC<CardsProps> = ({
                 </Col>
                 <Col span={8} sm={24} md={8} xs={24}>
                   <CardView
-                    value="Araka Annual Fees"
+                    value={translate('general.arakaAnnualFees')}
                     title={pcesReport.arakaAnnualFees.value}
                     data={annualFees}
                     currency={currency}

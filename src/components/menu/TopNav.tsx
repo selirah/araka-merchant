@@ -66,10 +66,10 @@ export const TopNav: React.FC<TopNavProps> = ({ collapsed, toggle }) => {
                 <FeatherIcons.Search className="top-nav-icons" size={25} />
               </div>
               <div className="topNavHeaders">
-                <h4>{menuHeader}</h4>
+                <h4>{t(`general.${menuHeader}`)}</h4>
               </div>
               <div className="topNavHeaderSub">
-                <h4>{activeMenu}</h4>
+                <h4>{t(`general.${activeMenu}`)}</h4>
               </div>
             </div>
             <div className="user-box">

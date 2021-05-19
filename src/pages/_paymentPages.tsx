@@ -126,7 +126,7 @@ const PaymentPages = () => {
   const uploadButton: React.ReactNode = (
     <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div className="ant-upload-text">Choose a file</div>
+      <div className="ant-upload-text">{t('general.chooseFile')}</div>
     </div>
   );
 
@@ -192,12 +192,12 @@ const PaymentPages = () => {
             </Row>
           }
         >
-          {!isEmpty(pageData) ? (
-            <FilterMenu onReset={onReset} onSearch={onSearch} />
-          ) : null}
+          <FilterMenu onReset={onReset} onSearch={onSearch} translate={t} />
           <div className="margin-top">
             <Row style={{ position: 'relative' }}>
-              <h4 className="transaction-chart-text">Payment Pages</h4>
+              <h4 className="transaction-chart-text">
+                {t('general.paymentPage')}
+              </h4>
               <div className="utility-buttons">
                 <Button
                   type="primary"
@@ -224,11 +224,13 @@ const PaymentPages = () => {
             onClickRow={onClickRow}
             onPreviewClick={onPreviewClick}
             loading={loading}
+            translate={t}
           />
           <PaymentTypeModal
             choosePaymentPage={choosePaymentPage}
             onTogglePaymentTypeModal={onTogglePaymentTypeModal}
             showPaymentTypeModal={showPaymentTypeModal}
+            translate={t}
           />
           <FormModal
             onToggleFormModal={onToggleFormModal}
@@ -240,6 +242,7 @@ const PaymentPages = () => {
             values={values}
             onSubmit={onSubmit}
             isSubmit={isSubmitting}
+            translate={t}
           />
         </Suspense>
       </Content>

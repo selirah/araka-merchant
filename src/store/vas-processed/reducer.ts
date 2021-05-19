@@ -9,7 +9,7 @@ export const initialState: VASProcessedState = {
   isExportSuccess: false,
   isExporting: false,
   loading: false,
-  vas: [],
+  vas: null,
 };
 
 const reducer: Reducer<VASProcessedState> = (state = initialState, action) => {
@@ -36,7 +36,7 @@ const reducer: Reducer<VASProcessedState> = (state = initialState, action) => {
     case VASProcessedTypes.CLEAR_VAS:
       return {
         ...state,
-        vas: [],
+        vas: null,
       };
     case VASProcessedTypes.EXPORT_VAS_REQUEST:
       return {

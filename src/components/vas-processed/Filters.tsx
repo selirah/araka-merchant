@@ -1,32 +1,24 @@
 import React from 'react';
-import {
-  Row,
-  Col,
-  Input,
-  Button,
-  Collapse,
-  Select,
-  Form,
-  DatePicker,
-} from 'antd';
+import { Row, Col, Button, Collapse, Select, Form, DatePicker } from 'antd';
 import { Clock } from '../../utils/clock';
 
 interface FiltersProps {
   onSearch(values: any): void;
   onReset(form: any): void;
+  translate: any;
 }
 
 const { Panel } = Collapse;
 const { Option } = Select;
 
-const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
+const Filters: React.FC<FiltersProps> = ({ onReset, onSearch, translate }) => {
   const { time } = Clock();
   const [form] = Form.useForm();
 
   return (
     <Collapse style={{ marginTop: '5px' }}>
       <Panel
-        header="Filter by:"
+        header={`${translate('general.filterBy')}:`}
         style={{ fontWeight: 400, fontSize: '1rem' }}
         key="1"
         extra={
@@ -48,7 +40,9 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
                   style={{ width: '100%' }}
                   format="MMMM D, YYYY"
                   allowClear
-                  placeholder="Date Period: From"
+                  placeholder={`${translate('general.datePeriod')}: ${translate(
+                    'general.from'
+                  )}`}
                 />
               </Form.Item>
             </Col>
@@ -58,38 +52,46 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
                   style={{ width: '100%' }}
                   format="MMMM D, YYYY"
                   allowClear
-                  placeholder="Date Period: To"
+                  placeholder={`${translate('general.datePeriod')}: ${translate(
+                    'general.to'
+                  )}`}
                 />
               </Form.Item>
             </Col>
             <Col span={6}>
               <Form.Item name="month">
                 <Select
-                  placeholder="Month: Default=All"
+                  placeholder={`${translate('general.month')}: ${translate(
+                    'general.default'
+                  )}=${translate('general.all')}`}
                   style={{ width: '100%' }}
                 >
-                  <Option value="All">All</Option>
-                  <Option value="January">January</Option>
-                  <Option value="February">February</Option>
-                  <Option value="March">March</Option>
-                  <Option value="April">April</Option>
-                  <Option value="May">May</Option>
-                  <Option value="June">June</Option>
-                  <Option value="July">July</Option>
-                  <Option value="August">August</Option>
-                  <Option value="September">September</Option>
-                  <Option value="October">October</Option>
-                  <Option value="November">November</Option>
-                  <Option value="December">December</Option>
+                  <Option value="All">{translate('general.all')}</Option>
+                  <Option value="January">
+                    {translate('general.January')}
+                  </Option>
+                  <Option value="February">
+                    {translate('general.February')}
+                  </Option>
+                  <Option value="March">{translate('general.March')}</Option>
+                  <Option value="April">{translate('general.April')}</Option>
+                  <Option value="May">{translate('general.May')}</Option>
+                  <Option value="June">{translate('general.June')}</Option>
+                  <Option value="July">{translate('general.July')}</Option>
+                  <Option value="August">{translate('general.August')}</Option>
+                  <Option value="September">
+                    {translate('general.September')}
+                  </Option>
+                  <Option value="October">
+                    {translate('general.October')}
+                  </Option>
+                  <Option value="November">
+                    {translate('general.November')}
+                  </Option>
+                  <Option value="December">
+                    {translate('general.December')}
+                  </Option>
                 </Select>
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <Form.Item name="query">
-                <Input
-                  placeholder="Amount/Fee/Discount/Income"
-                  style={{ width: '100%' }}
-                />
               </Form.Item>
             </Col>
           </Row>
@@ -103,7 +105,7 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
                       className="filterButton"
                       htmlType="submit"
                     >
-                      Filter
+                      {translate('general.filter')}
                     </Button>
                   </Col>
                 </Form.Item>
@@ -113,7 +115,7 @@ const Filters: React.FC<FiltersProps> = ({ onReset, onSearch }) => {
                     className="resetButton"
                     onClick={() => onReset(form)}
                   >
-                    Reset
+                    {translate('general.reset')}
                   </Button>
                 </Col>
               </Row>

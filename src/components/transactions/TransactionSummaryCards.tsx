@@ -19,8 +19,8 @@ const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
 }) => {
   const totalTrx = trxReports
     ? getAreaOptions(
-        trxReports.total.graph.labels,
-        trxReports.total.graph.values,
+        trxReports.total.graph.labels.reverse(),
+        trxReports.total.graph.values.reverse(),
         '#FBC02D',
         '#FFF176'
       )
@@ -28,16 +28,16 @@ const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
 
   const totalAmountApproved = trxReports
     ? getAreaOptions(
-        trxReports.totalAmountApproved.graph.labels,
-        trxReports.totalAmountApproved.graph.values,
+        trxReports.totalAmountApproved.graph.labels.reverse(),
+        trxReports.totalAmountApproved.graph.values.reverse(),
         '#FBC02D',
         '#FFF176'
       )
     : {};
   const totalAmountDeclined = trxReports
     ? getAreaOptions(
-        trxReports.totalAmountDeclined.graph.labels,
-        trxReports.totalAmountDeclined.graph.values,
+        trxReports.totalAmountDeclined.graph.labels.reverse(),
+        trxReports.totalAmountDeclined.graph.values.reverse(),
         '#FBC02D',
         '#FFF176'
       )

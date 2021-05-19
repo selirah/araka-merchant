@@ -7,12 +7,22 @@ interface DetailsProps {
   vas: VASProcessed[];
   currency: string;
   loading: boolean;
+  onLoadMore(page: any, pageSize: any): void;
+  total: number;
+  translate: any;
 }
 
-const Details: React.FC<DetailsProps> = ({ vas, currency, loading }) => {
+const Details: React.FC<DetailsProps> = ({
+  vas,
+  currency,
+  loading,
+  onLoadMore,
+  total,
+  translate,
+}) => {
   const columns: any = [
     {
-      title: 'Month',
+      title: `${translate('general.month')}`,
       dataIndex: 'month',
       key: 'month',
       align: 'center',
@@ -22,21 +32,21 @@ const Details: React.FC<DetailsProps> = ({ vas, currency, loading }) => {
       },
     },
     {
-      title: 'Total Amount Sold',
+      title: `${translate('general.totalAmountSold')}`,
       dataIndex: 'totalAmountProcessed',
       key: 'totalAmountProcessed',
       align: 'center',
       className: 'column-text',
     },
     {
-      title: 'Fees Charged',
+      title: `${translate('general.feesCharged')}`,
       dataIndex: 'totalFeesCharged',
       key: 'totalFeesCharged',
       align: 'center',
       className: 'column-text',
     },
     {
-      title: 'Annual Fee',
+      title: `${translate('general.annualFee')}`,
       dataIndex: 'annualFees',
       key: 'annualFees',
       align: 'center',
@@ -44,7 +54,7 @@ const Details: React.FC<DetailsProps> = ({ vas, currency, loading }) => {
       responsive: ['md'],
     },
     {
-      title: 'Other Fees',
+      title: `${translate('general.otherFees')}`,
       dataIndex: 'totalArakaDiscount',
       key: 'totalArakaDiscount',
       align: 'center',
@@ -52,7 +62,7 @@ const Details: React.FC<DetailsProps> = ({ vas, currency, loading }) => {
       responsive: ['md'],
     },
     {
-      title: 'Total Araka Income',
+      title: `${translate('general.totalArakaIncome')}`,
       dataIndex: 'totalArakaIncome',
       key: 'totalArakaIncome',
       align: 'center',
@@ -96,11 +106,17 @@ const Details: React.FC<DetailsProps> = ({ vas, currency, loading }) => {
             bordered
             className="tranaction-table"
             pagination={{
-              hideOnSinglePage: true,
-              total: dataSource.length,
-              showTotal: (total, range) => {
-                return `Showing ${range[0]} - ${range[1]} of ${total} results`;
+              onChange: (page, pageSize) => {
+                // onLoadMore(page, pageSize);
               },
+              total: total,
+              showTotal: (_, range) => {
+                const tran = translate(`general.pagination`);
+                let t = tran.replace(`%d`, `${range[0]} - ${range[1]}`);
+                let s = t.replace(`%s`, total);
+                return s;
+              },
+              showSizeChanger: false,
             }}
             loading={loading}
           />

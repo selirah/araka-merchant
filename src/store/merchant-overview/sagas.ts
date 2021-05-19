@@ -34,14 +34,11 @@ function* getExportOverview({ payload }: { type: string; payload: any }): any {
   try {
     const res = yield call(
       callApiPost,
-      `payments/exportmerchantsoverview`,
+      `reports/exportmerchantsoverview`,
       payload
     );
     if (res.status === 200) {
       yield put(exportOverviewSuccess(res.data));
-
-      // console.log(res.data);
-
       let file: DataStream = res.data;
       const link = document.createElement('a');
       link.href = `data:application/pdf;base64,${file.fileContents}`;

@@ -11,7 +11,6 @@ import {
   Select,
 } from 'antd';
 import { PaymentPage } from '../../interfaces';
-import { useTranslation } from 'react-i18next';
 
 interface FormModalProps {
   showFormModal: boolean;
@@ -23,6 +22,7 @@ interface FormModalProps {
   values: PaymentPage;
   onSubmit(values: PaymentPage): void;
   isSubmit: boolean;
+  translate: any;
 }
 
 const FormModal: React.FC<FormModalProps> = ({
@@ -35,14 +35,14 @@ const FormModal: React.FC<FormModalProps> = ({
   values,
   onSubmit,
   isSubmit,
+  translate,
 }) => {
   const { TextArea } = Input;
   const { Option } = Select;
-  const { t } = useTranslation();
 
   return (
     <Modal
-      title={t('paymentPages.formModal.title')}
+      title={translate('general.title')}
       maskClosable={false}
       centered
       visible={showFormModal}
@@ -54,7 +54,7 @@ const FormModal: React.FC<FormModalProps> = ({
           onClick={() => onToggleFormModal()}
           className="new-cancel-btn"
         >
-          {t('paymentPages.formModal.close')}
+          {translate('general.close')}
         </Button>,
         <Button
           form="paymentPageForm"
@@ -64,7 +64,7 @@ const FormModal: React.FC<FormModalProps> = ({
           loading={isSubmit}
           className="new-page-btn"
         >
-          {t('paymentPages.formModal.btnText')}
+          {translate('general.createPage')}
         </Button>,
       ]}
     >
@@ -79,38 +79,36 @@ const FormModal: React.FC<FormModalProps> = ({
           <Col span={24}>
             <Form.Item
               name="PageName"
-              label={t('paymentPages.formModal.pageName')}
+              label={translate('general.pageName')}
               rules={[
                 {
                   required: true,
-                  message: `${t('paymentPages.formModal.pageNameRequired')}`,
+                  message: `${translate('general.pageNameRequired')}`,
                 },
               ]}
             >
-              <Input
-                placeholder={t('paymentPages.formModal.pageNamePlaceholder')}
-              />
+              <Input placeholder={translate('general.pageNamePlaceholder')} />
             </Form.Item>
           </Col>
           <Col span={24}>
             <Form.Item
               name="Description"
-              label={t('paymentPages.formModal.description')}
+              label={translate('general.description')}
               rules={[
                 {
                   required: true,
-                  message: `${t('paymentPages.formModal.descriptionRequired')}`,
+                  message: `${translate('general.descriptionRequired')}`,
                 },
               ]}
             >
               <TextArea
-                placeholder={t('paymentPages.formModal.descriptionPlaceholder')}
+                placeholder={translate('general.descriptionPlaceholder')}
               />
             </Form.Item>
           </Col>
           <Col span={24}>
-            <Form.Item label={t('paymentPages.formModal.seoImage')}>
-              <span>{t('paymentPages.formModal.seoImageDesc')}</span>
+            <Form.Item label={translate('general.seoImage')}>
+              <span>{translate('general.seoImageDesc')}</span>
               <Upload
                 name="Logo"
                 listType="picture-card"
@@ -129,37 +127,35 @@ const FormModal: React.FC<FormModalProps> = ({
           </Col>
           <Col span={24}>
             <Form.Item name="CustomerName" label={null} valuePropName="checked">
-              <Checkbox>{t('paymentPages.formModal.collectName')}</Checkbox>
+              <Checkbox>{translate('general.collectName')}</Checkbox>
             </Form.Item>
           </Col>
 
           <Col span={24}>
-            <Form.Item name="Amount" label={t('paymentPages.formModal.amount')}>
-              <Input
-                placeholder={t('paymentPages.formModal.amountPlaceholder')}
-              />
+            <Form.Item name="Amount" label={translate('general.amount')}>
+              <Input placeholder={translate('general.amountPlaceholder')} />
             </Form.Item>
           </Col>
           <Col span={24}>
             <Form.Item name="PhoneNumber" label={null} valuePropName="checked">
-              <Checkbox>{t('paymentPages.formModal.phone')}</Checkbox>
+              <Checkbox>{translate('general.phone')}</Checkbox>
             </Form.Item>
           </Col>
 
           <Col span={24}>
             <Form.Item name="EmailAddress" label={null} valuePropName="checked">
-              <Checkbox>{t('paymentPages.formModal.email')}</Checkbox>
+              <Checkbox>{translate('general.email')}</Checkbox>
             </Form.Item>
           </Col>
 
           <Col span={24}>
             <Form.Item
               name="Currency"
-              label={t('paymentPages.formModal.currency')}
+              label={translate('general.currency')}
               rules={[
                 {
                   required: true,
-                  message: `${t('paymentPages.formModal.currencyRequired')}`,
+                  message: `${translate('general.currencyRequired')}`,
                 },
               ]}
             >
@@ -173,11 +169,11 @@ const FormModal: React.FC<FormModalProps> = ({
           <Col span={24}>
             <Form.Item
               name="RedirectUrl"
-              label={t('paymentPages.formModal.redirectUrl')}
+              label={translate('general.redirectUrl')}
               rules={[
                 {
                   required: true,
-                  message: `${t('paymentPages.formModal.redirectUrlReuired')}`,
+                  message: `${translate('general.redirectUrlReuired')}`,
                 },
               ]}
             >

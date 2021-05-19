@@ -35,7 +35,7 @@ import { proxyPayDataTypes } from '../../helpers/constants';
 
 function* getPCESReport({ payload }: { type: string; payload: any }): any {
   try {
-    const res = yield call(callApiPost, 'payments/getpcesreports', payload);
+    const res = yield call(callApiPost, 'reports/getpcesreports', payload);
     yield put(getPCESSuccess(res.data));
   } catch (err) {
     if (err && err.response) {
@@ -227,7 +227,7 @@ function* postPayoutFee({ payload }: { type: string; payload: any }): any {
 
 function* getExport({ payload }: { type: string; payload: any }): any {
   try {
-    const res = yield call(callApiPost, `payments/exportproxypayouts`, payload);
+    const res = yield call(callApiPost, `reports/exportproxypayouts`, payload);
     yield put(exportSuccess(res.data));
     let file: DataStream = res.data;
     const link = document.createElement('a');

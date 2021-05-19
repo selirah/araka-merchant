@@ -16,6 +16,7 @@ import {
   clearFee,
 } from '../store/payment-pages';
 import { isEmpty } from '../helpers/isEmpty';
+import { useTranslation } from 'react-i18next';
 
 interface GenericPayProps {}
 
@@ -36,6 +37,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
   const query = new URLSearchParams(useLocation().search);
   const transactionStatus = query.get('transactionStatus');
   const [fee, setFee] = useState<Fee | undefined>(undefined);
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(clearStates());
@@ -163,6 +165,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
         onSubmit={onSubmit}
         fee={fee}
         onCalculateFee={onCalculateFee}
+        translate={t}
       />
     );
     methods = (

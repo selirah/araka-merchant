@@ -1,48 +1,67 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import CardView from '../cards/CardView';
-import { VASProcessed } from '../../interfaces';
-import { GetVASAnalytics } from '../../helpers/vas_functions';
+import { VASProcessedReport } from '../../interfaces';
+import { getAreaOptions } from '../../helpers/functions';
 
 interface CardsProps {
-  vas: VASProcessed[];
+  vas: VASProcessedReport | null;
   currency: string;
   loading: boolean;
+  translate: any;
 }
 
-const Cards: React.FC<CardsProps> = ({ vas, currency, loading }) => {
-  const {
-    totalArakaIncome,
-    totalFeesCharged,
-    totalProcessed,
-    vasAreaChart,
-    incomeAreaChart,
-    feesChargedAreaChart,
-    // annualFeesAreaChart,
-    // totalAnnualFees,
-  } = GetVASAnalytics(vas);
+const Cards: React.FC<CardsProps> = ({ vas, currency, loading, translate }) => {
+  const vasProcessed = vas
+    ? getAreaOptions(
+        vas.vasProcessed.graph.labels.reverse(),
+        vas.vasProcessed.graph.values.reverse(),
+        '#FBC02D',
+        '#FFF176'
+      )
+    : {};
+
+  const vasFees = vas
+    ? getAreaOptions(
+        vas.vasFees.graph.labels.reverse(),
+        vas.vasFees.graph.values.reverse(),
+        '#FBC02D',
+        '#FFF176'
+      )
+    : {};
+
+  const vasIncome = vas
+    ? getAreaOptions(
+        vas.vasIncome.graph.labels.reverse(),
+        vas.vasIncome.graph.values.reverse(),
+        '#FBC02D',
+        '#FFF176'
+      )
+    : {};
 
   return (
     <div className="margin-top-small">
       <Row>
-        <h4 className="transaction-chart-text">VAS Processed Overview</h4>
+        <h4 className="transaction-chart-text">
+          {translate('general.VASProcessed')}
+        </h4>
       </Row>
       <Row gutter={20}>
         <Col span={24}>
           <Row gutter={20}>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
-                value="Vas Processed"
-                title={totalProcessed}
-                data={vasAreaChart}
+                value={translate('general.VASProcessed')}
+                title={vas ? vas.vasProcessed.value : 0}
+                data={vasProcessed}
                 loading={loading}
               />
             </Col>
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
-                value="VAS Income"
-                title={totalArakaIncome}
-                data={incomeAreaChart}
+                value={translate('general.vasIncome')}
+                title={vas ? vas.vasIncome.value : 0}
+                data={vasIncome}
                 currency={currency}
                 loading={loading}
               />
@@ -58,9 +77,9 @@ const Cards: React.FC<CardsProps> = ({ vas, currency, loading }) => {
             </Col> */}
             <Col span={8} sm={24} md={8} xs={24}>
               <CardView
-                value="Fees Charged"
-                title={totalFeesCharged}
-                data={feesChargedAreaChart}
+                value={translate('general.feesCharged')}
+                title={vas ? vas.vasFees.value : 0}
+                data={vasFees}
                 currency={currency}
                 loading={loading}
               />

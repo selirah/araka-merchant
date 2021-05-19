@@ -11,6 +11,7 @@ interface FilterProps {
   merchants: MerchantData[];
   onChangeMerchant(merchantId: number): void;
   role: string | undefined;
+  translate: any;
 }
 
 const { Panel } = Collapse;
@@ -22,13 +23,14 @@ const Filter: React.FC<FilterProps> = ({
   merchants,
   onChangeMerchant,
   role,
+  translate,
 }) => {
   const { time } = Clock();
   const [form] = Form.useForm();
   return (
     <Collapse style={{ marginTop: '5px' }}>
       <Panel
-        header="Filter by:"
+        header={`${translate('general.filterBy')}:`}
         style={{ fontWeight: 400, fontSize: '1rem' }}
         key="1"
         extra={
@@ -50,7 +52,9 @@ const Filter: React.FC<FilterProps> = ({
                   style={{ width: '100%' }}
                   format="MMMM D, YYYY"
                   allowClear
-                  placeholder="Date Period: From"
+                  placeholder={`${translate('general.datePeriod')}: ${translate(
+                    'general.from'
+                  )}`}
                 />
               </Form.Item>
             </Col>
@@ -60,7 +64,9 @@ const Filter: React.FC<FilterProps> = ({
                   style={{ width: '100%' }}
                   format="MMMM D, YYYY"
                   allowClear
-                  placeholder="Date Period: To"
+                  placeholder={`${translate('general.datePeriod')}: ${translate(
+                    'general.to'
+                  )}`}
                 />
               </Form.Item>
             </Col>
@@ -68,7 +74,9 @@ const Filter: React.FC<FilterProps> = ({
               <Col span={6}>
                 <Form.Item name="merchant">
                   <Select
-                    placeholder="Merchant: Default=All"
+                    placeholder={`${translate('general.merchant')}: ${translate(
+                      'general.default'
+                    )}=${translate('general.all')}`}
                     style={{ width: '100%' }}
                     allowClear
                     onChange={onChangeMerchant}
@@ -99,7 +107,7 @@ const Filter: React.FC<FilterProps> = ({
                       className="filterButton"
                       htmlType="submit"
                     >
-                      Filter
+                      {translate('general.filter')}
                     </Button>
                   </Col>
                 </Form.Item>
@@ -109,7 +117,7 @@ const Filter: React.FC<FilterProps> = ({
                     className="resetButton"
                     onClick={() => onReset(form)}
                   >
-                    Reset
+                    {translate('general.reset')}
                   </Button>
                 </Col>
               </Row>

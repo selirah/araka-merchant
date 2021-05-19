@@ -10,6 +10,9 @@ interface DetailsProps {
   currency: string;
   onClickRow(record: any): void;
   loading: boolean;
+  onLoadMore(page: any, pageSize: any): void;
+  total: number;
+  translate: any;
 }
 
 const Details: React.FC<DetailsProps> = ({
@@ -17,6 +20,9 @@ const Details: React.FC<DetailsProps> = ({
   currency,
   onClickRow,
   loading,
+  onLoadMore,
+  total,
+  translate,
 }) => {
   const columns: any = [
     {
@@ -32,42 +38,42 @@ const Details: React.FC<DetailsProps> = ({
       },
     },
     {
-      title: 'Amount',
+      title: `${translate('general.amount')}`,
       dataIndex: 'amount',
       key: 'amount',
       align: 'center',
       className: 'column-text',
     },
     {
-      title: 'Fees Paid',
+      title: `${translate('general.feesPaid')}`,
       dataIndex: 'feesPaid',
       key: 'feesPaid',
       align: 'center',
       className: 'column-text',
     },
     {
-      title: 'Net Amount',
+      title: `${translate('general.netAmount')}`,
       dataIndex: 'netAmount',
       key: 'netAmount',
       align: 'center',
       className: 'column-text',
     },
     {
-      title: 'Transaction ID',
+      title: `${translate('general.transactionId')}`,
       dataIndex: 'transactionId',
       key: 'transactionId',
       align: 'center',
       className: 'column-text',
     },
     {
-      title: 'Paid On',
+      title: `${translate('general.paidOn')}`,
       dataIndex: 'paidOn',
       key: 'paidOn',
       align: 'left',
       className: 'column-text',
     },
     {
-      title: 'Merchant',
+      title: `${translate('general.merchant')}`,
       dataIndex: 'merchant',
       key: 'merchant',
       align: 'center',
@@ -108,11 +114,17 @@ const Details: React.FC<DetailsProps> = ({
             bordered
             className="tranaction-table"
             pagination={{
-              hideOnSinglePage: true,
-              total: dataSource.length,
-              showTotal: (total, range) => {
-                return `Showing ${range[0]} - ${range[1]} of ${total} results`;
+              onChange: (page, pageSize) => {
+                onLoadMore(page, pageSize);
               },
+              total: total,
+              showTotal: (_, range) => {
+                const tran = translate(`general.pagination`);
+                let t = tran.replace(`%d`, `${range[0]} - ${range[1]}`);
+                let s = t.replace(`%s`, total);
+                return s;
+              },
+              showSizeChanger: false,
             }}
             onRow={(record: any) => ({
               onClick: () => onClickRow(record),

@@ -60,7 +60,7 @@ function* getExportTransactions({
   try {
     const res = yield call(
       callApiPost,
-      `payments/exportmerchanttransactions`,
+      `reports/exportmerchanttransactions`,
       payload
     );
     if (res.status === 200) {

@@ -23,6 +23,7 @@ interface CreateMerchantProps {
   errors: any;
   success: boolean;
   values: Merchant;
+  translate: any;
 }
 
 const CreateMerchant: React.FC<CreateMerchantProps> = ({
@@ -33,12 +34,13 @@ const CreateMerchant: React.FC<CreateMerchantProps> = ({
   onSubmit,
   success,
   values,
+  translate,
 }) => {
   const FormItem = Form.Item;
   return (
     <Row justify="center" align="middle">
       <Col span={20} md={20} sm={24} xs={24} className="profile-box">
-        <h3>Create Merchant</h3>
+        <h3>{translate('general.createMerchant')}</h3>
 
         <Row justify="center" align="middle">
           <Col span={8} className="form-container">
@@ -67,7 +69,7 @@ const CreateMerchant: React.FC<CreateMerchantProps> = ({
                 name="Name"
                 rules={[{ required: true, message: 'This field is required' }]}
               >
-                <Input placeholder="Merchant fullname.." />
+                <Input placeholder={translate('general.merchantFullname')} />
               </FormItem>
               <FormItem
                 hasFeedback
@@ -77,17 +79,21 @@ const CreateMerchant: React.FC<CreateMerchantProps> = ({
                   { type: 'email', message: 'Enter a valid email' },
                 ]}
               >
-                <Input placeholder="Merchant email.." />
+                <Input placeholder={translate('general.merchantEmail')} />
               </FormItem>
               <FormItem hasFeedback name="PhoneNumber">
-                <CountryPhoneInput placeholder="Merchant Phone..." />
+                <CountryPhoneInput
+                  placeholder={translate('general.merchantPhone')}
+                />
               </FormItem>
               <FormItem
                 hasFeedback
                 name="Password"
                 rules={[{ required: true, message: 'This field is required' }]}
               >
-                <Input.Password placeholder="Merchant password.." />
+                <Input.Password
+                  placeholder={translate('general.merchantPassword')}
+                />
               </FormItem>
               <FormItem
                 hasFeedback
@@ -107,7 +113,9 @@ const CreateMerchant: React.FC<CreateMerchantProps> = ({
                   }),
                 ]}
               >
-                <Input.Password placeholder="Confirm password" />
+                <Input.Password
+                  placeholder={translate('general.reTypePassword')}
+                />
               </FormItem>
 
               <Button
@@ -116,7 +124,7 @@ const CreateMerchant: React.FC<CreateMerchantProps> = ({
                 size="large"
                 loading={isSubmitting}
               >
-                Create Merchant
+                {translate('general.createMerchant')}
               </Button>
             </Form>
           </Col>

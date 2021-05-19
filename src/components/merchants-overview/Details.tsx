@@ -9,6 +9,7 @@ interface DetailsProps {
   loading: boolean;
   onLoadMore(page: any, pageSize: any): void;
   total: number;
+  translate: any;
 }
 
 const Details: React.FC<DetailsProps> = ({
@@ -17,6 +18,7 @@ const Details: React.FC<DetailsProps> = ({
   loading,
   onLoadMore,
   total,
+  translate,
 }) => {
   const sortOverview = (a: MerchantOverview, b: MerchantOverview) => {
     return b.totalAmountProcessed - a.totalAmountProcessed; // descending
@@ -30,7 +32,7 @@ const Details: React.FC<DetailsProps> = ({
 
   const columns: any = [
     {
-      title: 'Merchant',
+      title: `${translate('general.merchant')}`,
       dataIndex: 'merchant',
       key: 'merchant',
       align: 'center',
@@ -44,14 +46,14 @@ const Details: React.FC<DetailsProps> = ({
       },
     },
     {
-      title: 'Total Amount Processed',
+      title: `${translate('general.totalAmountProcessed')}`,
       dataIndex: 'amountProcessed',
       key: 'amountProcessed',
       align: 'center',
       className: 'column-text',
     },
     {
-      title: 'Total Transactions',
+      title: `${translate('general.totalTransactions')}`,
       dataIndex: 'totalTransactions',
       key: 'totalTransactions',
       align: 'center',
@@ -59,7 +61,7 @@ const Details: React.FC<DetailsProps> = ({
       responsive: ['md'],
     },
     {
-      title: 'Total Araka Fees',
+      title: `${translate('general.totalArakaFees')}`,
       dataIndex: 'totalFees',
       key: 'totalFees',
       align: 'center',
@@ -98,7 +100,10 @@ const Details: React.FC<DetailsProps> = ({
               },
               total: total,
               showTotal: (_, range) => {
-                return `Showing ${range[0]} - ${range[1]} of ${total} results`;
+                const tran = translate(`general.pagination`);
+                let t = tran.replace(`%d`, `${range[0]} - ${range[1]}`);
+                let s = t.replace(`%s`, total);
+                return s;
               },
               showSizeChanger: false,
             }}

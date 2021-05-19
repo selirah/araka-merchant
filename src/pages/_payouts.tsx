@@ -24,6 +24,7 @@ import {
 import { isEmpty } from '../helpers/isEmpty';
 import moment from 'moment';
 import { roles } from '../helpers/constants';
+import { useTranslation } from 'react-i18next';
 
 const Filter = lazy(() => import('../components/payouts/Filter'));
 const CurrencyFilter = lazy(
@@ -40,6 +41,7 @@ const { Content } = Layout;
 
 const Payouts: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
+  const { t } = useTranslation();
   const reports = appSelector((state) => state.reports);
   const { user } = appSelector((state) => state.auth);
   const [isNewPayout, setIsNewPayout] = useState(false);
@@ -68,6 +70,8 @@ const Payouts: React.FC = () => {
   const [switchDetailView, setSwitchDetailView] = useState(false);
   const [payout, setPayout] = useState<any>({});
   const [isDownlaoding, setIsDownloading] = useState(false);
+  const [pageSize, setPageSize] = useState(10);
+  const [skip, setSkip] = useState(0);
 
   const params = {
     periodFrom: periodFrom,
@@ -75,6 +79,9 @@ const Payouts: React.FC = () => {
     currency: currency,
     merchant: merchant ? merchant.name : '',
     exportType: exportType,
+    pageSize: pageSize,
+    skip: skip,
+    fixedPeriod: 'overall',
   };
 
   let role;
@@ -152,6 +159,14 @@ const Payouts: React.FC = () => {
     params.merchant = '';
     dispatch(getPayoutRequest(params));
     setHasSelectMerchant(false);
+  };
+
+  const onLoadMore = (page: any, size: any) => {
+    setSkip(0);
+    setPageSize(size);
+    params.skip = page - 1;
+    setSkip(params.skip);
+    dispatch(getPayoutFeeRequest(params));
   };
 
   const onSearch = (values: any) => {
@@ -293,8 +308,12 @@ const Payouts: React.FC = () => {
                 merchants={merchants}
                 onChangeMerchant={onChangeMerchant}
                 role={role}
+                translate={t}
               />
-              <CurrencyFilter onSelectCurrency={onSelectCurrency} />
+              <CurrencyFilter
+                onSelectCurrency={onSelectCurrency}
+                translate={t}
+              />
               <Card
                 isNewPayout={isNewPayout}
                 onOpenRecordView={onOpenRecordView}
@@ -303,6 +322,7 @@ const Payouts: React.FC = () => {
                 currency={currency}
                 role={role}
                 loading={loading}
+                translate={t}
               />
               <div className="margin-top">
                 <Row style={{ position: 'relative' }}>
@@ -315,25 +335,25 @@ const Payouts: React.FC = () => {
                       loading={isExporting && exportType === 'EXCEL'}
                       disabled={isEmpty(payouts)}
                     >
-                      Export to Excel
+                      {t('general.export-excel')}
                     </Button>
 
-                    <Button
+                    {/* <Button
                       type="primary"
                       className="export-buttons"
                       onClick={() => onExportClick('PDF')}
                       loading={isExporting && exportType === 'PDF'}
                       disabled={isEmpty(payouts)}
                     >
-                      Export to PDF
-                    </Button>
+                       {t('general.export-pdf')}
+                    </Button> */}
 
                     <Button
                       type="primary"
                       className="export-buttons reload"
                       onClick={() => reloadPayouts()}
                     >
-                      Refresh
+                      {t('general.refresh')}
                     </Button>
                   </div>
                 </Row>
@@ -342,6 +362,9 @@ const Payouts: React.FC = () => {
                   currency={currency}
                   onClickRow={onClickRow}
                   loading={loading}
+                  onLoadMore={onLoadMore}
+                  total={payoutReport ? payoutReport.data.length : 0}
+                  translate={t}
                 />
               </div>
             </>
@@ -358,6 +381,7 @@ const Payouts: React.FC = () => {
               onCalculateFee={onCalculateFee}
               fee={fee}
               amount={amount}
+              translate={t}
             />
           ) : (
             <PayoutDetail
@@ -365,6 +389,7 @@ const Payouts: React.FC = () => {
               onCloseScreen={onCloseScreen}
               onDownloadReceiptClick={onDownloadReceiptClick}
               payout={payout}
+              translate={t}
             />
           )}
         </Suspense>

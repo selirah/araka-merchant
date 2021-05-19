@@ -1018,7 +1018,7 @@ thead[class*='ant-table-thead'] th {
 .topNavHeaderSub {
   position: absolute;
   top: 3px;
-  left: 160px;
+  left: 180px;
 }
 
 .topNavHeaderSub h4 {
@@ -1938,6 +1938,12 @@ thead[class*='ant-table-thead'] th {
   width: 100%;
   margin-top: 15px;
   background-color: #0090fe;
+}
+
+.ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
+  top: 7px;
+  left: 75px;
+  font-size: 12px;
 }
 
 /** END CONTENT **/

@@ -6,7 +6,6 @@ import { appSelector } from '../helpers/appSelector';
 import { AppDispatch } from '../helpers/appDispatch';
 import {
   getMerchantsOverview,
-  clearOverview,
   exportOverviewRequest,
 } from '../store/merchant-overview';
 import { isEmpty } from '../helpers/isEmpty';
@@ -17,18 +16,20 @@ import {
 } from '../interfaces';
 import { getMerchantsRequest } from '../store/reports';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 
 const Filters = lazy(() => import('../components/merchants-overview/Filters'));
 const Cards = lazy(() => import('../components/merchants-overview/Cards'));
 const Details = lazy(() => import('../components/merchants-overview/Details'));
 const CurrencyFilter = lazy(
-  () => import('../components/dashboard/CurrencyFilter')
+  () => import('../components/merchants-overview/CurrencyFilter')
 );
 
 const { Content } = Layout;
 
 const MerchantsOverview = () => {
   const dispatch: AppDispatch = useDispatch();
+  const { t } = useTranslation();
   const overviewsStore = appSelector((state) => state.overviews);
   const reports = appSelector((state) => state.reports);
   const [overviewReport, setOverviewReport] =
@@ -53,6 +54,7 @@ const MerchantsOverview = () => {
     exportType: exportType,
     pageSize: pageSize,
     skip: skip,
+    fixedPeriod: 'overall',
   };
 
   useEffect(() => {
@@ -126,7 +128,6 @@ const MerchantsOverview = () => {
     params.periodFrom = pFrom;
     params.periodTo = pTo;
     params.merchant = m !== undefined ? m.name : '';
-    dispatch(clearOverview());
     dispatch(getMerchantsOverview(params));
   };
 
@@ -146,15 +147,19 @@ const MerchantsOverview = () => {
             onReset={onReset}
             onSearch={onSearch}
             merchants={merchants}
+            translate={t}
           />
           <Cards
             overviews={overviewReport}
             currency={currency}
             loading={loading}
+            translate={t}
           />
           <div className="margin-top">
             <Row style={{ position: 'relative' }}>
-              <h4 className="transaction-chart-text">Merchants Table</h4>
+              <h4 className="transaction-chart-text">
+                {t('general.merchantsTable')}
+              </h4>
               <div className="utility-buttons">
                 <>
                   <Button
@@ -164,34 +169,35 @@ const MerchantsOverview = () => {
                     loading={isExporting && exportType === 'EXCEL'}
                     disabled={isEmpty(overviewdata)}
                   >
-                    Export to Excel
+                    {t('general.export-excel')}
                   </Button>
-                  <Button
+                  {/* <Button
                     type="primary"
                     className="export-buttons"
                     onClick={() => onExportClick('PDF')}
                     loading={isExporting && exportType === 'PDF'}
                     disabled={isEmpty(overviewdata)}
                   >
-                    Export to PDF
-                  </Button>
+                    {t('general.export-pdf')}
+                  </Button> */}
                 </>
                 <Button
                   type="primary"
                   className="export-buttons reload"
                   onClick={() => reloadOverviews()}
                 >
-                  Refresh
+                  {t('general.refresh')}
                 </Button>
               </div>
             </Row>
-            <CurrencyFilter onSelectCurrency={onSelectCurrency} />
+            <CurrencyFilter onSelectCurrency={onSelectCurrency} translate={t} />
             <Details
               overviews={overviewdata}
               currency={currency}
               loading={loading}
               onLoadMore={onLoadMore}
               total={overviewReport ? overviewReport.totalMerchants.value : 0}
+              translate={t}
             />
           </div>
         </Suspense>
