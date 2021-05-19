@@ -228,7 +228,9 @@
       "firstName": "First name",
       "lastName": "Last name",
       "enabled": "Enabled",
-      "pagination": "Showing %d of %s results"
+      "pagination": "Showing %d of %s results",
+      "payNow": "Pay Now",
+      "referenceInput": "Reference"
     }
   }
 }

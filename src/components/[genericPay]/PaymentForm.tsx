@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Row, Col, Form, Input, Button, Alert } from 'antd';
 import { Merchant, Page, Fee } from '../../interfaces';
-import { PayCircleOutlined, LoadingOutlined } from '@ant-design/icons';
+import { PayCircleOutlined } from '@ant-design/icons';
 import { isEmpty } from '../../helpers/isEmpty';
 
 interface PaymentFormProps {
@@ -84,7 +84,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
               {page.emailAddress === 'true' ? (
                 <Form.Item
                   name="customerEmailAddress"
-                  label={translate('general.email-placeholder')}
+                  label={translate('login.email-placeholder')}
                   style={{ marginBottom: '2px' }}
                   rules={[
                     {
@@ -99,7 +99,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
               ) : (
                 <Form.Item
                   name="customerEmailAddress"
-                  label={translate('general.email-placeholder')}
+                  label={translate('login.email-placeholder')}
                   style={{ marginBottom: '2px' }}
                 >
                   <Input disabled />
@@ -112,7 +112,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
               {page.phoneNumber === 'true' ? (
                 <Form.Item
                   name="customerPhoneNumber"
-                  label="Phone Number"
+                  label={translate('general.phoneNumber')}
                   style={{ marginBottom: '2px' }}
                   rules={[
                     { required: true, message: 'Enter your phone number' },
@@ -245,7 +245,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
             <Col span={24}>
               <Form.Item
                 name="transactionReference"
-                label="Reference"
+                label={translate('general.referenceInput')}
                 rules={[
                   {
                     required: true,
@@ -253,10 +253,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
                   },
                 ]}
               >
-                <Input
-                  type="text"
-                  placeholder="Enter a reference for the payment..."
-                />
+                <Input type="text" />
               </Form.Item>
             </Col>
           </Row>
@@ -267,16 +264,10 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
               justifyContent: 'center',
             }}
           >
-            <Button type="primary" htmlType="submit" disabled={isSubmit}>
-              {!isSubmit ? (
-                <React.Fragment>
-                  <PayCircleOutlined /> Pay Now
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <LoadingOutlined /> Processing...
-                </React.Fragment>
-              )}
+            <Button type="primary" htmlType="submit" loading={isSubmit}>
+              <React.Fragment>
+                <PayCircleOutlined /> {translate('general.payNow')}
+              </React.Fragment>
             </Button>
           </Row>
         </Form>
