@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter, useParams, useLocation } from 'react-router-dom';
-import { Layout, Row, Col, Image } from 'antd';
+import { Layout, Row, Col, Image, Avatar } from 'antd';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../helpers/appDispatch';
 import { appSelector } from '../helpers/appSelector';
@@ -97,6 +97,13 @@ const Pay: React.FC<PayProps> = () => {
     setSinglePage(singlePage);
   }, [home, dispatch, page]);
 
+  let initials: string[] = [];
+  let name = '';
+  if (singlePage !== undefined) {
+    initials = singlePage.pageName.match(/\b\w/g) || [];
+    name = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
+  }
+
   return (
     <Layout>
       <Content style={{ background: '#fff' }}>
@@ -110,16 +117,20 @@ const Pay: React.FC<PayProps> = () => {
         >
           <Col span={24}>
             <div className="pay-details">
-              <Image
-                width={100}
-                src={
-                  values.pageLogo !== null
-                    ? values.pageLogo
-                    : 'https://via.placeholder.com/150'
-                }
-              />
+              {singlePage !== undefined && singlePage.logo !== '' ? (
+                <Image style={{ width: '100%' }} src={singlePage.logo} />
+              ) : (
+                <Avatar
+                  size={100}
+                  style={{
+                    backgroundColor: '#1890ff',
+                    verticalAlign: 'middle',
+                  }}
+                >
+                  {name}
+                </Avatar>
+              )}
               <h2>{values.pageTitle}</h2>
-              {/* <h4>BY MERCHANT COMPANY NAME</h4> */}
               <p>{values.pageDescription}</p>
             </div>
           </Col>
