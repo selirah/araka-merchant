@@ -16,7 +16,7 @@ i18n
       en: en,
       fr: fr,
     },
-    lng: locale !== null ? locale : 'en',
+    lng: locale !== null ? locale : 'fr',
     debug: false,
     ns: ['translations'],
     defaultNS: 'translations',

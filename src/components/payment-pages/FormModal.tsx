@@ -177,7 +177,7 @@ const FormModal: React.FC<FormModalProps> = ({
                 },
               ]}
             >
-              <Input placeholder="http://redirect-link" />
+              <Input placeholder="https://www.example.com" />
             </Form.Item>
           </Col>
         </Row>
