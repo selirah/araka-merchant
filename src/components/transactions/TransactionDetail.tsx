@@ -100,7 +100,8 @@ const TransactionDetail: React.FC<TransactionDetailProps> = ({
               <List.Item>
                 <h4 className="key">{translate('general.paidOn')}</h4>
                 <h4 className="value">
-                  {moment(transaction.createdAt, 'MM/DD/YYYY HH:mm:ss')
+                  {/* {moment(transaction.createdAt, 'MM/DD/YYYY HH:mm:ss') */}
+                  {moment(transaction.createdAt)
                     .tz(timeZones.kinshasa)
                     .format(`MMMM D, YYYY (h:mm a)`)}
                 </h4>
