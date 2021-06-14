@@ -1,63 +1,61 @@
-import { TransactionHistory } from '../interfaces';
-import { transactionStatus } from './constants';
-import { isEmpty } from './isEmpty';
-import moment from 'moment';
-import { getAreaOptions } from './functions';
-import { sortMerchantPayout } from './sorter';
+import { TransactionHistory } from '../interfaces'
+import { transactionStatus } from './constants'
+import { isEmpty } from './isEmpty'
+import moment from 'moment'
+import { getAreaOptions } from './functions'
+import { sortMerchantPayout } from './sorter'
 
-export const GetTransactionsAnalytics = (
-  transactions: TransactionHistory[]
-) => {
-  let totalMerchants = 0;
-  let totalAmountProcessed = 0.0;
-  let totalAmountDeclined = 0.0;
-  let totalAmountPaidOut = 0.0;
-  let totalTransactions = 0;
-  let merchants: string[] = [];
-  let amtAreaChart = {};
-  let paidOutAreaChart = {};
-  let labels: string[] = [];
-  let amtLabel: number[] = [];
-  let paidLabel: number[] = [];
+export const GetTransactionsAnalytics = (transactions: TransactionHistory[]) => {
+  let totalMerchants = 0
+  let totalAmountProcessed = 0.0
+  let totalAmountDeclined = 0.0
+  let totalAmountPaidOut = 0.0
+  let totalTransactions = 0
+  let merchants: string[] = []
+  let amtAreaChart = {}
+  let paidOutAreaChart = {}
+  let labels: string[] = []
+  let amtLabel: number[] = []
+  let paidLabel: number[] = []
 
   for (let trx of transactions) {
-    const over = merchants.find((o) => o === trx.merchant);
+    const over = merchants.find((o) => o === trx.merchant)
     if (over === undefined) {
-      merchants.push(trx.merchant);
+      merchants.push(trx.merchant)
     }
-    totalTransactions += 1;
+    totalTransactions += 1
 
     if (trx.status === transactionStatus.APPROVED) {
-      totalAmountProcessed += trx.amountPaid;
-      const lbl = labels.find((l) => l === trx.merchant);
+      totalAmountProcessed += trx.amountPaid
+      const lbl = labels.find((l) => l === trx.merchant)
       if (lbl === undefined) {
-        labels.push(trx.merchant);
+        labels.push(trx.merchant)
       }
     }
 
     if (trx.status === transactionStatus.DECLINED) {
-      totalAmountDeclined += trx.amountPaid;
+      totalAmountDeclined += trx.amountPaid
     }
   }
 
   for (let lbl of labels) {
-    let merchantAmount = 0.0;
+    let merchantAmount = 0.0
     for (let trx of transactions) {
       if (trx.merchant === lbl && trx.status === transactionStatus.APPROVED) {
-        merchantAmount += trx.amountPaid;
+        merchantAmount += trx.amountPaid
       }
     }
-    amtLabel.push(merchantAmount);
-    paidLabel.push(0); // for now paid out is 0
+    amtLabel.push(merchantAmount)
+    paidLabel.push(0) // for now paid out is 0
   }
 
   // sort the merchants
-  const { a, b } = sortMerchantPayout(labels, amtLabel);
+  const { a, b } = sortMerchantPayout(labels, amtLabel)
 
-  totalMerchants = merchants.length;
-  totalAmountPaidOut = 0; // for now paid out is 0
-  amtAreaChart = getAreaOptions(a.reverse(), b.reverse(), '#D81B60', '#F48FB1');
-  paidOutAreaChart = getAreaOptions(labels, paidLabel, '#C0CA33', '#E6EE9C');
+  totalMerchants = merchants.length
+  totalAmountPaidOut = 0 // for now paid out is 0
+  amtAreaChart = getAreaOptions(a.reverse(), b.reverse(), '#D81B60', '#F48FB1')
+  paidOutAreaChart = getAreaOptions(labels, paidLabel, '#C0CA33', '#E6EE9C')
 
   return {
     totalMerchants,
@@ -66,82 +64,72 @@ export const GetTransactionsAnalytics = (
     totalAmountDeclined,
     totalTransactions,
     amtAreaChart,
-    paidOutAreaChart,
-  };
-};
+    paidOutAreaChart
+  }
+}
 
-export const GetTransactionsFilteredResult = (
-  transactions: TransactionHistory[],
-  values: any
-) => {
+export const GetTransactionsFilteredResult = (transactions: TransactionHistory[], values: any) => {
   // set bucket to transactions
-  let bucket: TransactionHistory[] = transactions;
-  const { status, channel, periodFrom, periodTo, query, merchant } = values;
-  let from: string | number;
-  let to: string | number;
+  let bucket: TransactionHistory[] = transactions
+  const { status, channel, periodFrom, periodTo, query, merchant } = values
+  let from: string | number
+  let to: string | number
 
   // check if dates are not empty
   if (!isEmpty(periodFrom) && !isEmpty(periodTo)) {
-    let filtered: TransactionHistory[] = [];
-    let pFrom = moment(periodFrom).format('MM/DD/YYYY 00:00:00');
-    from = moment(pFrom, 'MM/DD/YYYY 00:00:00').format('X');
-    to = moment(periodTo._d).format('X');
+    let filtered: TransactionHistory[] = []
+    let pFrom = moment(periodFrom).format('MM/DD/YYYY 00:00:00')
+    from = moment(pFrom, 'MM/DD/YYYY 00:00:00').format('X')
+    to = moment(periodTo._d).format('X')
 
     for (let trx of bucket) {
-      const createdAt = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format(
-        'X'
-      );
+      const createdAt = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('X')
       if (createdAt >= from && createdAt <= to) {
-        filtered.push(trx);
+        filtered.push(trx)
       }
     }
-    bucket = filtered;
+    bucket = filtered
   }
   if (!isEmpty(channel)) {
-    let filtered: TransactionHistory[] = [];
+    let filtered: TransactionHistory[] = []
     for (let trx of bucket) {
       if (trx.channel === channel) {
-        filtered.push(trx);
+        filtered.push(trx)
       }
     }
-    bucket = filtered;
+    bucket = filtered
   }
 
   if (!isEmpty(status)) {
-    let filtered: TransactionHistory[] = [];
+    let filtered: TransactionHistory[] = []
     for (let trx of bucket) {
       if (trx.status === status) {
-        filtered.push(trx);
+        filtered.push(trx)
       }
     }
-    bucket = filtered;
+    bucket = filtered
   }
 
   if (!isEmpty(query)) {
-    let filtered: TransactionHistory[] = [];
+    let filtered: TransactionHistory[] = []
     filtered = bucket.filter((tranx) => {
-      const tranxId = `${tranx.transactionId}`;
-      const amount = `${tranx.amountPaid.toFixed(2)}`;
-      const customer = tranx.customer.toLowerCase();
-      return (
-        tranxId.includes(query) ||
-        amount.includes(query) ||
-        customer.includes(query)
-      );
-    });
-    console.log(filtered);
-    bucket = filtered;
+      const tranxId = `${tranx.transactionId}`
+      const amount = `${tranx.amountPaid.toFixed(2)}`
+      const customer = tranx.customer.toLowerCase()
+      return tranxId.includes(query) || amount.includes(query) || customer.includes(query)
+    })
+    bucket = filtered
   }
 
   if (!isEmpty(merchant)) {
-    let filtered: TransactionHistory[] = [];
+    let filtered: TransactionHistory[] = []
     for (let trx of bucket) {
       if (trx.merchant === merchant) {
-        filtered.push(trx);
+        filtered.push(trx)
       }
     }
-    bucket = filtered;
+    bucket = filtered
   }
 
-  return { bucket };
-};
+  return { bucket }
+}
