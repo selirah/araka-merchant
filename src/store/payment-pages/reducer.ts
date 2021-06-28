@@ -14,6 +14,11 @@ export const initialState: PaymentPagesState = {
   fee: undefined,
   feeError: undefined,
   feeLoading: false,
+  providers : [],
+  mobileResponse: null,
+  mobilePaymentSuccess: false,
+  mobilePaymentProcessing: false,
+  mobilePaymentSubmit: false,
 };
 
 const reducer: Reducer<PaymentPagesState> = (state = initialState, action) => {
@@ -199,6 +204,36 @@ const reducer: Reducer<PaymentPagesState> = (state = initialState, action) => {
       return {
         ...state,
         fee: undefined,
+      };
+
+    case PaymentPagesTypes.GET_PROVIDERS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        providers: action.payload,
+      };
+
+    case PaymentPagesTypes.GET_PROVIDERS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case PaymentPagesTypes.MOBILE_PAYMENT_SUCCESS:
+      return {
+        ...state,
+        mobilePaymentSubmit: false,
+        mobileResponse: action.payload,
+        mobilePaymentSuccess: true,
+      };
+    
+    case PaymentPagesTypes.MOBILE_PAYMENT_FAILURE:
+      return {
+        ...state,
+        mobilePaymentSubmit: false,
+        error: action.payload,
+        mobilePaymentSuccess: false,
       };
     default:
       return state;

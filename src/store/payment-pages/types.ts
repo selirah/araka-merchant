@@ -25,6 +25,15 @@ export enum PaymentPagesTypes {
   REQUEST_FEE_SUCCESS = '@@payment-pages/REQUEST_FEE_SUCCESS',
   REQUEST_FEE_FAILURE = '@@payment-pages/REQUEST_FEE_FAILURE',
   CLEAR_FEE = '@@payment-pages/CLEAR_FEE',
+  GET_PROVIDERS_REQUEST = '@@payment-pages/GET_MOBILE_PROVIDERS',
+  GET_PROVIDERS_SUCCESS = "@@payment-pages/GET_MOBILE_PROVIDERS_SUCCESS",
+  GET_PROVIDERS_FAILURE = "@@payment-pages/GET_MOBILE_PROVIDERS_FAILURE",
+  MOBILE_PAYMENT_REQUEST = "@@payment-pages/MOBILE_PAYMENT_REQUEST",
+  MOBILE_PAYMENT_SUCCESS = '@@payment-pages/MOBILE_PAYMENT_SUCCESS',
+  MOBILE_PAYMENT_FAILURE = '@@payment-pages/MOBILE_PAYMENT_FAILURE',
+  MOBILE_STATUS_REQUEST = '@@payment-pages/MOBILE_STATUS_REQUEST',
+  MOBILE_STATUS_SUCCESS = '@@payment-pages/MOBILE_STATUS_SUCCESS',
+  MOBILE_STATUS_FAILURE = '@@payment-pages/MOBILE_STATUS_FAILURE',
 }
 
 export type PaymentPagesState = {
@@ -39,4 +48,9 @@ export type PaymentPagesState = {
   readonly fee: Fee | undefined;
   readonly feeError: any;
   readonly feeLoading: boolean;
+  readonly providers: [];
+  readonly mobileResponse: any;
+  readonly mobilePaymentSuccess: boolean;
+  readonly mobilePaymentProcessing: boolean;
+  readonly mobilePaymentSubmit: boolean;
 };

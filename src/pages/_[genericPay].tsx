@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, withRouter, useLocation } from 'react-router-dom';
-import { Layout, Row, Col, Image, Avatar, Spin, Empty, message } from 'antd';
+import { Layout, Row, Col, Image, Avatar, Spin, Empty, message, Button } from 'antd';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../helpers/appDispatch';
 import { appSelector } from '../helpers/appSelector';
 import { PaymentForm } from '../components/[genericPay]/PaymentForm';
 import visa from '../images/visa.png';
 import mastercard from '../images/master-card.png';
+import creditDebitCards from '../images/logos/visa-master-card.jpg';
+import mobileWallets from '../images/logos/mobile-wallets.jpg';
 import { Merchant, Error, Page, Fee } from '../interfaces';
 import { paymentRequest, clearPaymentData } from '../store/home';
 import {
   paymentPageRequest,
+  mobilePaymentRequest,
+  getProvidersRequest,
   clearStates,
   postFeeRequest,
   clearFee,
@@ -33,6 +38,10 @@ const GenericPay: React.FC<GenericPayProps> = () => {
   const [singlePage, setSinglePage] = useState<Page | undefined>(undefined);
   const [loading, setLoading] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
+  const [isShowOptions, setIsShowOptions] = useState(true);
+  const [isPayWithCard, setIsPayWithCard] = useState(false);
+  const [isPayWithMomo, setIsPayWithMomo] = useState(false);
+  const [momoProviders, setMomoProviders] = useState([]);
   const [errorData, setErrorData] = useState<Error | {}>({});
   const query = new URLSearchParams(useLocation().search);
   const transactionStatus = query.get('transactionStatus');
@@ -44,6 +53,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
     dispatch(clearPaymentData());
     dispatch(clearFee());
     dispatch(paymentPageRequest(processId));
+    dispatch(getProvidersRequest());
     if (!isEmpty(transactionStatus)) {
       switch (transactionStatus) {
         case 'SUCCESS':
@@ -58,7 +68,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
   }, []);
 
   useEffect(() => {
-    const { singlePage, loading, fee } = page;
+    const { singlePage, loading, fee, providers } = page;
     const {
       isPaymentFailure,
       isPaymentSuccess,
@@ -85,14 +95,27 @@ const GenericPay: React.FC<GenericPayProps> = () => {
             processId: singlePage.processId,
           },
         };
-        dispatch(postFeeRequest(payload));
       }
     }
     setFee(fee);
+    setMomoProviders(providers)
   }, [page, home, dispatch]);
 
   const onSubmit = (values: Merchant) => {
-    dispatch(paymentRequest(values));
+    if (isPayWithCard) {
+      dispatch(paymentRequest(values));
+    }
+    if (isPayWithMomo) {
+      console.log("Pay with MOmo")
+      const PaymentInfo = {
+        Channel: 'MOBILEWALLET',
+        Provider: values.momoProvider,
+        WalletID: values.momoAccountNumber
+      }
+      
+      values.paymentInfo = PaymentInfo;
+      dispatch(mobilePaymentRequest(values));
+    }
   };
 
   const onCalculateFee = (e: React.FormEvent<EventTarget>) => {
@@ -113,7 +136,8 @@ const GenericPay: React.FC<GenericPayProps> = () => {
     name = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
   }
 
-  let render: React.ReactNode, form: React.ReactNode, methods: React.ReactNode;
+  let render: React.ReactNode, form: React.ReactNode, methodsMoMo: React.ReactNode,
+  methodsCard: React.ReactNode, paymentOptions: React.ReactNode;
   if (loading) {
     render = (
       <div className="spinner" style={{ marginTop: '15rem' }}>
@@ -158,17 +182,40 @@ const GenericPay: React.FC<GenericPayProps> = () => {
       </Col>
     );
     form = (
-      <PaymentForm
-        page={singlePage}
-        isSubmit={isSubmit}
-        error={errorData}
-        onSubmit={onSubmit}
-        fee={fee}
-        onCalculateFee={onCalculateFee}
-        translate={t}
-      />
+      <Row>
+        <Col span={24} className="text-center">
+          <Button type="primary" icon={<ArrowLeftOutlined />} onClick={() => { setIsPayWithMomo(false); setIsPayWithCard(false); setIsShowOptions(true); }}>Select another payment option</Button>
+        </Col>
+        <Col span={24}>
+          <PaymentForm
+            page={singlePage}
+            isSubmit={isSubmit}
+            error={errorData}
+            onSubmit={onSubmit}
+            fee={fee}
+            onCalculateFee={onCalculateFee}
+            translate={t}
+            momoProviders={momoProviders}
+            isDefault={isPayWithCard ? true : false}
+          />
+        </Col>
+      </Row>
     );
-    methods = (
+    methodsMoMo = (
+      <Row
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          marginTop: '10px',
+        }}
+      >
+        <div className="pay-logos">
+          <Image width={300} src={mobileWallets} />
+        </div>
+      </Row>
+    );
+    methodsCard = (
       <Row
         style={{
           display: 'flex',
@@ -181,6 +228,31 @@ const GenericPay: React.FC<GenericPayProps> = () => {
           <Image width={80} src={visa} />
           <Image width={80} src={mastercard} />
         </div>
+      </Row>
+    );
+    paymentOptions = (
+      <Row gutter={24}
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          margin: '50px auto',
+          maxWidth: '740px',
+          textAlign: 'center'
+        }}
+      >
+        <Col span={12} xs={24} sm={12}>
+          <div className={`selectable-item`} onClick={() => {setIsPayWithCard(true); setIsShowOptions(false);}}>
+            <img src={creditDebitCards} width={100} alt="Pay with credit or debit card" />
+            <h2>Pay with Credit/Debit Card</h2>
+          </div>
+        </Col>
+        <Col span={12} xs={24} sm={12}>
+          <div className={`selectable-item`} onClick={() => {setIsPayWithMomo(true); setIsShowOptions(false);}}>
+            <img src={mobileWallets} width={100} alt="Pay with mobile wallet" />
+            <h2>Pay with Mobile Wallets</h2>
+          </div>
+        </Col>
       </Row>
     );
   }
@@ -198,8 +270,9 @@ const GenericPay: React.FC<GenericPayProps> = () => {
         >
           {render}
         </Row>
-        {form}
-        {methods}
+        {isShowOptions ? paymentOptions : null}
+        {isPayWithCard || isPayWithMomo ? form : null}
+        {isPayWithCard || isPayWithMomo ? (isPayWithCard ? methodsCard : methodsMoMo) : null}
       </Content>
     </Layout>
   );
