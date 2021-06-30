@@ -2,11 +2,16 @@ export interface PCESTableData {
   merchant: string;
   totalTransactions: number;
   totalAmount: number;
-  annualFees: number;
-  arakaFees: number;
+  annualFees?: number;
+  arakaAmount: number;
+  totalFees: number;
   totalArakaIncome: number;
-  otherFees: number;
+  otherFees?: number;
   currency: string;
+  pcesAmount: number;
+  totalNetAmount: number;
+  merchantPayout: number;
+  totalVat: number;
 }
 
 export interface GraphData {
@@ -144,4 +149,11 @@ export interface MerchantData {
   userId: number;
   image: string;
   createdWhen: string;
+  isActive: boolean;
+  emailAddress: string;
+}
+
+export interface MerchantActivation {
+  EmailAddress: string;
+  IsActive: boolean;
 }
