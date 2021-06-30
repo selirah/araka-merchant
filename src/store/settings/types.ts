@@ -1,4 +1,4 @@
-import { Client, User } from '../../interfaces';
+import { Client, MerchantData, User } from '../../interfaces';
 
 export enum SettingsTypes {
   GET_CURRENT_USER = '@@settings/GET_CURRENT_USER',
@@ -14,6 +14,12 @@ export enum SettingsTypes {
   REGISTER_MERCHANT_REQUEST = '@@settings/REGISTER_MERCHANT_REQUEST',
   REGISTER_MERCHANT_SUCCESS = '@@settings/REGISTER_MERCHANT_SUCCESS',
   REGISTER_MERCHANT_FAILURE = '@@settings/REGISTER_MERCHANT_FAILURE',
+  UPDATE_MERCHANT_STATUS_REQUEST = '@@settings/UPDATE_MERCHANT_STATUS_REQUEST',
+  UPDATE_MERCHANT_STATUS_SUCCESS = '@@settings/UPDATE_MERCHANT_STATUS_SUCCESS',
+  UPDATE_MERCHANT_STATUS_FAILURE = '@@settings/UPDATE_MERCHANT_STATUS_FAILURE',
+  GET_MERCHANTS_REQUEST = '@@settings/GET_MERCHANTS_REQUEST',
+  GET_MERCHANTS_SUCCESS = '@@settings/GET_MERCHANTS_SUCCESS',
+  GET_MERCHANTS_FAILURE = '@@settings/GET_MERCHANTS_FAILURE',
   LOG_SINGLE_ERROR = '@@settings/LOG_SINGLE_ERROR',
 }
 
@@ -29,7 +35,11 @@ export type SettingsState = {
   readonly changePasswordFailure: boolean;
   readonly createMerchantSuccess: boolean;
   readonly createMerchantFailure: boolean;
+  readonly updateMerchantStatusSuccess: boolean;
+  readonly updateMerchantStatusFailure: boolean;
+  readonly updateMerchantError: string;
   readonly merchants: User[];
+  readonly allMerchants: MerchantData[];
   readonly singleError: string;
   readonly merchantError: any;
 };
