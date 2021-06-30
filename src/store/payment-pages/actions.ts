@@ -61,6 +61,9 @@ export const clearStates = () => action(PaymentPagesTypes.CLEAR_STATES);
 export const clearPaymentPages = () =>
   action(PaymentPagesTypes.CLEAR_PAYMENT_PAGES);
 
+export const getProvidersRequest = () =>
+  action(PaymentPagesTypes.GET_PROVIDERS_REQUEST);
+
 export const postFeeRequest = (payload: any) =>
   action(PaymentPagesTypes.REQUEST_FEE_REQUEST, payload);
 
@@ -71,3 +74,24 @@ export const postFeeFailure = (error: any) =>
   action(PaymentPagesTypes.REQUEST_FEE_FAILURE, error);
 
 export const clearFee = () => action(PaymentPagesTypes.CLEAR_FEE);
+
+export const getProvidersSuccess = (data: any) =>
+  action(PaymentPagesTypes.GET_PROVIDERS_SUCCESS, data);
+
+export const getProvidersFailure = (error: string) =>
+  action(PaymentPagesTypes.GET_PROVIDERS_FAILURE, error);
+
+export const mobilePaymentRequest = (payload: any) =>
+  action(PaymentPagesTypes.MOBILE_PAYMENT_REQUEST, payload);
+
+export const mobilePaymentSuccess = (data: any) =>
+  action(PaymentPagesTypes.MOBILE_PAYMENT_SUCCESS, data);
+
+export const mobilePaymentFailure = (error: string) =>
+  action(PaymentPagesTypes.MOBILE_PAYMENT_FAILURE, error);
+
+export const checkMobileStatusSuccess = (data: any) =>
+  action(PaymentPagesTypes.MOBILE_STATUS_SUCCESS, data);
+
+export const checkMobileStatusFailure = (error: string) =>
+  action(PaymentPagesTypes.MOBILE_STATUS_FAILURE, error);

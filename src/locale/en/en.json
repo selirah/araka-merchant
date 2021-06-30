@@ -237,7 +237,9 @@
       "enabled": "Enabled",
       "pagination": "Showing %d of %s results",
       "payNow": "Pay Now",
-      "referenceInput": "Reference"
+      "referenceInput": "Reference",
+      "momoProvider": "Select mobile wallet provider",
+      "momoAccount" : "Enter mobile number to debit"
     }
   }
 }

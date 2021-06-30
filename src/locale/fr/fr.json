@@ -232,7 +232,9 @@
       "enabled": "Activé",
       "pagination": "Affichage de %d sur %s résultats",
       "payNow": "Payez maintenant",
-      "referenceInput": "Référence"
+      "referenceInput": "Référence",      
+      "momoProvider": "Sélectionnez le fournisseur de portefeuille mobile",
+      "momoAccount" : "Entrer le numéro de portable à débiter"
     }
   }
 }

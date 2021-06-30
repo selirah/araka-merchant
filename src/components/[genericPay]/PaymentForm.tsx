@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Row, Col, Form, Input, Button, Alert } from 'antd';
+import { Row, Col, Form, Input, Button, Alert, Select } from 'antd';
 import { Merchant, Page, Fee } from '../../interfaces';
 import { PayCircleOutlined } from '@ant-design/icons';
 import { isEmpty } from '../../helpers/isEmpty';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 interface PaymentFormProps {
   page: Page;
@@ -12,6 +14,8 @@ interface PaymentFormProps {
   fee: Fee | undefined;
   onCalculateFee(e: React.FormEvent<EventTarget>): void;
   translate: any;
+  isDefault: boolean;
+  momoProviders: any [];
 }
 
 export const PaymentForm: React.FC<PaymentFormProps> = ({
@@ -22,6 +26,8 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
   fee,
   onCalculateFee,
   translate,
+  isDefault,
+  momoProviders
 }) => {
   const [values] = useState<Merchant>({
     amount: page.amount !== '' ? page.amount : '',
@@ -36,7 +42,11 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
     redirectURL: page.redirectURL,
     transactionReference: page.transactionReference,
     paymentPageId: page.paymentPageId,
+    momoProvider: '',
+    momoAccountNumber: '',
+    paymentInfo: {}
   });
+  const { Option } = Select;
 
   return (
     <Row
@@ -139,7 +149,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
             </Col>
             {page.amount !== '' ? (
               <Col span={18}>
-                <Row gutter={5}>
+                <Row gutter={10}>
                   <Col span={24}>
                     <Form.Item
                       name="amount"
@@ -171,7 +181,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
               </Col>
             ) : (
               <Col span={18}>
-                <Row gutter={5}>
+                <Row gutter={10}>
                   <Col span={24}>
                     <Form.Item
                       name="amount"
@@ -241,6 +251,45 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
               </Form.Item>
             </Col>
           </Row>
+          {!isDefault ? <Row>
+            <Col span={24}>
+              <Form.Item
+                name="paymentProvider"
+                label={translate('general.momoProvider')}
+                rules={[
+                  {
+                    required: true,
+                    message: 'Payment provider is required',
+                  },
+                ]}
+              >
+                <Select placeholder='Choose Mobile Wallet Provider'>
+                  <Option value="">Choose Provider</Option>
+                  {momoProviders.map((provider) => (
+                    <Option key={provider} value={provider}>{provider}</Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item
+                name="momoAccountNumber"
+                label={translate('general.momoAccount')}
+                rules={[
+                  {
+                    required: true,
+                    message: 'Phone number to debit is required',
+                  },
+                ]}
+              >
+              <PhoneInput
+                country="cd"
+                preferredCountries={['cd', 'gh', 'us', 'gb']}
+                
+              />
+              </Form.Item>
+            </Col>
+          </Row> : null}
           <Row>
             <Col span={24}>
               <Form.Item
