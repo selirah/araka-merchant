@@ -46,9 +46,9 @@ const Details: React.FC<DetailsProps> = ({
       className: 'column-text',
     },
     {
-      title: `${translate('general.annualFees')}`,
-      dataIndex: 'annualFees',
-      key: 'annualFees',
+      title: `${translate('general.arakaAmount')}`,
+      dataIndex: 'arakaAmount',
+      key: 'arakaAmount',
       align: 'center',
       className: 'column-text',
     },
@@ -60,16 +60,30 @@ const Details: React.FC<DetailsProps> = ({
       className: 'column-text',
     },
     {
-      title: `${translate('general.otherFees')}`,
-      dataIndex: 'otherFees',
-      key: 'otherFees',
+      title: `${translate('general.pcesAmount')}`,
+      dataIndex: 'pcesAmount',
+      key: 'pcesAmount',
       align: 'center',
       className: 'column-text',
     },
     {
-      title: `${translate('general.totalArakaIncome')}`,
-      dataIndex: 'totalArakaIncome',
-      key: 'totalArakaIncome',
+      title: `${translate('general.totalNetAmount')}`,
+      dataIndex: 'totalNetAmount',
+      key: 'totalNetAmount',
+      align: 'center',
+      className: 'column-text',
+    },
+    {
+      title: `${translate('general.merchantPayout')}`,
+      dataIndex: 'merchantPayout',
+      key: 'merchantPayout',
+      align: 'center',
+      className: 'column-text',
+    },
+    {
+      title: `${translate('general.totalVat')}`,
+      dataIndex: 'totalVat',
+      key: 'totalVat',
       align: 'center',
       className: 'column-text',
     },
@@ -82,12 +96,14 @@ const Details: React.FC<DetailsProps> = ({
       totalTransactions: v.totalTransactions,
       merchant: v.merchant,
       totalAmount: `${currency} ${numberWithCommas(v.totalAmount.toFixed(2))}`,
-      arakaFees: `${currency} ${numberWithCommas(v.arakaFees.toFixed(2))}`,
-      otherFees: `${currency} ${numberWithCommas(v.otherFees.toFixed(2))}`,
-      annualFees: `${currency} ${numberWithCommas(v.annualFees.toFixed(2))}`,
-      totalArakaIncome: `${currency} ${numberWithCommas(
-        v.totalArakaIncome.toFixed(2)
+      arakaFees: `${currency} ${numberWithCommas(v.totalFees.toFixed(2))}`,
+      arakaAmount: `${currency} ${numberWithCommas(
+        v.arakaAmount.toFixed(2)
       )}`,
+      pcesAmount: `${currency} ${numberWithCommas(v.pcesAmount.toFixed(2))}`,
+      totalNetAmount: `${currency} ${numberWithCommas(v.totalNetAmount.toFixed(2))}`,
+      merchantPayout: `${currency} ${numberWithCommas(v.merchantPayout.toFixed(2))}`,
+      totalVat: `${currency} ${numberWithCommas(v.totalVat.toFixed(2))}`
     });
   }
 
