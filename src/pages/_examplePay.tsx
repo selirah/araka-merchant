@@ -22,6 +22,9 @@ const ExamplePay: React.FC<ExamplePayProps> = () => {
     redirectURL: 'https://inrbcovid.com/transaction-status',
     processId: 'b255c76a-41cc-4398-bfd2-b2f9e3238c2d',
     paymentPageId: 0,
+    momoAccountNumber :'',
+    momoProvider: '',
+    paymentInfo: {}
   });
 
   return (

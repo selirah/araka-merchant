@@ -11,4 +11,7 @@ export interface Merchant {
   redirectURL: string;
   processId: string;
   paymentPageId: number;
+  momoProvider: string;
+  momoAccountNumber: string;
+  paymentInfo: any;
 }

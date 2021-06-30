@@ -17,6 +17,12 @@ import {
   getPageTranxFailure,
   postFeeSuccess,
   postFeeFailure,
+  getProvidersSuccess,
+  getProvidersFailure,
+  mobilePaymentSuccess,
+  mobilePaymentFailure,
+  checkMobileStatusSuccess,
+  checkMobileStatusFailure
 } from './actions';
 
 function* addPaymentPage({
@@ -150,6 +156,52 @@ function* processFeeRequest({ payload }: { type: string; payload: any }): any {
   }
 }
 
+function* mobilePayment({ payload }: { type: string; payload: any }): any {
+  try {
+    const res = yield call(
+      callApiPost,
+      'payments/processmobilewallet',
+      payload
+    );
+    yield put(mobilePaymentSuccess(res.data));
+  } catch (err) {
+    if (err && err.response) {
+      yield put(mobilePaymentFailure('An error occured during payment.'));
+    } else {
+      throw err;
+    }
+  }
+}
+
+function* mobileStatus({ payload }: { type: string; payload: any }): any {
+  try {
+    const res = yield call(
+      callApiGet,
+      `payments/gettransactionstatus/${payload}`
+    );
+    yield put(checkMobileStatusSuccess(res.data));
+  } catch (err) {
+    if (err && err.response) {
+      yield put(checkMobileStatusFailure('An error occured during payment.'));
+    } else {
+      throw err;
+    }
+  }
+}
+
+function* getProviders(): any {
+  try {
+    const res = yield call(callApiGet, 'payments/getmobilewalletproviders');
+    yield put(getProvidersSuccess(res.data));
+  } catch (err) {
+    if (err && err.response) {
+      yield put(getProvidersFailure('An error occured during payment.'));
+    } else {
+      throw err;
+    }
+  }
+}
+
 function* watchAddPaymentPage() {
   yield takeEvery(PaymentPagesTypes.ADD_PAYMENT_PAGE_REQUEST, addPaymentPage);
 }
@@ -184,6 +236,18 @@ function* watchPostFeeRequest() {
   yield takeEvery(PaymentPagesTypes.REQUEST_FEE_REQUEST, processFeeRequest);
 }
 
+function* watchGetProviders() {
+  yield takeEvery(PaymentPagesTypes.GET_PROVIDERS_REQUEST, getProviders);
+}
+
+function* watchMobilePayment() {
+  yield takeEvery(PaymentPagesTypes.MOBILE_PAYMENT_REQUEST, mobilePayment);
+}
+
+function* watchMobileStatus() {
+  yield takeEvery(PaymentPagesTypes.MOBILE_STATUS_REQUEST, mobileStatus);
+}
+
 function* paymentPagesSaga(): Generator {
   yield all([
     fork(watchAddPaymentPage),
@@ -193,6 +257,9 @@ function* paymentPagesSaga(): Generator {
     fork(watchGetPaymentPage),
     fork(watchGetPageTranx),
     fork(watchPostFeeRequest),
+    fork(watchGetProviders),
+    fork(watchMobilePayment),
+    fork(watchMobileStatus)
   ]);
 }
 
