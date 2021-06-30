@@ -10,9 +10,14 @@ import {
   createMerchantSuccess,
   createMerchantFailure,
   logError,
+  getAllMerchantsSuccess,
+  getAllMerchantsFailure,
+  updateMerchantStatusSuccess,
+  updateMerchantStatusFailure,
 } from './actions';
 import { callApiGet, callApiPost } from '../../utils/api';
-import { Client, Register } from '../../interfaces';
+import { Client, MerchantActivation, Register } from '../../interfaces';
+
 
 function* getUser({ payload }: { type: string; payload: number }): any {
   try {
@@ -87,6 +92,36 @@ function* createMerchant({
   }
 }
 
+function* getAllMerchants(): any {
+  try {
+    const res = yield call(callApiGet, 'payments/getmerchants');
+    yield put(getAllMerchantsSuccess(res.data));
+  } catch (err) {
+    if (err && err.response) {
+      yield put(getAllMerchantsFailure(err.response.data));
+    } else {
+      yield put(getAllMerchantsFailure('An unknown error occurred'))
+    }
+  }
+}
+
+function* updateMerchantStatus({ payload }: {type: string; payload: MerchantActivation}): any {
+  try {
+    const res = yield call(callApiPost, 'payments/updateuserstatus', payload);
+    if (res.data){
+      yield put(updateMerchantStatusSuccess(payload))
+    } else {
+      yield put(updateMerchantStatusFailure('Status update was not performed. Please try again'))
+    }
+  } catch (err) {
+    if (err && err.response) {
+      yield put(updateMerchantStatusFailure(err.response.data));
+    } else {
+      yield put(updateMerchantStatusFailure('An unknown error occurred'));
+    }
+  }
+}
+
 function* watchGetUser() {
   yield takeEvery(SettingsTypes.GET_CURRENT_USER, getUser);
 }
@@ -102,6 +137,13 @@ function* watchChangePassword() {
 function* watchCreateMerchant() {
   yield takeEvery(SettingsTypes.REGISTER_MERCHANT_REQUEST, createMerchant);
 }
+function* watchGetAllMerchants() {
+  yield takeEvery(SettingsTypes.GET_MERCHANTS_REQUEST, getAllMerchants);
+}
+
+function* watchUpdateMerchantStatus() {
+  yield takeEvery(SettingsTypes.UPDATE_MERCHANT_STATUS_REQUEST, updateMerchantStatus);
+}
 
 function* settingsSaga(): Generator {
   yield all([
@@ -109,6 +151,8 @@ function* settingsSaga(): Generator {
     fork(watchUpdateUser),
     fork(watchChangePassword),
     fork(watchCreateMerchant),
+    fork(watchGetAllMerchants),
+    fork(watchUpdateMerchantStatus),
   ]);
 }
 

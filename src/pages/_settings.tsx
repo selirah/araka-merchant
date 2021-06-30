@@ -1,7 +1,7 @@
-import React, { lazy, Suspense, useEffect } from 'react'
+import React, { lazy, Suspense, useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { Layout, Spin, Row, message, Tabs, Form } from 'antd'
-import { SettingOutlined, UserAddOutlined } from '@ant-design/icons'
+import { SettingOutlined, UserAddOutlined, TeamOutlined } from '@ant-design/icons'
 import { useDispatch } from 'react-redux'
 import { appSelector } from '../helpers/appSelector'
 import { AppDispatch } from '../helpers/appDispatch'
@@ -10,12 +10,15 @@ import {
   changePasswordRequest,
   clearSomeBooleans,
   updateUserRequest,
-  createMerchantRequest
+  createMerchantRequest,
+  getAllMerchantsRequest
 } from '../store/settings'
 import { isEmpty } from '../helpers/isEmpty'
-import { Register } from '../interfaces'
+import { Register, MerchantData } from '../interfaces'
 import { roles } from '../helpers/constants'
 import { useTranslation } from 'react-i18next'
+// import { getMerchantsOverview } from '../store/merchant-overview'
+// import { getMerchantsRequest } from '../store/reports'
 
 const { Content } = Layout
 const { TabPane } = Tabs
@@ -24,6 +27,7 @@ const UserProfile = lazy(() => import('../components/settings/UserProfile'))
 const CreateMerchant = lazy(
   () => import('../components/settings/CreateMerchant')
 )
+const AllMerchants = lazy(() => import('../components/settings/AllMerchants'))
 
 interface Merchant {
   Name: string
@@ -41,6 +45,8 @@ export const Settings = () => {
   const dispatch: AppDispatch = useDispatch()
   const { t } = useTranslation()
   const { user } = appSelector((state) => state.auth)
+  const settings = appSelector((state) => state.settings);
+  const [merchants, setMerchants] = useState<MerchantData[]>(settings.allMerchants);
   const [form] = Form.useForm()
   const initialValues: Merchant = {
     Name: '',
@@ -49,7 +55,9 @@ export const Settings = () => {
     Password: '',
     PhoneNumber: { short: 'cd', code: 0, phone: '' }
   }
-
+  // const params = {
+  //   fixedPeriod: 'overall',
+  // };
   const {
     client,
     isSubmitting,
@@ -78,6 +86,22 @@ export const Settings = () => {
     dispatch(clearSomeBooleans())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  // useEffect(() => {
+  //   dispatch(getMerchantsOverview(params));
+  //   const { merchants } = reports;
+  //   if (isEmpty(merchants)) {
+  //     dispatch(getMerchantsRequest())
+  //   }
+  // })
+
+  useEffect(() => {
+    const { allMerchants } = settings;
+    if (isEmpty(allMerchants)) {
+      dispatch(getAllMerchantsRequest())
+    }
+    setMerchants(allMerchants)
+  }, [dispatch, merchants, settings])
 
   const onUpdateProfile = (values: any) => {
     dispatch(updateUserRequest(values))
@@ -174,6 +198,20 @@ export const Settings = () => {
                     success={createMerchantSuccess}
                     values={initialValues}
                     translate={t}
+                  />
+                </TabPane>
+              ) : null}
+              {role !== undefined && role === roles.SuperMerchant ? (
+                <TabPane
+                  tab={
+                    <span onClick={() => dispatch(clearSomeBooleans())}>
+                      <TeamOutlined /> {t('general.allMerchants')}
+                    </span>
+                  }
+                >
+                  <AllMerchants
+                    translate={t}
+                    merchants={merchants}
                   />
                 </TabPane>
               ) : null}
