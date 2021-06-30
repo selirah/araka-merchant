@@ -1695,7 +1695,7 @@ thead[class*='ant-table-thead'] th {
 
 .settings-page {
   background: #f9f9f9;
-  height: 100vh;
+  height: 100%;
   padding: 20px;
 }
 
