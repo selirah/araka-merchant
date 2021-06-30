@@ -87,16 +87,16 @@ const GenericPay: React.FC<GenericPayProps> = () => {
     if (isPaymentFailure && error !== undefined) {
       setErrorData(error);
     }
-    if (singlePage !== undefined && fee === undefined) {
-      if (singlePage.amount !== '') {
-        const payload = {
-          data: {
-            Amount: singlePage.amount,
-            processId: singlePage.processId,
-          },
-        };
-      }
-    }
+    // if (singlePage !== undefined && fee === undefined) {
+    //   if (singlePage.amount !== '') {
+    //     const payload = {
+    //       data: {
+    //         Amount: singlePage.amount,
+    //         processId: singlePage.processId,
+    //       },
+    //     };
+    //   }
+    // }
     setFee(fee);
     setMomoProviders(providers)
   }, [page, home, dispatch]);

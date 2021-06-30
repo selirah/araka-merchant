@@ -131,6 +131,11 @@
       "merchantsOverview": " Vue d'ensemble des marchands (seulement approuvés)",
       "amountProcessed": " Montant traité ",
       "totalTransactions": " Transactions totales ",
+      "arakaAmount": "Montant Araka",
+      "merchantPayout": "Paiement du marchand",
+      "totalNetAmount": "Montant net totale",
+      "pcesAmount": "Montant PCES",
+      "totalVat": "VAT totale",
       "merchantsTable": " Table des marchands ",
       "totalAmountProcessed": " Montant total traité ",
       "totalArakaFees": " Total des frais d'Araka ",
@@ -232,9 +237,9 @@
       "enabled": "Activé",
       "pagination": "Affichage de %d sur %s résultats",
       "payNow": "Payez maintenant",
-      "referenceInput": "Référence",      
+      "referenceInput": "Référence",
       "momoProvider": "Sélectionnez le fournisseur de portefeuille mobile",
-      "momoAccount" : "Entrer le numéro de portable à débiter"
+      "momoAccount": "Entrer le numéro de portable à débiter"
     }
   }
 }
