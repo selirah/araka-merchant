@@ -1,159 +1,160 @@
 export interface PCESTableData {
-  merchant: string;
-  totalTransactions: number;
-  totalAmount: number;
-  annualFees?: number;
-  arakaAmount: number;
-  totalFees: number;
-  totalArakaIncome: number;
-  otherFees?: number;
-  currency: string;
-  pcesAmount: number;
-  totalNetAmount: number;
-  merchantPayout: number;
-  totalVat: number;
+  merchant: string
+  totalTransactions: number
+  totalAmount: number
+  annualFees?: number
+  arakaAmount: number
+  totalFees: number
+  totalArakaIncome: number
+  otherFees?: number
+  currency: string
+  pcesAmount: number
+  totalNetAmount: number
+  merchantPayout: number
+  totalVat: number
 }
 
 export interface GraphData {
-  value: number;
+  value: number
   graph: {
-    values: number[];
-    labels: string[];
-  };
+    values: number[]
+    labels: string[]
+  }
 }
 
 export interface ProxyPayTableData {
-  subscriberName: string;
-  status: string;
-  emailAddress: string;
-  phoneNumber: string;
-  createdAt: string;
-  lastTransactionDate: string;
+  subscriberName: string
+  status: string
+  emailAddress: string
+  phoneNumber: string
+  createdAt: string
+  lastTransactionDate: string
 }
 
 export interface ProxyPayTrxTableData {
-  merchant: string;
-  total: number;
-  successful: number;
-  failed: number;
-  channel: string;
+  merchant: string
+  total: number
+  successful: number
+  failed: number
+  channel: string
 }
 
 export interface PayoutTableData {
-  amount: number;
-  feesPaid: number;
-  transactionId: number;
-  paidOn: string;
-  merchant: string;
-  netAmount: number;
+  amount: number
+  feesPaid: number
+  transactionId: number
+  paidOn: string
+  merchant: string
+  netAmount: number
 }
 
 export interface PCESReport {
-  transactions: GraphData;
-  totalAmount: GraphData;
-  arakaAnnualFees: GraphData;
-  totalArakaFees: GraphData;
-  totalArakaIncome: GraphData;
-  pcesshare: GraphData;
-  data: PCESTableData[];
+  transactions: GraphData
+  totalAmount: GraphData
+  arakaAnnualFees: GraphData
+  totalArakaFees: GraphData
+  totalArakaIncome: GraphData
+  pcesshare: GraphData
+  totalMerchants: number
+  data: PCESTableData[]
 }
 
 export interface ProxyPayReportSub {
-  total: GraphData;
-  active: GraphData;
-  newsubscribers: GraphData;
+  total: GraphData
+  active: GraphData
+  newsubscribers: GraphData
   external: {
-    total: GraphData;
-    active: GraphData;
-    inactive: GraphData;
-  };
-  data: ProxyPayTableData[];
+    total: GraphData
+    active: GraphData
+    inactive: GraphData
+  }
+  data: ProxyPayTableData[]
 }
 
 export interface ProxyPayReportTrx {
   overview: {
-    total: GraphData;
-    successful: GraphData;
-    failed: GraphData;
-  };
+    total: GraphData
+    successful: GraphData
+    failed: GraphData
+  }
   card: {
-    total: GraphData;
-    successful: GraphData;
-    failed: GraphData;
-  };
+    total: GraphData
+    successful: GraphData
+    failed: GraphData
+  }
   mobilemoney: {
-    total: GraphData;
-    successful: GraphData;
-    failed: GraphData;
-  };
-  data: ProxyPayTrxTableData[];
+    total: GraphData
+    successful: GraphData
+    failed: GraphData
+  }
+  data: ProxyPayTrxTableData[]
 }
 
 export interface ProxyPayReportVol {
-  moneyTransfers: GraphData;
-  otherPayments: GraphData;
-  airtimeRecharge: GraphData;
+  moneyTransfers: GraphData
+  otherPayments: GraphData
+  airtimeRecharge: GraphData
   airtimeRechargeSplits: {
-    airtel: GraphData;
-    vodacom: GraphData;
-    orange: GraphData;
-    africell: GraphData;
-  };
+    airtel: GraphData
+    vodacom: GraphData
+    orange: GraphData
+    africell: GraphData
+  }
 }
 
 export interface ProxyPayReportRev {
   channel: {
-    card: GraphData;
-    mpesa: GraphData;
-    airtel: GraphData;
-  };
+    card: GraphData
+    mpesa: GraphData
+    airtel: GraphData
+  }
   service: {
-    moneyTransfers: GraphData;
-    otherPayments: GraphData;
-    airtimeRecharge: GraphData;
-  };
+    moneyTransfers: GraphData
+    otherPayments: GraphData
+    airtimeRecharge: GraphData
+  }
 }
 
 export interface ProxyPayReportOpex {
-  bankGatewayProvider: number;
-  airtelMoney: number;
-  orangeMoney: number;
-  mpesa: number;
+  bankGatewayProvider: number
+  airtelMoney: number
+  orangeMoney: number
+  mpesa: number
 }
 
 export interface ProxyPayReportEbitda {
-  total: GraphData;
-  cards: GraphData;
-  mobileMoney: GraphData;
+  total: GraphData
+  cards: GraphData
+  mobileMoney: GraphData
 }
 
 export interface PayoutReport {
-  processedTransactions: GraphData;
-  totalPaidOut: GraphData;
-  feesPaid: GraphData;
-  outstanding: GraphData;
-  data: PayoutTableData[];
+  processedTransactions: GraphData
+  totalPaidOut: GraphData
+  feesPaid: GraphData
+  outstanding: GraphData
+  data: PayoutTableData[]
 }
 
 export interface PayoutNewRecord {
-  merchant: number | string;
-  amount: number | string;
-  comments: string;
-  currency: string;
+  merchant: number | string
+  amount: number | string
+  comments: string
+  currency: string
 }
 
 export interface MerchantData {
-  merchantId: number;
-  name: string;
-  parentMerchantId: number;
-  userId: number;
-  image: string;
-  createdWhen: string;
-  isActive: boolean;
-  emailAddress: string;
+  merchantId: number
+  name: string
+  parentMerchantId: number
+  userId: number
+  image: string
+  createdWhen: string
+  isActive: boolean
+  emailAddress: string
 }
 
 export interface MerchantActivation {
-  EmailAddress: string;
-  IsActive: boolean;
+  EmailAddress: string
+  IsActive: boolean
 }

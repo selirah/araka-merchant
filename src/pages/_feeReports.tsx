@@ -198,8 +198,8 @@ const FeeReports = () => {
               currency={currency}
               loading={loading}
               onLoadMore={onLoadMore}
-              // total={pcesReport ? pcesReport.transactions.value : 0}
-              total={pces.length}
+              total={pcesReport ? pcesReport.totalMerchants : 0}
+              // total={pces.length}
               translate={t}
             />
           </div>
