@@ -21,7 +21,7 @@ import FeeReports from '../pages/_feeReports'
 // import ProxyPayTransactions from '../pages/_proxyPayTransactions';
 // import ProxyPayOverview from '../pages/_proxyPayOverview';
 // import ProxyPayOVolumes from '../pages/_proxyPayVolumes';
-import Payouts from '../pages/_payouts'
+// import Payouts from '../pages/_payouts'
 import NotFound from '../pages/_404'
 
 const Routes: React.FC = () => {
@@ -43,7 +43,7 @@ const Routes: React.FC = () => {
         <PrivateRoute exact path={path.tranasctions} component={Transactions} />
         <PrivateRoute exact path={path.paymentPages} component={PaymentPages} />
         <PrivateRoute exact path={`${path.page}/:pageId`} component={Page} />
-        <PrivateRoute exact path={path.payouts} component={Payouts} />
+        {/* <PrivateRoute exact path={path.payouts} component={Payouts} /> */}
         <Route exact path={`${path.pay}/:processId`} component={Pay} />
         <Route
           exact

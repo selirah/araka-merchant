@@ -108,7 +108,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             </NavLink>
           </Menu.Item>
         </Menu.ItemGroup>
-        <Menu.ItemGroup key="g4" title={t('general.payouts').toUpperCase()}>
+        {/* <Menu.ItemGroup key="g4" title={t('general.payouts').toUpperCase()}>
           <Menu.Item
             key={menu.PAYOUTS}
             icon={
@@ -121,7 +121,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
           >
             <NavLink to={path.payouts}>{t('general.payouts')}</NavLink>
           </Menu.Item>
-        </Menu.ItemGroup>
+        </Menu.ItemGroup> */}
         {role !== undefined && role === roles.SuperMerchant ? (
           <Menu.ItemGroup key="g5" title={t('general.reports').toUpperCase()}>
             <Menu.Item
