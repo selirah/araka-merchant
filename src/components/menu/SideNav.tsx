@@ -1,48 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import { Layout, Menu, Image, Button } from 'antd';
-import * as FeatherIcons from 'react-feather';
-import { useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import logo from '../../images/logo_symbol.png';
-import logo2 from '../../images/logo_transparent_background.png';
-import { changeMenu, changeMenuHeader } from '../../store/utils';
-import { menu, menuHeadings } from '../../helpers/menu';
-import { appSelector } from '../../helpers/appSelector';
-import { AppDispatch } from '../../helpers/appDispatch';
-import { path } from '../../helpers/path';
-import { roles } from '../../helpers/constants';
+import React, { useState, useEffect } from 'react'
+import { NavLink } from 'react-router-dom'
+import { Layout, Menu, Image, Button } from 'antd'
+import * as FeatherIcons from 'react-feather'
+import { useDispatch } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+import logo from '../../images/logo_symbol.png'
+import logo2 from '../../images/logo_transparent_background.png'
+import { changeMenu, changeMenuHeader } from '../../store/utils'
+import { menu, menuHeadings } from '../../helpers/menu'
+import { appSelector } from '../../helpers/appSelector'
+import { AppDispatch } from '../../helpers/appDispatch'
+import { path } from '../../helpers/path'
+import { roles } from '../../helpers/constants'
 
 interface SideNavProps {
-  collapsed: boolean;
-  onCollapsed(): void;
+  collapsed: boolean
+  onCollapsed(): void
 }
 
-const { Sider } = Layout;
+const { Sider } = Layout
 
 export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
-  const dispatch: AppDispatch = useDispatch();
-  const { t } = useTranslation();
-  const utils = appSelector((state) => state.utils);
-  const [activeMenu, setActiveMenu] = useState(utils.activeMenu);
-  const { user } = appSelector((state) => state.auth);
-  let role;
+  const dispatch: AppDispatch = useDispatch()
+  const { t } = useTranslation()
+  const utils = appSelector((state) => state.utils)
+  const [activeMenu, setActiveMenu] = useState(utils.activeMenu)
+  const { user } = appSelector((state) => state.auth)
+  let role
 
   if (user) {
-    role = user.roles.find((r) => r === roles.SuperMerchant);
+    role = user.roles.find((r) => r === roles.SuperMerchant)
   } else {
-    role = roles.SuperMerchant;
+    role = roles.SuperMerchant
   }
 
   useEffect(() => {
-    const { activeMenu } = utils;
-    setActiveMenu(activeMenu);
-  }, [utils]);
+    const { activeMenu } = utils
+    setActiveMenu(activeMenu)
+  }, [utils])
 
   const switchMenu = (menu: string, header: string) => {
-    dispatch(changeMenu(menu));
-    dispatch(changeMenuHeader(header));
-  };
+    dispatch(changeMenu(menu))
+    dispatch(changeMenuHeader(header))
+  }
 
   return (
     <Sider
@@ -141,7 +141,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
               </NavLink>
             </Menu.Item>
 
-            <Menu.Item
+            {/* <Menu.Item
               key={menu.VAS_PROCESSED}
               icon={
                 <FeatherIcons.Cpu
@@ -156,7 +156,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
               <NavLink to={path.vasProcessed}>
                 {t('general.VASProcessed')}
               </NavLink>
-            </Menu.Item>
+            </Menu.Item> */}
 
             <Menu.Item
               key={menu.FEE_REPORTS}
@@ -171,7 +171,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
               <NavLink to={path.feeReports}> {t('general.FEEReports')}</NavLink>
             </Menu.Item>
 
-            <Menu.SubMenu
+            {/* <Menu.SubMenu
               key="sub2"
               icon={
                 <FeatherIcons.BarChart
@@ -221,7 +221,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                   {menu.PROXYPAY_VOLUMES}
                 </NavLink>
               </Menu.Item>
-            </Menu.SubMenu>
+            </Menu.SubMenu> */}
           </Menu.ItemGroup>
         ) : null}
         <Menu.ItemGroup
@@ -255,5 +255,5 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
         </div>
       ) : null}
     </Sider>
-  );
-};
+  )
+}
