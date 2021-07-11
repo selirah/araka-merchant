@@ -9,13 +9,18 @@ import {
   PayoutReport,
   MerchantData,
   Fee,
-  DataStream
+  DataStream,
+  PendingTransactions
 } from '../../interfaces'
 
 export enum ReportsActionTypes {
   GET_PCES_REQUEST = '@@reports/GET_PCES_REQUEST',
   GET_PCES_SUCCESS = '@@reports/GET_PCES_SUCCESS',
   GET_PCES_FAILURE = '@@reports/GET_PCES_FAILURE',
+
+  GET_PENDING_TRANSACTIONS_REQUEST = '@@reports/GET_PENDING_TRANSACTIONS_REQUEST',
+  GET_PENDING_TRANSACTIONS_SUCCESS = '@@reports/GET_PENDING_TRANSACTIONS_SUCCESS',
+  GET_PENDING_TRANSACTIONS_FAILURE = '@@reports/GET_PENDING_TRANSACTIONS_FAILURE',
 
   GET_PROXYPAY_SUBSCRIBERS_REQUEST = '@@reports/GET_PROXYPAY_SUBSCRIBERS_REQUEST',
   GET_PROXYPAY_TRANSACTIONS_REQUEST = '@@reports/GET_PROXYPAY_TRANSACTIONS_REQUEST',
@@ -77,6 +82,7 @@ export type ReportsState = {
   readonly failure: boolean
   readonly error: any
   readonly pces: PCESReport | null
+  readonly pendingtransactions: PendingTransactions | null 
   readonly proxypaySubscribers: ProxyPayReportSub | null
   readonly proxypayTransactions: ProxyPayReportTrx | null
   readonly proxypayVolumes: ProxyPayReportVol | null

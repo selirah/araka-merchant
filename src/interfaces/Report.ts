@@ -14,6 +14,20 @@ export interface PCESTableData {
   totalVat: number
 }
 
+export interface PendingTransactionsTableData {
+  transactionId: string,
+  paymentGatewayReference: string,
+  transactionDate: string,
+  amountPaid: string,
+  fee: string,
+  vat: string,
+  currency: string,
+  customer: string,
+  channel: string,
+  product: string,
+  merchant: string
+}
+
 export interface GraphData {
   value: number
   graph: {
@@ -57,6 +71,11 @@ export interface PCESReport {
   pcesshare: GraphData
   totalMerchants: number
   data: PCESTableData[]
+}
+
+export interface PendingTransactions {
+  totalRecords: number,
+  data: PendingTransactionsTableData[]
 }
 
 export interface ProxyPayReportSub {

@@ -15,6 +15,7 @@ export const initialState: ReportsState = {
   loadingEbitda: false,
   payouts: null,
   pces: null,
+  pendingtransactions : null,
   proxypaySubscribers: null,
   proxypayTransactions: null,
   proxypayVolumes: null,
@@ -52,6 +53,7 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
     case AuthActionTypes.DESTROY_STATES:
       return initialState
     case ReportsActionTypes.GET_PCES_REQUEST:
+    case ReportsActionTypes.GET_PENDING_TRANSACTIONS_REQUEST:
       return {
         ...state,
         loading: true
@@ -63,10 +65,17 @@ const reducer: Reducer<ReportsState> = (state = initialState, action) => {
         pces: action.payload
       }
     case ReportsActionTypes.GET_PCES_FAILURE:
+    case ReportsActionTypes.GET_PENDING_TRANSACTIONS_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload
+      }
+    case ReportsActionTypes.GET_PENDING_TRANSACTIONS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        pendingtransactions: action.payload
       }
     case ReportsActionTypes.GET_PROXYPAY_SUBSCRIBERS_REQUEST:
       return {

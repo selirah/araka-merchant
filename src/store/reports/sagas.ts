@@ -5,6 +5,8 @@ import { PayoutNewRecord, DataStream } from '../../interfaces'
 import {
   getPCESFailure,
   getPCESSuccess,
+  getPendingTransactionsSuccess,
+  getPendingTransactionsFailure,
   getPayoutFailure,
   getPayoutSuccess,
   getProxyPaySubscribersSuccess,
@@ -44,6 +46,19 @@ function* getPCESReport({ payload }: { type: string; payload: any }): any {
       yield put(getPCESFailure(err.response.data))
     } else {
       yield put(getPCESFailure('An unknwon error occurred'))
+    }
+  }
+}
+
+function* getPendingTransactionsReport({ payload }: { type: string; payload: any }): any {
+  try {
+    const res = yield call(callApiPost, 'reports/getpendingtransactions', payload)
+    yield put(getPendingTransactionsSuccess(res.data))
+  } catch (err) {
+    if (err && err.response) {
+      yield put(getPendingTransactionsFailure(err.response.data))
+    } else {
+      yield put(getPendingTransactionsFailure('An unknwon error occurred'))
     }
   }
 }
@@ -298,6 +313,10 @@ function* watchGetPCESReport() {
   yield takeEvery(ReportsActionTypes.GET_PCES_REQUEST, getPCESReport)
 }
 
+function* watchGetPendingTransactionsReport() {
+  yield takeEvery(ReportsActionTypes.GET_PENDING_TRANSACTIONS_REQUEST, getPendingTransactionsReport)
+}
+
 function* watchGetProxyPaySubReport() {
   yield takeEvery(
     ReportsActionTypes.GET_PROXYPAY_SUBSCRIBERS_REQUEST,
@@ -374,6 +393,7 @@ function* watchFetchGetDownloadReceiptStream() {
 function* reportsSaga(): Generator {
   yield all([
     fork(watchGetPCESReport),
+    fork(watchGetPendingTransactionsReport),
     fork(watchGetProxyPaySubReport),
     fork(watchGetProxyPayTrxReport),
     fork(watchGetProxyPayVolReport),

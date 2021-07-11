@@ -17,6 +17,7 @@ import MerchantsOverview from '../pages/_merchantsOverview'
 // import VASProcessed from '../pages/_vasProcessed';
 import Settings from '../pages/_settings'
 import FeeReports from '../pages/_feeReports'
+import PendingTransactionsView from '../pages/_pendingTransactions'
 // import ProxyPaySubscribers from '../pages/_proxyPaySubscribers';
 // import ProxyPayTransactions from '../pages/_proxyPayTransactions';
 // import ProxyPayOverview from '../pages/_proxyPayOverview';
@@ -85,6 +86,13 @@ const Routes: React.FC = () => {
 
         {role !== undefined && role === roles.SuperMerchant ? (
           <PrivateRoute exact path={path.feeReports} component={FeeReports} />
+        ) : (
+          <NotFound />
+        )}
+
+        
+        {role !== undefined && role === roles.SuperMerchant ? (
+          <PrivateRoute exact path={path.pendingTransactions} component={PendingTransactionsView} />
         ) : (
           <NotFound />
         )}

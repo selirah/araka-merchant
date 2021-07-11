@@ -9,6 +9,7 @@ export const menu = {
   MERCHANT_PAYOUTS: 'merchantPayouts',
   VAS_PROCESSED: 'VASProcessed',
   FEE_REPORTS: 'FEEReports',
+  PENDING_TRANSACTIONS : 'Pending Transactions',
   SETTINGS: 'settings',
   MY_PAYOUTS: 'My Payouts',
   MERCHANT_OVERVIEW: 'merchantOverview',
@@ -27,4 +28,5 @@ export const menuHeadings = {
   REPORTS: 'reports',
   CONFIGURATION: 'configurations',
   PAYOUTS: 'payouts',
+  PENDINGTRANSACTIONS: 'Pending Transactions'
 };

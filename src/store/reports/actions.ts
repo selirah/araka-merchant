@@ -2,6 +2,7 @@ import { action } from 'typesafe-actions'
 import { ReportsActionTypes } from './types'
 import {
   PCESReport,
+  PendingTransactions,
   ProxyPayReportSub,
   ProxyPayReportTrx,
   ProxyPayReportVol,
@@ -23,6 +24,15 @@ export const getPCESSuccess = (response: PCESReport) =>
 
 export const getPCESFailure = (error: any) =>
   action(ReportsActionTypes.GET_PCES_FAILURE, error)
+
+export const getPendingTransactionsRequest = (payload: any) =>
+  action(ReportsActionTypes.GET_PENDING_TRANSACTIONS_REQUEST, payload)
+
+export const getPendingTransactionsSuccess = (response: PendingTransactions) =>
+  action(ReportsActionTypes.GET_PENDING_TRANSACTIONS_SUCCESS, response)
+
+export const getPendingTransactionsFailure = (error: any) =>
+    action(ReportsActionTypes.GET_PENDING_TRANSACTIONS_FAILURE, error)
 
 export const getProxyPaySubscribersRequest = (payload: any) =>
   action(ReportsActionTypes.GET_PROXYPAY_SUBSCRIBERS_REQUEST, payload)
