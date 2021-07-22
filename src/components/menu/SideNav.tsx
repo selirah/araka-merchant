@@ -56,7 +56,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
         {collapsed ? (
           <Image src={logo2} alt="logo" preview={false} />
         ) : (
-          <Image src={logo} alt="logo" preview={false} width={150} />
+          <Image src={logo} alt="logo" preview={false} />
         )}
       </div>
       <Menu theme="light" mode="inline" defaultSelectedKeys={[activeMenu]}>
@@ -170,9 +170,25 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             >
               <NavLink to={path.feeReports}> {t('general.FEEReports')}</NavLink>
             </Menu.Item>
-            <Menu.Item key={menu.PENDING_TRANSACTIONS} icon={<FeatherIcons.AlertTriangle className="ant-menu-item-icon anticon" size={14} />} 
-              onClick={() => switchMenu(menu.PENDING_TRANSACTIONS, menuHeadings.PENDINGTRANSACTIONS)}>
-              <NavLink to={path.pendingTransactions}> {t('general.PendingTransactions')}</NavLink>
+            <Menu.Item
+              key={menu.PENDING_TRANSACTIONS}
+              icon={
+                <FeatherIcons.AlertTriangle
+                  className="ant-menu-item-icon anticon"
+                  size={14}
+                />
+              }
+              onClick={() =>
+                switchMenu(
+                  menu.PENDING_TRANSACTIONS,
+                  menuHeadings.PENDINGTRANSACTIONS
+                )
+              }
+            >
+              <NavLink to={path.pendingTransactions}>
+                {' '}
+                {t('general.PendingTransactions')}
+              </NavLink>
             </Menu.Item>
             {/* <Menu.SubMenu
               key="sub2"
