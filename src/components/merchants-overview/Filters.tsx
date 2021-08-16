@@ -1,30 +1,30 @@
-import React from 'react';
-import { Row, Col, Button, Collapse, Select, Form, DatePicker } from 'antd';
-import { Clock } from '../../utils/clock';
-import { MerchantData } from '../../interfaces';
-import { isEmpty } from '../../helpers/isEmpty';
+import React from 'react'
+import { Row, Col, Button, Collapse, Select, Form, DatePicker } from 'antd'
+import { Clock } from '../../utils/clock'
+import { MerchantData } from '../../interfaces'
+import { isEmpty } from '../../helpers/isEmpty'
 
 interface FiltersProps {
-  merchants: MerchantData[];
-  onSearch(values: any): void;
-  onReset(form: any): void;
-  translate: any;
+  merchants: MerchantData[]
+  onSearch(values: any): void
+  onReset(form: any): void
+  translate: any
 }
 
-const { Panel } = Collapse;
-const { Option } = Select;
+const { Panel } = Collapse
+const { Option } = Select
 
 const Filters: React.FC<FiltersProps> = ({
   merchants,
   onReset,
   onSearch,
-  translate,
+  translate
 }) => {
-  const { time } = Clock();
-  const [form] = Form.useForm();
+  const { time } = Clock()
+  const [form] = Form.useForm()
 
   return (
-    <Collapse style={{ marginTop: '5px' }}>
+    <Collapse style={{ marginTop: '5px' }} defaultActiveKey={['1']}>
       <Panel
         header={`${translate('general.filterBy')}:`}
         style={{ fontWeight: 400, fontSize: '1rem' }}
@@ -43,7 +43,15 @@ const Filters: React.FC<FiltersProps> = ({
         >
           <Row gutter={10}>
             <Col span={6}>
-              <Form.Item name="periodFrom">
+              <Form.Item
+                name="periodFrom"
+                rules={[
+                  {
+                    required: true,
+                    message: translate('general.requiredField')
+                  }
+                ]}
+              >
                 <DatePicker
                   style={{ width: '100%' }}
                   format="MMMM D, YYYY"
@@ -55,7 +63,15 @@ const Filters: React.FC<FiltersProps> = ({
               </Form.Item>
             </Col>
             <Col span={6}>
-              <Form.Item name="periodTo">
+              <Form.Item
+                name="periodTo"
+                rules={[
+                  {
+                    required: true,
+                    message: translate('general.requiredField')
+                  }
+                ]}
+              >
                 <DatePicker
                   style={{ width: '100%' }}
                   format="MMMM D, YYYY"
@@ -121,7 +137,7 @@ const Filters: React.FC<FiltersProps> = ({
         </Form>
       </Panel>
     </Collapse>
-  );
-};
+  )
+}
 
-export default Filters;
+export default Filters

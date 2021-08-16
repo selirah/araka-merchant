@@ -39,10 +39,10 @@
       "Pending Transactions": "Transactions en attente",
       "PendingTransactions": "Transactions en attente",
       "paymentGatewayReference": "Référence de la passerelle de paiement",
-      "transactionDate" : "Date et heure de la transaction",
-      "amountPaid" : "Le montant payé",
-      "vat" : "VAT",
-      "product" : "Produit",
+      "transactionDate": "Date et heure de la transaction",
+      "amountPaid": "Le montant payé",
+      "vat": "VAT",
+      "product": "Produit",
       "configurations": "Configurations",
       "settings": " Paramètres ",
       "menuInfo": " Besoin d'aide pour intégrer Araka pour votre entreprise ? N'hésitez pas à nous contacter !",
@@ -246,7 +246,9 @@
       "payNow": "Payez maintenant",
       "referenceInput": "Référence",
       "momoProvider": "Sélectionnez le fournisseur de portefeuille mobile",
-      "momoAccount": "Entrer le numéro de portable à débiter"
+      "momoAccount": "Entrer le numéro de portable à débiter",
+      "requiredField": "This field is required",
+      "filterToGetData": "Please enter details in the filter form above to retrieve data"
     }
   }
 }

@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect, useState } from 'react'
+import React, { lazy, Suspense, useEffect, useState, Fragment } from 'react'
 import { withRouter } from 'react-router-dom'
 import { Layout, Spin, Row, Button } from 'antd'
 import { useDispatch } from 'react-redux'
@@ -23,6 +23,7 @@ const Details = lazy(() => import('../components/fee-reports/Details'))
 const CurrencyFilter = lazy(
   () => import('../components/fee-reports/CurrencyFilter')
 )
+const EmptyBox = lazy(() => import('../components/fee-reports/EmptyBox'))
 
 const FeeReports = () => {
   const dispatch: AppDispatch = useDispatch()
@@ -40,6 +41,7 @@ const FeeReports = () => {
   const [pageSize, setPageSize] = useState(10)
   const [skip, setSkip] = useState(0)
   const [currency, setCurrency] = useState('USD')
+  const [isSearching, setIsSearching] = useState(false)
 
   const params = {
     currency: currency,
@@ -56,7 +58,7 @@ const FeeReports = () => {
   useEffect(() => {
     const { merchants } = reports
     dispatch(clearData())
-    dispatch(getPCESRequest(params))
+    // dispatch(getPCESRequest(params))
     if (isEmpty(merchants)) {
       dispatch(getMerchantsRequest())
     }
@@ -94,6 +96,7 @@ const FeeReports = () => {
   }
 
   const onSearch = (values: any) => {
+    setIsSearching(true)
     const { merchant, periodFrom, periodTo } = values
     let pFrom: string = '',
       pTo: string = ''
@@ -123,7 +126,8 @@ const FeeReports = () => {
     params.periodFrom = ''
     params.periodTo = ''
     params.merchant = ''
-    dispatch(getPCESRequest(params))
+    setIsSearching(false)
+    // dispatch(getPCESRequest(params))
   }
 
   const onExportClick = (type: string) => {
@@ -144,37 +148,43 @@ const FeeReports = () => {
             </Row>
           }
         >
-          <Filters
-            onReset={onReset}
-            onSearch={onSearch}
-            merchants={merchants}
-            translate={t}
-          />
-          <Cards
-            pces={pces}
-            pcesReport={pcesReport}
-            currency={currency}
-            loading={loading}
-            translate={t}
-          />
-          <CurrencyFilter onSelectCurrency={onSelectCurrency} translate={t} />
-          <div className="margin-top">
-            <Row style={{ position: 'relative' }}>
-              <h4 className="transaction-chart-text">
-                {t('general.FEEReports')}
-              </h4>
-              <div className="utility-buttons">
-                <>
-                  <Button
-                    type="primary"
-                    className="export-buttons"
-                    onClick={() => onExportClick('EXCEL')}
-                    loading={isExporting && exportType === 'EXCEL'}
-                    disabled={isEmpty(pces)}
-                  >
-                    {t('general.export-excel')}
-                  </Button>
-                  {/* <Button
+          <Fragment>
+            <Filters
+              onReset={onReset}
+              onSearch={onSearch}
+              merchants={merchants}
+              translate={t}
+            />
+            {isSearching ? (
+              <Fragment>
+                <Cards
+                  pces={pces}
+                  pcesReport={pcesReport}
+                  currency={currency}
+                  loading={loading}
+                  translate={t}
+                />
+                <CurrencyFilter
+                  onSelectCurrency={onSelectCurrency}
+                  translate={t}
+                />
+                <div className="margin-top">
+                  <Row style={{ position: 'relative' }}>
+                    <h4 className="transaction-chart-text">
+                      {t('general.FEEReports')}
+                    </h4>
+                    <div className="utility-buttons">
+                      <>
+                        <Button
+                          type="primary"
+                          className="export-buttons"
+                          onClick={() => onExportClick('EXCEL')}
+                          loading={isExporting && exportType === 'EXCEL'}
+                          disabled={isEmpty(pces)}
+                        >
+                          {t('general.export-excel')}
+                        </Button>
+                        {/* <Button
                     type="primary"
                     className="export-buttons"
                     onClick={() => onExportClick('PDF')}
@@ -183,26 +193,31 @@ const FeeReports = () => {
                   >
                     {t('general.export-pdf')}
                   </Button> */}
-                </>
-                <Button
-                  type="primary"
-                  className="export-buttons reload"
-                  onClick={() => reloadReport()}
-                >
-                  {t('general.refresh')}
-                </Button>
-              </div>
-            </Row>
-            <Details
-              pces={pces}
-              currency={currency}
-              loading={loading}
-              onLoadMore={onLoadMore}
-              total={pcesReport ? pcesReport.totalMerchants : 0}
-              // total={pces.length}
-              translate={t}
-            />
-          </div>
+                      </>
+                      <Button
+                        type="primary"
+                        className="export-buttons reload"
+                        onClick={() => reloadReport()}
+                      >
+                        {t('general.refresh')}
+                      </Button>
+                    </div>
+                  </Row>
+                  <Details
+                    pces={pces}
+                    currency={currency}
+                    loading={loading}
+                    onLoadMore={onLoadMore}
+                    total={pcesReport ? pcesReport.totalMerchants : 0}
+                    // total={pces.length}
+                    translate={t}
+                  />
+                </div>
+              </Fragment>
+            ) : (
+              <EmptyBox header={t('general.filterToGetData')} description="" />
+            )}
+          </Fragment>
         </Suspense>
       </Content>
     </div>

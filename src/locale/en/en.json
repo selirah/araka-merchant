@@ -39,10 +39,10 @@
       "Pending Transactions": "Pending Transactions",
       "PendingTransactions": "Pending Transactions",
       "paymentGatewayReference": "Payment Gateway Reference",
-      "transactionDate" : "Transaction Date & Time",
-      "amountPaid" : "Amount Paid",
-      "vat" : "VAT",
-      "product" : "Product",
+      "transactionDate": "Transaction Date & Time",
+      "amountPaid": "Amount Paid",
+      "vat": "VAT",
+      "product": "Product",
       "configurations": "Configurations",
       "settings": "Settings",
       "menuInfo": "Need assistance integrating Araka into your business model? Reach out to us!",
@@ -246,7 +246,9 @@
       "payNow": "Pay Now",
       "referenceInput": "Reference",
       "momoProvider": "Select mobile wallet provider",
-      "momoAccount" : "Enter mobile number to debit"
+      "momoAccount": "Enter mobile number to debit",
+      "requiredField": "This field is required",
+      "filterToGetData": "Please enter details in the filter form above to retrieve data"
     }
   }
 }

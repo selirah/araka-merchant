@@ -170,7 +170,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             >
               <NavLink to={path.feeReports}> {t('general.FEEReports')}</NavLink>
             </Menu.Item>
-            <Menu.Item
+            {/* <Menu.Item
               key={menu.PENDING_TRANSACTIONS}
               icon={
                 <FeatherIcons.AlertTriangle
@@ -189,7 +189,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                 {' '}
                 {t('general.PendingTransactions')}
               </NavLink>
-            </Menu.Item>
+            </Menu.Item> */}
             {/* <Menu.SubMenu
               key="sub2"
               icon={
