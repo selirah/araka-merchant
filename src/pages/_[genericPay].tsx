@@ -9,7 +9,8 @@ import {
   Spin,
   Empty,
   message,
-  Button
+  Button,
+  Modal
 } from 'antd'
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import { useDispatch } from 'react-redux'
@@ -21,10 +22,14 @@ import mastercard from '../images/master-card.png'
 import creditDebitCards from '../images/logos/visa-master-card.jpg'
 import mobileWallets from '../images/logos/mobile-wallets.jpg'
 import { Merchant, Error, Page, Fee } from '../interfaces'
-import { paymentRequest, clearPaymentData } from '../store/home'
+import {
+  paymentRequest,
+  clearPaymentData,
+  mobilePaymentRequest,
+  checkMobileStatusRequest
+} from '../store/home'
 import {
   paymentPageRequest,
-  mobilePaymentRequest,
   getProvidersRequest,
   clearStates,
   postFeeRequest,
@@ -59,6 +64,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
   const [fee, setFee] = useState<Fee | undefined>(undefined)
   const { t } = useTranslation()
   const [counter, setCounter] = useState(0)
+  const [isMobilePaymentSuccess, setIsMobilePaymentSuccess] = useState(false)
 
   useEffect(() => {
     dispatch(clearStates())
@@ -68,6 +74,9 @@ const GenericPay: React.FC<GenericPayProps> = () => {
     dispatch(getProvidersRequest())
     if (!isEmpty(transactionStatus)) {
       switch (transactionStatus) {
+        case 'PENDING':
+          message.info('Transaction Pending', 5)
+          break
         case 'SUCCESS':
           message.success('Transaction Successful', 5)
           break
@@ -80,27 +89,23 @@ const GenericPay: React.FC<GenericPayProps> = () => {
   }, [])
 
   useEffect(() => {
-    const {
-      singlePage,
-      loading,
-      fee,
-      providers,
-      mobilePaymentSubmit,
-      mobilePaymentSuccess,
-      trxStatus,
-      mobileResponse
-    } = page
+    const { singlePage, loading, fee, providers } = page
     const {
       isPaymentFailure,
       isPaymentSuccess,
       isSubmitting,
       orderResponse,
-      error
+      error,
+      mobilePaymentSubmit,
+      mobilePaymentSuccess,
+      trxStatus,
+      mobileResponse
     } = home
     setSinglePage(singlePage)
     setLoading(loading)
     setIsSubmit(isSubmitting)
     setIsMomoSubmit(mobilePaymentSubmit)
+    setIsMobilePaymentSuccess(mobilePaymentSuccess)
     if (isPaymentSuccess && orderResponse !== undefined) {
       const { orderURL } = orderResponse.order
       dispatch(clearPaymentData())
@@ -110,6 +115,34 @@ const GenericPay: React.FC<GenericPayProps> = () => {
       setErrorData(error)
     }
     if (mobilePaymentSuccess && !isEmpty(mobileResponse)) {
+      if (counter <= 3) {
+        setInterval(() => {
+          dispatch(checkMobileStatusRequest(mobileResponse.transactionId))
+          setCounter(counter + 1)
+        }, 30000)
+      } else {
+        dispatch(clearPaymentData())
+        if (singlePage) {
+          window.location.href = `${singlePage.redirectURL}?systemReference=${mobileResponse.transactionId}&transactionStatus=${trxStatus.status}`
+        }
+      }
+    }
+
+    if (!isEmpty(trxStatus) && mobilePaymentSuccess) {
+      switch (trxStatus.status) {
+        case 'SUCCESS':
+          dispatch(clearPaymentData())
+          if (singlePage) {
+            window.location.href = `${singlePage.redirectURL}?systemReference=${mobileResponse.transactionId}&transactionStatus=${trxStatus.status}`
+          }
+          break
+        case 'FAILED':
+          dispatch(clearPaymentData())
+          if (singlePage) {
+            window.location.href = `${singlePage.redirectURL}?systemReference=${mobileResponse.transactionId}&transactionStatus=${trxStatus.status}`
+          }
+          break
+      }
     }
     // if (singlePage !== undefined && fee === undefined) {
     //   if (singlePage.amount !== '') {
@@ -123,7 +156,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
     // }
     setFee(fee)
     setMomoProviders(providers)
-  }, [page, home, dispatch])
+  }, [page, home, dispatch, counter])
 
   const onSubmit = (values: Merchant) => {
     if (isPayWithCard) {
@@ -297,10 +330,10 @@ const GenericPay: React.FC<GenericPayProps> = () => {
         <Col span={12} xs={24} sm={12}>
           <div
             className={`selectable-item`}
-            // onClick={() => {
-            //   setIsPayWithMomo(true)
-            //   setIsShowOptions(false)
-            // }}
+            onClick={() => {
+              setIsPayWithMomo(true)
+              setIsShowOptions(false)
+            }}
           >
             <img src={mobileWallets} width={100} alt="Pay with mobile wallet" />
             <h2>Pay with Mobile Wallets</h2>
@@ -331,6 +364,21 @@ const GenericPay: React.FC<GenericPayProps> = () => {
             : methodsMoMo
           : null}
       </Content>
+      <Modal
+        title="Mobile Money Payment"
+        maskClosable={false}
+        centered
+        visible={isMobilePaymentSuccess}
+        width={400}
+        footer={null}
+      >
+        <Row style={{ display: 'block', margin: '0 auto' }}>
+          <Col span={24} style={{ textAlign: 'center' }}>
+            <Spin />
+            <h4>Complete the payment on your phone. We are waiting...</h4>
+          </Col>
+        </Row>
+      </Modal>
     </Layout>
   )
 }

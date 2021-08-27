@@ -14,12 +14,7 @@ export const initialState: PaymentPagesState = {
   fee: undefined,
   feeError: undefined,
   feeLoading: false,
-  providers: [],
-  mobileResponse: null,
-  mobilePaymentSuccess: false,
-  mobilePaymentProcessing: false,
-  mobilePaymentSubmit: false,
-  trxStatus: null
+  providers: []
 }
 
 const reducer: Reducer<PaymentPagesState> = (state = initialState, action) => {
@@ -218,50 +213,6 @@ const reducer: Reducer<PaymentPagesState> = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: action.payload
-      }
-
-    case PaymentPagesTypes.MOBILE_PAYMENT_REQUEST:
-      return {
-        ...state,
-        mobilePaymentSubmit: true,
-        error: undefined
-      }
-
-    case PaymentPagesTypes.MOBILE_PAYMENT_SUCCESS:
-      return {
-        ...state,
-        mobilePaymentSubmit: false,
-        mobileResponse: action.payload,
-        mobilePaymentSuccess: true
-      }
-
-    case PaymentPagesTypes.MOBILE_PAYMENT_FAILURE:
-      return {
-        ...state,
-        mobilePaymentSubmit: false,
-        error: action.payload,
-        mobilePaymentSuccess: false
-      }
-
-    case PaymentPagesTypes.MOBILE_STATUS_REQUEST:
-      return {
-        ...state,
-        mobilePaymentProcessing: true,
-        error: undefined
-      }
-
-    case PaymentPagesTypes.MOBILE_STATUS_SUCCESS:
-      return {
-        ...state,
-        mobilePaymentProcessing: false,
-        trxStatus: action.payload
-      }
-
-    case PaymentPagesTypes.MOBILE_STATUS_FAILURE:
-      return {
-        ...state,
-        mobilePaymentProcessing: false,
         error: action.payload
       }
 
