@@ -121,9 +121,9 @@ const GenericPay: React.FC<GenericPayProps> = () => {
           setCounter(counter + 1)
         }, 30000)
       } else {
-        dispatch(clearPaymentData())
         if (singlePage) {
           window.location.href = `${singlePage.redirectURL}?systemReference=${mobileResponse.transactionId}&transactionStatus=${trxStatus.status}`
+          dispatch(clearPaymentData())
         }
       }
     }
@@ -131,15 +131,15 @@ const GenericPay: React.FC<GenericPayProps> = () => {
     if (!isEmpty(trxStatus) && mobilePaymentSuccess) {
       switch (trxStatus.status) {
         case 'SUCCESS':
-          dispatch(clearPaymentData())
           if (singlePage) {
             window.location.href = `${singlePage.redirectURL}?systemReference=${mobileResponse.transactionId}&transactionStatus=${trxStatus.status}`
+            dispatch(clearPaymentData())
           }
           break
         case 'FAILED':
-          dispatch(clearPaymentData())
           if (singlePage) {
             window.location.href = `${singlePage.redirectURL}?systemReference=${mobileResponse.transactionId}&transactionStatus=${trxStatus.status}`
+            dispatch(clearPaymentData())
           }
           break
       }
