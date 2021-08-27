@@ -371,6 +371,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
         visible={isMobilePaymentSuccess}
         width={400}
         footer={null}
+        closable={false}
       >
         <Row style={{ display: 'block', margin: '0 auto' }}>
           <Col span={24} style={{ textAlign: 'center' }}>
