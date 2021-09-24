@@ -36,27 +36,54 @@ import {
 } from './actions'
 import { isEmpty } from '../../helpers/isEmpty'
 import { proxyPayDataTypes } from '../../helpers/constants'
+import { path } from '../../helpers/path'
+import { logout } from '../auth'
 
 function* getPCESReport({ payload }: { type: string; payload: any }): any {
   try {
     const res = yield call(callApiPost, 'reports/getpcesreports', payload)
     yield put(getPCESSuccess(res.data))
-  } catch (err) {
+  } catch (err: any) {
     if (err && err.response) {
-      yield put(getPCESFailure(err.response.data))
+      if (err.response.status === 401) {
+        yield put(logout())
+        localStorage.removeItem('user')
+        localStorage.removeItem('persist:root')
+        localStorage.clear()
+        window.location.href = path.login
+      } else {
+        yield put(getPCESFailure(err.response.data))
+      }
     } else {
       yield put(getPCESFailure('An unknwon error occurred'))
     }
   }
 }
 
-function* getPendingTransactionsReport({ payload }: { type: string; payload: any }): any {
+function* getPendingTransactionsReport({
+  payload
+}: {
+  type: string
+  payload: any
+}): any {
   try {
-    const res = yield call(callApiPost, 'reports/getpendingtransactions', payload)
+    const res = yield call(
+      callApiPost,
+      'reports/getpendingtransactions',
+      payload
+    )
     yield put(getPendingTransactionsSuccess(res.data))
-  } catch (err) {
+  } catch (err: any) {
     if (err && err.response) {
-      yield put(getPendingTransactionsFailure(err.response.data))
+      if (err.response.status === 401) {
+        yield put(logout())
+        localStorage.removeItem('user')
+        localStorage.removeItem('persist:root')
+        localStorage.clear()
+        window.location.href = path.login
+      } else {
+        yield put(getPendingTransactionsFailure(err.response.data))
+      }
     } else {
       yield put(getPendingTransactionsFailure('An unknwon error occurred'))
     }
@@ -73,9 +100,17 @@ function* getProxyPaySubReport({
     payload.reportType = proxyPayDataTypes.subscribers
     const res = yield call(callApiPost, 'payments/getproxypayreports', payload)
     yield put(getProxyPaySubscribersSuccess(res.data))
-  } catch (err) {
+  } catch (err: any) {
     if (err && err.response) {
-      yield put(getProxyPaySubscribersFailure(err.response.data))
+      if (err.response.status === 401) {
+        yield put(logout())
+        localStorage.removeItem('user')
+        localStorage.removeItem('persist:root')
+        localStorage.clear()
+        window.location.href = path.login
+      } else {
+        yield put(getProxyPaySubscribersFailure(err.response.data))
+      }
     } else {
       yield put(getProxyPaySubscribersFailure('An unknwon error occurred'))
     }
@@ -92,9 +127,17 @@ function* getProxyPayTrxReport({
     payload.reportType = proxyPayDataTypes.transactions
     const res = yield call(callApiPost, 'payments/getproxypayreports', payload)
     yield put(getProxyPayTransactionsSuccess(res.data))
-  } catch (err) {
+  } catch (err: any) {
     if (err && err.response) {
-      yield put(getProxyPayTransactionsFailure(err.response.data))
+      if (err.response.status === 401) {
+        yield put(logout())
+        localStorage.removeItem('user')
+        localStorage.removeItem('persist:root')
+        localStorage.clear()
+        window.location.href = path.login
+      } else {
+        yield put(getProxyPayTransactionsFailure(err.response.data))
+      }
     } else {
       yield put(getProxyPayTransactionsFailure('An unknwon error occurred'))
     }
@@ -111,9 +154,17 @@ function* getProxyPayVolReport({
     payload.reportType = proxyPayDataTypes.volumes
     const res = yield call(callApiPost, 'payments/getproxypayreports', payload)
     yield put(getProxyPayVolumesSuccess(res.data))
-  } catch (err) {
+  } catch (err: any) {
     if (err && err.response) {
-      yield put(getProxyPayVolumesFailure(err.response.data))
+      if (err.response.status === 401) {
+        yield put(logout())
+        localStorage.removeItem('user')
+        localStorage.removeItem('persist:root')
+        localStorage.clear()
+        window.location.href = path.login
+      } else {
+        yield put(getProxyPayVolumesFailure(err.response.data))
+      }
     } else {
       yield put(getProxyPayVolumesFailure('An unknwon error occurred'))
     }
@@ -130,9 +181,17 @@ function* getProxyPayRevReport({
     payload.reportType = proxyPayDataTypes.revenues
     const res = yield call(callApiPost, 'payments/getproxypayreports', payload)
     yield put(getProxyPayRevenuesSuccess(res.data))
-  } catch (err) {
+  } catch (err: any) {
     if (err && err.response) {
-      yield put(getProxyPayRevenuesFailure(err.response.data))
+      if (err.response.status === 401) {
+        yield put(logout())
+        localStorage.removeItem('user')
+        localStorage.removeItem('persist:root')
+        localStorage.clear()
+        window.location.href = path.login
+      } else {
+        yield put(getProxyPayRevenuesFailure(err.response.data))
+      }
     } else {
       yield put(getProxyPayRevenuesFailure('An unknwon error occurred'))
     }
@@ -149,9 +208,17 @@ function* getProxyPayOpexReport({
     payload.reportType = proxyPayDataTypes.opex
     const res = yield call(callApiPost, 'payments/getproxypayreports', payload)
     yield put(getProxyPayOpexSuccess(res.data))
-  } catch (err) {
+  } catch (err: any) {
     if (err && err.response) {
-      yield put(getProxyPayOpexFailure(err.response.data))
+      if (err.response.status === 401) {
+        yield put(logout())
+        localStorage.removeItem('user')
+        localStorage.removeItem('persist:root')
+        localStorage.clear()
+        window.location.href = path.login
+      } else {
+        yield put(getProxyPayOpexFailure(err.response.data))
+      }
     } else {
       yield put(getProxyPayOpexFailure('An unknwon error occurred'))
     }
@@ -168,9 +235,17 @@ function* getProxyPayEbitdaReport({
     payload.reportType = proxyPayDataTypes.ebitda
     const res = yield call(callApiPost, 'payments/getproxypayreports', payload)
     yield put(getProxyPayEbitdaSuccess(res.data))
-  } catch (err) {
+  } catch (err: any) {
     if (err && err.response) {
-      yield put(getProxyPayEbitdaFailure(err.response.data))
+      if (err.response.status === 401) {
+        yield put(logout())
+        localStorage.removeItem('user')
+        localStorage.removeItem('persist:root')
+        localStorage.clear()
+        window.location.href = path.login
+      } else {
+        yield put(getProxyPayEbitdaFailure(err.response.data))
+      }
     } else {
       yield put(getProxyPayEbitdaFailure('An unknwon error occurred'))
     }
@@ -185,9 +260,17 @@ function* getPayoutReport({ payload }: { type: string; payload: any }): any {
     } else {
       yield put(getPayoutSuccess(res.data))
     }
-  } catch (err) {
+  } catch (err: any) {
     if (err && err.response) {
-      yield put(getPayoutFailure(err.response.data))
+      if (err.response.status === 401) {
+        yield put(logout())
+        localStorage.removeItem('user')
+        localStorage.removeItem('persist:root')
+        localStorage.clear()
+        window.location.href = path.login
+      } else {
+        yield put(getPayoutFailure(err.response.data))
+      }
     } else {
       yield put(getPayoutFailure('An unknwon error occurred'))
     }
@@ -203,9 +286,17 @@ function* postNewRecord({
   try {
     yield call(callApiPost, 'payments/newrecordpayout', payload)
     yield put(postPayoutSuccess())
-  } catch (err) {
+  } catch (err: any) {
     if (err && err.response) {
-      yield put(postPayoutFailure(err.response.data))
+      if (err.response.status === 401) {
+        yield put(logout())
+        localStorage.removeItem('user')
+        localStorage.removeItem('persist:root')
+        localStorage.clear()
+        window.location.href = path.login
+      } else {
+        yield put(postPayoutFailure(err.response.data))
+      }
     } else {
       yield put(
         postPayoutFailure('An error occured when making request to server')
@@ -218,9 +309,17 @@ function* getMerchants(): any {
   try {
     const res = yield call(callApiGet, 'payments/getmerchants')
     yield put(getMerchantsSuccess(res.data))
-  } catch (err) {
+  } catch (err: any) {
     if (err && err.response) {
-      yield put(getMerchantsFailure(err.response.data))
+      if (err.response.status === 401) {
+        yield put(logout())
+        localStorage.removeItem('user')
+        localStorage.removeItem('persist:root')
+        localStorage.clear()
+        window.location.href = path.login
+      } else {
+        yield put(getMerchantsFailure(err.response.data))
+      }
     } else {
       yield put(getMerchantsFailure('An unknwon error occurred'))
     }
@@ -231,11 +330,19 @@ function* postPayoutFee({ payload }: { type: string; payload: any }): any {
   try {
     const res = yield call(callApiPost, 'payments/getpayoutfee', payload)
     yield put(getPayoutFeeSuccess(res.data))
-  } catch (err) {
+  } catch (err: any) {
     if (err && err.response) {
-      yield put(
-        getPayoutFeeFailure('An error occured when making request to server')
-      )
+      if (err.response.status === 401) {
+        yield put(logout())
+        localStorage.removeItem('user')
+        localStorage.removeItem('persist:root')
+        localStorage.clear()
+        window.location.href = path.login
+      } else {
+        yield put(
+          getPayoutFeeFailure('An error occured when making request to server')
+        )
+      }
     } else {
       throw err
     }
@@ -251,9 +358,17 @@ function* getExport({ payload }: { type: string; payload: any }): any {
     link.href = `data:application/pdf;base64,${file.fileContents}`
     link.download = file.fileDownloadName
     link.click()
-  } catch (err) {
+  } catch (err: any) {
     if (err && err.response) {
-      yield put(exportFailure(err.response.data))
+      if (err.response.status === 401) {
+        yield put(logout())
+        localStorage.removeItem('user')
+        localStorage.removeItem('persist:root')
+        localStorage.clear()
+        window.location.href = path.login
+      } else {
+        yield put(exportFailure(err.response.data))
+      }
     } else {
       yield put(exportFailure('An unknwon error occurred'))
     }
@@ -274,9 +389,17 @@ function* getExportPCESReport({
     link.href = `data:application/pdf;base64,${file.fileContents}`
     link.download = file.fileDownloadName
     link.click()
-  } catch (err) {
+  } catch (err: any) {
     if (err && err.response) {
-      yield put(exportPCESFailure(err.response.data))
+      if (err.response.status === 401) {
+        yield put(logout())
+        localStorage.removeItem('user')
+        localStorage.removeItem('persist:root')
+        localStorage.clear()
+        window.location.href = path.login
+      } else {
+        yield put(exportPCESFailure(err.response.data))
+      }
     } else {
       yield put(exportPCESFailure('An unknwon error occurred'))
     }
@@ -300,9 +423,17 @@ function* getDownloadReceiptStream({
       link.download = file.fileDownloadName
       link.click()
     }
-  } catch (err) {
+  } catch (err: any) {
     if (err && err.response) {
-      yield put(downloadReceiptFailure(err.response.data))
+      if (err.response.status === 401) {
+        yield put(logout())
+        localStorage.removeItem('user')
+        localStorage.removeItem('persist:root')
+        localStorage.clear()
+        window.location.href = path.login
+      } else {
+        yield put(downloadReceiptFailure(err.response.data))
+      }
     } else {
       yield put(downloadReceiptFailure('An unknwon error occurred'))
     }
@@ -314,7 +445,10 @@ function* watchGetPCESReport() {
 }
 
 function* watchGetPendingTransactionsReport() {
-  yield takeEvery(ReportsActionTypes.GET_PENDING_TRANSACTIONS_REQUEST, getPendingTransactionsReport)
+  yield takeEvery(
+    ReportsActionTypes.GET_PENDING_TRANSACTIONS_REQUEST,
+    getPendingTransactionsReport
+  )
 }
 
 function* watchGetProxyPaySubReport() {
