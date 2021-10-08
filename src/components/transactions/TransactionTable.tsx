@@ -1,20 +1,19 @@
-import React from 'react';
-import { Row, Col, Tag, Table } from 'antd';
-import moment from 'moment-timezone';
-import { TransactionHistory } from '../../interfaces/TransactionHistory';
-import { transactionStatus, timeZones } from '../../helpers/constants';
-import { TransactionTable as TT } from '../../interfaces';
-import { isEmpty } from '../../helpers/isEmpty';
-import { numberWithCommas } from '../../helpers/helperFunctions';
+import React from 'react'
+import { Row, Col, Tag, Table } from 'antd'
+import moment from 'moment-timezone'
+import { TransactionHistory } from '../../interfaces/TransactionHistory'
+import { transactionStatus, timeZones } from '../../helpers/constants'
+import { TransactionTable as TT } from '../../interfaces'
+import { numberWithCommas } from '../../helpers/helperFunctions'
 
 interface TransactionTableProps {
-  transactionHistory: TransactionHistory[];
-  onClickRow(transactionID: number): void;
-  currency: string;
-  loading: boolean;
-  onLoadMore(page: any, pageSize: any): void;
-  total: number;
-  translate: any;
+  transactionHistory: TransactionHistory[]
+  onClickRow(transactionID: number): void
+  currency: string
+  loading: boolean
+  onLoadMore(page: any, pageSize: any): void
+  total: number
+  translate: any
 }
 
 const TransactionTable: React.FC<TransactionTableProps> = ({
@@ -24,7 +23,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
   loading,
   onLoadMore,
   total,
-  translate,
+  translate
 }) => {
   const columns: any = [
     {
@@ -34,30 +33,30 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
       align: 'center',
       className: 'column-text',
       render: (status: string) => {
-        let color: string;
+        let color: string
         switch (status) {
           case transactionStatus.APPROVED:
-            color = '#41b883';
-            break;
+            color = '#41b883'
+            break
           case transactionStatus.DECLINED:
-            color = '#ff2e2e';
-            break;
+            color = '#ff2e2e'
+            break
           case transactionStatus.CANCELED:
-            color = '#868686';
-            break;
+            color = '#868686'
+            break
           default:
-            color = '#868686';
-            break;
+            color = '#868686'
+            break
         }
-        return <span style={{ fontSize: '2rem', color: color }}>&bull;</span>;
-      },
+        return <span style={{ fontSize: '2rem', color: color }}>&bull;</span>
+      }
     },
     {
       title: `${translate('general.amount')}`,
       dataIndex: 'amount',
       key: 'amount',
       align: 'center',
-      className: 'column-text',
+      className: 'column-text'
     },
     {
       title: `${translate('general.customer')}`,
@@ -67,9 +66,9 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
       sorter: (a: TT, b: TT) => a.customer.length - b.customer.length,
       className: 'column-text',
       render: (name: string) => {
-        return <span style={{ color: '#35b9e6' }}>{name}</span>;
+        return <span style={{ color: '#35b9e6' }}>{name}</span>
       },
-      responsive: ['md'],
+      responsive: ['md']
     },
     {
       title: `${translate('general.transactionId')}`,
@@ -78,7 +77,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
       align: 'center',
       sorter: (a: TT, b: TT) => a.transactionId - b.transactionId,
       className: 'column-text',
-      responsive: ['md'],
+      responsive: ['md']
     },
     {
       title: `${translate('general.paidOn')}`,
@@ -94,9 +93,9 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
         // const d = moment(date, 'MM/DD/YYYY HH:mm:ss')
         const d = moment(date)
           .tz(timeZones.kinshasa)
-          .format(`MMMM D, YYYY (h:mm a)`);
-        return <span>{d}</span>;
-      },
+          .format(`MMMM D, YYYY (h:mm a)`)
+        return <span>{d}</span>
+      }
     },
     {
       title: `${translate('general.channel')}`,
@@ -109,16 +108,16 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
           <Tag key={channel} className="table-tag-channel">
             {channel}
           </Tag>
-        );
-      },
+        )
+      }
     },
     {
-      title: `${translate('general.reason')}`,
-      dataIndex: 'reason',
-      key: 'reason',
+      title: `${translate('general.status')}`,
+      dataIndex: 'status',
+      key: 'status',
       align: 'center',
       className: 'column-text',
-      responsive: ['lg'],
+      responsive: ['lg']
     },
     {
       title: `${translate('general.merchant')}`,
@@ -131,12 +130,12 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
           <Tag key={merchant} className="table-tag-merchant">
             {merchant}
           </Tag>
-        );
-      },
-    },
-  ];
+        )
+      }
+    }
+  ]
 
-  let dataSource: TT[] = [];
+  let dataSource: TT[] = []
 
   for (let transaction of transactionHistory) {
     dataSource.push({
@@ -149,11 +148,8 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
       date: transaction.createdAt,
       channel: transaction.channel,
       status: transaction.status,
-      reason: !isEmpty(transaction.statusMessage)
-        ? transaction.statusMessage
-        : 'N/A',
-      merchant: transaction.merchant,
-    });
+      merchant: transaction.merchant
+    })
   }
 
   return (
@@ -164,23 +160,23 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
             dataSource={dataSource}
             columns={columns}
             onRow={(t: TT) => ({
-              onClick: () => onClickRow(t.transactionId),
+              onClick: () => onClickRow(t.transactionId)
             })}
             className="tranaction-table"
             bordered
             // pagination={false}
             pagination={{
               onChange: (page, pageSize) => {
-                onLoadMore(page, pageSize);
+                onLoadMore(page, pageSize)
               },
               total: total,
               showTotal: (_, range) => {
-                const tran = translate(`general.pagination`);
-                let t = tran.replace(`%d`, `${range[0]} - ${range[1]}`);
-                let s = t.replace(`%s`, total);
-                return s;
+                const tran = translate(`general.pagination`)
+                let t = tran.replace(`%d`, `${range[0]} - ${range[1]}`)
+                let s = t.replace(`%s`, total)
+                return s
               },
-              showSizeChanger: false,
+              showSizeChanger: false
             }}
             // scroll={{ y: 500, scrollToFirstRowOnChange: true }}
             loading={loading}
@@ -188,7 +184,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
         </div>
       </Col>
     </Row>
-  );
-};
+  )
+}
 
-export default TransactionTable;
+export default TransactionTable
