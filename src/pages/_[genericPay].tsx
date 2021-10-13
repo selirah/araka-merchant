@@ -65,6 +65,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
   const { t } = useTranslation()
   const [counter, setCounter] = useState(0)
   const [isMobilePaymentSuccess, setIsMobilePaymentSuccess] = useState(false)
+  const urlAmount = query.get('amount')
 
   useEffect(() => {
     dispatch(clearStates())
@@ -266,6 +267,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
             translate={t}
             momoProviders={momoProviders}
             isDefault={isPayWithCard ? true : false}
+            urlAmount={urlAmount}
           />
         </Col>
       </Row>

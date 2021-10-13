@@ -16,6 +16,7 @@ interface PaymentFormProps {
   translate: any
   isDefault: boolean
   momoProviders: any[]
+  urlAmount: any
 }
 
 export const PaymentForm: React.FC<PaymentFormProps> = ({
@@ -27,10 +28,11 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
   onCalculateFee,
   translate,
   isDefault,
-  momoProviders
+  momoProviders,
+  urlAmount
 }) => {
   const [values] = useState<Merchant>({
-    amount: page.amount !== '' ? page.amount : '',
+    amount: page.amount !== '' ? page.amount : urlAmount ? urlAmount : '',
     currency: page.currency,
     customerEmailAddress: '',
     customerFullName: '',
@@ -147,7 +149,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
                 <Input readOnly disabled />
               </Form.Item>
             </Col>
-            {page.amount !== '' ? (
+            {page.amount !== '' || urlAmount !== null ? (
               <Col span={18}>
                 <Row gutter={10}>
                   <Col span={24}>
