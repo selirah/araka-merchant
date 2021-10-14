@@ -125,6 +125,13 @@ const Transactions = () => {
     setCurrency(value)
     params.skip = 0
     params.currency = value
+    params.pageSize = pageSize
+    params.periodFrom = fromDate
+    params.periodTo = toDate
+    params.status = ''
+    params.channel = ''
+    params.searchValue = ''
+    params.fixedPeriod = 'overall'
     dispatch(getTransactionsRequest(params))
   }
 
