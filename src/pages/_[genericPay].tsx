@@ -63,7 +63,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
   const transactionStatus = query.get('transactionStatus')
   const [fee, setFee] = useState<Fee | undefined>(undefined)
   const { t } = useTranslation()
-  const [counter, setCounter] = useState(0)
+  const [counter, setCounter] = useState(1)
   const [isMobilePaymentSuccess, setIsMobilePaymentSuccess] = useState(false)
   const urlAmount = query.get('amount')
 

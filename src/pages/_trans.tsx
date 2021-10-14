@@ -123,7 +123,7 @@ const Transactions = () => {
 
   const onSelectCurrency = (value: string) => {
     setCurrency(value)
-    params.skip = skip
+    params.skip = 0
     params.currency = value
     dispatch(getTransactionsRequest(params))
   }
