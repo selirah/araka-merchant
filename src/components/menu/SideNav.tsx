@@ -141,6 +141,23 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
               </NavLink>
             </Menu.Item>
 
+            <Menu.Item
+              key={menu.MERCHANT_CHANNELS}
+              icon={
+                <FeatherIcons.User
+                  className="ant-menu-item-icon anticon"
+                  size={14}
+                />
+              }
+              onClick={() =>
+                switchMenu(menu.MERCHANT_CHANNELS, menuHeadings.REPORTS)
+              }
+            >
+              <NavLink to={path.merchantsChannels}>
+                {t('general.Merchants Channels')}
+              </NavLink>
+            </Menu.Item>
+
             {/* <Menu.Item
               key={menu.VAS_PROCESSED}
               icon={

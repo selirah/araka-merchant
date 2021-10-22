@@ -19,5 +19,6 @@ export const path = {
   proxyPayVolumes: '/proxypay-volumes',
   proxyPayOverview: '/proxypay-overview',
   payouts: '/payouts',
-  pendingTransactions : '/pending-transactions'
-};
+  pendingTransactions: '/pending-transactions',
+  merchantsChannels: '/merchants-channels'
+}

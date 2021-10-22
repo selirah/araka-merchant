@@ -248,7 +248,8 @@
       "momoProvider": "Select mobile wallet provider",
       "momoAccount": "Enter mobile number to debit",
       "requiredField": "This field is required",
-      "filterToGetData": "Please enter details in the filter form above to retrieve data"
+      "filterToGetData": "Please enter details in the filter form above to retrieve data",
+      "Merchants Channels": "Merchants Channels"
     }
   }
 }

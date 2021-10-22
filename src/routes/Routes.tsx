@@ -14,6 +14,7 @@ import Pay from '../pages/_[pay]'
 import GenericPay from '../pages/_[genericPay]'
 import ExamplePay from '../pages/_examplePay'
 import MerchantsOverview from '../pages/_merchantsOverview'
+import MerchantsChannels from '../pages/_merchantsChannels'
 // import VASProcessed from '../pages/_vasProcessed';
 import Settings from '../pages/_settings'
 import FeeReports from '../pages/_feeReports'
@@ -69,6 +70,16 @@ const Routes: React.FC = () => {
             exact
             path={path.merchantsOverview}
             component={MerchantsOverview}
+          />
+        ) : (
+          <NotFound />
+        )}
+
+        {role !== undefined && role === roles.SuperMerchant ? (
+          <PrivateRoute
+            exact
+            path={path.merchantsChannels}
+            component={MerchantsChannels}
           />
         ) : (
           <NotFound />

@@ -9,7 +9,7 @@ export const menu = {
   MERCHANT_PAYOUTS: 'merchantPayouts',
   VAS_PROCESSED: 'VASProcessed',
   FEE_REPORTS: 'FEEReports',
-  PENDING_TRANSACTIONS : 'Pending Transactions',
+  PENDING_TRANSACTIONS: 'Pending Transactions',
   SETTINGS: 'settings',
   MY_PAYOUTS: 'My Payouts',
   MERCHANT_OVERVIEW: 'merchantOverview',
@@ -19,7 +19,8 @@ export const menu = {
   PROXYPAY_VOLUMES: 'Volumes',
   PROXYPAY_OVERVIEW: 'Overview',
   PAYOUTS: 'payouts',
-};
+  MERCHANT_CHANNELS: 'Merchants Channels'
+}
 
 export const menuHeadings = {
   DASHBOARD: 'dashboard',
@@ -29,4 +30,4 @@ export const menuHeadings = {
   CONFIGURATION: 'configurations',
   PAYOUTS: 'payouts',
   PENDINGTRANSACTIONS: 'Pending Transactions'
-};
+}
