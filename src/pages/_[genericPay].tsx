@@ -120,7 +120,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
         setInterval(() => {
           dispatch(checkMobileStatusRequest(mobileResponse.transactionId))
           setCounter(counter + 1)
-        }, 30000)
+        }, 10000)
       } else {
         if (singlePage) {
           window.location.href = `${singlePage.redirectURL}?systemReference=${mobileResponse.transactionId}&transactionStatus=${trxStatus.status}`
