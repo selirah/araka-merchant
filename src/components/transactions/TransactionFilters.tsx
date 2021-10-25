@@ -91,7 +91,10 @@ const TransactionFilters: React.FC<TransactionFiltersProps> = ({
                   style={{ width: '100%' }}
                 >
                   <Option value="Card">{translate('general.card')}</Option>
-                  <Option value="mPESA">{translate('general.mpesa')}</Option>
+                  <Option value="MPESA">MPESA</Option>
+                  <Option value="QPC">QPC</Option>
+                  <Option value="Rawbank">Rawbank</Option>
+                  <Option value="Airtel">Airtel</Option>
                 </Select>
               </Form.Item>
             </Col>
