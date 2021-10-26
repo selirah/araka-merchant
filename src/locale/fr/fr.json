@@ -244,12 +244,18 @@
       "enabled": "Activé",
       "pagination": "Affichage de %d sur %s résultats",
       "payNow": "Payez maintenant",
+<<<<<<< HEAD
       "referenceInput": "Référence",
       "momoProvider": "Sélectionnez le fournisseur de portefeuille mobile",
       "momoAccount": "Entrer le numéro de portable à débiter",
       "requiredField": "This field is required",
       "filterToGetData": "Please enter details in the filter form above to retrieve data",
       "Merchants Channels": "Canaux marchands"
+=======
+      "referenceInput": "Référence",      
+      "momoProvider": "Sélectionnez le fournisseur de portefeuille mobile",
+      "momoAccount" : "Entrer le numéro de portable à débiter"
+>>>>>>> 801cacdea0b799a3a17e92832576e16cc9edaa04
     }
   }
 }

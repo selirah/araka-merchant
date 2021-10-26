@@ -246,10 +246,14 @@
       "payNow": "Pay Now",
       "referenceInput": "Reference",
       "momoProvider": "Select mobile wallet provider",
+<<<<<<< HEAD
       "momoAccount": "Enter mobile number to debit",
       "requiredField": "This field is required",
       "filterToGetData": "Please enter details in the filter form above to retrieve data",
       "Merchants Channels": "Merchants Channels"
+=======
+      "momoAccount" : "Enter mobile number to debit"
+>>>>>>> 801cacdea0b799a3a17e92832576e16cc9edaa04
     }
   }
 }

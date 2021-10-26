@@ -19,6 +19,7 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>Araka Merchant</title>
     <script>
+<<<<<<< HEAD
       const { host, protocol } = window.location
       if (host !== 'localhost:3000') {
         if (protocol === 'http:') {
@@ -27,6 +28,19 @@
           console.log('you are accessing us via our secure HTTPS protocol.')
         }
       }
+=======
+      // const { host, protocol } = window.location;
+      // if (host !== 'localhost:3000') {
+      //   if (protocol === 'http:') {
+      //     window.location.href = window.location.href.replace(
+      //       'http:',
+      //       'https:'
+      //     );
+      //   } else if (protocol === 'https:') {
+      //     console.log('you are accessing us via our secure HTTPS protocol.');
+      //   }
+      // }
+>>>>>>> 801cacdea0b799a3a17e92832576e16cc9edaa04
     </script>
   </head>
   <body>
