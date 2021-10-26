@@ -9,9 +9,10 @@ import {
   Avatar,
   Spin,
   Empty,
-  message,
+  /*message,*/
   Button,
-  Modal
+  Modal,
+  notification
 } from 'antd'
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import { useDispatch } from 'react-redux'
@@ -123,13 +124,32 @@ const GenericPay: React.FC<GenericPayProps> = () => {
     if (!isEmpty(transactionStatus)) {
       switch (transactionStatus) {
         case 'PENDING':
-          message.info('Transaction Pending', 5)
+          // message.info('Transaction Pending', 5)
+          notification['info']({
+            message: 'Oops',
+            description: 'Transaction is Pending'
+          })
           break
         case 'SUCCESS':
-          message.success('Transaction Successful', 5)
+          // message.success('Transaction was successful', 5)
+          notification['success']({
+            message: 'Nice!',
+            description: 'Transaction was successful'
+          })
           break
         case 'FAILED':
-          message.error('Transaction Failed', 5)
+          // message.error('Transaction has failed', 5)
+          notification['error']({
+            message: 'Oops',
+            description: 'Transaction has failed'
+          })
+          break
+        case 'DECLINED':
+          // message.error('Transaction was declined ', 5)
+          notification['error']({
+            message: 'Oops',
+            description: 'Transaction was declined'
+          })
           break
       }
     }
