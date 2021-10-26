@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
-import { Row, Col, Form, Input, Button, Alert } from 'antd';
-import { Merchant, Page, Fee } from '../../interfaces';
-import { PayCircleOutlined } from '@ant-design/icons';
-import { isEmpty } from '../../helpers/isEmpty';
+import React, { useState } from 'react'
+import { Row, Col, Form, Input, Button, Alert, Select } from 'antd'
+import { Merchant, Page, Fee } from '../../interfaces'
+import { PayCircleOutlined } from '@ant-design/icons'
+import { isEmpty } from '../../helpers/isEmpty'
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 interface PaymentFormProps {
-  page: Page;
-  onSubmit(values: Merchant): void;
-  isSubmit: boolean;
-  error: any;
-  fee: Fee | undefined;
-  onCalculateFee(e: React.FormEvent<EventTarget>): void;
-  translate: any;
+  page: Page
+  onSubmit(values: Merchant): void
+  isSubmit: boolean
+  error: any
+  fee: Fee | undefined
+  onCalculateFee(e: React.FormEvent<EventTarget>): void
+  translate: any
+  isDefault: boolean
+  momoProviders: any[]
+  urlAmount: any
 }
 
 export const PaymentForm: React.FC<PaymentFormProps> = ({
@@ -22,9 +27,12 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
   fee,
   onCalculateFee,
   translate,
+  isDefault,
+  momoProviders,
+  urlAmount
 }) => {
   const [values] = useState<Merchant>({
-    amount: page.amount !== '' ? page.amount : '',
+    amount: page.amount !== '' ? page.amount : urlAmount ? urlAmount : '',
     currency: page.currency,
     customerEmailAddress: '',
     customerFullName: '',
@@ -36,7 +44,11 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
     redirectURL: page.redirectURL,
     transactionReference: page.transactionReference,
     paymentPageId: page.paymentPageId,
-  });
+    momoProvider: '',
+    momoAccountNumber: '',
+    paymentInfo: {}
+  })
+  const { Option } = Select
 
   return (
     <Row
@@ -44,7 +56,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'center',
-        marginTop: '10px',
+        marginTop: '10px'
       }}
     >
       <Col className="pay-form-col">
@@ -89,9 +101,9 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
                   rules={[
                     {
                       required: true,
-                      message: `${translate('general.email-error')}`,
-                      type: 'email',
-                    },
+                      message: `${translate('login.email-error')}`,
+                      type: 'email'
+                    }
                   ]}
                 >
                   <Input />
@@ -115,7 +127,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
                   label={translate('general.phoneNumber')}
                   style={{ marginBottom: '2px' }}
                   rules={[
-                    { required: true, message: 'Enter your phone number' },
+                    { required: true, message: 'Enter your phone number' }
                   ]}
                 >
                   <Input />
@@ -137,9 +149,9 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
                 <Input readOnly disabled />
               </Form.Item>
             </Col>
-            {page.amount !== '' ? (
+            {page.amount !== '' || urlAmount !== null ? (
               <Col span={18}>
-                <Row gutter={5}>
+                <Row gutter={10}>
                   <Col span={24}>
                     <Form.Item
                       name="amount"
@@ -171,7 +183,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
               </Col>
             ) : (
               <Col span={18}>
-                <Row gutter={5}>
+                <Row gutter={10}>
                   <Col span={24}>
                     <Form.Item
                       name="amount"
@@ -241,6 +253,48 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
               </Form.Item>
             </Col>
           </Row>
+          {!isDefault ? (
+            <Row>
+              <Col span={24}>
+                <Form.Item
+                  name="momoProvider"
+                  label={translate('general.momoProvider')}
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Payment provider is required'
+                    }
+                  ]}
+                >
+                  <Select placeholder="Choose Mobile Wallet Provider">
+                    <Option value="">Choose Provider</Option>
+                    {momoProviders.map((provider) => (
+                      <Option key={provider} value={provider}>
+                        {provider}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={24}>
+                <Form.Item
+                  name="momoAccountNumber"
+                  label={translate('general.momoAccount')}
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Phone number to debit is required'
+                    }
+                  ]}
+                >
+                  <PhoneInput
+                    country="cd"
+                    preferredCountries={['cd', 'gh', 'us', 'gb']}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+          ) : null}
           <Row>
             <Col span={24}>
               <Form.Item
@@ -249,8 +303,8 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
                 rules={[
                   {
                     required: true,
-                    message: 'Transaction reference is required',
-                  },
+                    message: 'Transaction reference is required'
+                  }
                 ]}
               >
                 <Input type="text" />
@@ -261,7 +315,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
             style={{
               display: 'flex',
               flexWrap: 'wrap',
-              justifyContent: 'center',
+              justifyContent: 'center'
             }}
           >
             <Button type="primary" htmlType="submit" loading={isSubmit}>
@@ -273,5 +327,5 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
         </Form>
       </Col>
     </Row>
-  );
-};
+  )
+}

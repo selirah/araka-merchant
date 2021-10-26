@@ -10,12 +10,17 @@ import {
   MerchantData,
   Fee,
   DataStream,
-} from '../../interfaces';
+  PendingTransactions
+} from '../../interfaces'
 
 export enum ReportsActionTypes {
   GET_PCES_REQUEST = '@@reports/GET_PCES_REQUEST',
   GET_PCES_SUCCESS = '@@reports/GET_PCES_SUCCESS',
   GET_PCES_FAILURE = '@@reports/GET_PCES_FAILURE',
+
+  GET_PENDING_TRANSACTIONS_REQUEST = '@@reports/GET_PENDING_TRANSACTIONS_REQUEST',
+  GET_PENDING_TRANSACTIONS_SUCCESS = '@@reports/GET_PENDING_TRANSACTIONS_SUCCESS',
+  GET_PENDING_TRANSACTIONS_FAILURE = '@@reports/GET_PENDING_TRANSACTIONS_FAILURE',
 
   GET_PROXYPAY_SUBSCRIBERS_REQUEST = '@@reports/GET_PROXYPAY_SUBSCRIBERS_REQUEST',
   GET_PROXYPAY_TRANSACTIONS_REQUEST = '@@reports/GET_PROXYPAY_TRANSACTIONS_REQUEST',
@@ -55,52 +60,56 @@ export enum ReportsActionTypes {
   EXPORT_REQUEST = '@@reports/EXPORT_REQUEST',
   EXPORT_SUCCESS = '@@reports/EXPORT_SUCCESS',
   EXPORT_FAILURE = '@@reports/EXPORT_FAILURE',
+  EXPORT_PCES_REQUEST = '@@reports/EXPORT_PCES_REQUEST',
+  EXPORT_PCES_SUCCESS = '@@reports/EXPORT_PCES_SUCCESS',
+  EXPORT_PCES_FAILURE = '@@reports/EXPORT_PCES_FAILURE',
   CLEAR_FEE = '@@reports/CLEAR_FEE',
   DOWNLOAD_RECEIPT_REQUEST = '@@reports/DOWNLOAD_RECEIPT_REQUEST',
   DOWNLOAD_RECEIPT_SUCCESS = '@@reports/DOWNLOAD_RECEIPT_SUCCESS',
-  DOWNLOAD_RECEIPT_FAILURE = '@@reports/DOWNLOAD_RECEIPT_FAILURE',
+  DOWNLOAD_RECEIPT_FAILURE = '@@reports/DOWNLOAD_RECEIPT_FAILURE'
 }
 
 export type ReportsState = {
-  readonly loading: boolean;
-  readonly loadingSub: boolean;
-  readonly loadingTrx: boolean;
-  readonly loadingVol: boolean;
-  readonly loadingRev: boolean;
-  readonly loadingOpex: boolean;
-  readonly loadingEbitda: boolean;
-  readonly isSubmitting: boolean;
-  readonly success: boolean;
-  readonly failure: boolean;
-  readonly error: any;
-  readonly pces: PCESReport | null;
-  readonly proxypaySubscribers: ProxyPayReportSub | null;
-  readonly proxypayTransactions: ProxyPayReportTrx | null;
-  readonly proxypayVolumes: ProxyPayReportVol | null;
-  readonly proxypayRevenues: ProxyPayReportRev | null;
-  readonly proxypayOpex: ProxyPayReportOpex | null;
-  readonly proxypayEbitda: ProxyPayReportEbitda | null;
-  readonly payouts: PayoutReport | null;
-  readonly merchants: MerchantData[];
-  readonly fee: Fee | undefined;
-  readonly feeError: any;
-  readonly feeLoading: boolean;
-  readonly isExporting: boolean;
-  readonly isExportSuccess: boolean;
-  readonly isExportError: boolean;
-  readonly exportStream: DataStream | undefined;
-  readonly exportError: any;
-  readonly isRequestingDownload: boolean;
-  readonly downloadRecieptSuccess: boolean;
-  readonly downloadRecieptError: boolean;
-  readonly downloadReceiptStream: DataStream | undefined;
-  readonly downloadError: any;
-  readonly errorSub: any;
-  readonly errorTrx: any;
-  readonly errorVol: any;
-  readonly errorRev: any;
-  readonly errorOpex: any;
-  readonly errorEbitda: any;
-  readonly isLoaded: boolean;
-  readonly dataType: string;
-};
+  readonly loading: boolean
+  readonly loadingSub: boolean
+  readonly loadingTrx: boolean
+  readonly loadingVol: boolean
+  readonly loadingRev: boolean
+  readonly loadingOpex: boolean
+  readonly loadingEbitda: boolean
+  readonly isSubmitting: boolean
+  readonly success: boolean
+  readonly failure: boolean
+  readonly error: any
+  readonly pces: PCESReport | null
+  readonly pendingtransactions: PendingTransactions | null 
+  readonly proxypaySubscribers: ProxyPayReportSub | null
+  readonly proxypayTransactions: ProxyPayReportTrx | null
+  readonly proxypayVolumes: ProxyPayReportVol | null
+  readonly proxypayRevenues: ProxyPayReportRev | null
+  readonly proxypayOpex: ProxyPayReportOpex | null
+  readonly proxypayEbitda: ProxyPayReportEbitda | null
+  readonly payouts: PayoutReport | null
+  readonly merchants: MerchantData[]
+  readonly fee: Fee | undefined
+  readonly feeError: any
+  readonly feeLoading: boolean
+  readonly isExporting: boolean
+  readonly isExportSuccess: boolean
+  readonly isExportError: boolean
+  readonly exportStream: DataStream | undefined
+  readonly exportError: any
+  readonly isRequestingDownload: boolean
+  readonly downloadRecieptSuccess: boolean
+  readonly downloadRecieptError: boolean
+  readonly downloadReceiptStream: DataStream | undefined
+  readonly downloadError: any
+  readonly errorSub: any
+  readonly errorTrx: any
+  readonly errorVol: any
+  readonly errorRev: any
+  readonly errorOpex: any
+  readonly errorEbitda: any
+  readonly isLoaded: boolean
+  readonly dataType: string
+}

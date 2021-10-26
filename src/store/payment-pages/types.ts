@@ -1,4 +1,4 @@
-import { Page, TransactionHistory, Fee } from '../../interfaces';
+import { Page, TransactionHistory, Fee } from '../../interfaces'
 
 export enum PaymentPagesTypes {
   GET_PAYMENT_PAGES_REQUEST = '@@payment-pages/GET_PAYMENT_PAGES_REQUEST',
@@ -25,18 +25,22 @@ export enum PaymentPagesTypes {
   REQUEST_FEE_SUCCESS = '@@payment-pages/REQUEST_FEE_SUCCESS',
   REQUEST_FEE_FAILURE = '@@payment-pages/REQUEST_FEE_FAILURE',
   CLEAR_FEE = '@@payment-pages/CLEAR_FEE',
+  GET_PROVIDERS_REQUEST = '@@payment-pages/GET_MOBILE_PROVIDERS',
+  GET_PROVIDERS_SUCCESS = '@@payment-pages/GET_MOBILE_PROVIDERS_SUCCESS',
+  GET_PROVIDERS_FAILURE = '@@payment-pages/GET_MOBILE_PROVIDERS_FAILURE'
 }
 
 export type PaymentPagesState = {
-  readonly pages: Page[];
-  readonly loading: boolean;
-  readonly isSubmitting: boolean;
-  readonly error: any;
-  readonly success: boolean;
-  readonly failure: boolean;
-  readonly singlePage: Page | undefined;
-  readonly pageTransactions: TransactionHistory[];
-  readonly fee: Fee | undefined;
-  readonly feeError: any;
-  readonly feeLoading: boolean;
-};
+  readonly pages: Page[]
+  readonly loading: boolean
+  readonly isSubmitting: boolean
+  readonly error: any
+  readonly success: boolean
+  readonly failure: boolean
+  readonly singlePage: Page | undefined
+  readonly pageTransactions: TransactionHistory[]
+  readonly fee: Fee | undefined
+  readonly feeError: any
+  readonly feeLoading: boolean
+  readonly providers: []
+}

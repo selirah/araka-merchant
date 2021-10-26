@@ -1,5 +1,5 @@
-import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
-import { TransactionTypes } from './types';
+import { all, call, fork, put, takeEvery } from 'redux-saga/effects'
+import { TransactionTypes } from './types'
 import {
   getTransactionsSuccess,
   getTransactionsFailure,
@@ -8,10 +8,12 @@ import {
   exportTranxSuccess,
   exportTranxFailure,
   downloadReceiptSuccess,
-  downloadReceiptFailure,
-} from './actions';
-import { callApiGet, callApiPost } from '../../utils/api';
-import { DataStream } from '../../interfaces';
+  downloadReceiptFailure
+} from './actions'
+import { callApiGet, callApiPost } from '../../utils/api'
+import { DataStream } from '../../interfaces'
+import { path } from '../../helpers/path'
+import { logout } from '../auth'
 
 function* getTransactions({ payload }: { type: string; payload: any }): any {
   try {
@@ -19,119 +21,151 @@ function* getTransactions({ payload }: { type: string; payload: any }): any {
       callApiPost,
       'reports/gettransactionsoverview',
       payload
-    );
+    )
     if (res.status === 200) {
-      yield put(getTransactionsSuccess(res.data));
+      yield put(getTransactionsSuccess(res.data))
     } else {
-      yield put(getTransactionsFailure('An unknwon error occurred'));
+      yield put(getTransactionsFailure('An unknwon error occurred'))
     }
-  } catch (err) {
+  } catch (err: any) {
     if (err && err.response) {
-      yield put(getTransactionsFailure(err.response.data));
+      if (err.response.status === 401) {
+        yield put(logout())
+        localStorage.removeItem('user')
+        localStorage.removeItem('persist:root')
+        localStorage.clear()
+        window.location.href = path.login
+      } else {
+        yield put(getTransactionsFailure(err.response.data))
+      }
     } else {
-      yield put(getTransactionsFailure('An unknwon error occurred'));
+      yield put(getTransactionsFailure('An unknwon error occurred'))
     }
   }
 }
 
 function* getCurrencies(): any {
   try {
-    const res = yield call(callApiGet, 'payments/currencycodes');
+    const res = yield call(callApiGet, 'payments/currencycodes')
     if (res.status === 200) {
-      yield put(getCurrenciesSuccess(res.data));
+      yield put(getCurrenciesSuccess(res.data))
     } else {
-      yield put(getCurrenciesFailure('An unknwon error occurred'));
+      yield put(getCurrenciesFailure('An unknwon error occurred'))
     }
-  } catch (err) {
+  } catch (err: any) {
     if (err && err.response) {
-      yield put(getCurrenciesFailure(err.response.data));
+      if (err.response.status === 401) {
+        yield put(logout())
+        localStorage.removeItem('user')
+        localStorage.removeItem('persist:root')
+        localStorage.clear()
+        window.location.href = path.login
+      } else {
+        yield put(getCurrenciesFailure(err.response.data))
+      }
     } else {
-      yield put(getCurrenciesFailure('An unknwon error occurred'));
+      yield put(getCurrenciesFailure('An unknwon error occurred'))
     }
   }
 }
 
 function* getExportTransactions({
-  payload,
+  payload
 }: {
-  type: string;
-  payload: any;
+  type: string
+  payload: any
 }): any {
   try {
     const res = yield call(
       callApiPost,
       `reports/exportmerchanttransactions`,
       payload
-    );
+    )
     if (res.status === 200) {
-      yield put(exportTranxSuccess(res.data));
+      yield put(exportTranxSuccess(res.data))
 
       // console.log(res.data);
 
-      let file: DataStream = res.data;
-      const link = document.createElement('a');
-      link.href = `data:application/pdf;base64,${file.fileContents}`;
-      link.download = file.fileDownloadName;
-      link.click();
+      let file: DataStream = res.data
+      const link = document.createElement('a')
+      link.href = `data:application/pdf;base64,${file.fileContents}`
+      link.download = file.fileDownloadName
+      link.click()
     }
-  } catch (err) {
+  } catch (err: any) {
     if (err && err.response) {
-      yield put(exportTranxFailure(err.response.data));
+      if (err.response.status === 401) {
+        yield put(logout())
+        localStorage.removeItem('user')
+        localStorage.removeItem('persist:root')
+        localStorage.clear()
+        window.location.href = path.login
+      } else {
+        yield put(exportTranxFailure(err.response.data))
+      }
     } else {
-      yield put(exportTranxFailure('An unknwon error occurred'));
+      yield put(exportTranxFailure('An unknwon error occurred'))
     }
   }
 }
 
 function* getDownloadReceiptStream({
-  payload,
+  payload
 }: {
-  type: string;
-  payload: number;
+  type: string
+  payload: number
 }): any {
   try {
     const res = yield call(
       callApiGet,
       `payments/gettransactionreciept/${payload}`
-    );
+    )
     if (res.status === 200) {
-      yield put(downloadReceiptSuccess(res.data));
+      yield put(downloadReceiptSuccess(res.data))
 
-      let file: DataStream = res.data;
-      const link = document.createElement('a');
-      link.href = `data:application/pdf;base64,${file.fileContents}`;
-      link.download = file.fileDownloadName;
-      link.click();
+      let file: DataStream = res.data
+      const link = document.createElement('a')
+      link.href = `data:application/pdf;base64,${file.fileContents}`
+      link.download = file.fileDownloadName
+      link.click()
     }
-  } catch (err) {
+  } catch (err: any) {
     if (err && err.response) {
-      yield put(downloadReceiptFailure(err.response.data));
+      if (err.response.status === 401) {
+        yield put(logout())
+        localStorage.removeItem('user')
+        localStorage.removeItem('persist:root')
+        localStorage.clear()
+        window.location.href = path.login
+      } else {
+        yield put(downloadReceiptFailure(err.response.data))
+      }
     } else {
-      yield put(downloadReceiptFailure('An unknwon error occurred'));
+      yield put(downloadReceiptFailure('An unknwon error occurred'))
     }
   }
 }
 
 function* watchGetTransactions() {
-  yield takeEvery(TransactionTypes.GET_TRANSACTIONS_REQUEST, getTransactions);
+  yield takeEvery(TransactionTypes.GET_TRANSACTIONS_REQUEST, getTransactions)
 }
 
 function* watchGetCurrencies() {
-  yield takeEvery(TransactionTypes.GET_CURRENCIES, getCurrencies);
+  yield takeEvery(TransactionTypes.GET_CURRENCIES, getCurrencies)
 }
 
 function* watchExportTransactions() {
   yield takeEvery(
     TransactionTypes.EXPORT_TRANSACTIONS_REQUEST,
     getExportTransactions
-  );
+  )
 }
 
 function* watchFetchGetDownloadReceiptStream() {
   yield takeEvery(
     TransactionTypes.DOWNLOAD_RECEIPT_REQUEST,
     getDownloadReceiptStream
-  );
+  )
 }
 
 function* transactionSaga(): Generator {
@@ -139,8 +173,8 @@ function* transactionSaga(): Generator {
     fork(watchGetTransactions),
     fork(watchGetCurrencies),
     fork(watchExportTransactions),
-    fork(watchFetchGetDownloadReceiptStream),
-  ]);
+    fork(watchFetchGetDownloadReceiptStream)
+  ])
 }
 
-export { transactionSaga };
+export { transactionSaga }

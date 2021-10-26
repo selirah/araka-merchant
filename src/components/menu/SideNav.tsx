@@ -1,48 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import { Layout, Menu, Image, Button } from 'antd';
-import * as FeatherIcons from 'react-feather';
-import { useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import logo from '../../images/logo_symbol.png';
-import logo2 from '../../images/logo_transparent_background.png';
-import { changeMenu, changeMenuHeader } from '../../store/utils';
-import { menu, menuHeadings } from '../../helpers/menu';
-import { appSelector } from '../../helpers/appSelector';
-import { AppDispatch } from '../../helpers/appDispatch';
-import { path } from '../../helpers/path';
-import { roles } from '../../helpers/constants';
+import React, { useState, useEffect } from 'react'
+import { NavLink } from 'react-router-dom'
+import { Layout, Menu, Image, Button } from 'antd'
+import * as FeatherIcons from 'react-feather'
+import { useDispatch } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+import logo from '../../images/logo_symbol.png'
+import logo2 from '../../images/logo_transparent_background.png'
+import { changeMenu, changeMenuHeader } from '../../store/utils'
+import { menu, menuHeadings } from '../../helpers/menu'
+import { appSelector } from '../../helpers/appSelector'
+import { AppDispatch } from '../../helpers/appDispatch'
+import { path } from '../../helpers/path'
+import { roles } from '../../helpers/constants'
 
 interface SideNavProps {
-  collapsed: boolean;
-  onCollapsed(): void;
+  collapsed: boolean
+  onCollapsed(): void
 }
 
-const { Sider } = Layout;
+const { Sider } = Layout
 
 export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
-  const dispatch: AppDispatch = useDispatch();
-  const { t } = useTranslation();
-  const utils = appSelector((state) => state.utils);
-  const [activeMenu, setActiveMenu] = useState(utils.activeMenu);
-  const { user } = appSelector((state) => state.auth);
-  let role;
+  const dispatch: AppDispatch = useDispatch()
+  const { t } = useTranslation()
+  const utils = appSelector((state) => state.utils)
+  const [activeMenu, setActiveMenu] = useState(utils.activeMenu)
+  const { user } = appSelector((state) => state.auth)
+  let role
 
   if (user) {
-    role = user.roles.find((r) => r === roles.SuperMerchant);
+    role = user.roles.find((r) => r === roles.SuperMerchant)
   } else {
-    role = roles.SuperMerchant;
+    role = roles.SuperMerchant
   }
 
   useEffect(() => {
-    const { activeMenu } = utils;
-    setActiveMenu(activeMenu);
-  }, [utils]);
+    const { activeMenu } = utils
+    setActiveMenu(activeMenu)
+  }, [utils])
 
   const switchMenu = (menu: string, header: string) => {
-    dispatch(changeMenu(menu));
-    dispatch(changeMenuHeader(header));
-  };
+    dispatch(changeMenu(menu))
+    dispatch(changeMenuHeader(header))
+  }
 
   return (
     <Sider
@@ -56,7 +56,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
         {collapsed ? (
           <Image src={logo2} alt="logo" preview={false} />
         ) : (
-          <Image src={logo} alt="logo" preview={false} width={150} />
+          <Image src={logo} alt="logo" preview={false} />
         )}
       </div>
       <Menu theme="light" mode="inline" defaultSelectedKeys={[activeMenu]}>
@@ -108,7 +108,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             </NavLink>
           </Menu.Item>
         </Menu.ItemGroup>
-        <Menu.ItemGroup key="g4" title={t('general.payouts').toUpperCase()}>
+        {/* <Menu.ItemGroup key="g4" title={t('general.payouts').toUpperCase()}>
           <Menu.Item
             key={menu.PAYOUTS}
             icon={
@@ -121,7 +121,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
           >
             <NavLink to={path.payouts}>{t('general.payouts')}</NavLink>
           </Menu.Item>
-        </Menu.ItemGroup>
+        </Menu.ItemGroup> */}
         {role !== undefined && role === roles.SuperMerchant ? (
           <Menu.ItemGroup key="g5" title={t('general.reports').toUpperCase()}>
             <Menu.Item
@@ -142,6 +142,23 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             </Menu.Item>
 
             <Menu.Item
+              key={menu.MERCHANT_CHANNELS}
+              icon={
+                <FeatherIcons.User
+                  className="ant-menu-item-icon anticon"
+                  size={14}
+                />
+              }
+              onClick={() =>
+                switchMenu(menu.MERCHANT_CHANNELS, menuHeadings.REPORTS)
+              }
+            >
+              <NavLink to={path.merchantsChannels}>
+                {t('general.Merchants Channels')}
+              </NavLink>
+            </Menu.Item>
+
+            {/* <Menu.Item
               key={menu.VAS_PROCESSED}
               icon={
                 <FeatherIcons.Cpu
@@ -156,7 +173,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
               <NavLink to={path.vasProcessed}>
                 {t('general.VASProcessed')}
               </NavLink>
-            </Menu.Item>
+            </Menu.Item> */}
 
             <Menu.Item
               key={menu.FEE_REPORTS}
@@ -170,7 +187,26 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             >
               <NavLink to={path.feeReports}> {t('general.FEEReports')}</NavLink>
             </Menu.Item>
-
+            {/* <Menu.Item
+              key={menu.PENDING_TRANSACTIONS}
+              icon={
+                <FeatherIcons.AlertTriangle
+                  className="ant-menu-item-icon anticon"
+                  size={14}
+                />
+              }
+              onClick={() =>
+                switchMenu(
+                  menu.PENDING_TRANSACTIONS,
+                  menuHeadings.PENDINGTRANSACTIONS
+                )
+              }
+            >
+              <NavLink to={path.pendingTransactions}>
+                {' '}
+                {t('general.PendingTransactions')}
+              </NavLink>
+            </Menu.Item> */}
             {/* <Menu.SubMenu
               key="sub2"
               icon={
@@ -255,5 +291,5 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
         </div>
       ) : null}
     </Sider>
-  );
-};
+  )
+}

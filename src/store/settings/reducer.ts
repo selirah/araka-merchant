@@ -14,6 +14,10 @@ export const initialState: SettingsState = {
   loading: false,
   createMerchantFailure: false,
   createMerchantSuccess: false,
+  updateMerchantStatusSuccess: false,
+  updateMerchantStatusFailure: false,
+  updateMerchantError: '',
+  allMerchants: [],
   merchants: [],
   singleError: '',
   merchantError: undefined,
@@ -89,7 +93,48 @@ const reducer: Reducer<SettingsState> = (state = initialState, action) => {
         changePasswordSuccess: false,
         changePasswordFailure: true,
       };
+    case SettingsTypes.UPDATE_MERCHANT_STATUS_REQUEST:
+      return {
+        ...state,
+        isSubmitting: true
+      };
+    case SettingsTypes.UPDATE_MERCHANT_STATUS_SUCCESS:
+      const resp = action.payload
+      for (var i = 0; i < state.allMerchants.length; i += 1){
+        if (state.allMerchants[i].emailAddress === resp.EmailAddress) {
+          state.allMerchants[i].isActive = resp.IsActive
+        }
+      }
+      return {
+        ...state,
+        isSubmitting: false,
+        updateMerchantStatusSuccess: true,
+        updateMerchantStatusFailure: false,
+        // merchants: [action.payload, ...state.merchants],
+      };
+    case SettingsTypes.UPDATE_MERCHANT_STATUS_FAILURE:
+      return {
+        ...state,
+        isSubmitting: false,
+        updateMerchantError: action.payload,
+        updateMerchantStatusFailure: true,
+        updateMerchantStatusSuccess: false
+      };
 
+    case SettingsTypes.GET_MERCHANTS_REQUEST:
+      return {
+        ...state,
+      }
+    case SettingsTypes.GET_MERCHANTS_SUCCESS:
+      return {
+        ...state,
+        allMerchants: action.payload
+      }
+    case SettingsTypes.GET_MERCHANTS_FAILURE:
+      return {
+        ...state,
+        error: action.payload
+      }
     case SettingsTypes.REGISTER_MERCHANT_REQUEST:
       return {
         ...state,
@@ -97,7 +142,7 @@ const reducer: Reducer<SettingsState> = (state = initialState, action) => {
         merchantError: undefined,
         singleError: '',
       };
-
+  
     case SettingsTypes.REGISTER_MERCHANT_SUCCESS:
       return {
         ...state,

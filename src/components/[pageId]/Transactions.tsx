@@ -1,23 +1,21 @@
-import React from 'react';
-import { TransactionHistory } from '../../interfaces';
-import { Tag, Table } from 'antd';
-import { transactionStatus } from '../../helpers/constants';
-import moment from 'moment';
-import { isEmpty } from '../../helpers/isEmpty';
+import React from 'react'
+import { TransactionHistory } from '../../interfaces'
+import { Tag, Table } from 'antd'
+import { transactionStatus } from '../../helpers/constants'
+import moment from 'moment'
 
 interface TransactionsProps {
-  transactions: TransactionHistory[];
+  transactions: TransactionHistory[]
 }
 
 interface DataSource {
-  key: number;
-  amount: string;
-  transactionId: number;
-  reference: string;
-  date: string;
-  status: string;
-  reason: string;
-  merchant: string;
+  key: number
+  amount: string
+  transactionId: number
+  reference: string
+  date: string
+  status: string
+  merchant: string
 }
 
 export const Transactions: React.FC<TransactionsProps> = ({ transactions }) => {
@@ -26,7 +24,7 @@ export const Transactions: React.FC<TransactionsProps> = ({ transactions }) => {
       title: 'Amount',
       dataIndex: 'amount',
       key: 'amount',
-      align: 'center',
+      align: 'center'
     },
     // {
     //   title: 'Reference',
@@ -38,13 +36,13 @@ export const Transactions: React.FC<TransactionsProps> = ({ transactions }) => {
       title: 'Transaction ID',
       dataIndex: 'transactionId',
       key: 'trasactionId',
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'Paid on',
       dataIndex: 'date',
       key: 'date',
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'Status',
@@ -52,43 +50,37 @@ export const Transactions: React.FC<TransactionsProps> = ({ transactions }) => {
       key: 'status',
       align: 'center',
       render: (status: string) => {
-        let color: string = 'geekblue';
+        let color: string = 'geekblue'
         switch (status) {
           case transactionStatus.APPROVED:
-            color = 'green';
-            break;
+            color = 'green'
+            break
           case transactionStatus.DECLINED:
-            color = 'volcano';
-            break;
+            color = 'volcano'
+            break
           case transactionStatus.CANCELED:
-            color = 'geekblue';
-            break;
+            color = 'geekblue'
+            break
           default:
-            color = 'geekblue';
-            break;
+            color = 'geekblue'
+            break
         }
         return (
           <Tag color={color} key={status}>
             {status ? status.toUpperCase() : 'N/A'}
           </Tag>
-        );
-      },
-    },
-    {
-      title: 'Reason',
-      dataIndex: 'reason',
-      key: 'reason',
-      align: 'center',
+        )
+      }
     },
     {
       title: 'Merchant',
       dataIndex: 'merchant',
       key: 'merchant',
-      align: 'left',
-    },
-  ];
+      align: 'left'
+    }
+  ]
 
-  let dataSource: DataSource[] = [];
+  let dataSource: DataSource[] = []
 
   for (let transaction of transactions) {
     dataSource.push({
@@ -100,11 +92,8 @@ export const Transactions: React.FC<TransactionsProps> = ({ transactions }) => {
         'MMMM D, YYYY (h:mm a)'
       ),
       status: transaction.status,
-      reason: !isEmpty(transaction.statusMessage)
-        ? transaction.statusMessage
-        : 'N/A',
-      merchant: transaction.merchant,
-    });
+      merchant: transaction.merchant
+    })
   }
   return (
     <Table
@@ -112,5 +101,5 @@ export const Transactions: React.FC<TransactionsProps> = ({ transactions }) => {
       columns={columns}
       pagination={{ pageSize: 10 }}
     />
-  );
-};
+  )
+}
