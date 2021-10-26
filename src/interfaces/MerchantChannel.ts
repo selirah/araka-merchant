@@ -10,7 +10,7 @@ export interface MerchantChannel {
   netAmount: number
   fee: number
   vat: number
-  paymentGetewayShare: number
+  paymentGatewayShare: number
   parentMerchantShare: number
   platformShare: number
 }

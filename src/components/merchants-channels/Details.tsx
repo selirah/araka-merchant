@@ -145,7 +145,7 @@ const Details: React.FC<DetailsProps> = ({
       fee: `${currency} ${numberWithCommas(channel.fee.toFixed(2))}`,
       vat: `${currency} ${numberWithCommas(channel.vat.toFixed(2))}`,
       paymentGetewayShare: `${currency} ${numberWithCommas(
-        channel.paymentGetewayShare.toFixed(2)
+        channel.paymentGatewayShare.toFixed(2)
       )}`,
       parentMerchantShare: `${currency} ${numberWithCommas(
         channel.parentMerchantShare.toFixed(2)
