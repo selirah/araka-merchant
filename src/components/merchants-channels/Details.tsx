@@ -100,7 +100,7 @@ const Details: React.FC<DetailsProps> = ({
       responsive: ['md']
     },
     {
-      title: `Geteway Share`,
+      title: `Gateway Share`,
       dataIndex: 'paymentGetewayShare',
       key: 'paymentGetewayShare',
       align: 'center',
