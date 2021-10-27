@@ -249,7 +249,16 @@
       "momoAccount": "Enter mobile number to debit",
       "requiredField": "This field is required",
       "filterToGetData": "Please enter details in the filter form above to retrieve data",
-      "Merchants Channels": "Merchants Channels"
+      "Merchants Channels": "Merchants Channels",
+      "Payment Gateway": "Payment Gateway",
+      "Total Amount": "Total Amount",
+      "Total Fees": "Total Fees",
+      "Gateway Share": "Gateway Share",
+      "Merchant Share": "Merchant Share",
+      "Platform Share": "Platform Share",
+      "Item Cost": "Item Cost",
+      "Net Amount": "Net Amount",
+      "Fee": "Fee"
     }
   }
 }

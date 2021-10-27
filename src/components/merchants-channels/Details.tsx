@@ -46,21 +46,21 @@ const Details: React.FC<DetailsProps> = ({
       }
     },
     {
-      title: `Payment Gateway`,
+      title: `${translate('general.Payment Gateway')}`,
       dataIndex: 'paymentGateway',
       key: 'paymentGateway',
       align: 'center',
       className: 'column-text'
     },
     {
-      title: `Total Amount`,
+      title: `${translate('general.Total Amount')}`,
       dataIndex: 'totalAmount',
       key: 'totalAmount',
       align: 'center',
       className: 'column-text'
     },
     {
-      title: `Total Fees`,
+      title: `${translate('general.Total Fees')}`,
       dataIndex: 'totalFees',
       key: 'totalFees',
       align: 'center',
@@ -68,7 +68,7 @@ const Details: React.FC<DetailsProps> = ({
       responsive: ['md']
     },
     {
-      title: `Item Cost`,
+      title: `${translate('general.Item Cost')}`,
       dataIndex: 'itemCost',
       key: 'itemCost',
       align: 'center',
@@ -76,7 +76,7 @@ const Details: React.FC<DetailsProps> = ({
       responsive: ['md']
     },
     {
-      title: `Net Amount`,
+      title: `${translate('general.Net Amount')}`,
       dataIndex: 'netAmount',
       key: 'netAmount',
       align: 'center',
@@ -84,7 +84,7 @@ const Details: React.FC<DetailsProps> = ({
       responsive: ['md']
     },
     {
-      title: `Fee`,
+      title: `${translate('general.Fee')}`,
       dataIndex: 'fee',
       key: 'fee',
       align: 'center',
@@ -100,7 +100,7 @@ const Details: React.FC<DetailsProps> = ({
       responsive: ['md']
     },
     {
-      title: `Gateway Share`,
+      title: `${translate('general.Gateway Share')}`,
       dataIndex: 'paymentGetewayShare',
       key: 'paymentGetewayShare',
       align: 'center',
@@ -108,7 +108,7 @@ const Details: React.FC<DetailsProps> = ({
       responsive: ['md']
     },
     {
-      title: `Merchant Share`,
+      title: `${translate('general.Merchant Share')}`,
       dataIndex: 'parentMerchantShare',
       key: 'parentMerchantShare',
       align: 'center',
@@ -116,7 +116,7 @@ const Details: React.FC<DetailsProps> = ({
       responsive: ['md']
     },
     {
-      title: `Platform Share`,
+      title: `${translate('general.Platform Share')}`,
       dataIndex: 'platformShare',
       key: 'platformShare',
       align: 'center',
@@ -129,7 +129,7 @@ const Details: React.FC<DetailsProps> = ({
   channels = sortMerchantOverview(channels)
   for (let channel of channels) {
     dataSource.push({
-      key: channel.merchantId,
+      key: Math.random(),
       merchant: channel.merchant,
       paymentGateway: channel.paymentGateway,
       totalAmount: `${currency} ${numberWithCommas(

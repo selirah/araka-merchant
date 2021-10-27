@@ -9,7 +9,7 @@ export const initialState: MerchantsChannelsState = {
   isExportSuccess: false,
   isExporting: false,
   loading: false,
-  channels: []
+  channels: null
 }
 
 const reducer: Reducer<MerchantsChannelsState> = (
