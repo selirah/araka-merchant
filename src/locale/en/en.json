@@ -250,10 +250,23 @@
       "momoAccount": "Enter mobile number to debit",
       "requiredField": "This field is required",
       "filterToGetData": "Please enter details in the filter form above to retrieve data",
+<<<<<<< HEAD
       "Merchants Channels": "Merchants Channels"
 =======
       "momoAccount" : "Enter mobile number to debit"
 >>>>>>> 801cacdea0b799a3a17e92832576e16cc9edaa04
+=======
+      "Merchants Channels": "Merchants Channels",
+      "Payment Gateway": "Payment Gateway",
+      "Total Amount": "Total Amount",
+      "Total Fees": "Total Fees",
+      "Gateway Share": "Gateway Share",
+      "Merchant Share": "Merchant Share",
+      "Platform Share": "Platform Share",
+      "Item Cost": "Item Cost",
+      "Net Amount": "Net Amount",
+      "Fee": "Fee"
+>>>>>>> master
     }
   }
 }

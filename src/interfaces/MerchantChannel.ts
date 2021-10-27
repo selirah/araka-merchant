@@ -14,3 +14,8 @@ export interface MerchantChannel {
   parentMerchantShare: number
   platformShare: number
 }
+
+export interface MerchantChannelReport {
+  totalRecords: number
+  data: MerchantChannel[]
+}

@@ -1,4 +1,4 @@
-import { DataStream, MerchantChannel } from '../../interfaces'
+import { DataStream, MerchantChannelReport } from '../../interfaces'
 
 export enum MerchantsChannelsTypes {
   GET_MERCHANTS_CHANNELS = '@@merchant-channels/GET_MERCHANTS_CHANNELS',
@@ -11,7 +11,7 @@ export enum MerchantsChannelsTypes {
 }
 
 export type MerchantsChannelsState = {
-  readonly channels: MerchantChannel[]
+  readonly channels: MerchantChannelReport | null
   readonly loading: boolean
   readonly error: any
   readonly isExporting: boolean

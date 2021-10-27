@@ -250,12 +250,25 @@
       "momoAccount": "Entrer le numéro de portable à débiter",
       "requiredField": "This field is required",
       "filterToGetData": "Please enter details in the filter form above to retrieve data",
+<<<<<<< HEAD
       "Merchants Channels": "Canaux marchands"
 =======
       "referenceInput": "Référence",      
       "momoProvider": "Sélectionnez le fournisseur de portefeuille mobile",
       "momoAccount" : "Entrer le numéro de portable à débiter"
 >>>>>>> 801cacdea0b799a3a17e92832576e16cc9edaa04
+=======
+      "Merchants Channels": "Canaux marchands",
+      "Payment Gateway": "Passerelle de paiement",
+      "Total Amount": "Montant total",
+      "Total Fees": "Total des frais",
+      "Gateway Share": "Partage de passerelle",
+      "Merchant Share": "Part du marchand",
+      "Platform Share": "Partage de la plate-forme",
+      "Item Cost": "Coût de l'article",
+      "Net Amount": "Montant net",
+      "Fee": "Frais"
+>>>>>>> master
     }
   }
 }

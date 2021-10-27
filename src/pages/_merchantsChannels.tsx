@@ -9,7 +9,11 @@ import {
   exportChannelsRequest
 } from '../store/merchant-channels'
 import { isEmpty } from '../helpers/isEmpty'
-import { MerchantChannel, MerchantData } from '../interfaces'
+import {
+  MerchantChannel,
+  MerchantData,
+  MerchantChannelReport
+} from '../interfaces'
 import moment from 'moment'
 import { useTranslation } from 'react-i18next'
 import { getMerchantsRequest } from '../store/reports'
@@ -28,6 +32,8 @@ const MerchantsChannels = () => {
   const { t } = useTranslation()
   const channelStore = appSelector((state) => state.channels)
   const reports = appSelector((state) => state.reports)
+  const [channelReport, setChannelReport] =
+    useState<MerchantChannelReport | null>(null)
   const [channels, setChannels] = useState<MerchantChannel[]>([])
   const [merchants, setMerchants] = useState<MerchantData[]>(reports.merchants)
   const [exportType, setExportType] = useState('')
@@ -70,7 +76,8 @@ const MerchantsChannels = () => {
     const { loading, channels, isExporting } = channelStore
     const { merchants } = reports
     setLoading(loading)
-    setChannels(channels)
+    setChannels(channels && !isEmpty(channels.data) ? channels.data : [])
+    setChannelReport(channels)
     setMerchants(merchants)
     setIsExporting(isExporting)
   }, [channelStore, reports])
@@ -185,7 +192,7 @@ const MerchantsChannels = () => {
                     currency={currency}
                     loading={loading}
                     onLoadMore={onLoadMore}
-                    total={channels.length}
+                    total={channelReport ? channelReport.totalRecords : 0}
                     translate={t}
                   />
                 </div>
