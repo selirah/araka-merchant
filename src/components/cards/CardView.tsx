@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react'
+import React, { /*lazy,*/ Suspense } from 'react'
 import { Card, Spin } from 'antd'
 // import AreaChart from '../chart/AreaChart';
 import CountUp from 'react-countup'

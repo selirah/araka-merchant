@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react'
+import React, { /*lazy,*/ Suspense } from 'react'
 import { Card, Spin } from 'antd'
 
 // const AreaChart = lazy(() => import('../chart/AreaChart'))
