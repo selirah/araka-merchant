@@ -1,21 +1,22 @@
-import React from 'react';
-import { Row, Col, Card } from 'antd';
-import CardView from '../cards/CardView';
-import BarChart from '../chart/BarChart';
-import ProfitCard from '../cards/ProfitCard';
-import { TransactionReport } from '../../interfaces';
-import { numberWithCommas } from '../../helpers/helperFunctions';
-import { Clock } from '../../utils/clock';
-import { roles } from '../../helpers/constants';
-import { getAreaOptions, getBarOptions } from '../../helpers/functions';
+import React from 'react'
+import { Row, Col, Card } from 'antd'
+import CardView from '../cards/CardView'
+import BarChart from '../chart/BarChart'
+import ProfitCard from '../cards/ProfitCard'
+import { TransactionReport } from '../../interfaces'
+import { numberWithCommas } from '../../helpers/helperFunctions'
+import { Clock } from '../../utils/clock'
+import { roles } from '../../helpers/constants'
+import { getAreaOptions, getBarOptions } from '../../helpers/functions'
+// import sample from '../../mock/sample.json'
 
 interface OverviewProps {
-  trxReports: TransactionReport | null;
-  userRoles: string[];
-  currency: string;
-  fixedPeriod: string;
-  loading: boolean;
-  translate: any;
+  trxReports: TransactionReport | null
+  userRoles: string[]
+  currency: string
+  fixedPeriod: string
+  loading: boolean
+  translate: any
 }
 
 const Overview: React.FC<OverviewProps> = ({
@@ -24,30 +25,31 @@ const Overview: React.FC<OverviewProps> = ({
   trxReports,
   userRoles,
   loading,
-  translate,
+  translate
 }) => {
-  const role = userRoles.find((r) => r === roles.SuperMerchant);
-  const { time } = Clock();
-  let borderColor: string;
-  let bgColor: string;
+  const role = userRoles.find((r) => r === roles.SuperMerchant)
+  const { time } = Clock()
+  let borderColor: string
+  let bgColor: string
+  // const trxReports = sample
 
   switch (fixedPeriod) {
     case 'daily':
-      borderColor = '#1ce1ac';
-      bgColor = '#1ce1ac50';
-      break;
+      borderColor = '#1ce1ac'
+      bgColor = '#1ce1ac50'
+      break
     case 'weekly':
-      borderColor = '#5E35B1';
-      bgColor = '#D1C4E9';
-      break;
+      borderColor = '#5E35B1'
+      bgColor = '#D1C4E9'
+      break
     case 'monthly':
-      borderColor = '#FFA000';
-      bgColor = '#FFE082';
-      break;
+      borderColor = '#FFA000'
+      bgColor = '#FFE082'
+      break
     default:
-      borderColor = '#1976D2';
-      bgColor = '#BBDEFB';
-      break;
+      borderColor = '#1976D2'
+      bgColor = '#BBDEFB'
+      break
   }
 
   const totalTrx = trxReports
@@ -57,7 +59,7 @@ const Overview: React.FC<OverviewProps> = ({
         borderColor,
         bgColor
       )
-    : {};
+    : {}
 
   const totalAmountApproved = trxReports
     ? getAreaOptions(
@@ -66,7 +68,7 @@ const Overview: React.FC<OverviewProps> = ({
         borderColor,
         bgColor
       )
-    : {};
+    : {}
   const totalAmountDeclined = trxReports
     ? getAreaOptions(
         trxReports.totalAmountDeclined.graph.labels.reverse(),
@@ -74,7 +76,7 @@ const Overview: React.FC<OverviewProps> = ({
         borderColor,
         bgColor
       )
-    : {};
+    : {}
 
   const barChartData = trxReports
     ? getBarOptions(
@@ -82,7 +84,7 @@ const Overview: React.FC<OverviewProps> = ({
         trxReports.totalValues.approvedValues.reverse(),
         trxReports.totalValues.declinedValues.reverse()
       )
-    : {};
+    : {}
 
   const firstTopMerchant = trxReports
     ? getAreaOptions(
@@ -91,7 +93,7 @@ const Overview: React.FC<OverviewProps> = ({
         borderColor,
         bgColor
       )
-    : {};
+    : {}
 
   const secondTopMerchant = trxReports
     ? getAreaOptions(
@@ -100,7 +102,7 @@ const Overview: React.FC<OverviewProps> = ({
         borderColor,
         bgColor
       )
-    : {};
+    : {}
 
   const thirdTopMerchant = trxReports
     ? getAreaOptions(
@@ -109,7 +111,7 @@ const Overview: React.FC<OverviewProps> = ({
         borderColor,
         bgColor
       )
-    : {};
+    : {}
 
   return (
     <>
@@ -242,7 +244,7 @@ const Overview: React.FC<OverviewProps> = ({
         </div>
       ) : null}
     </>
-  );
-};
+  )
+}
 
-export default Overview;
+export default Overview

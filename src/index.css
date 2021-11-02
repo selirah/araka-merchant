@@ -460,7 +460,7 @@ a {
 }
 
 .react-tel-input .form-control {
-  width:100%!important;
+  width: 100% !important;
 }
 
 .pay-form-col .ant-form-item-label label {
@@ -1156,7 +1156,7 @@ thead[class*='ant-table-thead'] th {
 }
 
 .ecard .card-chunk h1 {
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 400;
   margin-bottom: 4px;
   color: #141322 !important;
@@ -1248,7 +1248,7 @@ thead[class*='ant-table-thead'] th {
 
 .profit-card h4 {
   text-transform: uppercase;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 .profit-card p {
@@ -1256,7 +1256,7 @@ thead[class*='ant-table-thead'] th {
 }
 
 .profit-card h1 {
-  font-size: 2rem;
+  font-size: 1.2rem;
 }
 
 .filterButton {
@@ -1853,7 +1853,7 @@ thead[class*='ant-table-thead'] th {
 }
 
 .pces-share .ecard .card-chunk h1 {
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 400;
   margin-bottom: 4px;
   color: #f55c29 !important;
@@ -1956,27 +1956,28 @@ thead[class*='ant-table-thead'] th {
   border-radius: 16.8px;
   box-shadow: 0 0 4px rgb(0 0 0 / 10%);
   margin: 0 auto 20px;
-  transition: all .2s ease-out;
+  transition: all 0.2s ease-out;
   cursor: pointer;
 }
-.selectable-item.selected, .selectable-item:hover {
+.selectable-item.selected,
+.selectable-item:hover {
   border-color: #ff4500;
   background: #fff;
   box-shadow: 0 0 7px rgb(255 118 0 / 68%);
 }
 .selectable-item h2 {
-  margin-top: .7rem;
-  font-size: .8rem;
+  margin-top: 0.7rem;
+  font-size: 0.8rem;
   color: #949dac;
   text-transform: uppercase;
   font-weight: 700;
   cursor: pointer;
-  transition: all .1s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
-.selectable-item.selected h2, .selectable-item:hover h2 {
+.selectable-item.selected h2,
+.selectable-item:hover h2 {
   color: #ff4500;
 }
-
 
 /** END CONTENT **/
 /* } */

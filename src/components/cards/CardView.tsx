@@ -1,16 +1,16 @@
-import React, { lazy, Suspense } from 'react';
-import { Card, Spin } from 'antd';
+import React, { lazy, Suspense } from 'react'
+import { Card, Spin } from 'antd'
 // import AreaChart from '../chart/AreaChart';
-import CountUp from 'react-countup';
+import CountUp from 'react-countup'
 
-const AreaChart = lazy(() => import('../chart/AreaChart'));
+// const AreaChart = lazy(() => import('../chart/AreaChart'))
 
 interface CardViewProps {
-  value: any;
-  title: any;
-  data: any;
-  currency?: string;
-  loading: boolean;
+  value: any
+  title: any
+  data: any
+  currency?: string
+  loading: boolean
 }
 
 const CardView: React.FC<CardViewProps> = ({
@@ -18,7 +18,7 @@ const CardView: React.FC<CardViewProps> = ({
   title,
   data,
   currency,
-  loading,
+  loading
 }) => {
   return (
     <Card className="stats-padding">
@@ -48,14 +48,14 @@ const CardView: React.FC<CardViewProps> = ({
                   </div>
                 }
               >
-                <AreaChart info={data} />
+                {/* <AreaChart info={data} /> */}
               </Suspense>
             </div>
           </>
         )}
       </div>
     </Card>
-  );
-};
+  )
+}
 
-export default CardView;
+export default CardView

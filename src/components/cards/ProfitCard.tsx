@@ -1,14 +1,14 @@
-import React, { lazy, Suspense } from 'react';
-import { Card, Spin } from 'antd';
+import React, { lazy, Suspense } from 'react'
+import { Card, Spin } from 'antd'
 
-const AreaChart = lazy(() => import('../chart/AreaChart'));
+// const AreaChart = lazy(() => import('../chart/AreaChart'))
 
 interface ProfitCardProps {
-  mainTitle: string;
-  paragraph: string;
-  amount: string;
-  data: any;
-  loading: boolean;
+  mainTitle: string
+  paragraph: string
+  amount: string
+  data: any
+  loading: boolean
 }
 
 const ProfitCard: React.FC<ProfitCardProps> = ({
@@ -16,7 +16,7 @@ const ProfitCard: React.FC<ProfitCardProps> = ({
   paragraph,
   amount,
   data,
-  loading,
+  loading
 }) => {
   return (
     <Card>
@@ -40,14 +40,14 @@ const ProfitCard: React.FC<ProfitCardProps> = ({
                   </div>
                 }
               >
-                <AreaChart info={data} />
+                {/* <AreaChart info={data} /> */}
               </Suspense>
             </div>
           </>
         )}
       </React.Fragment>
     </Card>
-  );
-};
+  )
+}
 
-export default ProfitCard;
+export default ProfitCard
