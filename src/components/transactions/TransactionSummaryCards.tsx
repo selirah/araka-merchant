@@ -1,21 +1,21 @@
-import React from 'react';
-import { Row, Col } from 'antd';
-import CardView from '../cards/CardView';
-import { Transaction } from '../../interfaces';
-import { getAreaOptions } from '../../helpers/functions';
+import React from 'react'
+import { Row, Col } from 'antd'
+import CardView from '../cards/CardView'
+import { Transaction } from '../../interfaces'
+import { getAreaOptions } from '../../helpers/functions'
 
 interface TransactionSummaryCardsProps {
-  trxReports: Transaction | null;
-  currency: string;
-  loading: boolean;
-  translate: any;
+  trxReports: Transaction | null
+  currency: string
+  loading: boolean
+  translate: any
 }
 
 const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
   trxReports,
   currency,
   loading,
-  translate,
+  translate
 }) => {
   const totalTrx = trxReports
     ? getAreaOptions(
@@ -24,7 +24,7 @@ const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
         '#FBC02D',
         '#FFF176'
       )
-    : {};
+    : {}
 
   const totalAmountApproved = trxReports
     ? getAreaOptions(
@@ -33,7 +33,7 @@ const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
         '#FBC02D',
         '#FFF176'
       )
-    : {};
+    : {}
   const totalAmountDeclined = trxReports
     ? getAreaOptions(
         trxReports.totalAmountDeclined.graph.labels.reverse(),
@@ -41,7 +41,7 @@ const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
         '#FBC02D',
         '#FFF176'
       )
-    : {};
+    : {}
 
   return (
     <div className="margin-top-small">
@@ -83,7 +83,7 @@ const TransactionCards: React.FC<TransactionSummaryCardsProps> = ({
         </Col>
       </Row>
     </div>
-  );
-};
+  )
+}
 
-export default TransactionCards;
+export default TransactionCards

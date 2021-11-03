@@ -1,40 +1,43 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Layout, Menu, Dropdown, Button, Row, Col } from 'antd';
-import { useDispatch } from 'react-redux';
+import React, { useState, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Layout, Menu, Dropdown, Button, Row, Col } from 'antd'
+import { useDispatch } from 'react-redux'
 import {
   UserOutlined,
-  DownOutlined /*, BellOutlined*/,
-} from '@ant-design/icons';
-import * as FeatherIcons from 'react-feather';
-import { logout } from '../../store/auth/actions';
-import { secure } from '../../utils/secure';
-import { AppDispatch } from '../../helpers/appDispatch';
-import { appSelector } from '../../helpers/appSelector';
+  DownOutlined /*, BellOutlined*/
+} from '@ant-design/icons'
+import * as FeatherIcons from 'react-feather'
+import { logout } from '../../store/auth/actions'
+import { secure } from '../../utils/secure'
+import { AppDispatch } from '../../helpers/appDispatch'
+import { appSelector } from '../../helpers/appSelector'
 
 interface TopNavProps {
-  collapsed: boolean;
-  toggle(): void;
+  collapsed: boolean
+  toggle(): void
 }
 
 export const TopNav: React.FC<TopNavProps> = ({ collapsed, toggle }) => {
-  const dispatch: AppDispatch = useDispatch();
-  const { Header } = Layout;
-  const { t, i18n } = useTranslation();
+  const dispatch: AppDispatch = useDispatch()
+  const { Header } = Layout
+  const { t, i18n } = useTranslation()
   const [active, setActive] = useState<string | null>(
     localStorage.getItem('i18nextLng')
-  );
-  const { activeMenu, menuHeader } = appSelector((state) => state.utils);
+  )
+  const { activeMenu, menuHeader } = appSelector((state) => state.utils)
 
   const logoutUser = () => {
-    secure.removeAll();
-    dispatch(logout());
-  };
+    secure.removeAll()
+    dispatch(logout())
+  }
 
-  const onChangeLanguage = (lang: string) => {
-    i18n.changeLanguage(lang);
-    setActive(lang);
-  };
+  const onChangeLanguage = useCallback(
+    (lang: string) => {
+      i18n.changeLanguage(lang)
+      setActive(lang)
+    },
+    [i18n]
+  )
 
   const menu = (
     <Menu>
@@ -45,7 +48,7 @@ export const TopNav: React.FC<TopNavProps> = ({ collapsed, toggle }) => {
         FR
       </Menu.Item>
     </Menu>
-  );
+  )
 
   const settingsMenu = (
     <Menu>
@@ -53,7 +56,7 @@ export const TopNav: React.FC<TopNavProps> = ({ collapsed, toggle }) => {
         {t('general.logout')}
       </Menu.Item>
     </Menu>
-  );
+  )
 
   return (
     <Header className="site-layout-background">
@@ -95,5 +98,5 @@ export const TopNav: React.FC<TopNavProps> = ({ collapsed, toggle }) => {
         </Col>
       </Row>
     </Header>
-  );
-};
+  )
+}
