@@ -17,6 +17,7 @@ interface PaymentFormProps {
   isDefault: boolean
   momoProviders: any[]
   urlAmount: any
+  urlReference: any
 }
 
 export const PaymentForm: React.FC<PaymentFormProps> = ({
@@ -29,7 +30,8 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
   translate,
   isDefault,
   momoProviders,
-  urlAmount
+  urlAmount,
+  urlReference
 }) => {
   const [values] = useState<Merchant>({
     amount: page.amount !== '' ? page.amount : urlAmount ? urlAmount : '',
@@ -42,7 +44,12 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
     pageTitle: page.pageName,
     processId: page.processId,
     redirectURL: page.redirectURL,
-    transactionReference: page.transactionReference,
+    transactionReference:
+      page.transactionReference !== ''
+        ? page.transactionReference
+        : urlReference
+        ? urlReference
+        : '',
     paymentPageId: page.paymentPageId,
     momoProvider: '',
     momoAccountNumber: '',
@@ -297,18 +304,33 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
           ) : null}
           <Row>
             <Col span={24}>
-              <Form.Item
-                name="transactionReference"
-                label={translate('general.referenceInput')}
-                rules={[
-                  {
-                    required: true,
-                    message: 'Transaction reference is required'
-                  }
-                ]}
-              >
-                <Input type="text" />
-              </Form.Item>
+              {page.transactionReference !== '' || urlReference !== null ? (
+                <Form.Item
+                  name="transactionReference"
+                  label={translate('general.referenceInput')}
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Transaction reference is required'
+                    }
+                  ]}
+                >
+                  <Input type="text" readOnly disabled />
+                </Form.Item>
+              ) : (
+                <Form.Item
+                  name="transactionReference"
+                  label={translate('general.referenceInput')}
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Transaction reference is required'
+                    }
+                  ]}
+                >
+                  <Input type="text" />
+                </Form.Item>
+              )}
             </Col>
           </Row>
           <Row

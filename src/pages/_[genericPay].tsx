@@ -67,6 +67,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
   const [counter, setCounter] = useState(1)
   const [isMobilePaymentSuccess, setIsMobilePaymentSuccess] = useState(false)
   const urlAmount = query.get('amount')
+  const urlReference = query.get('transactionReference')
 
   useEffect(() => {
     dispatch(clearStates())
@@ -288,6 +289,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
             momoProviders={momoProviders}
             isDefault={isPayWithCard ? true : false}
             urlAmount={urlAmount}
+            urlReference={urlReference}
           />
         </Col>
       </Row>
