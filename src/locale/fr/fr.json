@@ -258,7 +258,11 @@
       "Platform Share": "Partage de la plate-forme",
       "Item Cost": "Coût de l'article",
       "Net Amount": "Montant net",
-      "Fee": "Frais"
+      "Fee": "Frais",
+      "Pay with Mobile Wallets": "Payer avec les portefeuilles mobiles",
+      "Pay with Credit/Debit Card": "Payer avec une carte de crédit/débit",
+      "Select another payment option": "Sélectionnez une autre option de paiement",
+      "Complete the payment on your phone. We are waiting...": "Effectuez le paiement sur votre téléphone. Nous attendons..."
     }
   }
 }

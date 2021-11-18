@@ -258,7 +258,11 @@
       "Platform Share": "Platform Share",
       "Item Cost": "Item Cost",
       "Net Amount": "Net Amount",
-      "Fee": "Fee"
+      "Fee": "Fee",
+      "Pay with Mobile Wallets": "Pay with Mobile Wallets",
+      "Pay with Credit/Debit Card": "Pay with Credit/Debit Card",
+      "Select another payment option": "Select another payment option",
+      "Complete the payment on your phone. We are waiting...": "Complete the payment on your phone. We are waiting..."
     }
   }
 }
