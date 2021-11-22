@@ -1,14 +1,14 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface LanguageProps {}
 
 export const Language: React.FC<LanguageProps> = () => {
-  const { i18n } = useTranslation();
+  const { i18n } = useTranslation()
 
   const onChangeLanguage = (lang: string) => {
-    i18n.changeLanguage(lang);
-  };
+    i18n.changeLanguage(lang)
+  }
 
   return (
     <div className="language">
@@ -21,5 +21,5 @@ export const Language: React.FC<LanguageProps> = () => {
         onClick={() => onChangeLanguage('fr')}
       ></i>
     </div>
-  );
-};
+  )
+}

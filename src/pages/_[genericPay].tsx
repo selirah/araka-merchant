@@ -38,6 +38,7 @@ import {
 } from '../store/payment-pages'
 import { isEmpty } from '../helpers/isEmpty'
 import { useTranslation } from 'react-i18next'
+import { Language } from '../components/menu/Language'
 
 interface GenericPayProps {}
 
@@ -274,7 +275,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
               setIsShowOptions(true)
             }}
           >
-            Select another payment option
+            {t('general.Select another payment option')}
           </Button>
         </Col>
         <Col span={24}>
@@ -348,7 +349,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
               width={100}
               alt="Pay with credit or debit card"
             />
-            <h2>Pay with Credit/Debit Card</h2>
+            <h2>{t('general.Pay with Credit/Debit Card')}</h2>
           </div>
         </Col>
         <Col span={12} xs={24} sm={12}>
@@ -360,7 +361,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
             }}
           >
             <img src={mobileWallets} width={100} alt="Pay with mobile wallet" />
-            <h2>Pay with Mobile Wallets</h2>
+            <h2>{t('general.Pay with Mobile Wallets')}</h2>
           </div>
         </Col>
       </Row>
@@ -375,9 +376,10 @@ const GenericPay: React.FC<GenericPayProps> = () => {
             display: 'flex',
             flexWrap: 'wrap',
             justifyContent: 'center',
-            marginTop: '10px'
+            marginTop: '40px'
           }}
         >
+          <Language />
           {render}
         </Row>
         {isShowOptions ? paymentOptions : null}
@@ -400,7 +402,11 @@ const GenericPay: React.FC<GenericPayProps> = () => {
         <Row style={{ display: 'block', margin: '0 auto' }}>
           <Col span={24} style={{ textAlign: 'center' }}>
             <Spin />
-            <h4>Complete the payment on your phone. We are waiting...</h4>
+            <h4>
+              {t(
+                'general.Complete the payment on your phone. We are waiting...'
+              )}
+            </h4>
           </Col>
         </Row>
       </Modal>
