@@ -360,7 +360,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
               setIsShowOptions(false)
             }}
           >
-            <img src={mobileWallets} width={100} alt="Pay with mobile wallet" />
+            <img src={mobileWallets} width={150} alt="Pay with mobile wallet" />
             <h2>{t('general.Pay with Mobile Wallets')}</h2>
           </div>
         </Col>
