@@ -1,65 +1,77 @@
-import React, { useState, useEffect } from 'react';
-import { withRouter, useHistory } from 'react-router-dom';
-import { Layout, message } from 'antd';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../helpers/appDispatch';
-import { appSelector } from '../helpers/appSelector';
-import { LoginForm } from '../components/login/LoginForm';
-import { Login as Auth, Error } from '../interfaces';
-import { loginRequest, clearAuthState } from '../store/auth';
-import { path } from '../helpers/path';
-import { Language } from '../components/menu/Language';
-import { isEmpty } from '../helpers/isEmpty';
-import { useTranslation } from 'react-i18next';
+import React, { useState, useEffect, useRef, useCallback } from 'react'
+import { withRouter, useHistory } from 'react-router-dom'
+import { Layout } from 'antd'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../helpers/appDispatch'
+import { appSelector } from '../helpers/appSelector'
+import { LoginForm } from '../components/login/LoginForm'
+import { Login as Auth, Error } from '../interfaces'
+import { loginRequest, clearAuthState } from '../store/auth'
+import { path } from '../helpers/path'
+import { Language } from '../components/menu/Language'
+import ReCAPTCHA from 'react-google-recaptcha'
+import { SITE_KEY } from '../helpers/constants'
 
 interface LoginProps {}
 
+const DELAY = 1500
+
 const Login: React.FC<LoginProps> = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const auth = appSelector((state) => state.auth);
-  const { Content } = Layout;
+  const dispatch: AppDispatch = useDispatch()
+  const auth = appSelector((state) => state.auth)
+  const { Content } = Layout
   const [values] = useState<Auth>({
     EmailAddress: '',
-    Password: '',
-  });
-  const [isSubmit, setIsSubmit] = useState(false);
-  const [error, setError] = useState<Error | {}>({});
-  const [singleError, setSingleError] = useState<string>('');
-  const history = useHistory();
-  const [recaptchaValue, setRecaptchaValue] = useState('');
-  const { t } = useTranslation();
+    Password: ''
+  })
+  const [isSubmit, setIsSubmit] = useState(false)
+  const [error, setError] = useState<Error | {}>({})
+  const [singleError, setSingleError] = useState<string>('')
+  const history = useHistory()
+  const [load, setLoad] = useState(false)
+  const [expired, setExpired] = useState(false)
+  const reCaptchaRef = useRef<any>()
+  const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
-    setRecaptchaValue('');
-    dispatch(clearAuthState());
+    dispatch(clearAuthState())
+    setTimeout(() => {
+      setLoad(true)
+    }, DELAY)
+    return () => {
+      setIsMounted(!isMounted)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   const onSubmit = (values: Auth) => {
-    if (isEmpty(recaptchaValue)) {
-      message.error(`${t('login.recaptcha')}`);
-    } else {
-      const payload: Auth = {
-        EmailAddress: values.EmailAddress,
-        Password: values.Password,
-      };
-      dispatch(loginRequest(payload));
-    }
-  };
-
-  const onHandleRecaptcha = (value: any) => {
-    setRecaptchaValue(value);
-  };
+    reCaptchaRef.current
+      .executeAsync()
+      .then((value: string) => {
+        if (value && !expired) {
+          const payload: Auth = {
+            EmailAddress: values.EmailAddress,
+            Password: values.Password
+          }
+          dispatch(loginRequest(payload))
+        }
+      })
+      .catch((err: any) => {})
+  }
 
   useEffect(() => {
-    const { isSubmitting, error, singleError, isAuthenticated } = auth;
-    setIsSubmit(isSubmitting);
-    setError(error);
-    setSingleError(singleError);
+    const { isSubmitting, error, singleError, isAuthenticated } = auth
+    setIsSubmit(isSubmitting)
+    setError(error)
+    setSingleError(singleError)
     if (isAuthenticated) {
-      history.push(path.home);
+      history.push(path.home)
     }
-  }, [auth, history]);
+  }, [auth, history])
+
+  const handleRecaptcha = useCallback((value) => {
+    if (value === null) setExpired(true)
+  }, [])
 
   return (
     <Layout>
@@ -71,11 +83,19 @@ const Login: React.FC<LoginProps> = () => {
           isSubmit={isSubmit}
           error={error}
           singleError={singleError}
-          onHandleRecaptcha={onHandleRecaptcha}
         />
       </Content>
+      {load && (
+        <ReCAPTCHA
+          theme="light"
+          size="invisible"
+          ref={reCaptchaRef}
+          sitekey={`${SITE_KEY}`}
+          onChange={handleRecaptcha}
+        />
+      )}
     </Layout>
-  );
-};
+  )
+}
 
-export default withRouter(Login);
+export default withRouter(Login)

@@ -1,34 +1,28 @@
-import React from 'react';
-import { Row, Col, Form, Input, Button, Alert, Image } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
-import { Login } from '../../interfaces';
-import { isEmpty } from '../../helpers/isEmpty';
-import logo from '../../images/logo_symbol.png';
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import ReCAPTCHA from 'react-google-recaptcha';
+import React from 'react'
+import { Row, Col, Form, Input, Button, Alert, Image } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
+import { Login } from '../../interfaces'
+import { isEmpty } from '../../helpers/isEmpty'
+import logo from '../../images/logo_symbol.png'
+import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 interface LoginFormProps {
-  values: Login;
-  onSubmit(values: Login): void;
-  isSubmit: boolean;
-  error: any;
-  singleError: string;
-  onHandleRecaptcha(value: any): void;
+  values: Login
+  onSubmit(values: Login): void
+  isSubmit: boolean
+  error: any
+  singleError: string
 }
-
-const SITE_KEY = '6Lf00SUaAAAAAJbCW3lrIe7duzL0-FuOvNfsk2jY';
 
 export const LoginForm: React.FC<LoginFormProps> = ({
   values,
   onSubmit,
   isSubmit,
   error,
-  singleError,
-  onHandleRecaptcha,
+  singleError
 }) => {
-  const { t } = useTranslation();
-  const ref = React.createRef<ReCAPTCHA>();
+  const { t } = useTranslation()
 
   return (
     <React.Fragment>
@@ -43,7 +37,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         </Col>
       </Row>
       <Row className="login-row-third">
-        <Col className="pay-form-col">
+        <Col className="pay-form-col" lg={6} md={6} sm={12} xs={24}>
           <h1 className="login-header">{t('login.box-header')}</h1>
           {!isEmpty(error) ? (
             <Alert type="error" message={`${JSON.stringify(error)}`} />
@@ -62,12 +56,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               rules={[
                 {
                   required: true,
-                  message: `${t('login.email-error')}`,
+                  message: `${t('login.email-error')}`
                 },
                 {
                   type: 'email',
-                  message: `${t('login.email-valid')}`,
-                },
+                  message: `${t('login.email-valid')}`
+                }
               ]}
             >
               <Input placeholder={t('login.email-placeholder')} />
@@ -75,18 +69,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             <Form.Item
               name="Password"
               rules={[
-                { required: true, message: `${t('login.password-error')}` },
+                { required: true, message: `${t('login.password-error')}` }
               ]}
             >
               <Input.Password placeholder={t('login.password-placeholder')} />
-            </Form.Item>
-            <Form.Item>
-              <ReCAPTCHA
-                sitekey={SITE_KEY}
-                onChange={onHandleRecaptcha}
-                ref={ref}
-                theme="light"
-              />
             </Form.Item>
             <Form.Item className="btn-input">
               <Button
@@ -146,5 +132,5 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         </div>
       </Row>
     </React.Fragment>
-  );
-};
+  )
+}
