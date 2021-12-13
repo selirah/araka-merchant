@@ -18,6 +18,9 @@ interface PaymentFormProps {
   momoProviders: any[]
   urlAmount: any
   urlReference: any
+  urlCusName: any
+  urlCusPhone: any
+  urlCusEmail: any
 }
 
 export const PaymentForm: React.FC<PaymentFormProps> = ({
@@ -31,14 +34,17 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
   isDefault,
   momoProviders,
   urlAmount,
-  urlReference
+  urlReference,
+  urlCusEmail,
+  urlCusName,
+  urlCusPhone
 }) => {
   const [values] = useState<Merchant>({
     amount: page.amount !== '' ? page.amount : urlAmount ? urlAmount : '',
     currency: page.currency,
-    customerEmailAddress: '',
-    customerFullName: '',
-    customerPhoneNumber: '',
+    customerEmailAddress: urlCusEmail ? urlCusEmail : '',
+    customerFullName: urlCusName ? urlCusName : '',
+    customerPhoneNumber: urlCusPhone ? urlCusPhone : '',
     pageDescription: page.description,
     pageLogo: '',
     pageTitle: page.pageName,
@@ -85,7 +91,10 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
                   style={{ marginBottom: '2px' }}
                   rules={[{ required: true, message: 'Enter your full name' }]}
                 >
-                  <Input placeholder={translate('general.fullname')} />
+                  <Input
+                    placeholder={translate('general.fullname')}
+                    disabled={urlCusName !== null}
+                  />
                 </Form.Item>
               ) : (
                 <Form.Item
@@ -113,7 +122,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
                     }
                   ]}
                 >
-                  <Input />
+                  <Input disabled={urlCusEmail !== null} />
                 </Form.Item>
               ) : (
                 <Form.Item
@@ -137,7 +146,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
                     { required: true, message: 'Enter your phone number' }
                   ]}
                 >
-                  <Input />
+                  <Input disabled={urlCusPhone !== null} />
                 </Form.Item>
               ) : (
                 <Form.Item

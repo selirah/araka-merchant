@@ -69,6 +69,9 @@ const GenericPay: React.FC<GenericPayProps> = () => {
   const [isMobilePaymentSuccess, setIsMobilePaymentSuccess] = useState(false)
   const urlAmount = query.get('amount')
   const urlReference = query.get('transactionReference')
+  const urlCusName = query.get('customerFullName')
+  const urlCusPhone = query.get('customerPhoneNumber')
+  const urlCusEmail = query.get('customerEmailAddress')
 
   useEffect(() => {
     dispatch(clearStates())
@@ -291,6 +294,9 @@ const GenericPay: React.FC<GenericPayProps> = () => {
             isDefault={isPayWithCard ? true : false}
             urlAmount={urlAmount}
             urlReference={urlReference}
+            urlCusName={urlCusName}
+            urlCusEmail={urlCusEmail}
+            urlCusPhone={urlCusPhone}
           />
         </Col>
       </Row>
