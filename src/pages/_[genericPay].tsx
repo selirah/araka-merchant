@@ -72,6 +72,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
   const urlCusName = query.get('customerFullName')
   const urlCusPhone = query.get('customerPhoneNumber')
   const urlCusEmail = query.get('customerEmailAddress')
+  const redirectURL = query.get('redirectURL')
 
   useEffect(() => {
     dispatch(clearStates())
@@ -148,7 +149,11 @@ const GenericPay: React.FC<GenericPayProps> = () => {
         }, 10000)
       } else {
         if (singlePage) {
-          window.location.href = `${singlePage.redirectURL}?systemReference=${mobileResponse.transactionId}&transactionStatus=${trxStatus.status}`
+          window.location.href = `${
+            singlePage.redirectURL ? singlePage.redirectURL : redirectURL
+          }?systemReference=${mobileResponse.transactionId}&transactionStatus=${
+            trxStatus.status
+          }`
           dispatch(clearPaymentData())
         }
       }
@@ -158,13 +163,21 @@ const GenericPay: React.FC<GenericPayProps> = () => {
       switch (trxStatus.status) {
         case 'SUCCESS':
           if (singlePage) {
-            window.location.href = `${singlePage.redirectURL}?systemReference=${mobileResponse.transactionId}&transactionStatus=${trxStatus.status}`
+            window.location.href = `${
+              singlePage.redirectURL ? singlePage.redirectURL : redirectURL
+            }?systemReference=${
+              mobileResponse.transactionId
+            }&transactionStatus=${trxStatus.status}`
             dispatch(clearPaymentData())
           }
           break
         case 'FAILED':
           if (singlePage) {
-            window.location.href = `${singlePage.redirectURL}?systemReference=${mobileResponse.transactionId}&transactionStatus=${trxStatus.status}`
+            window.location.href = `${
+              singlePage.redirectURL ? singlePage.redirectURL : redirectURL
+            }?systemReference=${
+              mobileResponse.transactionId
+            }&transactionStatus=${trxStatus.status}`
             dispatch(clearPaymentData())
           }
           break
@@ -182,7 +195,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
     // }
     setFee(fee)
     setMomoProviders(providers)
-  }, [page, home, dispatch, counter])
+  }, [page, home, dispatch, counter, redirectURL])
 
   const onSubmit = (values: Merchant) => {
     if (isPayWithCard) {

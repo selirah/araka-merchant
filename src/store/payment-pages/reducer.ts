@@ -14,17 +14,8 @@ export const initialState: PaymentPagesState = {
   fee: undefined,
   feeError: undefined,
   feeLoading: false,
-<<<<<<< HEAD
   providers: []
 }
-=======
-  providers : [],
-  mobileResponse: null,
-  mobilePaymentSuccess: false,
-  mobilePaymentProcessing: false,
-  mobilePaymentSubmit: false,
-};
->>>>>>> 801cacdea0b799a3a17e92832576e16cc9edaa04
 
 const reducer: Reducer<PaymentPagesState> = (state = initialState, action) => {
   switch (action.type) {
@@ -208,54 +199,23 @@ const reducer: Reducer<PaymentPagesState> = (state = initialState, action) => {
     case PaymentPagesTypes.CLEAR_FEE:
       return {
         ...state,
-<<<<<<< HEAD
         fee: undefined
       }
-=======
-        fee: undefined,
-      };
->>>>>>> 801cacdea0b799a3a17e92832576e16cc9edaa04
 
     case PaymentPagesTypes.GET_PROVIDERS_SUCCESS:
       return {
         ...state,
         loading: false,
-<<<<<<< HEAD
         providers: action.payload
       }
-=======
-        providers: action.payload,
-      };
->>>>>>> 801cacdea0b799a3a17e92832576e16cc9edaa04
 
     case PaymentPagesTypes.GET_PROVIDERS_FAILURE:
       return {
         ...state,
         loading: false,
-<<<<<<< HEAD
         error: action.payload
       }
 
-=======
-        error: action.payload,
-      };
-
-    case PaymentPagesTypes.MOBILE_PAYMENT_SUCCESS:
-      return {
-        ...state,
-        mobilePaymentSubmit: false,
-        mobileResponse: action.payload,
-        mobilePaymentSuccess: true,
-      };
-    
-    case PaymentPagesTypes.MOBILE_PAYMENT_FAILURE:
-      return {
-        ...state,
-        mobilePaymentSubmit: false,
-        error: action.payload,
-        mobilePaymentSuccess: false,
-      };
->>>>>>> 801cacdea0b799a3a17e92832576e16cc9edaa04
     default:
       return state
   }

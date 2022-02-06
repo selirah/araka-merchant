@@ -5,7 +5,6 @@ import { path } from '../helpers/path'
 import { roles } from '../helpers/constants'
 import { appSelector } from '../helpers/appSelector'
 
-<<<<<<< HEAD
 import Dashboard from '../pages/_dashboard'
 import Transactions from '../pages/_trans'
 import PaymentPages from '../pages/_paymentPages'
@@ -26,26 +25,6 @@ import FeeReports from '../pages/_feeReports'
 // import ProxyPayOVolumes from '../pages/_proxyPayVolumes';
 // import Payouts from '../pages/_payouts'
 import NotFound from '../pages/_404'
-=======
-import Dashboard from '../pages/_dashboard';
-import Transactions from '../pages/_trans';
-import PaymentPages from '../pages/_paymentPages';
-import Page from '../pages/_[pageId]';
-import Login from '../pages/_login';
-import Pay from '../pages/_[pay]';
-import GenericPay from '../pages/_[genericPay]';
-import ExamplePay from '../pages/_examplePay';
-import MerchantsOverview from '../pages/_merchantsOverview';
-import VASProcessed from '../pages/_vasProcessed';
-import Settings from '../pages/_settings';
-import FeeReports from '../pages/_feeReports';
-import ProxyPaySubscribers from '../pages/_proxyPaySubscribers';
-import ProxyPayTransactions from '../pages/_proxyPayTransactions';
-import ProxyPayOverview from '../pages/_proxyPayOverview';
-import ProxyPayOVolumes from '../pages/_proxyPayVolumes';
-import Payouts from '../pages/_payouts';
-import NotFound from '../pages/_404';
->>>>>>> 801cacdea0b799a3a17e92832576e16cc9edaa04
 
 const Routes: React.FC = () => {
   const { user } = appSelector((state) => state.auth)
@@ -76,7 +55,7 @@ const Routes: React.FC = () => {
         <Route exact path={path.example} component={ExamplePay} />
         <PrivateRoute exact path={path.settings} component={Settings} />
 
-        {role !== undefined && role === roles.SuperMerchant ? (
+        {/* {role !== undefined && role === roles.SuperMerchant ? (
           <PrivateRoute
             exact
             path={path.proxyPayOverview}
@@ -84,7 +63,7 @@ const Routes: React.FC = () => {
           />
         ) : (
           <NotFound />
-        )}
+        )} */}
 
         {role !== undefined && role === roles.SuperMerchant ? (
           <PrivateRoute
@@ -122,7 +101,6 @@ const Routes: React.FC = () => {
           <NotFound />
         )}
 
-<<<<<<< HEAD
         {/* {role !== undefined && role === roles.SuperMerchant ? (
           <PrivateRoute exact path={path.pendingTransactions} component={PendingTransactionsView} />
         ) : (
@@ -130,9 +108,6 @@ const Routes: React.FC = () => {
         )} */}
 
         {/* {role !== undefined && role === roles.SuperMerchant ? (
-=======
-        {role !== undefined && role === roles.SuperMerchant ? (
->>>>>>> 801cacdea0b799a3a17e92832576e16cc9edaa04
           <PrivateRoute
             exact
             path={path.proxyPaySubscribers}
@@ -140,9 +115,9 @@ const Routes: React.FC = () => {
           />
         ) : (
           <NotFound />
-        )}
+        )} */}
 
-        {role !== undefined && role === roles.SuperMerchant ? (
+        {/* {role !== undefined && role === roles.SuperMerchant ? (
           <PrivateRoute
             exact
             path={path.proxyPayTransactions}
@@ -150,9 +125,9 @@ const Routes: React.FC = () => {
           />
         ) : (
           <NotFound />
-        )}
+        )} */}
 
-        {role !== undefined && role === roles.SuperMerchant ? (
+        {/* {role !== undefined && role === roles.SuperMerchant ? (
           <PrivateRoute
             exact
             path={path.proxyPayVolumes}
@@ -160,7 +135,7 @@ const Routes: React.FC = () => {
           />
         ) : (
           <NotFound />
-        )}
+        )} */}
       </Switch>
     </React.Fragment>
   )

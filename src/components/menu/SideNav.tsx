@@ -187,7 +187,6 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
             >
               <NavLink to={path.feeReports}> {t('general.FEEReports')}</NavLink>
             </Menu.Item>
-<<<<<<< HEAD
             {/* <Menu.Item
               key={menu.PENDING_TRANSACTIONS}
               icon={
@@ -209,10 +208,6 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
               </NavLink>
             </Menu.Item> */}
             {/* <Menu.SubMenu
-=======
-
-            <Menu.SubMenu
->>>>>>> 801cacdea0b799a3a17e92832576e16cc9edaa04
               key="sub2"
               icon={
                 <FeatherIcons.BarChart
@@ -262,7 +257,7 @@ export const SideNav: React.FC<SideNavProps> = ({ collapsed, onCollapsed }) => {
                   {menu.PROXYPAY_VOLUMES}
                 </NavLink>
               </Menu.Item>
-            </Menu.SubMenu>
+            </Menu.SubMenu> */}
           </Menu.ItemGroup>
         ) : null}
         <Menu.ItemGroup
