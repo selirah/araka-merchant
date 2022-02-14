@@ -147,7 +147,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
       } else {
         if (singlePage) {
           window.location.href = `${
-            singlePage.redirectURL ? singlePage.redirectURL : ''
+            redirectURL ? redirectURL : singlePage.redirectURL
           }?systemReference=${mobileResponse.transactionId}&transactionStatus=${
             trxStatus.status
           }`
@@ -161,7 +161,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
         case 'SUCCESS':
           if (singlePage) {
             window.location.href = `${
-              singlePage.redirectURL ? singlePage.redirectURL : ''
+              redirectURL ? redirectURL : singlePage.redirectURL
             }?systemReference=${
               mobileResponse.transactionId
             }&transactionStatus=${trxStatus.status}`
@@ -171,7 +171,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
         case 'FAILED':
           if (singlePage) {
             window.location.href = `${
-              singlePage.redirectURL ? singlePage.redirectURL : ''
+              redirectURL ? redirectURL : singlePage.redirectURL
             }?systemReference=${
               mobileResponse.transactionId
             }&transactionStatus=${trxStatus.status}`
