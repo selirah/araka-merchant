@@ -83,28 +83,25 @@ const GenericPay: React.FC<GenericPayProps> = () => {
     if (!isEmpty(transactionStatus)) {
       switch (transactionStatus) {
         case 'PENDING':
-          // message.info('Transaction Pending', 5)
           notification['info']({
             message: 'Oops',
             description: 'Transaction is Pending'
           })
           break
         case 'SUCCESS':
-          // message.success('Transaction was successful', 5)
           notification['success']({
             message: 'Nice!',
             description: 'Transaction was successful'
           })
+
           break
         case 'FAILED':
-          // message.error('Transaction has failed', 5)
           notification['error']({
             message: 'Oops',
             description: 'Transaction has failed'
           })
           break
         case 'DECLINED':
-          // message.error('Transaction was declined ', 5)
           notification['error']({
             message: 'Oops',
             description: 'Transaction was declined'
@@ -150,7 +147,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
       } else {
         if (singlePage) {
           window.location.href = `${
-            singlePage.redirectURL ? singlePage.redirectURL : redirectURL
+            singlePage.redirectURL ? singlePage.redirectURL : ''
           }?systemReference=${mobileResponse.transactionId}&transactionStatus=${
             trxStatus.status
           }`
@@ -164,7 +161,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
         case 'SUCCESS':
           if (singlePage) {
             window.location.href = `${
-              singlePage.redirectURL ? singlePage.redirectURL : redirectURL
+              singlePage.redirectURL ? singlePage.redirectURL : ''
             }?systemReference=${
               mobileResponse.transactionId
             }&transactionStatus=${trxStatus.status}`
@@ -174,7 +171,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
         case 'FAILED':
           if (singlePage) {
             window.location.href = `${
-              singlePage.redirectURL ? singlePage.redirectURL : redirectURL
+              singlePage.redirectURL ? singlePage.redirectURL : ''
             }?systemReference=${
               mobileResponse.transactionId
             }&transactionStatus=${trxStatus.status}`
@@ -310,6 +307,7 @@ const GenericPay: React.FC<GenericPayProps> = () => {
             urlCusName={urlCusName}
             urlCusEmail={urlCusEmail}
             urlCusPhone={urlCusPhone}
+            redirectURL={redirectURL}
           />
         </Col>
       </Row>

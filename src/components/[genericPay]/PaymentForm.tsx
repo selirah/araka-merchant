@@ -21,6 +21,7 @@ interface PaymentFormProps {
   urlCusName: any
   urlCusPhone: any
   urlCusEmail: any
+  redirectURL: any
 }
 
 export const PaymentForm: React.FC<PaymentFormProps> = ({
@@ -37,7 +38,8 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
   urlReference,
   urlCusEmail,
   urlCusName,
-  urlCusPhone
+  urlCusPhone,
+  redirectURL
 }) => {
   const [values] = useState<Merchant>({
     amount: page.amount !== '' ? page.amount : urlAmount ? urlAmount : '',
@@ -49,7 +51,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
     pageLogo: '',
     pageTitle: page.pageName,
     processId: page.processId,
-    redirectURL: page.redirectURL,
+    redirectURL: redirectURL ? redirectURL : page.redirectURL,
     transactionReference:
       page.transactionReference !== ''
         ? page.transactionReference

@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { withRouter, useParams, useLocation } from 'react-router-dom';
-import { Layout, Row, Col, Image, Avatar } from 'antd';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../helpers/appDispatch';
-import { appSelector } from '../helpers/appSelector';
-import { PayForm } from '../components/[pay]/PayForm';
-import visa from '../images/visa.png';
-import mastercard from '../images/master-card.png';
-import { Merchant, Error, Page } from '../interfaces';
-import { paymentRequest, clearPaymentData } from '../store/home';
-import { paymentPageRequest, clearStates } from '../store/payment-pages';
+import React, { useState, useEffect } from 'react'
+import { withRouter, useParams, useLocation } from 'react-router-dom'
+import { Layout, Row, Col, Image, Avatar } from 'antd'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../helpers/appDispatch'
+import { appSelector } from '../helpers/appSelector'
+import { PayForm } from '../components/[pay]/PayForm'
+import visa from '../images/visa.png'
+import mastercard from '../images/master-card.png'
+import { Merchant, Error, Page } from '../interfaces'
+import { paymentRequest, clearPaymentData } from '../store/home'
+import { paymentPageRequest, clearStates } from '../store/payment-pages'
 
 interface PayProps {}
 
 interface ParamProps {
-  processId: string;
+  processId: string
 }
 
 const Pay: React.FC<PayProps> = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const { Content } = Layout;
-  const { processId } = useParams<ParamProps>();
-  const home = appSelector((state) => state.home);
-  const page = appSelector((state) => state.page);
-  const query = new URLSearchParams(useLocation().search);
+  const dispatch: AppDispatch = useDispatch()
+  const { Content } = Layout
+  const { processId } = useParams<ParamProps>()
+  const home = appSelector((state) => state.home)
+  const page = appSelector((state) => state.page)
+  const query = new URLSearchParams(useLocation().search)
 
   const [values] = useState({
     pageTitle: query.get('pageTitle') !== null ? query.get('pageTitle') : '',
@@ -50,31 +50,31 @@ const Pay: React.FC<PayProps> = () => {
     amount: query.get('amount') !== null ? query.get('amount') : '',
     redirectURL:
       query.get('redirectURL') !== null ? query.get('redirectURL') : '',
-    processId: processId,
-  });
-  const [isSubmit, setIsSubmit] = useState(false);
-  const [errorData, setErrorData] = useState<Error | {}>({});
-  const [singlePage, setSinglePage] = useState<Page | undefined>(undefined);
+    processId: processId
+  })
+  const [isSubmit, setIsSubmit] = useState(false)
+  const [errorData, setErrorData] = useState<Error | {}>({})
+  const [singlePage, setSinglePage] = useState<Page | undefined>(undefined)
 
   const onSubmit = (v: Merchant) => {
-    v.processId = values.processId;
-    v.pageTitle = values.pageTitle !== null ? values.pageTitle : '';
+    v.processId = values.processId
+    v.pageTitle = values.pageTitle !== null ? values.pageTitle : ''
     v.pageDescription =
-      values.pageDescription !== null ? values.pageDescription : '';
-    v.pageLogo = values.pageLogo !== null ? values.pageLogo : '';
-    v.redirectURL = values.redirectURL !== null ? values.redirectURL : '';
+      values.pageDescription !== null ? values.pageDescription : ''
+    v.pageLogo = values.pageLogo !== null ? values.pageLogo : ''
+    v.redirectURL = values.redirectURL !== null ? values.redirectURL : ''
     v.transactionReference =
-      values.transactionReference !== null ? values.transactionReference : '';
-    v.paymentPageId = singlePage !== undefined ? singlePage.paymentPageId : 0;
+      values.transactionReference !== null ? values.transactionReference : ''
+    v.paymentPageId = singlePage !== undefined ? singlePage.paymentPageId : 0
 
-    dispatch(paymentRequest(v));
-  };
+    dispatch(paymentRequest(v))
+  }
 
   useEffect(() => {
-    dispatch(clearStates());
-    dispatch(paymentPageRequest(processId));
+    dispatch(clearStates())
+    dispatch(paymentPageRequest(processId))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   useEffect(() => {
     const {
@@ -82,26 +82,26 @@ const Pay: React.FC<PayProps> = () => {
       isPaymentSuccess,
       isSubmitting,
       orderResponse,
-      error,
-    } = home;
-    const { singlePage } = page;
-    setIsSubmit(isSubmitting);
+      error
+    } = home
+    const { singlePage } = page
+    setIsSubmit(isSubmitting)
     if (isPaymentSuccess && orderResponse !== undefined) {
-      const { orderURL } = orderResponse.order;
-      dispatch(clearPaymentData());
-      window.location.href = orderURL;
+      const { orderURL } = orderResponse.order
+      dispatch(clearPaymentData())
+      window.location.href = orderURL
     }
     if (isPaymentFailure && error !== undefined) {
-      setErrorData(error);
+      setErrorData(error)
     }
-    setSinglePage(singlePage);
-  }, [home, dispatch, page]);
+    setSinglePage(singlePage)
+  }, [home, dispatch, page])
 
-  let initials: string[] = [];
-  let name = '';
+  let initials: string[] = []
+  let name = ''
   if (singlePage !== undefined) {
-    initials = singlePage.pageName.match(/\b\w/g) || [];
-    name = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
+    initials = singlePage.pageName.match(/\b\w/g) || []
+    name = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase()
   }
 
   return (
@@ -112,7 +112,7 @@ const Pay: React.FC<PayProps> = () => {
             display: 'flex',
             flexWrap: 'wrap',
             justifyContent: 'center',
-            marginTop: '10px',
+            marginTop: '10px'
           }}
         >
           <Col span={24}>
@@ -124,7 +124,7 @@ const Pay: React.FC<PayProps> = () => {
                   size={100}
                   style={{
                     backgroundColor: '#1890ff',
-                    verticalAlign: 'middle',
+                    verticalAlign: 'middle'
                   }}
                 >
                   {name}
@@ -146,7 +146,7 @@ const Pay: React.FC<PayProps> = () => {
             display: 'flex',
             flexWrap: 'wrap',
             justifyContent: 'center',
-            marginTop: '50px',
+            marginTop: '50px'
           }}
         >
           <div className="pay-logos">
@@ -156,7 +156,7 @@ const Pay: React.FC<PayProps> = () => {
         </Row>
       </Content>
     </Layout>
-  );
-};
+  )
+}
 
-export default withRouter(Pay);
+export default withRouter(Pay)
