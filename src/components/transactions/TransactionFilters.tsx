@@ -95,6 +95,7 @@ const TransactionFilters: React.FC<TransactionFiltersProps> = ({
                   <Option value="QPC">QPC</Option>
                   <Option value="Rawbank">Rawbank</Option>
                   <Option value="Airtel">Airtel</Option>
+                  <Option value="Orange">Orange</Option>
                 </Select>
               </Form.Item>
             </Col>
