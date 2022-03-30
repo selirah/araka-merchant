@@ -83,6 +83,7 @@ const Login: React.FC<LoginProps> = () => {
           isSubmit={isSubmit}
           error={error}
           singleError={singleError}
+          resetSuccess={auth.resetPasswordSuccess}
         />
       </Content>
       {load && (

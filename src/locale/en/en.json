@@ -21,7 +21,11 @@
             "compliance": "Compliance",
             "support": "Support",
             "contact": "Contact",
-            "privacy": "Privacy Policy"
+            "privacy": "Privacy Policy",
+            "return-to-login": "Return to Login",
+            "forgotten-header": "Enter email to reset password",
+            "btn-text-forgotten": "Send Instructions",
+            "Please wait . .": "Please wait . ."
         },
         "general": {
             "home": "Home",

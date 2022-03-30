@@ -21,7 +21,11 @@
             "compliance": "Respect des règles",
             "support": "Support",
             "contact": "Contact",
-            "privacy": "Politique de confidentialité "
+            "privacy": "Politique de confidentialité",
+            "return-to-login": "Revenir à la connexion",
+            "forgotten-header": "Entrez l'e-mail pour réinitialiser le mot de passe",
+            "btn-text-forgotten": "Envoyer les instructions",
+            "Please wait . .": "S'il vous plaît, attendez . ."
         },
         "general": {
             "home": "Accueil ",

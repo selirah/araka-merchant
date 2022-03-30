@@ -1,7 +1,11 @@
 import React, { lazy, Suspense, useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { Layout, Spin, Row, message, Tabs, Form } from 'antd'
-import { SettingOutlined, UserAddOutlined, TeamOutlined } from '@ant-design/icons'
+import {
+  SettingOutlined,
+  UserAddOutlined,
+  TeamOutlined
+} from '@ant-design/icons'
 import { useDispatch } from 'react-redux'
 import { appSelector } from '../helpers/appSelector'
 import { AppDispatch } from '../helpers/appDispatch'
@@ -45,8 +49,10 @@ export const Settings = () => {
   const dispatch: AppDispatch = useDispatch()
   const { t } = useTranslation()
   const { user } = appSelector((state) => state.auth)
-  const settings = appSelector((state) => state.settings);
-  const [merchants, setMerchants] = useState<MerchantData[]>(settings.allMerchants);
+  const settings = appSelector((state) => state.settings)
+  const [merchants, setMerchants] = useState<MerchantData[]>(
+    settings.allMerchants
+  )
   const [form] = Form.useForm()
   const initialValues: Merchant = {
     Name: '',
@@ -55,6 +61,9 @@ export const Settings = () => {
     Password: '',
     PhoneNumber: { short: 'cd', code: 0, phone: '' }
   }
+  const [showFormModal, setShowFormModal] = useState(false)
+  const [updateForm] = Form.useForm()
+  const [passwordForm] = Form.useForm()
   // const params = {
   //   fixedPeriod: 'overall',
   // };
@@ -96,7 +105,7 @@ export const Settings = () => {
   // })
 
   useEffect(() => {
-    const { allMerchants } = settings;
+    const { allMerchants } = settings
     if (isEmpty(allMerchants)) {
       dispatch(getAllMerchantsRequest())
     }
@@ -122,15 +131,22 @@ export const Settings = () => {
     dispatch(createMerchantRequest(payload))
   }
 
+  const onToggleFormModal = () => {
+    setShowFormModal(!showFormModal)
+  }
+
   useEffect(() => {
     if (changePasswordFailure) {
       message.error(JSON.stringify(error))
     }
     if (changePasswordSuccess) {
       message.success(t('general.passwordChanged'))
+      setShowFormModal(false)
+      passwordForm.resetFields()
     }
     if (editSuccess) {
       message.success(t('general.detailsUpdated'))
+      updateForm.resetFields()
     }
     if (editFailure) {
       message.error(JSON.stringify(error))
@@ -146,7 +162,9 @@ export const Settings = () => {
     editSuccess,
     createMerchantSuccess,
     form,
-    t
+    t,
+    updateForm,
+    passwordForm
   ])
 
   return (
@@ -178,6 +196,11 @@ export const Settings = () => {
                   onChangePassword={onChangePassword}
                   user={user}
                   translate={t}
+                  onToggleFormModal={onToggleFormModal}
+                  showModal={showFormModal}
+                  Form={Form}
+                  passwordForm={passwordForm}
+                  updateForm={updateForm}
                 />
               </TabPane>
               {role !== undefined && role === roles.SuperMerchant ? (
@@ -209,10 +232,7 @@ export const Settings = () => {
                     </span>
                   }
                 >
-                  <AllMerchants
-                    translate={t}
-                    merchants={merchants}
-                  />
+                  <AllMerchants translate={t} merchants={merchants} />
                 </TabPane>
               ) : null}
             </Tabs>

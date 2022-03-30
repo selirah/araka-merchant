@@ -25,6 +25,8 @@ import FeeReports from '../pages/_feeReports'
 // import ProxyPayOVolumes from '../pages/_proxyPayVolumes';
 // import Payouts from '../pages/_payouts'
 import NotFound from '../pages/_404'
+import ForgottenPassword from '../pages/_forgottenPassword'
+import ResetPassword from '../pages/_reset-password'
 
 const Routes: React.FC = () => {
   const { user } = appSelector((state) => state.auth)
@@ -40,6 +42,12 @@ const Routes: React.FC = () => {
     <React.Fragment>
       <Switch>
         <Route exact path={path.login} component={Login} />
+        <Route
+          exact
+          path={path.forgottenPasssword}
+          component={ForgottenPassword}
+        />
+        <Route exact path={path.resetPassword} component={ResetPassword} />
         <PrivateRoute exact path={path.home} component={Dashboard} />
         <PrivateRoute exact path={path.dashboard} component={Dashboard} />
         <PrivateRoute exact path={path.tranasctions} component={Transactions} />

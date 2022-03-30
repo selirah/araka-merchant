@@ -1,14 +1,19 @@
-import React from 'react';
-import { Row, Col, Input, Form, Checkbox, Button, Switch, Modal } from 'antd';
+import React from 'react'
+import { Row, Col, Input, Checkbox, Button, Switch, Modal } from 'antd'
 // import { Client } from '../../interfaces';
 
 interface UserProfileProps {
-  onUpdateProfile(values: any): void;
-  isSubmitting: boolean;
-  onChangePassword(values: any): void;
-  isChangingPassword: boolean;
-  user: any;
-  translate: any;
+  onUpdateProfile(values: any): void
+  isSubmitting: boolean
+  onChangePassword(values: any): void
+  isChangingPassword: boolean
+  user: any
+  translate: any
+  showModal: boolean
+  onToggleFormModal: () => void
+  Form: any
+  updateForm: any
+  passwordForm: any
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({
@@ -18,21 +23,19 @@ const UserProfile: React.FC<UserProfileProps> = ({
   onChangePassword,
   user,
   translate,
+  showModal,
+  onToggleFormModal,
+  Form,
+  passwordForm,
+  updateForm
 }) => {
-  const [form] = Form.useForm();
-  const [showFormModal, setShowFormModal] = React.useState(false);
-
-  const onToggleFormModal = () => {
-    setShowFormModal(!showFormModal);
-  };
-
   return (
     <>
       <Row
         style={{
           display: 'flex',
           flexWrap: 'wrap',
-          justifyContent: 'center',
+          justifyContent: 'center'
         }}
       >
         <Col span={20} md={20} sm={24} xs={24} className="profile-box">
@@ -40,7 +43,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
           <Row>
             <Col span={24}>
               <Form
-                form={form}
+                form={updateForm}
                 name="update-form"
                 onFinish={onUpdateProfile}
                 scrollToFirstError
@@ -53,7 +56,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
                     <Form.Item
                       name="firstName"
                       rules={[
-                        { required: true, message: 'First name is required' },
+                        { required: true, message: 'First name is required' }
                       ]}
                     >
                       <Input
@@ -66,7 +69,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
                     <Form.Item
                       name="lastName"
                       rules={[
-                        { required: true, message: 'Last name is required' },
+                        { required: true, message: 'Last name is required' }
                       ]}
                     >
                       <Input
@@ -85,7 +88,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
                       name="email"
                       rules={[
                         { required: true, message: 'First name is required' },
-                        { type: 'email', message: 'Enter a valid email' },
+                        { type: 'email', message: 'Enter a valid email' }
                       ]}
                     >
                       <Input
@@ -103,7 +106,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
                     <Form.Item
                       name="phoneNumber"
                       rules={[
-                        { required: true, message: 'Phone number is required' },
+                        { required: true, message: 'Phone number is required' }
                       ]}
                     >
                       <Input
@@ -172,7 +175,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
         title={translate('general.password')}
         maskClosable={false}
         centered
-        visible={showFormModal}
+        visible={showModal}
         onCancel={() => onToggleFormModal()}
         footer={[
           <Button
@@ -192,13 +195,14 @@ const UserProfile: React.FC<UserProfileProps> = ({
             loading={isChangingPassword}
           >
             {translate('general.saveNewPassword')}
-          </Button>,
+          </Button>
         ]}
       >
         <Form
           name="change-password"
           onFinish={onChangePassword}
           scrollToFirstError
+          form={passwordForm}
         >
           <Form.Item
             name="OldPassword"
@@ -219,16 +223,16 @@ const UserProfile: React.FC<UserProfileProps> = ({
             hasFeedback
             rules={[
               { required: true, message: 'Please confirm password!' },
-              ({ getFieldValue }) => ({
-                validator(_, value) {
+              ({ getFieldValue }: any) => ({
+                validator(_: any, value: any) {
                   if (!value || getFieldValue('NewPassword') === value) {
-                    return Promise.resolve();
+                    return Promise.resolve()
                   }
                   return Promise.reject(
                     'The two passwords that you entered do not match!'
-                  );
-                },
-              }),
+                  )
+                }
+              })
             ]}
           >
             <Input.Password placeholder={translate('general.reTypePassword')} />
@@ -236,7 +240,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
         </Form>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default UserProfile;
+export default UserProfile

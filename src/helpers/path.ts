@@ -20,5 +20,7 @@ export const path = {
   proxyPayOverview: '/proxypay-overview',
   payouts: '/payouts',
   pendingTransactions: '/pending-transactions',
-  merchantsChannels: '/merchants-channels'
+  merchantsChannels: '/merchants-channels',
+  forgottenPasssword: '/auth/forgotten-password',
+  resetPassword: '/auth/reset-password'
 }

@@ -1,29 +1,29 @@
-import React from 'react';
-import { Input, Row, Col, Button, Alert } from 'antd';
-import CountryPhoneInput from 'antd-country-phone-input';
-import 'antd-country-phone-input/dist/index.css';
+import React from 'react'
+import { Input, Row, Col, Button, Alert } from 'antd'
+import CountryPhoneInput from 'antd-country-phone-input'
+import 'antd-country-phone-input/dist/index.css'
 
 interface Merchant {
-  Name: string;
+  Name: string
   PhoneNumber: {
-    short: string;
-    code: number;
-    phone: string;
-  };
-  EmailAddress: string;
-  Password: string;
-  Confirm: string;
+    short: string
+    code: number
+    phone: string
+  }
+  EmailAddress: string
+  Password: string
+  Confirm: string
 }
 
 interface CreateMerchantProps {
-  onSubmit(values: Merchant): void;
-  isSubmitting: boolean;
-  Form: any;
-  form: any;
-  errors: any;
-  success: boolean;
-  values: Merchant;
-  translate: any;
+  onSubmit(values: Merchant): void
+  isSubmitting: boolean
+  Form: any
+  form: any
+  errors: any
+  success: boolean
+  values: Merchant
+  translate: any
 }
 
 const CreateMerchant: React.FC<CreateMerchantProps> = ({
@@ -34,9 +34,9 @@ const CreateMerchant: React.FC<CreateMerchantProps> = ({
   onSubmit,
   success,
   values,
-  translate,
+  translate
 }) => {
-  const FormItem = Form.Item;
+  const FormItem = Form.Item
   return (
     <Row justify="center" align="middle">
       <Col span={20} md={20} sm={24} xs={24} className="profile-box">
@@ -76,7 +76,7 @@ const CreateMerchant: React.FC<CreateMerchantProps> = ({
                 name="EmailAddress"
                 rules={[
                   { required: true, message: 'This field is required' },
-                  { type: 'email', message: 'Enter a valid email' },
+                  { type: 'email', message: 'Enter a valid email' }
                 ]}
               >
                 <Input placeholder={translate('general.merchantEmail')} />
@@ -104,13 +104,13 @@ const CreateMerchant: React.FC<CreateMerchantProps> = ({
                   ({ getFieldValue }: any) => ({
                     validator(_: any, value: any) {
                       if (!value || getFieldValue('Password') === value) {
-                        return Promise.resolve();
+                        return Promise.resolve()
                       }
                       return Promise.reject(
                         'The two passwords that you entered do not match!'
-                      );
-                    },
-                  }),
+                      )
+                    }
+                  })
                 ]}
               >
                 <Input.Password
@@ -131,7 +131,7 @@ const CreateMerchant: React.FC<CreateMerchantProps> = ({
         </Row>
       </Col>
     </Row>
-  );
-};
+  )
+}
 
-export default CreateMerchant;
+export default CreateMerchant

@@ -6,6 +6,7 @@ import { isEmpty } from '../../helpers/isEmpty'
 import logo from '../../images/logo_symbol.png'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { path } from '../../helpers/path'
 
 interface LoginFormProps {
   values: Login
@@ -13,6 +14,7 @@ interface LoginFormProps {
   isSubmit: boolean
   error: any
   singleError: string
+  resetSuccess: boolean
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({
@@ -20,7 +22,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   onSubmit,
   isSubmit,
   error,
-  singleError
+  singleError,
+  resetSuccess
 }) => {
   const { t } = useTranslation()
 
@@ -39,11 +42,24 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       <Row className="login-row-third">
         <Col className="pay-form-col" lg={6} md={6} sm={12} xs={24}>
           <h1 className="login-header">{t('login.box-header')}</h1>
+
           {!isEmpty(error) ? (
-            <Alert type="error" message={`${JSON.stringify(error)}`} />
+            <div style={{ marginBottom: 10 }}>
+              <Alert type="error" message={`${JSON.stringify(error)}`} />
+            </div>
           ) : null}
           {!isEmpty(singleError) ? (
-            <Alert type="error" message={`${JSON.stringify(singleError)}`} />
+            <div style={{ marginBottom: 10 }}>
+              <Alert type="error" message={`${JSON.stringify(singleError)}`} />
+            </div>
+          ) : null}
+          {resetSuccess ? (
+            <div style={{ marginBottom: 10 }}>
+              <Alert
+                type="success"
+                message="Your password has been reset successfully. Proceed to Login"
+              />
+            </div>
           ) : null}
           <Form
             layout="vertical"
@@ -86,7 +102,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               </Button>
               <Row className="login-forgot">
                 <Col span={24}>
-                  <Link to="">{t('login.forgot-password')}</Link>
+                  <Link to={path.forgottenPasssword}>
+                    {t('login.forgot-password')}
+                  </Link>
                 </Col>
               </Row>
             </Form.Item>

@@ -1,4 +1,4 @@
-import { User, Error } from '../../interfaces';
+import { User, Error } from '../../interfaces'
 
 export enum AuthActionTypes {
   IS_SUBMITTING = '@@auth/IS_SUBMITTING',
@@ -10,13 +10,29 @@ export enum AuthActionTypes {
   SET_USER = '@@auth/SET_USER',
   DESTROY_STATES = '@@auth/DESTROY_STATES',
   CLEAR_AUTH_STATES = '@@auth/CLEAR_AUTH_STATES',
+  FORGOTTEN_PASSWORD_REQUEST = '@@auth/FORGOTTEN_PASSWORD_REQUEST',
+  FORGOTTEN_PASSWORD_SUCCESS = '@@auth/FORGOTTEN_PASSWORD_SUCCESS',
+  FORGOTTEN_PASSWORD_FAILURE = '@@auth/FORGOTTEN_PASSWORD_FAILURE',
+  RESET_PASSWORD_REQUEST = '@@auth/RESET_PASSWORD_REQUEST',
+  RESET_PASSWORD_SUCCESS = '@@auth/RESET_PASSWORD_SUCCESS',
+  RESET_PASSWORD_FAILURE = '@@auth/RESET_PASSWORD_FAILURE'
 }
 
 export type AuthState = {
-  readonly isAuthenticated: boolean;
-  readonly isSubmitting: boolean;
-  readonly error: Error | {};
-  readonly success: boolean;
-  readonly user: User | undefined;
-  readonly singleError: string;
-};
+  readonly isAuthenticated: boolean
+  readonly isSubmitting: boolean
+  readonly error: Error | {}
+  readonly success: boolean
+  readonly user: User | undefined
+  readonly singleError: string
+
+  readonly isForgottenPassword: boolean
+  readonly forgottenPasswordSuccess: boolean
+  readonly forgottenPasswordError: boolean
+  readonly forgottenError: any
+
+  readonly isResettingPassword: boolean
+  readonly resetPasswordSuccess: boolean
+  readonly resetPasswordError: boolean
+  readonly resetError: any
+}
