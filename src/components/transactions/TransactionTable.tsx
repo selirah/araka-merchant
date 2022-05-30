@@ -4,7 +4,7 @@ import moment from 'moment-timezone'
 import { TransactionHistory } from '../../interfaces/TransactionHistory'
 import { transactionStatus, timeZones } from '../../helpers/constants'
 import { TransactionTable as TT } from '../../interfaces'
-import { numberWithCommas } from '../../helpers/helperFunctions'
+import { amountSeparator } from '../../helpers/helperFunctions'
 
 interface TransactionTableProps {
   transactionHistory: TransactionHistory[]
@@ -137,11 +137,11 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
 
   let dataSource: TT[] = []
 
-  for (let transaction of transactionHistory) {
+  transactionHistory.map((transaction) => {
     dataSource.push({
       key: transaction.transactionId,
-      amount: `${currency} ${numberWithCommas(
-        transaction.amountPaid.toFixed(2)
+      amount: `${currency} ${amountSeparator(
+        transaction.amountPaid.toFixed(4)
       )}`,
       customer: transaction.customer,
       transactionId: transaction.transactionId,
@@ -150,7 +150,8 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
       status: transaction.status,
       merchant: transaction.merchant
     })
-  }
+    return dataSource
+  })
 
   return (
     <Row gutter={20}>

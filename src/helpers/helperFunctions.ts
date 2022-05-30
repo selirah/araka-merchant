@@ -1,6 +1,6 @@
-import { TransactionHistory } from '../interfaces';
-import { transactionStatus } from './constants';
-import moment from 'moment';
+import { TransactionHistory } from '../interfaces'
+import { transactionStatus } from './constants'
+import moment from 'moment'
 
 export const calculateDailyTransactionTotals = (
   transactions: TransactionHistory[],
@@ -8,26 +8,26 @@ export const calculateDailyTransactionTotals = (
 ) => {
   let trxTotal = 0,
     totalApprovedAmt = 0.0,
-    totalDeclinedAmt = 0.0;
+    totalDeclinedAmt = 0.0
 
   for (let trx of transactions) {
-    let t = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('hh:mm A');
-    let hour = t.split(':')[0];
-    let ampm = t.split(':')[1].split(' ')[1];
-    const time = `${hour}${ampm}`;
+    let t = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('hh:mm A')
+    let hour = t.split(':')[0]
+    let ampm = t.split(':')[1].split(' ')[1]
+    const time = `${hour}${ampm}`
 
     if (time === label) {
-      trxTotal += 1;
+      trxTotal += 1
     }
     if (time === label && trx.status === transactionStatus.APPROVED) {
-      totalApprovedAmt += trx.amountPaid;
+      totalApprovedAmt += trx.amountPaid
     }
     if (time === label && trx.status === transactionStatus.DECLINED) {
-      totalDeclinedAmt += trx.amountPaid;
+      totalDeclinedAmt += trx.amountPaid
     }
   }
-  return { trxTotal, totalApprovedAmt, totalDeclinedAmt };
-};
+  return { trxTotal, totalApprovedAmt, totalDeclinedAmt }
+}
 
 export const calculateWeeklyTransactionTotals = (
   transactions: TransactionHistory[],
@@ -35,23 +35,23 @@ export const calculateWeeklyTransactionTotals = (
 ) => {
   let trxTotal = 0,
     totalApprovedAmt = 0.0,
-    totalDeclinedAmt = 0.0;
+    totalDeclinedAmt = 0.0
 
   // now let's loop through our new data to get the actual calculations
   for (let trx of transactions) {
-    const day = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('ddd');
+    const day = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('ddd')
     if (day === label) {
-      trxTotal += 1;
+      trxTotal += 1
     }
     if (day === label && trx.status === transactionStatus.APPROVED) {
-      totalApprovedAmt += trx.amountPaid;
+      totalApprovedAmt += trx.amountPaid
     }
     if (day === label && trx.status === transactionStatus.DECLINED) {
-      totalDeclinedAmt += trx.amountPaid;
+      totalDeclinedAmt += trx.amountPaid
     }
   }
-  return { trxTotal, totalApprovedAmt, totalDeclinedAmt };
-};
+  return { trxTotal, totalApprovedAmt, totalDeclinedAmt }
+}
 
 export const calculateMonthlyTransactionTotal = (
   transactions: TransactionHistory[],
@@ -59,54 +59,54 @@ export const calculateMonthlyTransactionTotal = (
 ) => {
   let trxTotal = 0,
     totalApprovedAmt = 0.0,
-    totalDeclinedAmt = 0.0;
+    totalDeclinedAmt = 0.0
 
   // now let's loop through our new data to get the actual calculations
   for (let trx of transactions) {
-    let date = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('MMM DD');
+    let date = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('MMM DD')
     if (date === label) {
-      trxTotal += 1;
+      trxTotal += 1
     }
     if (date === label && trx.status === transactionStatus.APPROVED) {
-      totalApprovedAmt += trx.amountPaid;
+      totalApprovedAmt += trx.amountPaid
     }
     if (date === label && trx.status === transactionStatus.DECLINED) {
-      totalDeclinedAmt += trx.amountPaid;
+      totalDeclinedAmt += trx.amountPaid
     }
   }
-  return { trxTotal, totalApprovedAmt, totalDeclinedAmt };
-};
+  return { trxTotal, totalApprovedAmt, totalDeclinedAmt }
+}
 
 export const calculateYearValues = (
   transactions: TransactionHistory[],
   month: string
 ) => {
-  let total = 0;
-  let approvedAmt = 0.0;
-  let declinedAmt = 0.0;
-  let totalApproved = 0;
-  let totalDeclined = 0;
-  let merchants: any = {};
+  let total = 0
+  let approvedAmt = 0.0
+  let declinedAmt = 0.0
+  let totalApproved = 0
+  let totalDeclined = 0
+  let merchants: any = {}
 
   for (let trx of transactions) {
-    const m = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('MMM');
+    const m = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('MMM')
     if (m === month) {
-      total += 1;
+      total += 1
     }
     if (m === month && trx.status === transactionStatus.APPROVED) {
-      approvedAmt += trx.amountPaid;
-      totalApproved += 1;
+      approvedAmt += trx.amountPaid
+      totalApproved += 1
       // if merchant is already there, let us add their amount to what is current there
       if (merchants[trx.merchant]) {
-        merchants[trx.merchant] = merchants[trx.merchant] + trx.amountPaid;
+        merchants[trx.merchant] = merchants[trx.merchant] + trx.amountPaid
       } else {
         // add afresh
-        merchants[trx.merchant] = trx.amountPaid;
+        merchants[trx.merchant] = trx.amountPaid
       }
     }
     if (m === month && trx.status === transactionStatus.DECLINED) {
-      declinedAmt += trx.amountPaid;
-      totalDeclined += 1;
+      declinedAmt += trx.amountPaid
+      totalDeclined += 1
     }
   }
   // console.log(merchants);
@@ -116,44 +116,44 @@ export const calculateYearValues = (
     declinedAmt,
     totalApproved,
     totalDeclined,
-    merchants,
-  };
-};
+    merchants
+  }
+}
 
 export const calculateDailyValues = (
   transactions: TransactionHistory[],
   time: string
 ) => {
-  let total = 0;
-  let approvedAmt = 0.0;
-  let declinedAmt = 0.0;
-  let totalApproved = 0;
-  let totalDeclined = 0;
-  let merchants: any = {};
+  let total = 0
+  let approvedAmt = 0.0
+  let declinedAmt = 0.0
+  let totalApproved = 0
+  let totalDeclined = 0
+  let merchants: any = {}
 
   for (let trx of transactions) {
-    let t = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('hh:mm A');
-    let hour = t.split(':')[0];
-    let ampm = t.split(':')[1].split(' ')[1];
-    const tm = `${hour}${ampm}`;
+    let t = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('hh:mm A')
+    let hour = t.split(':')[0]
+    let ampm = t.split(':')[1].split(' ')[1]
+    const tm = `${hour}${ampm}`
 
     if (tm === time) {
-      total += 1;
+      total += 1
     }
     if (tm === time && trx.status === transactionStatus.APPROVED) {
-      approvedAmt += trx.amountPaid;
-      totalApproved += 1;
+      approvedAmt += trx.amountPaid
+      totalApproved += 1
       // if merchant is already there, let us add their amount to what is current there
       if (merchants[trx.merchant]) {
-        merchants[trx.merchant] = merchants[trx.merchant] + trx.amountPaid;
+        merchants[trx.merchant] = merchants[trx.merchant] + trx.amountPaid
       } else {
         // add afresh
-        merchants[trx.merchant] = trx.amountPaid;
+        merchants[trx.merchant] = trx.amountPaid
       }
     }
     if (tm === time && trx.status === transactionStatus.DECLINED) {
-      declinedAmt += trx.amountPaid;
-      totalDeclined += 1;
+      declinedAmt += trx.amountPaid
+      totalDeclined += 1
     }
   }
   return {
@@ -162,41 +162,41 @@ export const calculateDailyValues = (
     declinedAmt,
     totalApproved,
     totalDeclined,
-    merchants,
-  };
-};
+    merchants
+  }
+}
 
 export const calculateWeeklyValues = (
   transactions: TransactionHistory[],
   day: string
 ) => {
-  let total = 0;
-  let approvedAmt = 0.0;
-  let declinedAmt = 0.0;
-  let totalApproved = 0;
-  let totalDeclined = 0;
-  let merchants: any = {};
+  let total = 0
+  let approvedAmt = 0.0
+  let declinedAmt = 0.0
+  let totalApproved = 0
+  let totalDeclined = 0
+  let merchants: any = {}
 
   for (let trx of transactions) {
-    const d = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('ddd');
+    const d = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('ddd')
 
     if (d === day) {
-      total += 1;
+      total += 1
     }
     if (d === day && trx.status === transactionStatus.APPROVED) {
-      approvedAmt += trx.amountPaid;
-      totalApproved += 1;
+      approvedAmt += trx.amountPaid
+      totalApproved += 1
       // if merchant is already there, let us add their amount to what is current there
       if (merchants[trx.merchant]) {
-        merchants[trx.merchant] = merchants[trx.merchant] + trx.amountPaid;
+        merchants[trx.merchant] = merchants[trx.merchant] + trx.amountPaid
       } else {
         // add afresh
-        merchants[trx.merchant] = trx.amountPaid;
+        merchants[trx.merchant] = trx.amountPaid
       }
     }
     if (d === day && trx.status === transactionStatus.DECLINED) {
-      declinedAmt += trx.amountPaid;
-      totalDeclined += 1;
+      declinedAmt += trx.amountPaid
+      totalDeclined += 1
     }
   }
 
@@ -206,41 +206,41 @@ export const calculateWeeklyValues = (
     declinedAmt,
     totalApproved,
     totalDeclined,
-    merchants,
-  };
-};
+    merchants
+  }
+}
 
 export const calculateMonthlyValues = (
   transactions: TransactionHistory[],
   day: string
 ) => {
-  let total = 0;
-  let approvedAmt = 0.0;
-  let declinedAmt = 0.0;
-  let totalApproved = 0;
-  let totalDeclined = 0;
-  let merchants: any = {};
+  let total = 0
+  let approvedAmt = 0.0
+  let declinedAmt = 0.0
+  let totalApproved = 0
+  let totalDeclined = 0
+  let merchants: any = {}
 
   // get transactions that falls within those last 30 days
   for (let trx of transactions) {
-    let date = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('MMM DD');
+    let date = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('MMM DD')
     if (date === day) {
-      total += 1;
+      total += 1
     }
     if (date === day && trx.status === transactionStatus.APPROVED) {
-      approvedAmt += trx.amountPaid;
-      totalApproved += 1;
+      approvedAmt += trx.amountPaid
+      totalApproved += 1
       // if merchant is already there, let us add their amount to what is current there
       if (merchants[trx.merchant]) {
-        merchants[trx.merchant] = merchants[trx.merchant] + trx.amountPaid;
+        merchants[trx.merchant] = merchants[trx.merchant] + trx.amountPaid
       } else {
         // add afresh
-        merchants[trx.merchant] = trx.amountPaid;
+        merchants[trx.merchant] = trx.amountPaid
       }
     }
     if (date === day && trx.status === transactionStatus.DECLINED) {
-      declinedAmt += trx.amountPaid;
-      totalDeclined += 1;
+      declinedAmt += trx.amountPaid
+      totalDeclined += 1
     }
   }
 
@@ -250,13 +250,23 @@ export const calculateMonthlyValues = (
     declinedAmt,
     totalApproved,
     totalDeclined,
-    merchants,
-  };
-};
+    merchants
+  }
+}
 
 export const numberWithCommas = (x: any) => {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-};
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+}
+
+export const amountSeparator = (n: any) => {
+  var parts = n.toString().split('.')
+  const numberPart = parts[0]
+  const decimalPart = parts[1]
+  const thousands = /\B(?=(\d{3})+(?!\d))/g
+  return (
+    numberPart.replace(thousands, ',') + (decimalPart ? '.' + decimalPart : '')
+  )
+}
 
 export const getTopMerchantAreaChartDataPoints = (
   transactions: TransactionHistory[],
@@ -264,22 +274,22 @@ export const getTopMerchantAreaChartDataPoints = (
   review: string,
   merchant: any
 ) => {
-  let approvedAmt = 0.0;
+  let approvedAmt = 0.0
   switch (review) {
     case 'daily':
-      let hour = param.split(':')[0];
-      let ampm = param.split(':')[1].split(' ')[1];
-      const lbl = `${hour}${ampm}`;
+      let hour = param.split(':')[0]
+      let ampm = param.split(':')[1].split(' ')[1]
+      const lbl = `${hour}${ampm}`
       // we have to make sure transactions were performed today
-      let cDate = moment(new Date()).format('MM/DD/YYYY');
+      let cDate = moment(new Date()).format('MM/DD/YYYY')
       for (let trx of transactions) {
         const tDate = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format(
           'MM/DD/YYYY'
-        );
-        let t = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('hh:mm A');
-        let hour = t.split(':')[0];
-        let ampm = t.split(':')[1].split(' ')[1];
-        const tm = `${hour}${ampm}`;
+        )
+        let t = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('hh:mm A')
+        let hour = t.split(':')[0]
+        let ampm = t.split(':')[1].split(' ')[1]
+        const tm = `${hour}${ampm}`
 
         if (
           trx.merchant === merchant &&
@@ -287,71 +297,71 @@ export const getTopMerchantAreaChartDataPoints = (
           tm === lbl &&
           trx.status === transactionStatus.APPROVED
         ) {
-          approvedAmt += trx.amountPaid;
+          approvedAmt += trx.amountPaid
         }
       }
-      break;
+      break
     case 'yearly':
       for (let trx of transactions) {
-        const m = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('MMM');
+        const m = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('MMM')
         if (
           trx.merchant === merchant &&
           m === param &&
           trx.status === transactionStatus.APPROVED
         ) {
-          approvedAmt += trx.amountPaid;
+          approvedAmt += trx.amountPaid
         }
       }
-      break;
+      break
     case 'weekly':
       const sevenDays = moment(new Date())
         .subtract(7, 'days')
-        .format('MM/DD/YYYY 23:59:59');
+        .format('MM/DD/YYYY 23:59:59')
 
-      const last7Days = moment(sevenDays, 'MM/DD/YYYY HH:mm:ss').format('X');
+      const last7Days = moment(sevenDays, 'MM/DD/YYYY HH:mm:ss').format('X')
 
       // get transactions that falls within those last 7 days
       for (let trx of transactions) {
-        const tDate = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('X');
+        const tDate = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('X')
         // check if trasnaction exists within these dates
         if (tDate >= last7Days) {
-          const d = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('ddd');
+          const d = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('ddd')
 
           if (
             trx.merchant === merchant &&
             d === param &&
             trx.status === transactionStatus.APPROVED
           ) {
-            approvedAmt += trx.amountPaid;
+            approvedAmt += trx.amountPaid
           }
         }
       }
-      break;
+      break
     case 'monthly':
       const thirtyDays = moment(new Date())
         .subtract(30, 'days')
-        .format('MM/DD/YYYY 23:59:59');
+        .format('MM/DD/YYYY 23:59:59')
 
-      const last30Days = moment(thirtyDays, 'MM/DD/YYYY HH:mm:ss').format('X');
+      const last30Days = moment(thirtyDays, 'MM/DD/YYYY HH:mm:ss').format('X')
       // get transactions that falls within those last 30 days
       for (let trx of transactions) {
-        const tDate = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('X');
+        const tDate = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format('X')
         // check if trasnaction exists within these dates
         if (tDate >= last30Days) {
           let date = moment(trx.createdAt, 'MM/DD/YYYY HH:mm:ss').format(
             'MMM DD'
-          );
+          )
           if (
             trx.merchant === merchant &&
             date === param &&
             trx.status === transactionStatus.APPROVED
           ) {
-            approvedAmt += trx.amountPaid;
+            approvedAmt += trx.amountPaid
           }
         }
       }
-      break;
+      break
   }
 
-  return { approvedAmt };
-};
+  return { approvedAmt }
+}

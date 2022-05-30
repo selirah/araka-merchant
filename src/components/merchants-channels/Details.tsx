@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col, Tag, Table } from 'antd'
 import { MerchantChannel } from '../../interfaces'
-import { numberWithCommas } from '../../helpers/helperFunctions'
+import { amountSeparator } from '../../helpers/helperFunctions'
 
 interface DetailsProps {
   channels: MerchantChannel[]
@@ -125,36 +125,32 @@ const Details: React.FC<DetailsProps> = ({
     }
   ]
 
-  let dataSource = []
+  let dataSource: any = []
   channels = sortMerchantOverview(channels)
-  for (let channel of channels) {
+
+  channels.map((channel) => {
     dataSource.push({
       key: Math.random(),
       merchant: channel.merchant,
       paymentGateway: channel.paymentGateway,
-      totalAmount: `${currency} ${numberWithCommas(
-        channel.totalAmount.toFixed(2)
+      totalAmount: `${currency} ${channel.totalAmount.toFixed(4)}`,
+      totalFees: `${currency} ${channel.totalFees.toFixed(4)}`,
+      itemCost: `${currency} ${channel.itemCost.toFixed(4)}`,
+      netAmount: `${currency} ${channel.netAmount.toFixed(4)}`,
+      fee: `${currency} ${amountSeparator(channel.fee.toFixed(4))}`,
+      vat: `${currency} ${amountSeparator(channel.vat.toFixed(4))}`,
+      paymentGetewayShare: `${currency} ${amountSeparator(
+        channel.paymentGatewayShare.toFixed(4)
       )}`,
-      totalFees: `${currency} ${numberWithCommas(
-        channel.totalFees.toFixed(2)
+      parentMerchantShare: `${currency} ${amountSeparator(
+        channel.parentMerchantShare.toFixed(4)
       )}`,
-      itemCost: `${currency} ${numberWithCommas(channel.itemCost.toFixed(2))}`,
-      netAmount: `${currency} ${numberWithCommas(
-        channel.netAmount.toFixed(2)
-      )}`,
-      fee: `${currency} ${numberWithCommas(channel.fee.toFixed(2))}`,
-      vat: `${currency} ${numberWithCommas(channel.vat.toFixed(2))}`,
-      paymentGetewayShare: `${currency} ${numberWithCommas(
-        channel.paymentGatewayShare.toFixed(2)
-      )}`,
-      parentMerchantShare: `${currency} ${numberWithCommas(
-        channel.parentMerchantShare.toFixed(2)
-      )}`,
-      platformShare: `${currency} ${numberWithCommas(
-        channel.platformShare.toFixed(2)
+      platformShare: `${currency} ${amountSeparator(
+        channel.platformShare.toFixed(4)
       )}`
     })
-  }
+    return dataSource
+  })
 
   return (
     <Row gutter={20}>

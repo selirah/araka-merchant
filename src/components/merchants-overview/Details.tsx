@@ -1,15 +1,15 @@
-import React from 'react';
-import { Row, Col, Tag, Table } from 'antd';
-import { MerchantOverview } from '../../interfaces';
-import { numberWithCommas } from '../../helpers/helperFunctions';
+import React from 'react'
+import { Row, Col, Tag, Table } from 'antd'
+import { MerchantOverview } from '../../interfaces'
+import { amountSeparator } from '../../helpers/helperFunctions'
 
 interface DetailsProps {
-  overviews: MerchantOverview[];
-  currency: string;
-  loading: boolean;
-  onLoadMore(page: any, pageSize: any): void;
-  total: number;
-  translate: any;
+  overviews: MerchantOverview[]
+  currency: string
+  loading: boolean
+  onLoadMore(page: any, pageSize: any): void
+  total: number
+  translate: any
 }
 
 const Details: React.FC<DetailsProps> = ({
@@ -18,17 +18,17 @@ const Details: React.FC<DetailsProps> = ({
   loading,
   onLoadMore,
   total,
-  translate,
+  translate
 }) => {
   const sortOverview = (a: MerchantOverview, b: MerchantOverview) => {
-    return b.totalAmountProcessed - a.totalAmountProcessed; // descending
-  };
+    return b.totalAmountProcessed - a.totalAmountProcessed // descending
+  }
 
   const sortMerchantOverview = (arr: MerchantOverview[]) => {
-    arr.sort(sortOverview);
+    arr.sort(sortOverview)
 
-    return arr;
-  };
+    return arr
+  }
 
   const columns: any = [
     {
@@ -42,15 +42,15 @@ const Details: React.FC<DetailsProps> = ({
           <Tag key={merchant} className="table-tag-merchant">
             {merchant}
           </Tag>
-        );
-      },
+        )
+      }
     },
     {
       title: `${translate('general.totalAmountProcessed')}`,
       dataIndex: 'amountProcessed',
       key: 'amountProcessed',
       align: 'center',
-      className: 'column-text',
+      className: 'column-text'
     },
     {
       title: `${translate('general.totalTransactions')}`,
@@ -58,32 +58,32 @@ const Details: React.FC<DetailsProps> = ({
       key: 'totalTransactions',
       align: 'center',
       className: 'column-text',
-      responsive: ['md'],
+      responsive: ['md']
     },
     {
       title: `${translate('general.totalArakaFees')}`,
       dataIndex: 'totalFees',
       key: 'totalFees',
       align: 'center',
-      className: 'column-text',
-    },
-  ];
+      className: 'column-text'
+    }
+  ]
 
-  let dataSource = [];
-  overviews = sortMerchantOverview(overviews);
-  for (let overview of overviews) {
+  let dataSource: any = []
+  overviews = sortMerchantOverview(overviews)
+  overviews.map((overview) => {
     dataSource.push({
       key: overview.id,
       merchant: overview.merchant,
-      amountProcessed: `${currency} ${numberWithCommas(
-        overview.totalAmountProcessed.toFixed(2)
+      amountProcessed: `${currency} ${amountSeparator(
+        overview.totalAmountProcessed.toFixed(4)
       )}`,
       totalTransactions: `${overview.totalTransactions}`,
-      totalFees: `${currency} ${numberWithCommas(
-        overview.totalArakaFees.toFixed(2)
-      )}`,
-    });
-  }
+      totalFees: `${currency} ${overview.totalArakaFees.toFixed(4)}`
+    })
+
+    return dataSource
+  })
 
   return (
     <Row gutter={20}>
@@ -96,23 +96,23 @@ const Details: React.FC<DetailsProps> = ({
             className="tranaction-table"
             pagination={{
               onChange: (page, pageSize) => {
-                onLoadMore(page, pageSize);
+                onLoadMore(page, pageSize)
               },
               total: total,
               showTotal: (_, range) => {
-                const tran = translate(`general.pagination`);
-                let t = tran.replace(`%d`, `${range[0]} - ${range[1]}`);
-                let s = t.replace(`%s`, total);
-                return s;
+                const tran = translate(`general.pagination`)
+                let t = tran.replace(`%d`, `${range[0]} - ${range[1]}`)
+                let s = t.replace(`%s`, total)
+                return s
               },
-              showSizeChanger: false,
+              showSizeChanger: false
             }}
             loading={loading}
           />
         </div>
       </Col>
     </Row>
-  );
-};
+  )
+}
 
-export default Details;
+export default Details
